@@ -27,15 +27,15 @@ Antes de comenzar, verifica:
 
 ## Windows PowerShell
 
-Ejemplo utilizando `C:\proyectos`:
+Ejemplo utilizando `$HOME\proyectos`:
 
 ```powershell
-New-Item -ItemType Directory -Force -Path C:\proyectos | Out-Null
-Set-Location C:\proyectos
+$Workspace = Join-Path $HOME "proyectos"
+New-Item -ItemType Directory -Force -Path $Workspace | Out-Null
+Set-Location $Workspace
 
 if (Test-Path .\00-ia-dos) {
-    Write-Error "La carpeta C:\proyectos\00-ia-dos ya existe. Detén la instalación y revisa su contenido."
-    exit 1
+    throw "La carpeta $Workspace\00-ia-dos ya existe. Revisa su contenido antes de continuar."
 }
 
 git clone https://github.com/fjaramillob/ia-dos.git 00-ia-dos
@@ -55,7 +55,7 @@ mkdir -p ~/proyectos
 cd ~/proyectos
 
 if [ -e ./00-ia-dos ]; then
-  echo "La carpeta ~/proyectos/00-ia-dos ya existe. Detén la instalación y revisa su contenido." >&2
+  echo "La carpeta ~/proyectos/00-ia-dos ya existe. Revisa su contenido antes de continuar." >&2
   exit 1
 fi
 
@@ -73,7 +73,7 @@ La instalación es correcta cuando:
 
 - existe la carpeta `00-ia-dos/`;
 - `git status` indica un árbol de trabajo limpio;
-- el remote `origin` apunta a `https://github.com/fjaramillob/ia-dos.git`;
+- el remote `origin` apunta al repositorio oficial;
 - la rama actual es `main`;
 - existen `README.md`, `ORCHESTRATOR.md`, `AGENTS.md` y `docs/index.md`.
 
@@ -109,7 +109,7 @@ nombre-proyecto/
 └── nombre-proyecto-wiki/
 ```
 
-No abras todo `proyectos/` a un coding agent salvo que la tarea requiera explícitamente administración transversal. Esto reduce acceso innecesario, mezcla de contexto y consumo de tokens.
+No abras todo `proyectos/` a un coding agent salvo que la tarea requiera explícitamente administración transversal.
 
 ## Condiciones de detención
 
