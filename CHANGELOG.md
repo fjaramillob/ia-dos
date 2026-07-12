@@ -16,6 +16,9 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - prompt universal de inicialización del orquestador;
 - recorridos iniciales para proyectos nuevos y existentes;
 - guía inicial de construcción de la LLM Wiki;
+- guía de preparación del workspace local;
+- guía manual de instalación de IA-DOS para Windows, macOS y Linux;
+- prompt para que un agente instale IA-DOS con validaciones y condiciones de detención;
 - modelo operativo;
 - modelo de adopción;
 - responsabilidades humanas, del orquestador y de los coding agents;
