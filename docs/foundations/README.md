@@ -13,4 +13,6 @@ Esta sección define la base conceptual de IA-DOS.
 - [Terminología](terminology.md)
 - [Versionado](versioning.md)
 
-Los documentos prácticos de instalación, LLM Wiki, Context Packs, Execution Tasks y verificación se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
+Los primeros recorridos conversacionales y la guía inicial de LLM Wiki están disponibles en [Primeros pasos](../index.md#primeros-pasos).
+
+Las guías de instalación local, Context Packs, Execution Tasks, handoffs completos y verificación se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
