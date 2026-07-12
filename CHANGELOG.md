@@ -11,9 +11,15 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - definición inicial de propósito y alcance;
 - público objetivo;
 - principios;
+- capa de orquestación conversacional;
+- instrucciones para el `Project Orchestrator`;
 - modelo operativo;
+- modelo de adopción;
+- responsabilidades humanas, del orquestador y de los coding agents;
+- fuentes de verdad;
 - terminología;
 - gobierno;
 - guía de contribución;
 - política de seguridad;
-- roadmap inicial.
+- roadmap inicial;
+- registro de influencias de diseño.
