@@ -23,7 +23,11 @@ Este archivo permite que ChatGPT, Gemini, Claude u otro asistente comprenda cóm
 
 ## Primeros pasos
 
-La guía práctica de instalación, clonación, construcción de la LLM Wiki y adopción se incorporará en los siguientes incrementos de `v0.1.0-alpha.1`.
+- [Iniciar un proyecto nuevo desde la capa conversacional](getting-started/new-project-from-conversation.md)
+- [Adoptar un proyecto existente desde la capa conversacional](getting-started/adopt-existing-project-from-conversation.md)
+- [Crear la LLM Wiki del proyecto](getting-started/bootstrap-llm-wiki.md)
+
+Las guías de instalación local, clonación y prompts completos se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
 
 ## Estado de la documentación
 
