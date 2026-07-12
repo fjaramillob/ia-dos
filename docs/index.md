@@ -27,9 +27,12 @@ Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda c
 - [Iniciar un proyecto nuevo desde la capa conversacional](getting-started/new-project-from-conversation.md)
 - [Adoptar un proyecto existente desde la capa conversacional](getting-started/adopt-existing-project-from-conversation.md)
 - [Crear la LLM Wiki del proyecto](getting-started/bootstrap-llm-wiki.md)
+- [Preparar el workspace local](getting-started/workspace-setup.md)
+- [Instalar IA-DOS en el workspace](getting-started/install-ia-dos.md)
+- [Prompt para instalar IA-DOS con un agente](../prompts/getting-started/install-ia-dos.md)
 
-Las guías de instalación local, clonación, handoffs completos y plantillas se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
+Las guías de handoff completo, plantillas y verificación se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
 
 ## Estado de la documentación
 
-IA-DOS está en fase fundacional. Los documentos actuales definen la base conceptual y el primer recorrido conversacional. Todavía no constituyen una versión estable.
+IA-DOS está en fase alpha. Los documentos actuales definen la base conceptual, el recorrido conversacional y la preparación inicial del workspace. Todavía no constituyen una versión estable.
