@@ -26,6 +26,11 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - plantilla `AGENTS.md` para repositorios de aplicación;
 - wiki starter con `project-brief`, estado actual, arquitectura, registro, fuentes, decisiones, tareas y `CORE`;
 - guía para aplicar y verificar las plantillas mínimas de adopción;
+- plantilla de `Execution Task`;
+- plantilla de `Execution Report`;
+- guía de handoff entre Project Orchestrator y coding agent;
+- prompt de ejecución acotada para coding agents;
+- reglas explícitas de sanitización para evitar información personal, laboral o de proyectos reales en el repositorio público;
 - modelo operativo;
 - modelo de adopción;
 - responsabilidades humanas, del orquestador y de los coding agents;
