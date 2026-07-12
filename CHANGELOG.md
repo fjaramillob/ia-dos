@@ -22,6 +22,10 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - guía para crear formalmente un proyecto nuevo dentro del workspace;
 - guía para incorporar un proyecto existente sin alterar su historia ni moverlo a ciegas;
 - prompts operativos para crear o incorporar proyectos con condiciones de detención;
+- manifiesto `.ia-dos.yaml` para declarar adopción;
+- plantilla `AGENTS.md` para repositorios de aplicación;
+- wiki starter con `project-brief`, estado actual, arquitectura, registro, fuentes, decisiones, tareas y `CORE`;
+- guía para aplicar y verificar las plantillas mínimas de adopción;
 - modelo operativo;
 - modelo de adopción;
 - responsabilidades humanas, del orquestador y de los coding agents;
