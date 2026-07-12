@@ -31,6 +31,7 @@ Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda c
 - [Instalar IA-DOS en el workspace](getting-started/install-ia-dos.md)
 - [Crear un proyecto nuevo dentro del workspace](getting-started/create-new-project-workspace.md)
 - [Incorporar un proyecto existente al workspace](getting-started/incorporate-existing-project-workspace.md)
+- [Aplicar las plantillas mínimas de adopción](getting-started/apply-starter-templates.md)
 
 ## Prompts operativos
 
@@ -38,8 +39,14 @@ Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda c
 - [Crear un proyecto nuevo dentro del workspace](../prompts/getting-started/create-new-project-workspace.md)
 - [Incorporar un proyecto existente al workspace](../prompts/getting-started/incorporate-existing-project-workspace.md)
 
-Las guías de handoff completo, plantillas y verificación se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
+## Plantillas
+
+- [Manifiesto de adopción](../templates/adoption.template.yaml)
+- [AGENTS.md para la app](../templates/AGENTS.template.md)
+- [Wiki inicial](../templates/wiki-starter/)
+
+Las guías de `Execution Task`, reporte de ejecución y verificación completa se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
 
 ## Estado de la documentación
 
-IA-DOS está en fase alpha. Los documentos actuales definen la base conceptual, el recorrido conversacional, la preparación del workspace y la incorporación formal de proyectos. Todavía no constituyen una versión estable.
+IA-DOS está en fase alpha. Los documentos actuales definen la base conceptual, el recorrido conversacional, la preparación del workspace, la incorporación formal de proyectos y las plantillas mínimas de adopción. Todavía no constituyen una versión estable.
