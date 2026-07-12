@@ -39,8 +39,8 @@ Ejemplos genéricos válidos:
 
 ```text
 portal-clientes
-inventario-central
-agenda-servicios
+sistema-inventario
+agenda-equipos
 ```
 
 El nombre comercial visible puede ser distinto del `project-slug`.
