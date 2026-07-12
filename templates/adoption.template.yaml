@@ -1,5 +1,5 @@
 ia_dos:
-  version: "0.1.0-alpha.1"
+  version: "[TAG_O_COMMIT_ADOPTADO]"
   source: "https://github.com/fjaramillob/ia-dos"
 
 project:
