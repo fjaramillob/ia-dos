@@ -7,7 +7,6 @@ Actúa como coding agent para una única tarea acotada.
 
 Antes de modificar:
 1. Lee `AGENTS.md` del repositorio.
-2. Lee la Execution Task canónica completa.
+2. Lee la `Execution Task` canónica completa.
 3. Consulta solo el `CORE`, Context Packs y rutas indicadas en la tarea.
-4. Ejecuta `git status` y reporta cualquier cambio previo no identificado.
-5. Confirma el
+4. Ejecuta
