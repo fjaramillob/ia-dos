@@ -13,6 +13,9 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - principios;
 - capa de orquestación conversacional;
 - instrucciones para el `Project Orchestrator`;
+- prompt universal de inicialización del orquestador;
+- recorridos iniciales para proyectos nuevos y existentes;
+- guía inicial de construcción de la LLM Wiki;
 - modelo operativo;
 - modelo de adopción;
 - responsabilidades humanas, del orquestador y de los coding agents;
@@ -22,4 +25,4 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - guía de contribución;
 - política de seguridad;
 - roadmap inicial;
-- registro de influencias de diseño.
+- referencias de influencias de diseño.
