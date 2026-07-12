@@ -1,18 +1,29 @@
 # Documentación de IA-DOS
 
-Esta documentación explica cómo utilizar IA-DOS para ordenar proyectos de software desarrollados con agentes de inteligencia artificial.
+Esta documentación explica cómo utilizar IA-DOS para ordenar proyectos de software desarrollados con asistentes conversacionales y coding agents.
 
 ## Fundamentos
 
 - [Propósito y alcance](foundations/purpose-and-scope.md)
 - [Público objetivo](foundations/target-audience.md)
 - [Principios](foundations/principles.md)
+- [Capa de orquestación conversacional](foundations/orchestration-layer.md)
 - [Modelo operativo](foundations/operating-model.md)
+- [Modelo de adopción](foundations/adoption-model.md)
+- [Fuentes de verdad](foundations/source-of-truth.md)
+- [Responsabilidades humanas y de la IA](foundations/human-ai-responsibilities.md)
 - [Terminología](foundations/terminology.md)
+- [Versionado](foundations/versioning.md)
+
+## Instrucciones para asistentes
+
+- [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
+
+Este archivo permite que ChatGPT, Gemini, Claude u otro asistente comprenda cómo debe coordinar conversaciones, wiki, tareas y coding agents.
 
 ## Primeros pasos
 
-La guía práctica de instalación, clonación y adopción se incorporará en el siguiente incremento de la versión `v0.1.0-alpha.1`.
+La guía práctica de instalación, clonación, construcción de la LLM Wiki y adopción se incorporará en los siguientes incrementos de `v0.1.0-alpha.1`.
 
 ## Estado de la documentación
 
