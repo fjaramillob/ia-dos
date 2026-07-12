@@ -4,7 +4,14 @@
 
 Framework abierto para organizar proyectos de software desarrollados con asistencia de inteligencia artificial.
 
-IA-DOS entrega una forma común de ordenar el workspace local, la memoria del proyecto, las instrucciones para agentes, las tareas, las decisiones y la verificación del trabajo realizado.
+IA-DOS entrega una forma común de coordinar:
+
+- la persona que dirige el proyecto;
+- ChatGPT, Gemini, Claude u otros asistentes conversacionales;
+- Codex, Claude Code, Antigravity u otros coding agents;
+- la LLM Wiki del proyecto;
+- el repositorio de aplicación;
+- las tareas, decisiones, pruebas y revisiones.
 
 ## Qué problema resuelve
 
@@ -18,30 +25,51 @@ Cuando un proyecto se desarrolla con varios chats, agentes y herramientas, suele
 - prompts repetidos;
 - consumo innecesario de tokens;
 - documentación desactualizada;
+- conversaciones que actúan como memorias paralelas;
 - dificultad para saber qué está realmente terminado.
 
 IA-DOS busca reducir estos problemas mediante una estructura simple, explícita y reutilizable.
 
 ## Para quién está pensado
 
-IA-DOS está dirigido principalmente a personas que ya están construyendo con herramientas como Codex, Claude Code, Antigravity, GitHub Copilot u otros agentes de desarrollo.
+IA-DOS está dirigido principalmente a personas que ya están construyendo con inteligencia artificial.
 
 El usuario puede no ser un programador experto, pero normalmente:
 
 - entiende conceptos generales de sistemas;
 - puede describir qué necesita construir;
 - toma decisiones de producto o tecnología;
+- utiliza un Project de ChatGPT, un Gem de Gemini u otro asistente para dirigir el proyecto;
+- utiliza Codex, Claude Code, Antigravity u otros agentes para desarrollar;
 - trabaja con repositorios, aplicaciones, APIs, bases de datos o automatizaciones;
 - necesita mantener control sobre lo que los agentes leen, cambian y reportan.
 
+## La capa de orquestación
+
+Para muchos usuarios, la interfaz principal de IA-DOS será un asistente conversacional externo al código.
+
+Ese asistente funciona como **Project Orchestrator**:
+
+- comprende el proyecto mediante su wiki y repositorios;
+- propone una separación clara de conversaciones por dominio;
+- ayuda a tomar decisiones y registrar sus resultados;
+- transforma necesidades en `Execution Tasks`;
+- prepara prompts optimizados para coding agents;
+- selecciona solo el contexto necesario;
+- revisa los reportes de ejecución y solicita evidencia;
+- mantiene alineados la conversación, la wiki y el desarrollo.
+
+Consulta [ORCHESTRATOR.md](ORCHESTRATOR.md) para las instrucciones dirigidas a ChatGPT, Gemini, Claude u otros asistentes equivalentes.
+
 ## Qué propone
 
-IA-DOS organiza cuatro elementos principales:
+IA-DOS organiza cinco elementos principales:
 
-1. **Workspace ordenado:** una ubicación clara para IA-DOS y para cada proyecto.
-2. **Memoria durable:** una wiki versionada que conserva contexto, decisiones y estado real.
-3. **Ejecución acotada:** tareas pequeñas, con alcance, límites y criterios de aceptación.
-4. **Verificación con evidencia:** un trabajo no se considera terminado solo porque un agente lo afirma.
+1. **Orquestación conversacional:** un espacio de dirección que convierte conversaciones en inputs estructurados para el desarrollo.
+2. **Workspace ordenado:** una ubicación clara para IA-DOS y para cada proyecto.
+3. **Memoria durable:** una LLM Wiki versionada que conserva contexto, decisiones y estado real.
+4. **Ejecución acotada:** tareas pequeñas, con alcance, límites y criterios de aceptación.
+5. **Verificación con evidencia:** un trabajo no se considera terminado solo porque un agente lo afirma.
 
 ## Estructura recomendada
 
@@ -62,7 +90,8 @@ Esta es una arquitectura de referencia fuertemente recomendada, no una obligaci�
 ## Cómo funciona
 
 ```text
-Entender
+Conversar y dirigir
+→ entender
 → documentar
 → delimitar
 → ejecutar
@@ -70,7 +99,37 @@ Entender
 → registrar
 ```
 
-La conversación es un espacio de trabajo. El repositorio y la wiki son las fuentes de verdad.
+La conversación es un espacio de dirección y trabajo. La wiki, el código, los issues, las decisiones y los pull requests conservan los resultados durables.
+
+## Flujo entre asistentes y desarrollo
+
+```text
+Usuario
+   ↓
+ChatGPT / Gemini / Claude
+Project Orchestrator
+   ↓
+LLM Wiki + contexto seleccionado
+   ↓
+Execution Task + prompt optimizado
+   ↓
+Codex / Claude Code / Antigravity
+   ↓
+Código + pruebas + reporte
+   ↓
+Revisión y actualización de la wiki
+```
+
+El orquestador no debe reenviar toda la historia o todos los repositorios para cada tarea. Debe utilizar un contexto `CORE`, uno o dos `Context Packs` relevantes y una `Execution Task` acotada.
+
+## Cómo se consume IA-DOS
+
+IA-DOS puede utilizarse de dos formas complementarias:
+
+- **Como repositorio de referencia para ChatGPT, Gemini u otro asistente:** el sistema lee IA-DOS para conocer cómo debe orquestar el proyecto.
+- **Como instalación local del workspace:** se clona una vez como `proyectos/00-ia-dos/` para consultar documentación, prompts y plantillas.
+
+No se copia el repositorio completo dentro de cada proyecto. Cada proyecto conserva solamente su wiki, sus instrucciones y la configuración correspondiente a la versión adoptada.
 
 ## Qué no es
 
@@ -78,7 +137,7 @@ IA-DOS no es:
 
 - un evaluador de ideas o proyectos;
 - una herramienta que programa por sí sola;
-- un agente autónomo;
+- un agente autónomo que elimina la supervisión humana;
 - una aplicación SaaS;
 - un reemplazo de GitHub, Obsidian, Spec Kit, OpenSpec o los agentes de desarrollo;
 - una garantía de que un proyecto estará libre de errores.
@@ -89,12 +148,14 @@ El proyecto se encuentra en fase fundacional. La primera versión será `v0.1.0-
 
 - propósito y alcance;
 - público objetivo;
-- principios;
-- modelo operativo;
+- orquestación conversacional;
+- principios y modelo operativo;
 - estructura del workspace;
+- construcción inicial de la LLM Wiki;
 - adopción por proyectos;
-- prompts de instalación y clonación;
-- plantillas mínimas.
+- prompts de instalación, clonación y handoff hacia coding agents;
+- plantillas mínimas;
+- guardrails y verificación inicial.
 
 Consulta [docs/index.md](docs/index.md) para navegar la documentación.
 
