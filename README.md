@@ -131,6 +131,13 @@ IA-DOS puede utilizarse de dos formas complementarias:
 
 No se copia el repositorio completo dentro de cada proyecto. Cada proyecto conserva solamente su wiki, sus instrucciones y la configuración correspondiente a la versión adoptada.
 
+Para que un asistente externo pueda orquestar un proyecto concreto debe recibir, además de IA-DOS:
+
+- acceso o referencia a la wiki del proyecto;
+- acceso o referencia al repositorio de aplicación cuando corresponda;
+- las instrucciones específicas del usuario o equipo;
+- la versión de IA-DOS adoptada.
+
 ## Qué no es
 
 IA-DOS no es:
