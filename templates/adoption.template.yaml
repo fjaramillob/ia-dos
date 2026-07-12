@@ -1,0 +1,26 @@
+ia_dos:
+  version: "[TAG_O_COMMIT_ADOPTADO]"
+  source: "https://github.com/fjaramillob/ia-dos"
+
+project:
+  name: "NOMBRE_VISIBLE"
+  slug: "project-slug"
+  app_path: "../project-slug-app"
+  wiki_path: "."
+
+adoption:
+  model: "separate-app-and-wiki"
+  project_orchestrator: "chatgpt-project-or-equivalent"
+  task_source: "github-issues"
+  decision_source: "wiki-decisions"
+  exceptions: []
+
+context:
+  core: "context-packs/core.md"
+  architecture: "architecture.md"
+  current_state: "current-state.md"
+
+verification:
+  require_evidence: true
+  require_out_of_scope: true
+  require_stop_conditions: true
