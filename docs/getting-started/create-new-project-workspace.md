@@ -35,12 +35,12 @@ Reglas:
 - sin caracteres especiales;
 - evitar nombres genéricos como `app`, `nuevo` o `proyecto`.
 
-Ejemplos válidos:
+Ejemplos genéricos válidos:
 
 ```text
-tag-cl
-junta-fc
-control-tesoreria
+portal-clientes
+inventario-central
+agenda-servicios
 ```
 
 El nombre comercial visible puede ser distinto del `project-slug`.
