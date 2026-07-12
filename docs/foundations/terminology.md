@@ -2,6 +2,22 @@
 
 IA-DOS mantiene en inglés algunos términos técnicos ampliamente utilizados, pero los explica en español.
 
+## `Project Orchestrator`
+
+Asistente conversacional utilizado para dirigir y coordinar el proyecto desde ChatGPT, Gemini, Claude u otro entorno equivalente.
+
+Comprende el contexto, separa conversaciones, prepara `Execution Tasks`, selecciona contexto y revisa el retorno de los coding agents.
+
+## `Conversation Space`
+
+Conversación persistente dedicada a un dominio del proyecto, por ejemplo dirección, producto, arquitectura, desarrollo, QA o wiki.
+
+No es una fuente de verdad independiente. Sus resultados durables deben registrarse en la wiki, un issue, un ADR, una `Execution Task` o un pull request.
+
+## coding agent
+
+Herramienta con capacidad de inspeccionar y modificar un repositorio, por ejemplo Codex, Claude Code o Antigravity.
+
 ## `repository`
 
 Repositorio versionado donde se almacena código, documentación u otros archivos de un proyecto.
@@ -34,9 +50,21 @@ Base documental en Markdown diseñada para conservar memoria durable, navegable 
 
 Unidad de trabajo concreta, acotada, verificable y terminable.
 
+También funciona como base para preparar el prompt que recibe un coding agent.
+
 ## `Context Pack`
 
-Conjunto pequeño de documentos o rutas seleccionados para entregar a un agente solo el contexto necesario para una tarea.
+Conjunto pequeño de documentos o rutas seleccionados para entregar a un asistente o agente solo el contexto necesario para una conversación o tarea.
+
+## `CORE`
+
+Context Pack mínimo y transversal del proyecto. Contiene propósito, estado resumido, restricciones, decisiones vigentes y ubicación de las fuentes de verdad.
+
+## handoff
+
+Traspaso estructurado desde el orquestador hacia un coding agent, o desde el coding agent de regreso al orquestador.
+
+Incluye la tarea, el contexto necesario, límites y el formato esperado de respuesta.
 
 ## `guardrail`
 
