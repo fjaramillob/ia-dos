@@ -61,6 +61,18 @@ Ese asistente funciona como **Project Orchestrator**:
 
 Consulta [ORCHESTRATOR.md](ORCHESTRATOR.md) para las instrucciones dirigidas a ChatGPT, Gemini, Claude u otros asistentes equivalentes.
 
+## Cómo comenzar
+
+1. Entrega este repositorio a un Project de ChatGPT, Gem de Gemini, Project de Claude o entorno equivalente.
+2. Utiliza el [prompt de inicialización del Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md).
+3. Sigue el recorrido correspondiente:
+   - [proyecto nuevo](docs/getting-started/new-project-from-conversation.md);
+   - [proyecto existente](docs/getting-started/adopt-existing-project-from-conversation.md).
+4. Crea o revisa la [LLM Wiki del proyecto](docs/getting-started/bootstrap-llm-wiki.md).
+5. Solo después convierte la necesidad en una tarea acotada para un coding agent.
+
+No es necesario clonar IA-DOS localmente para iniciar la etapa conversacional. La clonación se recomienda cuando el proyecto entra en trabajo con repositorios, archivos, Git y coding agents.
+
 ## Qué propone
 
 IA-DOS organiza cinco elementos principales:
