@@ -2,54 +2,36 @@
 
 Este flujo convierte una necesidad de desarrollo en una tarea acotada, verificable y trazable.
 
-## Flujo completo
+No consiste en reenviar todo el historial del proyecto ni en pedir al agente que “resuelva lo necesario”.
+
+## Flujo
 
 ```text
 Necesidad o decisión
-→ Execution Task
-→ revisión humana
-→ handoff al coding agent
+→ Execution Task aprobada
+→ handoff con contexto mínimo
 → implementación y pruebas
 → Execution Report
 → revisión de evidencia
-→ actualización de wiki, issue o ADR
+→ actualización de tarea, código y memoria durable
 ```
 
-## 1. Crear la Execution Task
+## Entradas mínimas
 
-Usa `templates/execution-task.template.md`.
+Antes de delegar, el Project Orchestrator debe contar con:
 
-La tarea debe definir una única fuente canónica y contener:
+- objetivo confirmado;
+- una fuente canónica para la tarea;
+- `CORE` actualizado;
+- uno o dos `Context Packs` relevantes;
+- rutas reales del repositorio y la wiki;
+- estado actual comprobado;
+- guardrails y condiciones de detención;
+- aprobación humana del alcance.
 
-- objetivo;
-- contexto mínimo;
-- problema o evidencia;
-- alcance y fuera de alcance;
-- repositorios y rutas autorizadas;
-- guardrails;
-- criterios de aceptación observables;
-- pruebas esperadas;
-- condiciones de detención;
-- documentación y memoria que deben actualizarse;
-- formato de entrega.
+## Paquete de handoff
 
-No delegues una tarea que todavía depende de una decisión importante sin resolver.
-
-## 2. Revisar antes de delegar
-
-El Project Orchestrator y la persona responsable deben confirmar:
-
-- que el objetivo es terminable;
-- que el alcance es suficientemente pequeño;
-- que las rutas autorizadas son correctas;
-- que el fuera de alcance protege comportamiento no relacionado;
-- que las pruebas son aplicables;
-- que el agente tiene acceso solo al contexto necesario;
-- que las condiciones de detención son claras.
-
-## 3. Construir el handoff
-
-El handoff debe incluir:
+Entrega únicamente:
 
 ```text
 CORE
@@ -59,79 +41,106 @@ CORE
 + AGENTS.md del repositorio
 ```
 
-Evita adjuntar toda la wiki, toda la historia de conversaciones o todos los repositorios del workspace.
+No adjuntes toda la wiki, todas las conversaciones, IA-DOS completo ni otros proyectos del workspace.
 
-## 4. Ejecución del coding agent
+## 1. Preparar la Execution Task
+
+Usa `templates/execution-task.template.md`.
+
+La tarea debe definir:
+
+- objetivo concreto;
+- problema o evidencia;
+- alcance y fuera de alcance;
+- repositorios, rama y rutas autorizadas;
+- criterios de aceptación observables;
+- pruebas y evidencia esperadas;
+- condiciones de detención;
+- documentación o memoria que podría cambiar;
+- formato de entrega.
+
+La tarea debe vivir en un único lugar: GitHub Issue, archivo Markdown en la wiki o sistema equivalente declarado en `.ia-dos.yaml`.
+
+No delegues una tarea que todavía dependa de una decisión importante sin resolver. Divide una tarea cuando mezcle objetivos independientes o varios subsistemas.
+
+## 2. Revisar antes de delegar
+
+Confirma:
+
+- que el objetivo puede terminarse;
+- que el alcance es pequeño y explícito;
+- que las rutas permitidas y prohibidas son correctas;
+- que el fuera de alcance protege comportamiento no relacionado;
+- que no se autoriza producción, costes o recursos externos por omisión;
+- que cada criterio de aceptación puede comprobarse;
+- que las pruebas son aplicables;
+- que el agente recibe solo el contexto necesario.
+
+## 3. Ejecutar con el coding agent
 
 El agente debe:
 
-1. leer `AGENTS.md`;
-2. revisar el estado Git;
-3. validar alcance y rutas;
-4. inspeccionar antes de modificar;
-5. ejecutar solo cambios autorizados;
-6. detenerse ante una condición definida;
-7. ejecutar pruebas aplicables;
+1. leer `AGENTS.md` y la `Execution Task` completa;
+2. consultar solo el contexto indicado;
+3. ejecutar `git status` antes de escribir;
+4. inspeccionar el estado real;
+5. modificar únicamente rutas autorizadas;
+6. detenerse ante contradicciones o riesgos definidos;
+7. ejecutar las pruebas aplicables;
 8. revisar el diff completo;
 9. devolver un `Execution Report`.
 
-## 5. Reporte de ejecución
+Puede utilizarse el prompt de `prompts/execution/handoff-to-coding-agent.md`.
+
+## 4. Revisar el Execution Report
 
 Usa `templates/execution-report.template.md`.
 
-El reporte debe distinguir:
+Compara:
 
-- trabajo completado;
-- trabajo parcial;
-- bloqueos;
-- pruebas ejecutadas;
-- pruebas no ejecutadas;
-- desviaciones;
-- riesgos;
-- decisiones pendientes;
-- actualizaciones recomendadas para la wiki.
+- objetivo versus resultado;
+- criterios de aceptación versus evidencia;
+- alcance versus diff;
+- pruebas solicitadas versus pruebas ejecutadas;
+- fuera de alcance versus cambios reales;
+- estado declarado versus estado Git;
+- riesgos, limitaciones y decisiones pendientes.
 
-Una afirmación del agente no sustituye evidencia.
+Una afirmación del agente no sustituye evidencia. El estado `Completada` solo corresponde cuando los criterios aplicables tienen respaldo suficiente.
 
-## 6. Revisión del retorno
+## 5. Cerrar el ciclo
 
-El Project Orchestrator compara el reporte con la tarea original.
+Después de aprobar el resultado:
 
-Debe comprobar:
+- actualiza la tarea en su fuente canónica;
+- conserva la implementación en el repositorio de aplicación;
+- conserva la evidencia en el pull request o reporte;
+- registra decisiones durables en la wiki o ADR;
+- actualiza `current-state.md` cuando cambie el estado real;
+- actualiza `architecture.md` solo si cambió la arquitectura;
+- actualiza `CORE` solo cuando cambie información transversal;
+- registra en `log.md` el aprendizaje durable, no logs efímeros completos.
 
-- cada criterio de aceptación;
-- evidencia de pruebas;
-- diff y archivos modificados;
-- respeto del fuera de alcance;
-- desviaciones aprobadas o no aprobadas;
-- riesgos y limitaciones;
-- información durable que cambió.
-
-El estado `Completada` solo corresponde cuando los criterios aplicables tienen evidencia suficiente.
-
-## 7. Cierre y memoria
-
-Al cerrar:
-
-- la implementación queda en el repositorio de aplicación;
-- el estado de la tarea se actualiza en su fuente canónica;
-- la evidencia queda en el pull request o reporte;
-- las decisiones durables vuelven a la wiki o ADR;
-- `current-state.md` se actualiza cuando cambió el estado real;
-- `CORE` solo se actualiza si cambió información transversal.
-
-## Condiciones de rechazo del reporte
-
-No cierres la tarea cuando:
+## Rechaza el cierre cuando
 
 - faltan pruebas exigidas sin explicación;
-- los criterios de aceptación no tienen evidencia;
+- los criterios no tienen evidencia;
 - aparecen cambios fuera de alcance;
-- el agente ocultó fallos o trabajo incompleto;
-- el working tree o diff no coincide con el reporte;
+- el reporte no coincide con el diff o el estado Git;
+- se ocultaron fallos o trabajo incompleto;
 - se tomaron decisiones no autorizadas;
 - la documentación presenta propuestas como implementadas.
 
-## Resultado esperado
+## Verificación final
 
-Este flujo permite que el trabajo pase de conversación a implementación y vuelva a memoria durable sin depender de la confianza ciega en el agente.
+- [ ] Existe una sola fuente canónica.
+- [ ] El objetivo es único y terminable.
+- [ ] El contexto es mínimo y suficiente.
+- [ ] Alcance, fuera de alcance y rutas están explícitos.
+- [ ] Los criterios de aceptación y pruebas son verificables.
+- [ ] Las condiciones de detención están presentes.
+- [ ] El agente debe devolver un reporte estructurado.
+- [ ] El cierre exige evidencia y revisión humana.
+- [ ] La memoria durable tiene un destino definido.
+
+Valida este flujo primero con una tarea de bajo riesgo.
