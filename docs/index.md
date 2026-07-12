@@ -18,8 +18,9 @@ Esta documentación explica cómo utilizar IA-DOS para ordenar proyectos de soft
 ## Instrucciones para asistentes
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
+- [Prompt para inicializar el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md)
 
-Este archivo permite que ChatGPT, Gemini, Claude u otro asistente comprenda cómo debe coordinar conversaciones, wiki, tareas y coding agents.
+Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda cómo debe coordinar conversaciones, wiki, tareas y coding agents.
 
 ## Primeros pasos
 
@@ -27,8 +28,8 @@ Este archivo permite que ChatGPT, Gemini, Claude u otro asistente comprenda cóm
 - [Adoptar un proyecto existente desde la capa conversacional](getting-started/adopt-existing-project-from-conversation.md)
 - [Crear la LLM Wiki del proyecto](getting-started/bootstrap-llm-wiki.md)
 
-Las guías de instalación local, clonación y prompts completos se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
+Las guías de instalación local, clonación, handoffs completos y plantillas se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
 
 ## Estado de la documentación
 
-IA-DOS está en fase fundacional. Los documentos actuales definen la base conceptual y operativa. Todavía no constituyen una versión estable.
+IA-DOS está en fase fundacional. Los documentos actuales definen la base conceptual y el primer recorrido conversacional. Todavía no constituyen una versión estable.
