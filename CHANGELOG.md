@@ -23,6 +23,10 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - separación explícita entre `00` y `90` cuando la plataforma permite varias conversaciones;
 - guía de primera respuesta accionable con nombre recomendado del chat, siguiente acción humana y máximo tres preguntas prioritarias;
 - recomendación por defecto de GitHub Issues como fuente canónica de tareas cuando existe repositorio remoto;
+- gestión explícita de estados entre hechos, preferencias, propuestas, decisiones conversacionales y decisiones durables;
+- regla de una decisión principal por turno y alternativas claramente no confirmadas;
+- gate de salida para `00 — Dirección y definición` con aprobación explícita antes de crear `90 — Wiki y memoria`;
+- prohibición de describir al usuario como bloqueo o de repetir el onboarding inicial en cada turno;
 - principios LLM Wiki inspirados en la propuesta de Andrej Karpathy;
 - recorridos iniciales para proyectos nuevos y existentes;
 - guía inicial de construcción de la LLM Wiki;
