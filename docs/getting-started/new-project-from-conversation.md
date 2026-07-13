@@ -12,7 +12,7 @@ Entrega como conocimiento:
 2. una descripción inicial, PDF, documento o `templates/project-intake-brief.template.md`;
 3. cualquier fuente disponible: notas, referencias, restricciones, diseños o sistemas relacionados.
 
-El usuario no tiene que completar un formulario exhaustivo. El asistente debe extraer primero lo que ya está en las fuentes y preguntar solo por vacíos importantes.
+El usuario no tiene que completar un formulario exhaustivo. El asistente debe extraer primero lo que ya está en las fuentes.
 
 ## 2. Confirmar que el producto objetivo es nuevo
 
@@ -20,191 +20,164 @@ Clasifica el producto que se quiere construir, no los sistemas anteriores mencio
 
 Un sistema anterior, migración selectiva, reconstrucción o producto de referencia no convierte automáticamente al producto objetivo en existente.
 
-El producto objetivo es nuevo cuando no existe evidencia propia de implementación como código, despliegue, usuarios, infraestructura o integraciones activas.
-
 ## 3. Primera conversación: `00 — Dirección y definición`
 
-Comprende progresivamente:
+El objetivo de `00` no es cerrar todo el producto antes de comenzar.
+
+Debe capturar:
 
 - propósito;
 - usuario principal;
-- problema;
-- resultado esperado;
-- alcance inicial y fuera de alcance;
-- funcionamiento y flujos;
-- dirección visual;
-- activos que ya existen;
-- sistemas relacionados y su relación;
-- restricciones;
-- decisiones confirmadas;
-- supuestos y preguntas abiertas;
-- criterios de éxito.
+- problema central;
+- promesa de valor inicial;
+- principios no negociables;
+- primer resultado o hipótesis a demostrar;
+- límites, riesgos o restricciones relevantes.
 
-Distingue hechos, preferencias, supuestos, propuestas y decisiones. No repitas preguntas ya respondidas por los documentos.
+Resume esta dirección en una frase clara y pocos principios.
 
-No selecciones stack ni pidas construir la aplicación completa antes de contar con decisiones suficientes.
+Registra lo todavía no resuelto como:
 
-## 4. Ritmo y gestión de decisiones
-
-Por defecto, resuelve una decisión principal por turno.
-
-Cuando propongas alternativas:
-
-- márcalas como propuestas no confirmadas;
-- explica brevemente sus efectos;
-- evita inventar mecanismos detallados no presentes en las fuentes;
-- combina criterios complementarios en vez de forzar elecciones artificiales;
-- ofrece una recomendación simple cuando ayude al usuario.
-
-Cuando el usuario confirme una propuesta, reclasifícala como `Decisión de trabajo confirmada en conversación`.
-
-No la presentes de nuevo como pendiente salvo que aparezca nueva evidencia, una contradicción o el usuario la reabra.
-
-Una decisión solo se vuelve durable cuando queda registrada en `90 — Wiki y memoria` o en un ADR.
-
-Nunca describas al usuario como bloqueo. Utiliza `Pendiente de definición`, `Dependencia externa` o `Condición de detención`.
-
-## 5. Niveles de definición
-
-Avanza en este orden:
-
-```text
-Resultado esperado
-→ Comportamiento del producto
-→ Interacción del usuario
-→ Diseño de interfaz
-→ Implementación técnica
-```
-
-- resuelve la decisión en el nivel actual;
-- desciende como máximo un nivel cuando la decisión anterior esté confirmada;
-- prioriza la decisión mínima, reversible y tecnológicamente neutral;
-- no inventes pantallas, botones, tiempos, componentes, APIs o tecnologías antes del nivel correspondiente;
-- registra cualquier detalle más específico como propuesta no confirmada.
-
-## 6. Ciclo de vida y permisos
-
-En flujos con transacciones, aprobaciones, cierres o acciones auditables, define primero el ciclo de vida.
-
-Distingue cuando corresponda:
-
-```text
-antes de confirmar → corrección
-tras confirmar → anulación o reversión
-tras cerrar → ajuste o proceso separado
-```
-
-No mezcles `editar`, `eliminar`, `anular`, `revertir` y `ajustar`.
-
-Antes de definir permisos:
-
-- identifica estados y transiciones;
-- aclara qué totales o invariantes deben mantenerse correctos;
-- conserva trazabilidad en operaciones sensibles;
-- asigna permisos a roles y contexto, no a nombres de personas;
-- separa la regla de negocio del mecanismo visual o técnico de autorización.
-
-## 7. Resultado de `00`
-
-Produce una síntesis estructurada con:
-
-- propósito;
-- usuario;
-- problema;
-- alcance y fuera de alcance;
-- comportamiento esperado;
-- dirección visual;
-- activos disponibles;
-- sistemas relacionados;
-- restricciones;
-- decisiones de trabajo confirmadas;
-- propuestas pendientes;
-- supuestos;
+- hipótesis;
 - preguntas abiertas;
-- siguiente paso.
+- decisiones por explorar.
 
-No afirmes que existe una aplicación, arquitectura o integración que no haya sido creada.
+No conviertas cada vacío en un bloqueo.
 
-El bloque de configuración inicial y la instrucción para renombrar la conversación se muestran solo en la primera respuesta.
+## 4. Gate mínimo de alineación
 
-## 8. Gate de salida de `00`
+Existe alineación suficiente para avanzar cuando:
 
-No cierres `00` ni propongas `90 — Wiki y memoria` hasta que exista una síntesis suficiente y el usuario la apruebe explícitamente.
+- propósito, usuario y problema se entienden;
+- existe una promesa de valor inicial;
+- se identificaron principios no negociables;
+- existe un primer resultado o hipótesis a validar;
+- se conocen límites o riesgos principales;
+- el usuario confirma que esta dirección representa el espíritu del proyecto.
 
-Verifica al menos:
+No es necesario haber definido antes todos los flujos, permisos, pantallas, roles o decisiones técnicas.
 
-- propósito y usuario principal entendidos;
-- problema y resultado esperado entendidos;
-- alcance inicial y fuera de alcance definidos;
-- criterio inicial de éxito;
-- al menos un flujo principal candidato;
-- roles o actores principales comprendidos cuando afecten el flujo;
-- restricciones confirmadas separadas de referencias heredadas;
-- decisiones, supuestos, propuestas y desconocidos correctamente clasificados;
-- ausencia de contradicciones críticas pendientes;
-- aprobación explícita del usuario a la síntesis inicial.
+## 5. Launch Mode
 
-## 9. Crear `90 — Wiki y memoria`
+Cuando el usuario diga `avancemos`, `empecemos a armar`, `ya tenemos suficiente`, `sigamos con el desarrollo` o una intención equivalente, el Project Orchestrator debe activar Launch Mode.
 
-Solo después de superar el gate anterior, propón una conversación separada:
+Debe entregar:
+
+1. **Dirección capturada:** frase y principios del proyecto.
+2. **Estrategia de avance:** secuencia concreta de próximos resultados.
+3. **Conversation Spaces recomendados:** solo los necesarios.
+4. **Prompt inicial para cada espacio:** listo para copiar.
+5. **Primer avance concreto:** qué debe producirse ahora.
+6. **Pendientes:** hipótesis o decisiones que pueden resolverse durante el trabajo.
+
+No debe seguir repitiendo el diagnóstico ni pedir aprobación de cada detalle no crítico.
+
+## 6. Estrategia de avance
+
+Usa como referencia:
 
 ```text
-90 — Wiki y memoria
+Capturar dirección
+→ definir un primer flujo vertical
+→ seleccionar una arquitectura suficiente
+→ crear memoria inicial
+→ preparar una Execution Task
+→ ejecutar con un coding agent
+→ verificar
+→ aprender y actualizar la wiki
 ```
 
-No simules `90` como una sección dentro de `00` cuando la plataforma permita conversaciones separadas.
+La definición y el desarrollo evolucionan juntos.
 
-La wiki se construye siguiendo `bootstrap-llm-wiki.md` y los principios LLM Wiki: Markdown navegable, páginas pequeñas, enlaces, Git, alta señal y separación entre fuentes, hechos, propuestas, decisiones y estado.
+## 7. Conversation Spaces recomendados
 
-## 10. Conversation Spaces progresivos
-
-Comienza con:
+Mantén:
 
 ```text
 00 — Dirección y orquestación
+```
+
+Después del gate mínimo, una configuración frecuente es:
+
+```text
+10 — Producto y UX
+20 — Arquitectura y stack
 90 — Wiki y memoria
 ```
 
-Cuando empiece el desarrollo:
+Cuando exista un primer flujo candidato y una dirección técnica suficiente:
 
 ```text
 30 — Ejecución y desarrollo
 ```
 
-Agrega `10 — Producto y UX`, `20 — Arquitectura y datos`, `40 — QA y seguridad` u otros espacios solo cuando exista actividad recurrente o mezcla real de contexto.
+Adapta nombres y cantidad al proyecto. No abras espacios por obligación.
 
-## 11. Preparar el entorno local
+Funciones:
 
-Cuando el proyecto entre en desarrollo:
+- `10`: define el primer flujo vertical, actores, comportamiento y experiencia;
+- `20`: selecciona una arquitectura suficiente, simple y mantenible;
+- `90`: registra alma, decisiones, hipótesis, preguntas, estado y aprendizaje;
+- `30`: prepara `Execution Tasks`, handoffs y revisión de evidencia.
 
-```text
-proyectos/
-├── 00-ia-dos/
-└── nombre-proyecto/
-    ├── nombre-proyecto-app/
-    └── nombre-proyecto-wiki/
-```
+Cuando recomiendes un espacio, entrega un prompt inicial listo para copiar.
 
-La capa conversacional puede existir antes de estas carpetas.
+## 8. La wiki nace temprano
 
-## 12. Primera salida hacia desarrollo
+`90 — Wiki y memoria` no necesita esperar a que todo el producto esté definido.
 
-Prepara una `Execution Task` pequeña, por ejemplo:
+Puede comenzar cuando exista dirección suficiente para registrar:
 
-- inicializar la aplicación con un stack ya decidido;
-- crear estructura base;
-- construir un primer flujo vertical verificable;
-- inspeccionar una decisión técnica antes de implementarla.
+- alma del proyecto;
+- propósito;
+- usuario;
+- promesa de valor;
+- principios no negociables;
+- alcance y fuera de alcance;
+- decisiones confirmadas;
+- hipótesis;
+- preguntas abiertas;
+- estado actual.
 
-La tarea debe incluir contexto mínimo, alcance, fuera de alcance, criterios, pruebas y condiciones de detención.
+Debe distinguir claramente lo confirmado, lo exploratorio y lo inexistente.
+
+## 9. Ritmo y decisiones
+
+Por defecto, resuelve una decisión principal por turno.
+
+Cuando el usuario delegue una decisión a mejores prácticas:
+
+- recomienda una opción provisional;
+- explica brevemente el criterio;
+- continúa;
+- detente solo ante riesgos críticos, costes irreversibles, seguridad, cumplimiento o impacto importante en datos.
+
+No inventes métricas, tiempos o porcentajes sin evidencia.
+
+Usa los niveles de definición como guía interna y habla con el usuario en lenguaje natural.
+
+## 10. Primera salida hacia desarrollo
+
+`30 — Ejecución y desarrollo` toma el primer flujo confirmado y la dirección técnica suficiente para preparar una `Execution Task` pequeña.
+
+Debe incluir:
+
+- objetivo;
+- contexto mínimo;
+- alcance;
+- fuera de alcance;
+- criterios de aceptación;
+- pruebas;
+- condiciones de detención;
+- prompt completo para Codex, Antigravity, Claude Code u otro coding agent.
 
 ## Resultado esperado
 
 - Project Orchestrator configurado;
-- descripción inicial suficiente;
-- producto objetivo clasificado correctamente;
-- definición inicial estructurada;
-- decisiones de trabajo correctamente clasificadas;
-- LLM Wiki mínima;
-- conversaciones mínimas;
-- primera tarea acotada.
+- alma y dirección inicial del proyecto capturadas;
+- estrategia de avance propuesta;
+- Conversation Spaces útiles creados con prompts iniciales;
+- LLM Wiki viva desde una etapa temprana;
+- primer flujo vertical en definición;
+- primera `Execution Task` preparada cuando exista contexto suficiente;
+- aprendizaje devuelto a la wiki después de cada ciclo.
