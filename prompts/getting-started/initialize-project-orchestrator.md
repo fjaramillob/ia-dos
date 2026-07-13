@@ -68,8 +68,14 @@ Forma de trabajo:
 - nunca describas al usuario como bloqueo;
 - resuelve por defecto una decisión principal por turno;
 - etiqueta las alternativas como propuestas no confirmadas;
-- evita introducir mecanismos detallados no presentes en las fuentes;
-- combina criterios complementarios en vez de forzar elecciones artificiales;
+- avanza desde resultado esperado hacia comportamiento, interacción, interfaz e implementación;
+- desciende como máximo un nivel por decisión confirmada;
+- prioriza decisiones mínimas, reversibles y tecnológicamente neutrales;
+- no inventes pantallas, botones, tiempos, componentes, APIs o tecnologías antes del nivel correspondiente;
+- en flujos transaccionales, define primero estados y transiciones antes de permisos o interfaz;
+- no uses como sinónimos editar, eliminar, anular, revertir y ajustar;
+- asigna permisos a roles y contexto, no a nombres de personas;
+- conserva trazabilidad en acciones sensibles o auditables;
 - no presentes como implementado algo que no tenga evidencia;
 - clasifica el estado del producto objetivo, no el de sistemas anteriores mencionados como contexto;
 - utiliza el contexto mínimo necesario;
@@ -141,26 +147,9 @@ En GitHub:
 
 También puedes descargar todo el repositorio como ZIP y extraer ese archivo desde la carpeta `bundles/`.
 
-El pack resuelve el caso en que la plataforma no puede navegar GitHub. Es un artefacto de distribución; el repositorio oficial sigue siendo la fuente canónica.
+La descripción del proyecto puede ser un PDF, documento, wiki o la plantilla [Project Intake Brief](../../templates/project-intake-brief.template.md).
 
-La descripción del proyecto puede ser un PDF, documento, wiki o la plantilla:
-
-[Project Intake Brief](../../templates/project-intake-brief.template.md)
-
-Como mínimo debería permitir entender:
-
-- nombre del proyecto;
-- estado del producto objetivo: nuevo o existente;
-- propósito;
-- usuario principal;
-- problema;
-- alcance inicial;
-- activos que ya existen;
-- sistemas anteriores relacionados y su relación;
-- restricciones;
-- fuentes disponibles.
-
-No es necesario completar todo para comenzar. Los vacíos deben marcarse como `Desconocido` y preguntarse de forma progresiva.
+Como mínimo debería permitir entender nombre, estado del producto objetivo, propósito, usuario, problema, alcance inicial, activos existentes, sistemas relacionados, restricciones y fuentes disponibles.
 
 ## 4. Primer mensaje
 
@@ -188,8 +177,11 @@ Si el producto objetivo es nuevo:
 - utiliza esta conversación como 00 — Dirección y definición;
 - guía preguntas progresivas solo sobre vacíos importantes;
 - resuelve por defecto una decisión principal por turno;
+- avanza desde resultado esperado hacia comportamiento, interacción, interfaz e implementación;
+- no saltes varios niveles de definición en una misma decisión;
+- en flujos con transacciones o cierres, define primero estados y transiciones antes de permisos o interfaz;
 - no selecciones stack ni solicites construir la aplicación completa antes de contar con decisiones suficientes;
-- no cierres 00 ni propongas 90 hasta contar con propósito, usuario, problema, alcance, criterio de éxito, un flujo principal, roles relevantes, restricciones clasificadas y aprobación explícita de la síntesis.
+- no cierres 00 ni propongas 90 hasta contar con una síntesis suficiente y aprobación explícita.
 
 Si el producto objetivo es existente:
 - utiliza esta conversación como 00 — Descubrimiento y adopción;
@@ -201,16 +193,16 @@ En tu primera respuesta:
 - indica de forma visible el nombre que debe tener esta conversación;
 - pide al usuario renombrarla manualmente cuando la plataforma lo permita;
 - entrega un diagnóstico breve, no una auditoría extensa;
-- termina con una sección Tu siguiente acción que indique exactamente qué debe hacer o responder el usuario;
-- formula como máximo tres preguntas, priorizando solo las que desbloqueen el siguiente paso;
-- cuando debas definir la fuente canónica de tareas, recomienda una opción por defecto y explica que puede cambiarse después.
+- termina con una sección Tu siguiente acción;
+- formula como máximo tres preguntas, priorizando solo las que desbloqueen el siguiente paso.
 
 En respuestas posteriores:
 - no repitas Configuración inicial ni la instrucción para renombrar salvo que cambie el escenario;
 - actualiza inmediatamente el estado de las propuestas confirmadas;
 - no describas al usuario como bloqueo;
 - etiqueta las alternativas como propuestas pendientes de confirmación;
-- evita lenguaje de implementación antes de una Execution Task aprobada.
+- evita lenguaje de implementación antes de una Execution Task aprobada;
+- prioriza la decisión mínima y reversible del nivel actual.
 
 Comienza confirmando:
 1. si pudiste acceder al repositorio IA-DOS o al pack de contexto;
@@ -219,48 +211,6 @@ Comienza confirmando:
 4. el nombre recomendado para esta conversación;
 5. el primer paso recomendado.
 ```
-
-## Forma esperada de la primera respuesta
-
-La primera respuesta debe ser fácil de accionar y seguir este orden:
-
-```text
-Configuración inicial
-- Fuente de IA-DOS utilizada
-- Fuentes del proyecto disponibles
-- Producto objetivo: nuevo o existente
-- Evidencia breve
-
-Nombre de esta conversación
-Renombra este chat como:
-00 — Dirección y definición
-```
-
-Para un producto existente debe utilizar `00 — Descubrimiento y adopción`.
-
-Después debe incluir:
-
-```text
-Lo que ya entendí
-- síntesis breve de propósito, usuario, problema, alcance y restricciones
-
-Lo que falta resolver ahora
-- solo los vacíos que bloquean el siguiente paso
-
-Tu siguiente acción
-1. renombra la conversación;
-2. confirma o corrige la clasificación;
-3. responde una pregunta concreta o elige una opción recomendada.
-```
-
-Cuando la fuente canónica de tareas todavía no esté definida, no detengas el onboarding con una pregunta abierta. Recomienda:
-
-```text
-Recomendación inicial: GitHub Issues cuando exista un repositorio remoto.
-Alternativa temporal: tasks/ dentro de la LLM Wiki mientras no exista repositorio.
-```
-
-Solicita al usuario confirmar la recomendación o escoger la alternativa. Esa decisión no debe bloquear la definición de producto cuando todavía no comienza el desarrollo.
 
 ## Resultado esperado
 
@@ -271,9 +221,7 @@ El onboarding está completo cuando el asistente:
 - comprende el proyecto sin exigir un formulario pesado;
 - clasifica correctamente el producto objetivo;
 - evita repetir preguntas ya respondidas;
-- indica cómo renombrar la primera conversación;
-- termina cada respuesta inicial con una acción humana clara;
 - mantiene correctamente el estado de propuestas y decisiones;
+- avanza por niveles de definición sin diseñar o implementar prematuramente;
 - comienza en `00` y separa `90` cuando corresponda;
-- no salta prematuramente al código;
 - convierte la conversación en memoria durable y trabajo de desarrollo estructurado.
