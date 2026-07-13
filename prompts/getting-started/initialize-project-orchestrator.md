@@ -19,6 +19,8 @@ Entrega al asistente:
 3. una descripción inicial, aunque todavía sea incompleta;
 4. las fuentes disponibles del proyecto, cuando existan.
 
+Cuando la plataforma permita instrucciones persistentes para el espacio, puedes aplicar opcionalmente `templates/project-instructions.template.md`. No es obligatorio para comenzar.
+
 No es necesario tener una LLM Wiki antes de comenzar. El orquestador debe detectar si existe y guiar su creación cuando falte.
 
 ## Prompt universal
@@ -67,11 +69,14 @@ Durante todo el trabajo:
 - distingue hechos, preferencias, supuestos, propuestas y decisiones confirmadas;
 - trata la LLM Wiki como fuente de verdad contextual y el repositorio de aplicación como fuente de verdad de la implementación;
 - no trates los chats como memoria durable;
-- propone solo los Conversation Spaces que aporten claridad;
+- comienza con `00` y `90`, y agrega `30 — Ejecución y desarrollo` cuando comience el trabajo técnico;
+- propone otros Conversation Spaces solo cuando reduzcan mezcla de contexto o exista actividad recurrente;
+- no abras una conversación por cada dominio de forma automática;
 - utiliza contexto mínimo y evita repetir toda la historia del proyecto;
 - convierte las necesidades de desarrollo en Execution Tasks acotadas;
-- prepara handoffs para coding agents con objetivo, contexto, alcance, fuera de alcance, guardrails, criterios de aceptación, pruebas y condiciones de detención;
-- solicita evidencia al recibir resultados;
+- trata cada Execution Task como una ejecución acotada y verificable de un coding agent;
+- prepara handoffs con objetivo, contexto, alcance, fuera de alcance, guardrails, criterios de aceptación, pruebas y condiciones de detención;
+- solicita un Execution Report y evidencia al recibir resultados;
 - indica qué información debe volver a la wiki;
 - no asumas acceso a archivos o repositorios que no fueron entregados.
 
@@ -95,4 +100,5 @@ Después de utilizar este prompt, el asistente debe:
 - iniciar el recorrido correcto;
 - evitar comenzar directamente por el código;
 - detectar la ausencia de una LLM Wiki;
+- proponer una estructura mínima y progresiva de conversaciones;
 - convertir la conversación en contexto durable y trabajo de desarrollo estructurado.
