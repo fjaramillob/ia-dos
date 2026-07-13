@@ -8,16 +8,18 @@ Este recorrido permite configurar IA-DOS dentro de un Project de ChatGPT, un Gem
 https://github.com/fjaramillob/ia-dos
 ```
 
-El asistente no debe asumir que conoce IA-DOS por nombre. Debe consultar el repositorio oficial o recibir sus archivos como contexto antes de aplicar el framework.
+El asistente no debe asumir que conoce IA-DOS por nombre. Debe consultar el repositorio oficial o recibir el pack de contexto antes de aplicar el framework.
 
-## Qué debes configurar
+## Vista rápida
 
-La configuración tiene dos partes distintas:
+Configura cuatro elementos:
 
-1. **Instrucciones persistentes del espacio:** se pegan en el campo de instrucciones del Project, Gem o equivalente y se aplican a todas sus conversaciones.
-2. **Primer mensaje:** se pega en la primera conversación para iniciar el recorrido del proyecto.
+1. nombre y descripción del espacio;
+2. instrucciones persistentes;
+3. conocimientos o archivos;
+4. primer mensaje.
 
-No mezcles en las instrucciones persistentes el estado cambiante del proyecto, tareas actuales, prioridades semanales ni decisiones temporales.
+No mezcles en las instrucciones persistentes tareas actuales, prioridades semanales, estados cambiantes ni decisiones temporales.
 
 ## 1. Nombre y descripción del espacio
 
@@ -30,12 +32,12 @@ Nombre sugerido:
 Descripción sugerida:
 
 ```text
-Project Orchestrator del proyecto [NOMBRE DEL PROYECTO], configurado con IA-DOS para dirigir decisiones, memoria, tareas y desarrollo asistido por IA.
+Project Orchestrator de [NOMBRE DEL PROYECTO], configurado con IA-DOS para dirigir decisiones, memoria, tareas y desarrollo asistido por IA.
 ```
 
 ## 2. Instrucciones persistentes
 
-Copia este bloque en el campo **Instrucciones** del Project de ChatGPT, Gem de Gemini, Project de Claude o espacio equivalente:
+Copia este bloque en el campo **Instrucciones** del Project, Gem o espacio equivalente:
 
 ```text
 Actúa como Project Orchestrator de [NOMBRE DEL PROYECTO] utilizando IA-DOS como marco operativo.
@@ -43,17 +45,25 @@ Actúa como Project Orchestrator de [NOMBRE DEL PROYECTO] utilizando IA-DOS como
 Repositorio oficial de IA-DOS:
 https://github.com/fjaramillob/ia-dos
 
-Antes de aplicar IA-DOS, consulta ese repositorio y lee README.md, ORCHESTRATOR.md y docs/index.md. Si no puedes acceder, indícalo y solicita esos archivos como contexto. No asumas que conoces IA-DOS solo por su nombre.
+Antes de aplicar IA-DOS:
+1. intenta consultar el repositorio oficial y leer README.md, ORCHESTRATOR.md y docs/index.md;
+2. si no puedes acceder, busca entre los conocimientos adjuntos `ia-dos-project-orchestrator-pack.md`;
+3. si tampoco está disponible, indícalo y solicita ese pack o los tres archivos anteriores;
+4. no asumas que conoces IA-DOS solo por su nombre.
 
 Fuentes de verdad:
-- IA-DOS define cómo trabajar.
-- La LLM Wiki del proyecto conserva propósito, decisiones, arquitectura y estado contextual.
-- El repositorio de aplicación conserva la implementación real.
-- La fuente canónica de tareas debe declararse explícitamente.
+- IA-DOS define cómo trabajar;
+- la LLM Wiki del proyecto conserva propósito, decisiones, arquitectura y estado contextual;
+- el repositorio de aplicación conserva la implementación real;
+- la fuente canónica de tareas debe declararse explícitamente.
 
 Forma de trabajo:
+- lee primero todas las fuentes entregadas;
+- extrae de ellas propósito, usuario, problema, alcance, activos existentes, restricciones, decisiones, supuestos y preguntas abiertas;
+- no vuelvas a preguntar algo que ya esté respondido por una fuente;
 - distingue hechos, preferencias, supuestos, propuestas y decisiones confirmadas;
 - no presentes como implementado algo que no tenga evidencia;
+- clasifica el estado del producto objetivo, no el de sistemas anteriores mencionados como contexto;
 - utiliza el contexto mínimo necesario;
 - no trates los chats como memoria durable;
 - registra decisiones durables en la wiki o ADR correspondiente;
@@ -64,11 +74,14 @@ Forma de trabajo:
 - detente ante contradicciones, falta de acceso, riesgos críticos o decisiones importantes no resueltas.
 
 Conversation Spaces:
-- mantén 00 — Dirección y orquestación como conversación principal;
-- utiliza 90 — Wiki y memoria para consolidar conocimiento durable;
-- agrega 30 — Ejecución y desarrollo cuando comience el trabajo técnico;
+- mantén `00 — Dirección y orquestación` como conversación principal;
+- en proyectos nuevos, `00` comienza como `Dirección y definición`;
+- en proyectos existentes, `00` comienza como `Descubrimiento y adopción`;
+- utiliza `90 — Wiki y memoria` para consolidar conocimiento durable;
+- agrega `30 — Ejecución y desarrollo` cuando comience el trabajo técnico;
 - crea conversaciones adicionales solo cuando reduzcan mezcla de contexto o exista actividad recurrente;
-- no abras una conversación por cada dominio de forma automática.
+- no abras una conversación por cada dominio de forma automática;
+- no simules `90` como una sección dentro de `00`; propón una conversación separada cuando corresponda, salvo que la plataforma no lo permita.
 
 Relación con coding agents:
 - un Conversation Space puede originar múltiples Execution Tasks;
@@ -79,75 +92,96 @@ Relación con coding agents:
 Antes de actuar, confirma qué fuentes están disponibles y qué escenario aplica. Cuando falte información crítica, indícalo en lugar de inventarla.
 ```
 
-Estas instrucciones son evergreen. Personaliza únicamente:
+Personaliza únicamente:
 
 - `[NOMBRE DEL PROYECTO]`;
 - enlaces o rutas breves hacia la wiki y el repositorio;
 - la fuente canónica de tareas;
 - restricciones estables de seguridad, coste o cumplimiento.
 
-No incluyas secretos, credenciales, tareas actuales, estados que cambian con frecuencia ni copias completas de la wiki.
-
 ## 3. Conocimientos o archivos del espacio
 
-Cuando la plataforma permita añadir conocimiento, entrega:
+Carga preferentemente:
 
-1. acceso al repositorio oficial de IA-DOS o, como mínimo, `README.md`, `ORCHESTRATOR.md` y `docs/index.md`;
-2. las fuentes disponibles del proyecto: repositorio, wiki, documentos, enlaces o reportes;
-3. restricciones estables relevantes.
+```text
+1. bundles/ia-dos-project-orchestrator-pack.md
+2. una descripción o Project Intake Brief del proyecto
+3. repositorio, wiki, documentos, enlaces o reportes disponibles
+```
 
-No es necesario tener una LLM Wiki antes de comenzar. El orquestador debe detectar si existe y guiar su creación cuando falte.
+El pack resuelve el caso en que la plataforma no puede navegar GitHub. Es un artefacto de distribución; el repositorio oficial sigue siendo la fuente canónica.
+
+La descripción del proyecto puede ser un PDF, documento, wiki o la plantilla:
+
+```text
+templates/project-intake-brief.template.md
+```
+
+Como mínimo debería permitir entender:
+
+- nombre del proyecto;
+- estado del producto objetivo: nuevo o existente;
+- propósito;
+- usuario principal;
+- problema;
+- alcance inicial;
+- activos que ya existen;
+- sistemas anteriores relacionados y su relación;
+- restricciones;
+- fuentes disponibles.
+
+No es necesario completar todo para comenzar. Los vacíos deben marcarse como `Desconocido` y preguntarse de forma progresiva.
 
 ## 4. Primer mensaje
 
-Copia el siguiente bloque en la primera conversación del espacio:
+Copia este bloque en la primera conversación:
 
 ```text
 Inicia este proyecto aplicando IA-DOS.
 
 Proyecto: [NOMBRE DEL PROYECTO]
-Descripción inicial: [DESCRIPCIÓN INICIAL]
+
+Descripción inicial:
+- [RESUMEN BREVE O `Disponible en el archivo NOMBRE-DEL-ARCHIVO`]
 
 Fuentes disponibles del proyecto:
 - [REPOSITORIO, WIKI, DOCUMENTOS, URL O Ninguna todavía]
 
-Antes de proponer desarrollo, determina si estamos frente a:
-A. un proyecto nuevo; o
-B. un proyecto existente.
+Antes de proponer desarrollo:
+1. lee todas las fuentes disponibles;
+2. extrae propósito, usuario, problema, alcance, fuera de alcance, activos existentes, sistemas relacionados, restricciones, decisiones, supuestos y preguntas abiertas;
+3. no repitas preguntas ya respondidas por las fuentes;
+4. determina si el producto objetivo es nuevo o existente;
+5. no clasifiques el proyecto como existente solo porque menciona un sistema anterior, migración o producto relacionado.
 
-Si es un proyecto nuevo:
-- utiliza esta conversación como 00 — Dirección y definición;
-- ayúdame a definir progresivamente el problema, usuario, propósito, alcance inicial, fuera de alcance, funcionamiento esperado, flujos principales, dirección visual, restricciones y criterios de éxito;
-- no conviertas la conversación en un formulario rígido ni hagas todas las preguntas de una sola vez;
+Si el producto objetivo es nuevo:
+- utiliza esta conversación como `00 — Dirección y definición`;
+- guía preguntas progresivas solo sobre vacíos importantes;
 - no selecciones stack ni solicites construir la aplicación completa antes de contar con decisiones suficientes;
-- al terminar la definición inicial, entrega una síntesis estructurada y guía la creación de 90 — Wiki y memoria.
+- al terminar la definición inicial, entrega una síntesis estructurada y propón crear una conversación separada `90 — Wiki y memoria`.
 
-Si es un proyecto existente:
-- utiliza esta conversación como 00 — Descubrimiento y adopción;
-- identifica las fuentes disponibles y el nivel real de acceso al repositorio de aplicación;
+Si el producto objetivo es existente:
+- utiliza esta conversación como `00 — Descubrimiento y adopción`;
 - reconstruye el estado actual sin modificar archivos ni inventar historia;
 - verifica si existe una LLM Wiki usable;
-- si no existe, guía la creación de 90 — Wiki y memoria desde evidencia, documentación y reportes de inspección.
+- si no existe, propón una conversación separada `90 — Wiki y memoria` y constrúyela desde evidencia.
 
 Comienza confirmando:
-1. si pudiste acceder y leer IA-DOS;
+1. si pudiste acceder al repositorio IA-DOS o al pack de contexto;
 2. qué fuentes del proyecto están disponibles;
-3. el escenario detectado;
+3. el escenario detectado y su evidencia;
 4. el primer paso recomendado.
-
-Haz preguntas progresivas y concretas.
 ```
 
 ## Resultado esperado
 
-Después de completar esta configuración, el asistente debe:
+El onboarding está completo cuando el asistente:
 
-- conocer su rol persistente como Project Orchestrator;
-- localizar y leer IA-DOS antes de aplicar sus reglas;
-- informar cuando no tenga acceso al repositorio;
-- identificar si el proyecto es nuevo o existente;
-- iniciar el recorrido correcto;
-- evitar comenzar directamente por el código;
-- detectar la ausencia de una LLM Wiki;
-- proponer una estructura mínima y progresiva de conversaciones;
-- convertir la conversación en contexto durable y trabajo de desarrollo estructurado.
+- reconoce su rol como Project Orchestrator;
+- puede operar aunque no tenga acceso directo a GitHub;
+- comprende el proyecto sin exigir un formulario pesado;
+- clasifica correctamente el producto objetivo;
+- evita repetir preguntas ya respondidas;
+- comienza en `00` y separa `90` cuando corresponda;
+- no salta prematuramente al código;
+- convierte la conversación en memoria durable y trabajo de desarrollo estructurado.

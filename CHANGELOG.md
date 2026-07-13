@@ -15,8 +15,13 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - instrucciones para el `Project Orchestrator`;
 - prompt universal de inicialización del orquestador;
 - plantilla opcional de instrucciones persistentes para Projects, Gems y espacios equivalentes;
+- `Project Intake Brief` para entregar contexto inicial sin formularios pesados;
+- `IA-DOS Project Orchestrator Pack` para plataformas sin acceso directo a GitHub;
 - estructura progresiva de Conversation Spaces con núcleo mínimo y dominios opcionales;
 - regla explícita `1 Execution Task → 1 ejecución acotada → 1 Execution Report`;
+- clasificación basada en el producto objetivo y no en sistemas anteriores relacionados;
+- separación explícita entre `00` y `90` cuando la plataforma permite varias conversaciones;
+- principios LLM Wiki inspirados en la propuesta de Andrej Karpathy;
 - recorridos iniciales para proyectos nuevos y existentes;
 - guía inicial de construcción de la LLM Wiki;
 - guía de preparación del workspace local;

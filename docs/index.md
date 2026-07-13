@@ -2,6 +2,16 @@
 
 Esta documentación explica cómo utilizar IA-DOS para ordenar proyectos de software desarrollados con asistentes conversacionales y coding agents.
 
+## Empieza aquí
+
+Para una primera adopción:
+
+1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
+2. Carga [IA-DOS Project Orchestrator Pack](../bundles/ia-dos-project-orchestrator-pack.md) cuando la plataforma no pueda navegar GitHub.
+3. Entrega una descripción del proyecto o usa [Project Intake Brief](../templates/project-intake-brief.template.md).
+4. Sigue el recorrido de [proyecto nuevo](getting-started/new-project-from-conversation.md) o [proyecto existente](getting-started/adopt-existing-project-from-conversation.md).
+5. Crea o revisa la [LLM Wiki](getting-started/bootstrap-llm-wiki.md).
+
 ## Fundamentos
 
 - [Propósito y alcance](foundations/purpose-and-scope.md)
@@ -20,40 +30,38 @@ Esta documentación explica cómo utilizar IA-DOS para ordenar proyectos de soft
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
 - [Prompt para inicializar el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md)
+- [Pack para plataformas sin acceso al repositorio](../bundles/ia-dos-project-orchestrator-pack.md)
 - [Plantilla opcional de instrucciones persistentes](../templates/project-instructions.template.md)
-
-Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda cómo debe coordinar conversaciones, wiki, tareas y coding agents. La plantilla de instrucciones persistentes es opcional y se utiliza solo cuando la plataforma permite configurar reglas propias del Project, Gem o espacio equivalente.
 
 ## Primeros pasos
 
-- [Iniciar un proyecto nuevo desde la capa conversacional](getting-started/new-project-from-conversation.md)
-- [Adoptar un proyecto existente desde la capa conversacional](getting-started/adopt-existing-project-from-conversation.md)
-- [Crear la LLM Wiki del proyecto](getting-started/bootstrap-llm-wiki.md)
+- [Iniciar un proyecto nuevo](getting-started/new-project-from-conversation.md)
+- [Adoptar un proyecto existente](getting-started/adopt-existing-project-from-conversation.md)
+- [Crear la LLM Wiki](getting-started/bootstrap-llm-wiki.md)
 - [Preparar el workspace local](getting-started/workspace-setup.md)
-- [Instalar IA-DOS en el workspace](getting-started/install-ia-dos.md)
-- [Crear un proyecto nuevo dentro del workspace](getting-started/create-new-project-workspace.md)
-- [Incorporar un proyecto existente al workspace](getting-started/incorporate-existing-project-workspace.md)
-- [Aplicar las plantillas mínimas de adopción](getting-started/apply-starter-templates.md)
-- [Preparar y revisar el handoff de ejecución](getting-started/execution-handoff.md)
+- [Instalar IA-DOS](getting-started/install-ia-dos.md)
+- [Crear un proyecto nuevo en el workspace](getting-started/create-new-project-workspace.md)
+- [Incorporar un proyecto existente](getting-started/incorporate-existing-project-workspace.md)
+- [Aplicar plantillas mínimas](getting-started/apply-starter-templates.md)
+- [Preparar y revisar el handoff](getting-started/execution-handoff.md)
 
 ## Prompts operativos
 
 - [Instalar IA-DOS con un agente](../prompts/getting-started/install-ia-dos.md)
-- [Crear un proyecto nuevo dentro del workspace](../prompts/getting-started/create-new-project-workspace.md)
-- [Incorporar un proyecto existente al workspace](../prompts/getting-started/incorporate-existing-project-workspace.md)
+- [Crear un proyecto nuevo](../prompts/getting-started/create-new-project-workspace.md)
+- [Incorporar un proyecto existente](../prompts/getting-started/incorporate-existing-project-workspace.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
 
 ## Plantillas
 
+- [Project Intake Brief](../templates/project-intake-brief.template.md)
 - [Manifiesto de adopción](../templates/adoption.template.yaml)
 - [AGENTS.md para la app](../templates/AGENTS.template.md)
-- [Instrucciones persistentes del Project Orchestrator](../templates/project-instructions.template.md)
+- [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Wiki inicial](../templates/wiki-starter/)
 - [Execution Task](../templates/execution-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
 
-Las plantillas y guías actuales cubren el recorrido desde la adopción inicial hasta el retorno de evidencia desde un coding agent. La validación práctica completa todavía forma parte de `v0.1.0-alpha.1`.
+## Estado
 
-## Estado de la documentación
-
-IA-DOS está en fase alpha. Los documentos actuales definen la base conceptual, el recorrido conversacional, la preparación del workspace, la adopción formal, las plantillas mínimas y el handoff inicial de ejecución. Todavía no constituyen una versión estable.
+IA-DOS está en fase alpha. La validación práctica completa del onboarding, la wiki y el ciclo de ejecución sigue en curso.
