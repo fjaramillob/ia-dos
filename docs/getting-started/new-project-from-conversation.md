@@ -44,7 +44,27 @@ Distingue hechos, preferencias, supuestos, propuestas y decisiones. No repitas p
 
 No selecciones stack ni pidas construir la aplicación completa antes de contar con decisiones suficientes.
 
-## 4. Resultado de `00`
+## 4. Ritmo y gestión de decisiones
+
+Por defecto, resuelve una decisión principal por turno.
+
+Cuando propongas alternativas:
+
+- márcalas como propuestas no confirmadas;
+- explica brevemente sus efectos;
+- evita inventar mecanismos detallados no presentes en las fuentes;
+- combina criterios complementarios en vez de forzar elecciones artificiales;
+- ofrece una recomendación simple cuando ayude al usuario.
+
+Cuando el usuario confirme una propuesta, reclasifícala como `Decisión de trabajo confirmada en conversación`.
+
+No la presentes de nuevo como pendiente salvo que aparezca nueva evidencia, una contradicción o el usuario la reabra.
+
+Una decisión solo se vuelve durable cuando queda registrada en `90 — Wiki y memoria` o en un ADR.
+
+Nunca describas al usuario como bloqueo. Utiliza `Pendiente de definición`, `Dependencia externa` o `Condición de detención`.
+
+## 5. Resultado de `00`
 
 Produce una síntesis estructurada con:
 
@@ -57,16 +77,36 @@ Produce una síntesis estructurada con:
 - activos disponibles;
 - sistemas relacionados;
 - restricciones;
-- decisiones;
+- decisiones de trabajo confirmadas;
+- propuestas pendientes;
 - supuestos;
 - preguntas abiertas;
 - siguiente paso.
 
 No afirmes que existe una aplicación, arquitectura o integración que no haya sido creada.
 
-## 5. Crear `90 — Wiki y memoria`
+El bloque de configuración inicial y la instrucción para renombrar la conversación se muestran solo en la primera respuesta.
 
-Cuando la definición sea suficiente, propón una conversación separada:
+## 6. Gate de salida de `00`
+
+No cierres `00` ni propongas `90 — Wiki y memoria` hasta que exista una síntesis suficiente y el usuario la apruebe explícitamente.
+
+Verifica al menos:
+
+- propósito y usuario principal entendidos;
+- problema y resultado esperado entendidos;
+- alcance inicial y fuera de alcance definidos;
+- criterio inicial de éxito;
+- al menos un flujo principal candidato;
+- roles o actores principales comprendidos cuando afecten el flujo;
+- restricciones confirmadas separadas de referencias heredadas;
+- decisiones, supuestos, propuestas y desconocidos correctamente clasificados;
+- ausencia de contradicciones críticas pendientes;
+- aprobación explícita del usuario a la síntesis inicial.
+
+## 7. Crear `90 — Wiki y memoria`
+
+Solo después de superar el gate anterior, propón una conversación separada:
 
 ```text
 90 — Wiki y memoria
@@ -76,7 +116,7 @@ No simules `90` como una sección dentro de `00` cuando la plataforma permita co
 
 La wiki se construye siguiendo `bootstrap-llm-wiki.md` y los principios LLM Wiki: Markdown navegable, páginas pequeñas, enlaces, Git, alta señal y separación entre fuentes, hechos, propuestas, decisiones y estado.
 
-## 6. Conversation Spaces progresivos
+## 8. Conversation Spaces progresivos
 
 Comienza con:
 
@@ -93,7 +133,7 @@ Cuando empiece el desarrollo:
 
 Agrega `10 — Producto y UX`, `20 — Arquitectura y datos`, `40 — QA y seguridad` u otros espacios solo cuando exista actividad recurrente o mezcla real de contexto.
 
-## 7. Preparar el entorno local
+## 9. Preparar el entorno local
 
 Cuando el proyecto entre en desarrollo:
 
@@ -107,7 +147,7 @@ proyectos/
 
 La capa conversacional puede existir antes de estas carpetas.
 
-## 8. Primera salida hacia desarrollo
+## 10. Primera salida hacia desarrollo
 
 Prepara una `Execution Task` pequeña, por ejemplo:
 
@@ -124,6 +164,7 @@ La tarea debe incluir contexto mínimo, alcance, fuera de alcance, criterios, pr
 - descripción inicial suficiente;
 - producto objetivo clasificado correctamente;
 - definición inicial estructurada;
+- decisiones de trabajo correctamente clasificadas;
 - LLM Wiki mínima;
 - conversaciones mínimas;
 - primera tarea acotada.
