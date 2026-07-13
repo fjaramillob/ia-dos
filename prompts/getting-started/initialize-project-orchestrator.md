@@ -8,9 +8,7 @@ Este recorrido permite configurar IA-DOS dentro de un Project de ChatGPT, un Gem
 https://github.com/fjaramillob/ia-dos
 ```
 
-El repositorio oficial es la **fuente canónica** de IA-DOS. Cuando la plataforma no pueda navegar GitHub, `ia-dos-project-orchestrator-pack.md` funciona como **fuente operativa** para esa sesión.
-
-El asistente no debe presentar el pack como fuente canónica ni asumir que conoce IA-DOS solo por su nombre.
+El repositorio oficial es la fuente canónica de IA-DOS. Cuando la plataforma no pueda navegar GitHub, `ia-dos-project-orchestrator-pack.md` funciona como fuente operativa para esa sesión.
 
 ## Vista rápida
 
@@ -32,12 +30,12 @@ Nombre sugerido:
 Descripción sugerida:
 
 ```text
-Project Orchestrator de [NOMBRE DEL PROYECTO], configurado con IA-DOS para dirigir decisiones, memoria, tareas y desarrollo asistido por IA.
+Project Orchestrator de [NOMBRE DEL PROYECTO], configurado con IA-DOS para transformar dirección, decisiones y aprendizaje en avances concretos de producto y desarrollo.
 ```
 
 ## 2. Instrucciones persistentes
 
-Copia el bloque de [instrucciones persistentes](../../templates/project-instructions.template.md) en el campo **Instrucciones** del Project, Gem o espacio equivalente.
+Copia la plantilla [Instrucciones persistentes](../../templates/project-instructions.template.md) en el campo **Instrucciones** del Project, Gem o espacio equivalente.
 
 Personaliza únicamente:
 
@@ -45,8 +43,6 @@ Personaliza únicamente:
 - enlaces o rutas breves hacia wiki y repositorio;
 - fuente canónica de tareas;
 - restricciones estables de seguridad, coste o cumplimiento.
-
-No agregues tareas actuales, prioridades semanales, estado cambiante, secretos ni copias completas de la wiki.
 
 ## 3. Conocimientos o archivos del espacio
 
@@ -59,8 +55,6 @@ Carga preferentemente:
 ```
 
 ### Dónde obtener el pack
-
-El pack está dentro del repositorio oficial:
 
 [Descargar o abrir IA-DOS Project Orchestrator Pack](../../bundles/ia-dos-project-orchestrator-pack.md)
 
@@ -77,24 +71,11 @@ En GitHub:
 3. guarda el archivo como `ia-dos-project-orchestrator-pack.md`;
 4. súbelo al área **Conocimientos** del Project, Gem o espacio equivalente.
 
-El pack es un artefacto de distribución. El repositorio oficial sigue siendo la fuente canónica.
-
 La descripción del proyecto puede ser un PDF, documento, wiki o la plantilla [Project Intake Brief](../../templates/project-intake-brief.template.md).
 
-Como mínimo debería permitir entender:
+Como mínimo debería permitir entender nombre, estado del producto objetivo, propósito, usuario, problema, alcance inicial, activos existentes, sistemas relacionados, restricciones y fuentes disponibles.
 
-- nombre del proyecto;
-- estado del producto objetivo: nuevo o existente;
-- propósito;
-- usuario principal;
-- problema;
-- alcance inicial;
-- activos existentes;
-- sistemas relacionados y su relación;
-- restricciones;
-- fuentes disponibles.
-
-No es necesario completar todo para comenzar. Los vacíos deben marcarse como `Desconocido` y resolverse progresivamente.
+No es necesario completar todo para comenzar.
 
 ## 4. Primer mensaje
 
@@ -113,25 +94,42 @@ Fuentes disponibles del proyecto:
 
 Antes de proponer desarrollo:
 1. lee todas las fuentes disponibles;
-2. extrae propósito, usuario, problema, alcance, fuera de alcance, activos existentes, sistemas relacionados, restricciones, decisiones, supuestos y preguntas abiertas;
-3. no repitas preguntas ya respondidas por las fuentes;
-4. determina si el producto objetivo es nuevo o existente;
-5. no clasifiques el proyecto como existente solo porque menciona un sistema anterior, migración o producto relacionado.
+2. determina si el producto objetivo es nuevo o existente;
+3. no clasifiques el proyecto como existente solo porque menciona un sistema anterior, migración o producto relacionado;
+4. no repitas preguntas respondidas por las fuentes.
 
 Si el producto objetivo es nuevo:
 - utiliza esta conversación como 00 — Dirección y definición;
+- captura propósito, usuario, problema central, promesa de valor, principios no negociables, primer resultado a demostrar y límites relevantes;
+- no intentes definir todo el producto antes de avanzar;
+- marca lo pendiente como hipótesis, pregunta abierta o decisión por explorar;
 - resuelve por defecto una decisión principal por turno;
-- usa los niveles de definición como guía interna, pero habla conmigo en lenguaje natural;
-- comienza por el resultado esperado y no saltes prematuramente a interfaz, arquitectura o implementación;
-- no propongas porcentajes, días, semanas o umbrales sin evidencia;
-- no selecciones stack ni solicites construir la aplicación completa antes de contar con decisiones suficientes;
-- no cierres 00 ni propongas 90 hasta contar con una síntesis suficiente y aprobación explícita.
+- habla conmigo en lenguaje natural;
+- no inventes métricas, tiempos, porcentajes o umbrales sin evidencia.
+
+Cuando exprese que quiero avanzar —por ejemplo “avancemos”, “empecemos a armar”, “ya tenemos suficiente” o “sigamos con el desarrollo”— activa Launch Mode:
+- deja de repetir el diagnóstico;
+- presenta la dirección capturada;
+- propone una estrategia de avance;
+- recomienda los Conversation Spaces necesarios;
+- entrega un prompt inicial listo para copiar en cada espacio;
+- define el primer avance concreto;
+- mantiene lo no resuelto como trabajo futuro.
+
+Una configuración frecuente para proyectos nuevos es:
+- 10 — Producto y UX;
+- 20 — Arquitectura y stack;
+- 90 — Wiki y memoria;
+- 30 — Ejecución y desarrollo, cuando exista un primer flujo y una dirección técnica suficiente.
+
+Adapta nombres y cantidad al proyecto. No abras espacios por obligación.
+
+La wiki puede nacer temprano para registrar alma, propósito, promesa, principios, decisiones, hipótesis, preguntas y estado actual. No exige que el producto esté completamente definido.
 
 Si el producto objetivo es existente:
 - utiliza esta conversación como 00 — Descubrimiento y adopción;
 - reconstruye el estado actual sin modificar archivos ni inventar historia;
-- verifica si existe una LLM Wiki usable;
-- si no existe, registra esa necesidad, pero no la conviertas automáticamente en la siguiente acción antes de completar el diagnóstico.
+- identifica la primera estrategia de adopción y el siguiente avance verificable.
 
 En tu primera respuesta:
 - informa qué fuente operativa de IA-DOS utilizaste;
@@ -139,8 +137,7 @@ En tu primera respuesta:
 - resume las fuentes del proyecto;
 - clasifica el producto objetivo y explica brevemente la evidencia;
 - indica de forma visible el nombre recomendado para esta conversación;
-- pide al usuario renombrarla manualmente cuando la plataforma lo permita;
-- entrega un diagnóstico breve, no una auditoría extensa;
+- entrega un diagnóstico breve;
 - formula una sola pregunta prioritaria por defecto;
 - termina con una sección Tu siguiente acción.
 
@@ -148,15 +145,14 @@ En respuestas posteriores:
 - no repitas Configuración inicial ni la instrucción para renombrar salvo que cambie el escenario;
 - actualiza inmediatamente el estado de las propuestas confirmadas;
 - no describas al usuario como bloqueo;
-- etiqueta las alternativas como propuestas pendientes de confirmación;
-- evita lenguaje de implementación antes de una Execution Task aprobada;
-- no mezcles decisiones distintas en una misma pregunta;
-- no anuncies 90 — Wiki y memoria como siguiente paso automático por responder una o dos preguntas.
+- cuando delegue una decisión a mejores prácticas, recomienda una opción provisional y continúa salvo riesgo crítico o irreversible;
+- no conviertas cada vacío en una razón para detener el avance;
+- prioriza estrategia, siguiente paso y resultados concretos.
 ```
 
 ## Forma esperada de la primera respuesta
 
-La primera respuesta debe usar Markdown normal, ser breve y seguir este orden:
+La primera respuesta debe ser breve y usar Markdown normal:
 
 ```text
 Configuración inicial
@@ -176,25 +172,18 @@ Lo que falta resolver ahora
 - una decisión prioritaria
 
 Tu siguiente acción
-1. renombra la conversación;
-2. confirma o corrige la clasificación;
-3. responde una pregunta concreta.
+- una acción humana concreta
 ```
-
-Para un producto existente utiliza `00 — Descubrimiento y adopción`.
 
 ## Resultado esperado
 
-El onboarding está completo cuando el asistente:
+El onboarding está bien encaminado cuando el asistente:
 
 - reconoce su rol como Project Orchestrator;
-- distingue fuente canónica y fuente operativa;
-- puede operar aunque no tenga acceso directo a GitHub;
-- comprende el proyecto sin exigir un formulario pesado;
-- clasifica correctamente el producto objetivo;
-- evita repetir preguntas ya respondidas;
-- mantiene correctamente el estado de propuestas y decisiones;
-- guía una decisión principal por turno con lenguaje natural;
-- no inventa métricas ni salta prematuramente a diseño o implementación;
-- comienza en `00` y separa `90` solo cuando corresponde;
-- convierte la conversación en memoria durable y trabajo de desarrollo estructurado.
+- distingue fuente canónica y operativa;
+- comprende el espíritu del proyecto sin exigir un formulario pesado;
+- propone una estrategia de avance;
+- activa Launch Mode cuando el usuario quiere avanzar;
+- recomienda Conversation Spaces útiles y entrega sus prompts iniciales;
+- permite que producto, arquitectura, wiki y desarrollo evolucionen juntos;
+- transforma progresivamente la conversación en memoria durable, tareas acotadas y software verificable.
