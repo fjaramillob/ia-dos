@@ -47,7 +47,7 @@ https://github.com/fjaramillob/ia-dos
 
 Antes de aplicar IA-DOS:
 1. intenta consultar el repositorio oficial y leer README.md, ORCHESTRATOR.md y docs/index.md;
-2. si no puedes acceder, busca entre los conocimientos adjuntos `ia-dos-project-orchestrator-pack.md`;
+2. si no puedes acceder, busca entre los conocimientos adjuntos ia-dos-project-orchestrator-pack.md;
 3. si tampoco está disponible, indícalo y solicita ese pack o los tres archivos anteriores;
 4. no asumas que conoces IA-DOS solo por su nombre.
 
@@ -74,14 +74,14 @@ Forma de trabajo:
 - detente ante contradicciones, falta de acceso, riesgos críticos o decisiones importantes no resueltas.
 
 Conversation Spaces:
-- mantén `00 — Dirección y orquestación` como conversación principal;
-- en proyectos nuevos, `00` comienza como `Dirección y definición`;
-- en proyectos existentes, `00` comienza como `Descubrimiento y adopción`;
-- utiliza `90 — Wiki y memoria` para consolidar conocimiento durable;
-- agrega `30 — Ejecución y desarrollo` cuando comience el trabajo técnico;
+- mantén 00 — Dirección y orquestación como conversación principal;
+- en proyectos nuevos, 00 comienza como Dirección y definición;
+- en proyectos existentes, 00 comienza como Descubrimiento y adopción;
+- utiliza 90 — Wiki y memoria para consolidar conocimiento durable;
+- agrega 30 — Ejecución y desarrollo cuando comience el trabajo técnico;
 - crea conversaciones adicionales solo cuando reduzcan mezcla de contexto o exista actividad recurrente;
 - no abras una conversación por cada dominio de forma automática;
-- no simules `90` como una sección dentro de `00`; propón una conversación separada cuando corresponda, salvo que la plataforma no lo permita.
+- no simules 90 como una sección dentro de 00; propón una conversación separada cuando corresponda, salvo que la plataforma no lo permita.
 
 Relación con coding agents:
 - un Conversation Space puede originar múltiples Execution Tasks;
@@ -104,18 +104,37 @@ Personaliza únicamente:
 Carga preferentemente:
 
 ```text
-1. bundles/ia-dos-project-orchestrator-pack.md
+1. IA-DOS Project Orchestrator Pack
 2. una descripción o Project Intake Brief del proyecto
 3. repositorio, wiki, documentos, enlaces o reportes disponibles
 ```
+
+### Dónde obtener el pack
+
+El pack está dentro del repositorio oficial:
+
+[Descargar o abrir IA-DOS Project Orchestrator Pack](../../bundles/ia-dos-project-orchestrator-pack.md)
+
+Ruta dentro del repositorio:
+
+```text
+bundles/ia-dos-project-orchestrator-pack.md
+```
+
+En GitHub:
+
+1. abre el enlace anterior;
+2. presiona **Download raw file** o abre **Raw**;
+3. guarda el archivo como `ia-dos-project-orchestrator-pack.md`;
+4. súbelo al área **Conocimientos** del Project, Gem o espacio equivalente.
+
+También puedes descargar todo el repositorio como ZIP y extraer ese archivo desde la carpeta `bundles/`.
 
 El pack resuelve el caso en que la plataforma no puede navegar GitHub. Es un artefacto de distribución; el repositorio oficial sigue siendo la fuente canónica.
 
 La descripción del proyecto puede ser un PDF, documento, wiki o la plantilla:
 
-```text
-templates/project-intake-brief.template.md
-```
+[Project Intake Brief](../../templates/project-intake-brief.template.md)
 
 Como mínimo debería permitir entender:
 
@@ -142,7 +161,7 @@ Inicia este proyecto aplicando IA-DOS.
 Proyecto: [NOMBRE DEL PROYECTO]
 
 Descripción inicial:
-- [RESUMEN BREVE O `Disponible en el archivo NOMBRE-DEL-ARCHIVO`]
+- [RESUMEN BREVE O Disponible en el archivo NOMBRE-DEL-ARCHIVO]
 
 Fuentes disponibles del proyecto:
 - [REPOSITORIO, WIKI, DOCUMENTOS, URL O Ninguna todavía]
@@ -155,16 +174,16 @@ Antes de proponer desarrollo:
 5. no clasifiques el proyecto como existente solo porque menciona un sistema anterior, migración o producto relacionado.
 
 Si el producto objetivo es nuevo:
-- utiliza esta conversación como `00 — Dirección y definición`;
+- utiliza esta conversación como 00 — Dirección y definición;
 - guía preguntas progresivas solo sobre vacíos importantes;
 - no selecciones stack ni solicites construir la aplicación completa antes de contar con decisiones suficientes;
-- al terminar la definición inicial, entrega una síntesis estructurada y propón crear una conversación separada `90 — Wiki y memoria`.
+- al terminar la definición inicial, entrega una síntesis estructurada y propón crear una conversación separada 90 — Wiki y memoria.
 
 Si el producto objetivo es existente:
-- utiliza esta conversación como `00 — Descubrimiento y adopción`;
+- utiliza esta conversación como 00 — Descubrimiento y adopción;
 - reconstruye el estado actual sin modificar archivos ni inventar historia;
 - verifica si existe una LLM Wiki usable;
-- si no existe, propón una conversación separada `90 — Wiki y memoria` y constrúyela desde evidencia.
+- si no existe, propón una conversación separada 90 — Wiki y memoria y constrúyela desde evidencia.
 
 Comienza confirmando:
 1. si pudiste acceder al repositorio IA-DOS o al pack de contexto;
