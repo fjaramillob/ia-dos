@@ -8,18 +8,18 @@ Este recorrido permite configurar IA-DOS dentro de un Project de ChatGPT, un Gem
 https://github.com/fjaramillob/ia-dos
 ```
 
-El repositorio oficial es la fuente canónica de IA-DOS. Cuando la plataforma no pueda navegar GitHub, `ia-dos-project-orchestrator-pack.md` funciona como fuente operativa para esa sesión.
+El repositorio oficial es la fuente canónica. Cuando la plataforma no pueda navegar GitHub, `ia-dos-project-orchestrator-pack.md` funciona como fuente operativa.
 
 ## Vista rápida
 
-Configura cuatro elementos:
+Configura:
 
 1. nombre y descripción del espacio;
 2. instrucciones persistentes;
 3. conocimientos o archivos;
 4. primer mensaje.
 
-## 1. Nombre y descripción del espacio
+## 1. Nombre y descripción
 
 Nombre sugerido:
 
@@ -35,26 +35,19 @@ Project Orchestrator de [NOMBRE DEL PROYECTO], configurado con IA-DOS para trans
 
 ## 2. Instrucciones persistentes
 
-Copia la plantilla [Instrucciones persistentes](../../templates/project-instructions.template.md) en el campo **Instrucciones** del Project, Gem o espacio equivalente.
+Copia [Instrucciones persistentes](../../templates/project-instructions.template.md) en el campo correspondiente.
 
-Personaliza únicamente:
+Personaliza solo nombre, rutas breves, fuente canónica de tareas y restricciones estables.
 
-- nombre del proyecto;
-- enlaces o rutas breves hacia wiki y repositorio;
-- fuente canónica de tareas;
-- restricciones estables de seguridad, coste o cumplimiento.
-
-## 3. Conocimientos o archivos del espacio
+## 3. Conocimientos o archivos
 
 Carga preferentemente:
 
 ```text
 1. IA-DOS Project Orchestrator Pack
-2. una descripción o Project Intake Brief del proyecto
+2. descripción o Project Intake Brief
 3. repositorio, wiki, documentos, enlaces o reportes disponibles
 ```
-
-### Dónde obtener el pack
 
 [Descargar o abrir IA-DOS Project Orchestrator Pack](../../bundles/ia-dos-project-orchestrator-pack.md)
 
@@ -64,22 +57,9 @@ Ruta:
 bundles/ia-dos-project-orchestrator-pack.md
 ```
 
-En GitHub:
-
-1. abre el enlace;
-2. presiona **Download raw file** o abre **Raw**;
-3. guarda el archivo como `ia-dos-project-orchestrator-pack.md`;
-4. súbelo al área **Conocimientos** del Project, Gem o espacio equivalente.
-
-La descripción del proyecto puede ser un PDF, documento, wiki o la plantilla [Project Intake Brief](../../templates/project-intake-brief.template.md).
-
-Como mínimo debería permitir entender nombre, estado del producto objetivo, propósito, usuario, problema, alcance inicial, activos existentes, sistemas relacionados, restricciones y fuentes disponibles.
-
-No es necesario completar todo para comenzar.
+La descripción puede ser un PDF, documento, wiki o [Project Intake Brief](../../templates/project-intake-brief.template.md). No es necesario completar todo para comenzar.
 
 ## 4. Primer mensaje
-
-Copia este bloque en la primera conversación:
 
 ```text
 Inicia este proyecto aplicando IA-DOS.
@@ -89,101 +69,104 @@ Proyecto: [NOMBRE DEL PROYECTO]
 Descripción inicial:
 - [RESUMEN BREVE O Disponible en el archivo NOMBRE-DEL-ARCHIVO]
 
-Fuentes disponibles del proyecto:
+Fuentes disponibles:
 - [REPOSITORIO, WIKI, DOCUMENTOS, URL O Ninguna todavía]
 
 Antes de proponer desarrollo:
-1. lee todas las fuentes disponibles;
-2. determina si el producto objetivo es nuevo o existente;
-3. no clasifiques el proyecto como existente solo porque menciona un sistema anterior, migración o producto relacionado;
+1. lee todas las fuentes;
+2. clasifica el producto objetivo como nuevo o existente;
+3. no lo clasifiques como existente solo por mencionar un sistema anterior;
 4. no repitas preguntas respondidas por las fuentes.
 
-Si el producto objetivo es nuevo:
+Si es nuevo:
 - utiliza esta conversación como 00 — Dirección y definición;
-- captura propósito, usuario, problema central, promesa de valor, principios no negociables, primer resultado a demostrar y límites relevantes;
-- no intentes definir todo el producto antes de avanzar;
-- marca lo pendiente como hipótesis, pregunta abierta o decisión por explorar;
-- resuelve por defecto una decisión principal por turno;
-- habla conmigo en lenguaje natural;
-- no inventes métricas, tiempos, porcentajes o umbrales sin evidencia.
+- captura propósito, usuario, problema, promesa, principios, primer resultado y límites;
+- no intentes definir todo antes de avanzar;
+- marca lo pendiente como hipótesis, pregunta abierta o decisión por explorar.
 
-Cuando exprese que quiero avanzar —por ejemplo “avancemos”, “empecemos a armar”, “ya tenemos suficiente” o “sigamos con el desarrollo”— activa Launch Mode:
+Cuando diga “avancemos”, “empecemos a armar”, “ya tenemos suficiente” o equivalente, activa Launch Mode:
 - deja de repetir el diagnóstico;
 - presenta la dirección capturada;
-- propone una estrategia de avance;
-- recomienda los Conversation Spaces necesarios;
-- entrega un prompt inicial listo para copiar en cada espacio;
-- define el primer avance concreto;
-- mantiene lo no resuelto como trabajo futuro.
+- propone una estrategia ordenada;
+- indica qué conversaciones crear ahora y cuáles después;
+- entrega un Conversation Space Handoff autosuficiente para cada conversación nueva;
+- define el primer avance concreto.
 
-Una configuración frecuente para proyectos nuevos es:
-- 10 — Producto y UX;
-- 20 — Arquitectura y stack;
-- 90 — Wiki y memoria;
-- 30 — Ejecución y desarrollo, cuando exista un primer flujo y una dirección técnica suficiente.
+Secuencia frecuente para un proyecto nuevo:
 
-Adapta nombres y cantidad al proyecto. No abras espacios por obligación.
+Crear ahora:
+- 90 — Wiki y memoria
+- 10 — Producto y UX
 
-La wiki puede nacer temprano para registrar alma, propósito, promesa, principios, decisiones, hipótesis, preguntas y estado actual. No exige que el producto esté completamente definido.
+Crear después de recibir el handoff de 10:
+- 20 — Arquitectura y stack
 
-Si el producto objetivo es existente:
-- utiliza esta conversación como 00 — Descubrimiento y adopción;
-- reconstruye el estado actual sin modificar archivos ni inventar historia;
-- identifica la primera estrategia de adopción y el siguiente avance verificable.
+Crear después de recibir el handoff de 20:
+- 30 — Ejecución y desarrollo
+
+No abras todas las conversaciones a la vez sin declarar dependencias.
+
+Dentro de un Project o Gem dedicado a un solo proyecto, usa títulos limpios sin agregar “: [NOMBRE DEL PROYECTO]”, salvo necesidad real de desambiguación.
+
+Cada prompt para una conversación nueva debe comenzar declarando:
+
+Esta conversación es [NOMBRE DEL ESPACIO].
+No reinicies el onboarding.
+No reclasifiques el proyecto.
+No propongas renombrar este chat como 00.
+No repitas la configuración inicial de IA-DOS.
+
+Después incluye:
+- dirección del proyecto;
+- decisiones confirmadas;
+- hipótesis o referencias no confirmadas;
+- preguntas abiertas relevantes;
+- fuentes disponibles;
+- objetivo;
+- entregable esperado;
+- fuera de alcance.
+
+No asumas que las conversaciones comparten historial.
+
+Regla especial para 20 — Arquitectura y stack:
+- debe recibir el handoff de 10;
+- no debe asumir stack por antecedentes;
+- Supabase, TypeScript, RLS u otras tecnologías heredadas son referencias no confirmadas salvo decisión explícita;
+- debe recomendar arquitectura suficiente para el primer vertical slice, con alternativas y trade-offs.
+
+Cada espacio debe cerrar un hito con un Handoff de salida que incluya resultado, decisiones, pendientes, artefactos y contexto para el siguiente espacio.
 
 En tu primera respuesta:
-- informa qué fuente operativa de IA-DOS utilizaste;
-- indica que la fuente canónica es https://github.com/fjaramillob/ia-dos;
-- resume las fuentes del proyecto;
-- clasifica el producto objetivo y explica brevemente la evidencia;
-- indica de forma visible el nombre recomendado para esta conversación;
+- informa fuente operativa y canónica;
+- resume fuentes;
+- clasifica el producto y explica evidencia;
+- indica el nombre recomendado de esta conversación;
 - entrega un diagnóstico breve;
-- formula una sola pregunta prioritaria por defecto;
-- termina con una sección Tu siguiente acción.
+- formula una pregunta prioritaria;
+- termina con Tu siguiente acción.
 
 En respuestas posteriores:
-- no repitas Configuración inicial ni la instrucción para renombrar salvo que cambie el escenario;
-- actualiza inmediatamente el estado de las propuestas confirmadas;
+- no repitas Configuración inicial ni la instrucción para renombrar;
+- actualiza el estado de decisiones;
 - no describas al usuario como bloqueo;
-- cuando delegue una decisión a mejores prácticas, recomienda una opción provisional y continúa salvo riesgo crítico o irreversible;
-- no conviertas cada vacío en una razón para detener el avance;
+- si delega una decisión a mejores prácticas, recomienda una opción provisional y continúa salvo riesgo crítico;
 - prioriza estrategia, siguiente paso y resultados concretos.
 ```
 
-## Forma esperada de la primera respuesta
+## Plantilla para abrir una conversación especializada
 
-La primera respuesta debe ser breve y usar Markdown normal:
+Usa [Conversation Space Handoff](../../templates/conversation-space-handoff.template.md).
 
-```text
-Configuración inicial
-- Fuente operativa utilizada
-- Fuente canónica de IA-DOS
-- Fuentes del proyecto
-- Producto objetivo y evidencia
-
-Nombre de esta conversación
-Renombra este chat como:
-00 — Dirección y definición
-
-Lo que ya entendí
-- síntesis breve
-
-Lo que falta resolver ahora
-- una decisión prioritaria
-
-Tu siguiente acción
-- una acción humana concreta
-```
+El título del chat debe coincidir exactamente con el destino indicado en el handoff.
 
 ## Resultado esperado
 
 El onboarding está bien encaminado cuando el asistente:
 
-- reconoce su rol como Project Orchestrator;
-- distingue fuente canónica y operativa;
-- comprende el espíritu del proyecto sin exigir un formulario pesado;
-- propone una estrategia de avance;
-- activa Launch Mode cuando el usuario quiere avanzar;
-- recomienda Conversation Spaces útiles y entrega sus prompts iniciales;
-- permite que producto, arquitectura, wiki y desarrollo evolucionen juntos;
-- transforma progresivamente la conversación en memoria durable, tareas acotadas y software verificable.
+- comprende el espíritu del proyecto;
+- propone una estrategia;
+- activa Launch Mode;
+- abre los espacios en un orden explícito;
+- transfiere contexto sin depender del historial entre chats;
+- evita heredar decisiones técnicas no confirmadas;
+- conecta producto, arquitectura, wiki, ejecución y coding agents.

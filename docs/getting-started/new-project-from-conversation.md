@@ -8,88 +8,58 @@ Utiliza `prompts/getting-started/initialize-project-orchestrator.md`.
 
 Entrega como conocimiento:
 
-1. `bundles/ia-dos-project-orchestrator-pack.md`, especialmente cuando la plataforma no pueda navegar GitHub;
+1. `bundles/ia-dos-project-orchestrator-pack.md` cuando la plataforma no pueda navegar GitHub;
 2. una descripción inicial, PDF, documento o `templates/project-intake-brief.template.md`;
-3. cualquier fuente disponible: notas, referencias, restricciones, diseños o sistemas relacionados.
+3. cualquier fuente disponible.
 
-El usuario no tiene que completar un formulario exhaustivo. El asistente debe extraer primero lo que ya está en las fuentes.
+El usuario no necesita completar un formulario exhaustivo.
 
 ## 2. Confirmar que el producto objetivo es nuevo
 
 Clasifica el producto que se quiere construir, no los sistemas anteriores mencionados como contexto.
 
-Un sistema anterior, migración selectiva, reconstrucción o producto de referencia no convierte automáticamente al producto objetivo en existente.
+Un sistema anterior, migración, reconstrucción o referencia no convierte automáticamente al producto objetivo en existente.
 
 ## 3. Primera conversación: `00 — Dirección y definición`
 
-El objetivo de `00` no es cerrar todo el producto antes de comenzar.
-
-Debe capturar:
+`00` debe capturar:
 
 - propósito;
 - usuario principal;
 - problema central;
 - promesa de valor inicial;
 - principios no negociables;
-- primer resultado o hipótesis a demostrar;
+- primer resultado o hipótesis;
 - límites, riesgos o restricciones relevantes.
 
-Resume esta dirección en una frase clara y pocos principios.
-
-Registra lo todavía no resuelto como:
-
-- hipótesis;
-- preguntas abiertas;
-- decisiones por explorar.
-
-No conviertas cada vacío en un bloqueo.
+Registra lo pendiente como hipótesis, pregunta abierta o decisión por explorar. No conviertas cada vacío en bloqueo.
 
 ## 4. Gate mínimo de alineación
 
-Existe alineación suficiente para avanzar cuando:
+Existe alineación suficiente cuando:
 
 - propósito, usuario y problema se entienden;
 - existe una promesa de valor inicial;
 - se identificaron principios no negociables;
-- existe un primer resultado o hipótesis a validar;
+- existe un primer resultado o hipótesis;
 - se conocen límites o riesgos principales;
 - el usuario confirma que esta dirección representa el espíritu del proyecto.
 
-No es necesario haber definido antes todos los flujos, permisos, pantallas, roles o decisiones técnicas.
+No es necesario haber definido todos los flujos, permisos, pantallas o decisiones técnicas.
 
 ## 5. Launch Mode
 
-Cuando el usuario diga `avancemos`, `empecemos a armar`, `ya tenemos suficiente`, `sigamos con el desarrollo` o una intención equivalente, el Project Orchestrator debe activar Launch Mode.
+Cuando el usuario diga `avancemos`, `empecemos a armar`, `ya tenemos suficiente` o equivalente, el Project Orchestrator debe entregar:
 
-Debe entregar:
+1. dirección capturada;
+2. estrategia de avance;
+3. conversaciones que deben crearse ahora;
+4. conversaciones que dependen de resultados posteriores;
+5. prompt autosuficiente para cada nuevo espacio;
+6. primer avance concreto;
+7. pendientes que pueden resolverse durante el trabajo.
 
-1. **Dirección capturada:** frase y principios del proyecto.
-2. **Estrategia de avance:** secuencia concreta de próximos resultados.
-3. **Conversation Spaces recomendados:** solo los necesarios.
-4. **Prompt inicial para cada espacio:** listo para copiar.
-5. **Primer avance concreto:** qué debe producirse ahora.
-6. **Pendientes:** hipótesis o decisiones que pueden resolverse durante el trabajo.
-
-No debe seguir repitiendo el diagnóstico ni pedir aprobación de cada detalle no crítico.
-
-## 6. Estrategia de avance
-
-Usa como referencia:
-
-```text
-Capturar dirección
-→ definir un primer flujo vertical
-→ seleccionar una arquitectura suficiente
-→ crear memoria inicial
-→ preparar una Execution Task
-→ ejecutar con un coding agent
-→ verificar
-→ aprender y actualizar la wiki
-```
-
-La definición y el desarrollo evolucionan juntos.
-
-## 7. Conversation Spaces recomendados
+## 6. Orden recomendado
 
 Mantén:
 
@@ -97,70 +67,117 @@ Mantén:
 00 — Dirección y orquestación
 ```
 
-Después del gate mínimo, una configuración frecuente es:
+### Crear ahora
 
 ```text
-10 — Producto y UX
-20 — Arquitectura y stack
 90 — Wiki y memoria
+10 — Producto y UX
 ```
 
-Cuando exista un primer flujo candidato y una dirección técnica suficiente:
+- `90` registra el alma y estado inicial.
+- `10` define el primer vertical slice candidato.
+
+### Crear después del handoff de `10`
+
+```text
+20 — Arquitectura y stack
+```
+
+`20` debe recibir el flujo, requisitos y preguntas abiertas producidas en `10`.
+
+### Crear después del handoff de `20`
 
 ```text
 30 — Ejecución y desarrollo
 ```
 
-Adapta nombres y cantidad al proyecto. No abras espacios por obligación.
+`30` recibe producto y arquitectura, prepara la primera `Execution Task` y genera el prompt para el coding agent.
 
-Funciones:
+Esta secuencia es una recomendación, no una burocracia rígida. El punto clave es no abrir conversaciones dependientes sin transferir contexto suficiente.
 
-- `10`: define el primer flujo vertical, actores, comportamiento y experiencia;
-- `20`: selecciona una arquitectura suficiente, simple y mantenible;
-- `90`: registra alma, decisiones, hipótesis, preguntas, estado y aprendizaje;
-- `30`: prepara `Execution Tasks`, handoffs y revisión de evidencia.
+## 7. Convención de nombres
 
-Cuando recomiendes un espacio, entrega un prompt inicial listo para copiar.
+Dentro de un Project o Gem dedicado a un solo proyecto, usa:
 
-## 8. La wiki nace temprano
+```text
+00 — Dirección y orquestación
+10 — Producto y UX
+20 — Arquitectura y stack
+30 — Ejecución y desarrollo
+90 — Wiki y memoria
+```
 
-`90 — Wiki y memoria` no necesita esperar a que todo el producto esté definido.
+No agregues `: NombreDelProyecto` salvo que sea necesario para desambiguar varios proyectos en una misma lista.
 
-Puede comenzar cuando exista dirección suficiente para registrar:
+## 8. Handoff entre conversaciones
 
-- alma del proyecto;
-- propósito;
-- usuario;
-- promesa de valor;
-- principios no negociables;
-- alcance y fuera de alcance;
+Las conversaciones pueden compartir archivos del espacio, pero no debes asumir que comparten historial.
+
+Usa `templates/conversation-space-handoff.template.md`.
+
+Cada prompt de apertura debe incluir:
+
+- Conversation Space de destino;
+- nombre del proyecto;
+- dirección capturada;
 - decisiones confirmadas;
-- hipótesis;
-- preguntas abiertas;
-- estado actual.
+- hipótesis o referencias no confirmadas;
+- preguntas abiertas relevantes;
+- fuentes disponibles;
+- objetivo;
+- entregable esperado;
+- fuera de alcance.
 
-Debe distinguir claramente lo confirmado, lo exploratorio y lo inexistente.
+Debe declarar:
 
-## 9. Ritmo y decisiones
+```text
+Esta conversación es [NOMBRE DEL ESPACIO].
+No reinicies el onboarding.
+No reclasifiques el proyecto.
+No propongas renombrar este chat como 00.
+No repitas la configuración inicial de IA-DOS.
+```
 
-Por defecto, resuelve una decisión principal por turno.
+## 9. Salida esperada de `10 — Producto y UX`
 
-Cuando el usuario delegue una decisión a mejores prácticas:
+Debe entregar:
 
-- recomienda una opción provisional;
-- explica brevemente el criterio;
-- continúa;
-- detente solo ante riesgos críticos, costes irreversibles, seguridad, cumplimiento o impacto importante en datos.
+- primer vertical slice candidato;
+- resultado para el usuario;
+- actores;
+- inicio y término del flujo;
+- decisiones de comportamiento;
+- hipótesis y pendientes;
+- handoff para `20`.
 
-No inventes métricas, tiempos o porcentajes sin evidencia.
+No debe definir toda la aplicación.
 
-Usa los niveles de definición como guía interna y habla con el usuario en lenguaje natural.
+## 10. Entrada y salida de `20 — Arquitectura y stack`
 
-## 10. Primera salida hacia desarrollo
+`20` no debe comenzar desde un prompt genérico ni reiniciar `00`.
 
-`30 — Ejecución y desarrollo` toma el primer flujo confirmado y la dirección técnica suficiente para preparar una `Execution Task` pequeña.
+Debe recibir el handoff de `10` y distinguir:
 
-Debe incluir:
+- requisitos confirmados;
+- restricciones técnicas confirmadas;
+- tecnologías heredadas o de referencia;
+- decisiones técnicas abiertas.
+
+No asumas Supabase, TypeScript, RLS u otra tecnología solo porque apareció en un proyecto anterior.
+
+Debe entregar:
+
+- recomendación principal de stack y arquitectura;
+- alternativas y trade-offs;
+- arquitectura suficiente para el primer vertical slice;
+- decisiones confirmadas y pendientes;
+- handoff para `30`.
+
+## 11. Entrada y salida de `30 — Ejecución y desarrollo`
+
+`30` recibe los handoffs de producto y arquitectura.
+
+Prepara una `Execution Task` pequeña con:
 
 - objetivo;
 - contexto mínimo;
@@ -168,16 +185,51 @@ Debe incluir:
 - fuera de alcance;
 - criterios de aceptación;
 - pruebas;
+- rutas autorizadas;
 - condiciones de detención;
 - prompt completo para Codex, Antigravity, Claude Code u otro coding agent.
+
+## 12. La wiki nace temprano
+
+`90 — Wiki y memoria` puede comenzar cuando exista dirección suficiente para registrar:
+
+- alma del proyecto;
+- propósito, usuario y promesa;
+- principios;
+- alcance y fuera de alcance;
+- decisiones;
+- hipótesis;
+- preguntas abiertas;
+- estado actual.
+
+Debe distinguir lo confirmado, lo exploratorio y lo inexistente.
+
+## 13. Handoff de salida obligatorio
+
+Cada Conversation Space especializado debe cerrar un hito con:
+
+```text
+Conversation Space de origen
+Resultado producido
+Decisiones confirmadas
+Hipótesis o pendientes
+Fuentes o artefactos creados
+Siguiente Conversation Space recomendado
+Contexto mínimo que debe recibir
+```
+
+No dependas de que el siguiente chat pueda leer la conversación anterior.
 
 ## Resultado esperado
 
 - Project Orchestrator configurado;
-- alma y dirección inicial del proyecto capturadas;
-- estrategia de avance propuesta;
-- Conversation Spaces útiles creados con prompts iniciales;
-- LLM Wiki viva desde una etapa temprana;
-- primer flujo vertical en definición;
-- primera `Execution Task` preparada cuando exista contexto suficiente;
-- aprendizaje devuelto a la wiki después de cada ciclo.
+- alma y dirección capturadas;
+- estrategia ordenada;
+- títulos de chats simples y consistentes;
+- Conversation Spaces abiertos en el orden necesario;
+- contexto transferido mediante handoffs explícitos;
+- LLM Wiki viva desde temprano;
+- primer vertical slice definido;
+- arquitectura suficiente elegida sin heredar supuestos;
+- primera `Execution Task` preparada;
+- aprendizaje devuelto a la wiki.
