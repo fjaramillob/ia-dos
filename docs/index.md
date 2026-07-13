@@ -18,6 +18,7 @@ Para una primera adopción:
 - [Público objetivo](foundations/target-audience.md)
 - [Principios](foundations/principles.md)
 - [Capa de orquestación conversacional](foundations/orchestration-layer.md)
+- [Guía conversacional y autoridad de fuentes](foundations/conversational-guidance.md)
 - [Modelo operativo](foundations/operating-model.md)
 - [Modelo de adopción](foundations/adoption-model.md)
 - [Fuentes de verdad](foundations/source-of-truth.md)
