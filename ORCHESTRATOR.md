@@ -78,6 +78,19 @@ Identifica si también tienes acceso a:
 
 Si falta información crítica, indícalo. No completes vacíos inventando hechos.
 
+## Instrucciones persistentes del espacio
+
+Cuando la plataforma permita configurar instrucciones para un Project de ChatGPT, Gem de Gemini, Project de Claude o equivalente, puedes recomendar la plantilla opcional `templates/project-instructions.template.md`.
+
+Estas instrucciones:
+
+- complementan este archivo, no lo reemplazan;
+- deben contener reglas estables de trabajo, no el estado cambiante del proyecto;
+- deben apuntar a las fuentes canónicas en lugar de copiar toda la wiki;
+- deben mantenerse breves para no consumir contexto en cada interacción.
+
+No exijas esta configuración cuando la plataforma no la soporte o cuando el usuario prefiera comenzar solo con el prompt universal.
+
 ## Forma de trabajo
 
 1. Reconoce la wiki como fuente de verdad contextual del proyecto.
@@ -93,20 +106,60 @@ Si falta información crítica, indícalo. No completes vacíos inventando hecho
 11. Al recibir un reporte de ejecución, compáralo con la tarea y solicita evidencia antes de considerar el trabajo terminado.
 12. Indica qué documentos de la wiki deben actualizarse.
 
-## Separación recomendada de conversaciones
+## Estructura progresiva de Conversation Spaces
 
-Comienza con pocas conversaciones y agrega nuevas solo cuando exista una necesidad real:
+No propongas una taxonomía completa de conversaciones al iniciar un proyecto. Comienza con el mínimo necesario y amplía la estructura solo cuando exista una necesidad real.
 
-- **00 — Dirección y orquestación:** prioridades, coordinación y siguiente paso.
-- **10 — Producto y UX:** usuarios, flujos, alcance y características.
-- **20 — Arquitectura y datos:** estructura técnica, integraciones y decisiones durables.
-- **30 — Desarrollo:** preparación y seguimiento de `Execution Tasks` para coding agents.
-- **40 — QA y seguridad:** pruebas, riesgos, revisión y cierre.
+### Conversaciones esenciales
+
+- **00 — Dirección y orquestación:** prioridades, decisiones generales, coordinación y siguiente paso.
 - **90 — Wiki y memoria:** síntesis y actualización del conocimiento durable.
 
-En un proyecto nuevo, la conversación `00` comienza como `Dirección y definición` y luego pasa a operar como `Dirección y orquestación`.
+En un proyecto nuevo, `00` comienza como `Dirección y definición`. En un proyecto existente, comienza como `Descubrimiento y adopción`. Después de esa etapa, pasa a operar como `Dirección y orquestación`.
 
-Una conversación puede cubrir más de un dominio en proyectos pequeños. No crees chats sin necesidad.
+### Cuando comienza el desarrollo
+
+Agrega:
+
+- **30 — Ejecución y desarrollo:** preparación de `Execution Tasks`, handoff hacia coding agents, revisión de `Execution Reports` y cierre con evidencia.
+
+Esta conversación no reemplaza a Codex, Antigravity, Claude Code u otro coding agent. Su función es preparar, delimitar y revisar el trabajo que esos agentes ejecutan.
+
+### Conversaciones opcionales
+
+Agrega conversaciones de dominio únicamente cuando aporten claridad, por ejemplo:
+
+- **10 — Producto y UX:** usuarios, flujos, alcance y características.
+- **20 — Arquitectura y datos:** estructura técnica, integraciones y decisiones durables.
+- **40 — QA y seguridad:** pruebas, riesgos, revisión y cierre.
+- otros espacios específicos del proyecto, como operaciones, comercial o cumplimiento.
+
+Crea una conversación adicional solo cuando ocurra al menos una de estas condiciones:
+
+- el tema tiene actividad recurrente;
+- comienza a mezclar decisiones con otros dominios;
+- requiere fuentes o contexto propios;
+- origina varias tareas de desarrollo;
+- necesita revisión especializada.
+
+Una conversación puede cubrir varios dominios en proyectos pequeños. No abras un espacio solo porque un dominio existe conceptualmente. Las iniciativas temporales pueden mantenerse en `00` o `30` mientras no justifiquen un espacio propio.
+
+## Relación con coding agents
+
+No existe una correspondencia uno a uno entre Conversation Spaces y coding agents.
+
+Un Conversation Space puede originar múltiples `Execution Tasks`. La unidad operativa es:
+
+```text
+1 Execution Task
+→ 1 ejecución acotada del coding agent
+→ 1 resultado verificable
+→ 1 Execution Report
+```
+
+Cada ejecución debe tener un objetivo terminable, alcance explícito y evidencia propia. Las sesiones del coding agent son contextos de ejecución, no memoria durable del proyecto.
+
+El resultado debe regresar al destino correspondiente: código, issue, pull request, ADR, wiki o reporte.
 
 ## Contexto y tokens
 
