@@ -10,11 +10,13 @@ Crea un Project de ChatGPT, un Gem de Gemini, un Project de Claude o un espacio 
 
 Entrega como contexto:
 
-- el repositorio IA-DOS o, como mínimo, `README.md` y `ORCHESTRATOR.md`;
+- el repositorio IA-DOS o, como mínimo, `README.md`, `ORCHESTRATOR.md` y `docs/index.md`;
 - el repositorio de aplicación, cuando la plataforma pueda conectarlo;
 - documentación existente;
 - enlaces, reportes o archivos relevantes;
 - restricciones conocidas.
+
+Cuando la plataforma permita instrucciones persistentes, puede aplicarse opcionalmente `templates/project-instructions.template.md`. Debe contener reglas estables, no tareas ni estado cambiante.
 
 Si la plataforma no puede conectarse al repositorio de aplicación, entrega primero una descripción general y utiliza un coding agent para inspeccionar el código y devolver un reporte estructurado.
 
@@ -43,28 +45,17 @@ El orquestador debe identificar uno de estos casos:
 
 ### Caso A — Existe una wiki usable
 
-Debe revisar:
-
-- si está versionada;
-- si tiene un punto de entrada claro;
-- si representa el estado actual;
-- si distingue implementado, planificado y desconocido;
-- si contiene decisiones y fuentes;
-- si puede ser utilizada por personas y agentes.
+Debe revisar si está versionada, tiene un punto de entrada claro, representa el estado actual, distingue implementado, planificado y desconocido, contiene decisiones y fuentes, y puede ser utilizada por personas y agentes.
 
 No debe reemplazarla automáticamente. Primero debe proponer ajustes.
 
 ### Caso B — Existe documentación dispersa
 
-Debe identificar qué documentos pueden conservarse como fuentes y cuáles deben sintetizarse dentro de una wiki.
-
-No debe copiar todo sin criterio.
+Debe identificar qué documentos pueden conservarse como fuentes y cuáles deben sintetizarse dentro de una wiki. No debe copiar todo sin criterio.
 
 ### Caso C — No existe una wiki
 
-Este será un escenario frecuente.
-
-El orquestador debe crear o proponer una conversación específica:
+El orquestador debe crear o proponer:
 
 ```text
 90 — Wiki y memoria
@@ -97,24 +88,38 @@ Desconocido
 
 Una ausencia de evidencia debe registrarse como desconocida, no completarse con una inferencia presentada como hecho.
 
-## 5. Crear la estructura de conversaciones
+## 5. Crear Conversation Spaces de forma progresiva
 
-Una vez que existe un contexto mínimo, el orquestador puede proponer los espacios necesarios.
+Una vez que existe contexto mínimo, no propongas una taxonomía completa por defecto.
 
-La base recomendada es:
+El mínimo inicial es:
 
 ```text
 00 — Dirección y orquestación
-10 — Producto y UX
-20 — Arquitectura y datos
-30 — Desarrollo
-40 — QA y seguridad
 90 — Wiki y memoria
 ```
 
-La estructura debe adaptarse al proyecto.
+La conversación `00` comienza como `Descubrimiento y adopción` y, terminada esa etapa, pasa a operar como `Dirección y orquestación`.
 
-Por ejemplo, un proyecto con mucha operación podría necesitar un espacio de operaciones. Un proyecto pequeño puede mantener producto y arquitectura en una sola conversación.
+Cuando comience el trabajo técnico, agrega:
+
+```text
+30 — Ejecución y desarrollo
+```
+
+Su función es preparar `Execution Tasks`, realizar handoffs y revisar resultados con evidencia.
+
+Agrega conversaciones opcionales solo cuando exista actividad recurrente, mezcla de contexto, fuentes propias, varias tareas relacionadas o necesidad de revisión especializada. Ejemplos:
+
+```text
+10 — Producto y UX
+20 — Arquitectura y datos
+40 — QA y seguridad
+```
+
+También pueden existir espacios específicos como operaciones, cumplimiento o comercial. Las iniciativas temporales pueden mantenerse en `00` o `30` mientras no justifiquen una conversación propia.
+
+Un proyecto pequeño puede mantenerse solo con `00`, `30` y `90`.
 
 ## 6. Conectar conversación, wiki y aplicación
 
@@ -138,7 +143,22 @@ Cuando tenga acceso a la app, debe consultarla solo cuando sea necesario.
 
 Cuando no tenga acceso, debe preparar instrucciones para que Codex, Claude Code, Antigravity u otro coding agent inspeccione y reporte.
 
-## 7. Primera tarea después de la adopción
+## 7. Relación con coding agents
+
+No existe una relación uno a uno entre Conversation Spaces y coding agents.
+
+La unidad de ejecución es:
+
+```text
+1 Execution Task
+→ 1 ejecución acotada del coding agent
+→ 1 resultado verificable
+→ 1 Execution Report
+```
+
+Un Conversation Space puede originar múltiples tareas. Las sesiones del coding agent ejecutan trabajo; no son memoria durable.
+
+## 8. Primera tarea después de la adopción
 
 La primera tarea no debería ser una gran refactorización.
 
@@ -160,5 +180,5 @@ Al finalizar este recorrido deben existir:
 - una comprensión inicial del estado real;
 - una LLM Wiki creada o revisada;
 - preguntas y contradicciones registradas;
-- conversaciones clave definidas;
+- conversaciones mínimas definidas;
 - una primera tarea acotada para validar el modelo operativo.

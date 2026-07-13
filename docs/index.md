@@ -20,8 +20,9 @@ Esta documentación explica cómo utilizar IA-DOS para ordenar proyectos de soft
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
 - [Prompt para inicializar el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md)
+- [Plantilla opcional de instrucciones persistentes](../templates/project-instructions.template.md)
 
-Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda cómo debe coordinar conversaciones, wiki, tareas y coding agents.
+Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda cómo debe coordinar conversaciones, wiki, tareas y coding agents. La plantilla de instrucciones persistentes es opcional y se utiliza solo cuando la plataforma permite configurar reglas propias del Project, Gem o espacio equivalente.
 
 ## Primeros pasos
 
@@ -46,6 +47,7 @@ Estos archivos permiten que ChatGPT, Gemini, Claude u otro asistente comprenda c
 
 - [Manifiesto de adopción](../templates/adoption.template.yaml)
 - [AGENTS.md para la app](../templates/AGENTS.template.md)
+- [Instrucciones persistentes del Project Orchestrator](../templates/project-instructions.template.md)
 - [Wiki inicial](../templates/wiki-starter/)
 - [Execution Task](../templates/execution-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
