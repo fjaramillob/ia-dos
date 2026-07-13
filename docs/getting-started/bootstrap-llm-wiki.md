@@ -1,28 +1,57 @@
 # Crear la LLM Wiki del proyecto
 
-La LLM Wiki es la memoria durable del proyecto. Su función es permitir que personas y asistentes comprendan qué se está construyendo, cuál es su estado real, qué decisiones están vigentes y dónde encontrar las fuentes.
+La LLM Wiki es la memoria durable del proyecto. Permite que personas y asistentes comprendan qué se está construyendo, cuál es su estado real, qué decisiones están vigentes y dónde encontrar las fuentes.
 
-No reemplaza el código, los issues ni los pull requests. Tampoco debe convertirse en una copia de todo el repositorio.
+No reemplaza el código, los issues ni los pull requests. Tampoco debe convertirse en una copia completa del repositorio o del historial de chats.
+
+## Principios LLM Wiki
+
+La implementación de IA-DOS está inspirada en la propuesta **LLM Wiki** de Andrej Karpathy: memoria durable en Markdown, navegable, versionada con Git y separada de las conversaciones.
+
+La wiki debe:
+
+- compilar conocimiento de alta señal, no acumular documentos sin procesar;
+- tener un punto de entrada claro;
+- dividir el conocimiento en páginas pequeñas y enlazables;
+- separar fuentes, hechos, propuestas, decisiones y estado;
+- enlazar páginas relacionadas;
+- mantenerse versionada con Git;
+- actualizarse progresivamente cuando cambia el proyecto;
+- permitir cargar `CORE` y solo las páginas relevantes para cada tarea;
+- permitir retomar el proyecto sin depender del historial de chats.
+
+IA-DOS agrega encima de estos principios:
+
+- estado explícito de implementación;
+- ADRs o decisiones durables;
+- `Execution Tasks`;
+- Context Packs;
+- fuentes de verdad;
+- verificación con evidencia.
+
+Esto es una implementación inspirada y compatible con esos principios, no una distribución oficial del sistema de Karpathy.
 
 ## Cuándo crearla
 
-La wiki debe crearse:
+Créala:
 
 - después de la primera definición de un proyecto nuevo;
-- al adoptar un proyecto existente que no tiene memoria estructurada;
-- cuando la documentación actual está dispersa o desactualizada;
+- al adoptar un proyecto existente sin memoria estructurada;
+- cuando la documentación está dispersa o desactualizada;
 - antes de aumentar el número de agentes o conversaciones;
-- antes de delegar tareas complejas que dependen de decisiones históricas.
+- antes de delegar tareas complejas que dependen de historia o decisiones previas.
 
 ## Conversación recomendada
 
-El Project Orchestrator debe crear o utilizar una conversación dedicada:
+Utiliza una conversación separada:
 
 ```text
 90 — Wiki y memoria
 ```
 
-Esta conversación no toma por sí sola decisiones de producto o arquitectura. Su función es sintetizar, ordenar, enlazar y mantener el conocimiento confirmado.
+La conversación `00` puede preparar una síntesis candidata, pero no debe simular `90` como una sección dentro del mismo chat cuando la plataforma permite conversaciones separadas.
+
+`90` sintetiza, ordena, enlaza y mantiene conocimiento confirmado. No toma por sí sola decisiones de producto o arquitectura.
 
 ## Estructura mínima recomendada
 
@@ -38,52 +67,31 @@ nombre-proyecto-wiki/
 │
 ├── decisions/
 │   └── README.md
-│
 ├── tasks/
 │   └── README.md
-│
 ├── sources/
 │   └── README.md
-│
 └── context-packs/
     └── core.md
 ```
 
-Se pueden agregar nuevas carpetas cuando exista una necesidad real. No se debe crear una taxonomía extensa antes de tener contenido.
+Agrega nuevas carpetas solo cuando exista contenido y una necesidad real.
 
 ## Función de cada archivo
 
 ### `index.md`
 
-Punto de entrada y mapa de la wiki.
-
-Debe indicar:
-
-- qué contiene la wiki;
-- qué archivos son fundamentales;
-- cuál es el estado general;
-- cómo navegarla;
-- dónde está el repositorio de aplicación.
+Punto de entrada y mapa de navegación. Debe indicar qué contiene la wiki, cuáles son los archivos fundamentales, estado general y ubicación del repositorio de aplicación.
 
 ### `project-brief.md`
 
-Resume:
+Resume propósito, usuario, problema, propuesta de valor, alcance, fuera de alcance, comportamiento esperado, dirección visual y restricciones.
 
-- propósito;
-- usuario;
-- problema;
-- propuesta de valor;
-- alcance;
-- fuera de alcance;
-- comportamiento esperado;
-- dirección visual cuando corresponda;
-- restricciones.
+Puede construirse desde `templates/project-intake-brief.template.md`, un documento adjunto o una síntesis de la conversación `00`.
 
 ### `current-state.md`
 
-Describe qué existe hoy.
-
-Debe distinguir:
+Describe qué existe hoy y distingue:
 
 ```text
 Implementado
@@ -93,101 +101,50 @@ Deprecado
 Desconocido
 ```
 
-En un proyecto nuevo puede indicar claramente que todavía no existe una implementación.
+En un proyecto nuevo debe indicar claramente que todavía no existe implementación cuando esa sea la evidencia.
 
 ### `architecture.md`
 
-Describe la arquitectura vigente o, en un proyecto nuevo, la arquitectura propuesta confirmada.
-
-Debe evitar presentar diagramas o componentes hipotéticos como si estuvieran implementados.
+Describe arquitectura vigente o una propuesta confirmada. No presenta componentes hipotéticos como implementados.
 
 ### `decisions/`
 
-Contiene decisiones durables.
-
-Cada decisión debe indicar:
-
-- contexto;
-- decisión;
-- alternativas consideradas;
-- consecuencias;
-- fecha;
-- estado.
+Contiene decisiones durables con contexto, decisión, alternativas, consecuencias, fecha y estado.
 
 ### `tasks/`
 
-Se utiliza cuando el proyecto decide conservar `Execution Tasks` en la wiki.
-
-Cuando GitHub Issues es la fuente canónica, esta carpeta puede contener solamente un índice o referencias.
+Se utiliza cuando la fuente canónica de `Execution Tasks` está en la wiki. Si GitHub Issues es la fuente canónica, conserva solo índices o referencias.
 
 ### `sources/`
 
-Contiene o referencia materiales de origen:
-
-- documentos;
-- enlaces;
-- reportes;
-- investigaciones;
-- capturas;
-- notas sin sintetizar.
-
-Una fuente no se considera automáticamente una decisión vigente.
+Contiene o referencia documentos, enlaces, reportes, investigaciones, capturas y notas sin sintetizar. Una fuente no se considera automáticamente una decisión vigente.
 
 ### `context-packs/core.md`
 
-Contiene el contexto transversal mínimo para asistentes y agentes:
+Conserva el contexto transversal mínimo:
 
 - propósito;
 - usuario principal;
 - estado actual resumido;
 - restricciones;
 - decisiones vigentes relevantes;
-- ubicación de las fuentes de verdad.
+- ubicación de fuentes de verdad.
 
 Debe mantenerse pequeño.
 
 ### `AGENTS.md`
 
-Explica cómo deben trabajar los agentes dentro de la wiki.
-
-Debe exigir:
-
-- no inventar información;
-- enlazar fuentes;
-- distinguir hechos y propuestas;
-- evitar duplicación;
-- actualizar `log.md` cuando corresponda;
-- no guardar secretos.
+Define cómo trabajan los agentes en la wiki: no inventar información, enlazar fuentes, distinguir hechos y propuestas, evitar duplicación, actualizar `log.md` cuando corresponda y no guardar secretos.
 
 ### `.ia-dos.yaml`
 
-Declara la adopción de IA-DOS.
-
-Ejemplo conceptual:
-
-```yaml
-ia_dos:
-  version: "0.1.0-alpha.1"
-  source: "https://github.com/fjaramillob/ia-dos"
-
-project:
-  name: "nombre-proyecto"
-  app: "../nombre-proyecto-app"
-  wiki: "."
-
-adoption:
-  model: "separate-app-and-wiki"
-  task_source: "github-issues"
-  exceptions: []
-```
-
-La estructura definitiva de este archivo se entregará como plantilla versionada.
+Declara la adopción de IA-DOS, versión o commit utilizado, rutas, modelo de adopción y fuente canónica de tareas. Usa `templates/adoption.template.yaml`.
 
 ## Proyecto nuevo
 
-Para un proyecto nuevo, la wiki se construye desde decisiones confirmadas en la conversación de dirección.
+Construye la wiki desde decisiones confirmadas en `00 — Dirección y definición`.
 
-Debe registrar:
+Registra:
 
 - qué se quiere construir;
 - qué todavía no está decidido;
@@ -195,24 +152,20 @@ Debe registrar:
 - cuál será el primer incremento;
 - qué supuestos necesitan validación.
 
-No debe inventar una arquitectura completa para llenar el archivo.
+No inventes arquitectura para completar archivos.
 
 ## Proyecto existente
 
-Para un proyecto existente, la wiki debe construirse desde evidencia.
+Construye la wiki desde evidencia:
 
-El orquestador puede solicitar a un coding agent una inspección en modo lectura con objetivos como:
+- inspección del repositorio en modo lectura;
+- README, configuración, dependencias y estructura;
+- documentación existente;
+- issues y pull requests relevantes;
+- conversación con la persona responsable;
+- registro de contradicciones y desconocidos.
 
-- identificar stack y estructura;
-- localizar puntos de entrada;
-- describir módulos;
-- detectar pruebas;
-- enumerar integraciones;
-- localizar documentación;
-- registrar contradicciones;
-- no modificar archivos.
-
-El reporte se utiliza como fuente para la wiki, pero debe revisarse antes de considerarlo definitivo.
+Un coding agent puede inspeccionar y reportar, pero el reporte debe revisarse antes de considerarlo definitivo.
 
 ## Repositorio separado o documentación interna
 
@@ -224,36 +177,27 @@ nombre-proyecto/
 └── nombre-proyecto-wiki/
 ```
 
-La wiki puede ser un repositorio Git independiente, privado, público o exclusivamente local.
-
-Un proyecto puede mantenerla dentro del repositorio de aplicación cuando:
-
-- es pequeño;
-- ya utiliza un monorepo;
-- separar repositorios agregaría fricción innecesaria;
-- existe una razón documentada.
+La wiki puede permanecer dentro del repositorio de aplicación cuando el proyecto es pequeño, ya utiliza monorepo o la separación agrega fricción injustificada. Documenta la excepción.
 
 ## Uso desde ChatGPT, Gemini o Claude
 
 El Project Orchestrator debe recibir acceso a la wiki o a los archivos necesarios.
 
-No debe cargar todos los documentos en cada conversación.
-
-Debe utilizar:
+No cargues toda la wiki en cada conversación. Usa:
 
 ```text
 CORE
 +
 un Context Pack principal
 +
-opcionalmente un Context Pack secundario
+opcionalmente uno secundario
 ```
 
-Las decisiones tomadas en chats deben volver a la wiki cuando sean durables.
+Las decisiones durables tomadas en chats deben volver a la wiki.
 
 ## Mantenimiento
 
-La wiki debe actualizarse cuando:
+Actualiza la wiki cuando:
 
 - cambia el comportamiento del producto;
 - cambia la arquitectura;
@@ -263,7 +207,7 @@ La wiki debe actualizarse cuando:
 - aparece una contradicción;
 - una propuesta pasa a implementarse.
 
-No necesita actualizarse por cada conversación ni por cada commit menor.
+No necesita actualizarse por cada conversación o commit menor.
 
 ## Verificación
 
@@ -271,15 +215,16 @@ Antes de considerar la wiki inicial terminada, verifica:
 
 - [ ] Existe un punto de entrada claro.
 - [ ] El propósito se entiende.
-- [ ] El estado actual no confunde planes con implementación.
-- [ ] La arquitectura indica qué es vigente y qué es propuesta.
+- [ ] El estado no confunde planes con implementación.
+- [ ] La arquitectura distingue vigente y propuesta.
 - [ ] Las decisiones importantes tienen destino.
 - [ ] Las fuentes están identificadas.
-- [ ] Los agentes tienen instrucciones.
+- [ ] Las páginas son pequeñas y enlazables.
 - [ ] Existe un `CORE` pequeño.
+- [ ] Los agentes tienen instrucciones.
 - [ ] No contiene secretos.
-- [ ] Una persona o asistente puede retomar el proyecto sin leer chats anteriores.
+- [ ] Puede retomarse sin leer chats anteriores.
 
 ## Resultado esperado
 
-La LLM Wiki debe permitir que el Project Orchestrator y los coding agents sepan dónde están parados, qué información pueden confiar, qué falta por decidir y qué contexto necesitan para la siguiente tarea.
+La LLM Wiki debe permitir que el Project Orchestrator y los coding agents sepan dónde están parados, qué información pueden confiar, qué falta decidir y qué contexto necesitan para la siguiente tarea.
