@@ -10,9 +10,11 @@ Crea un espacio dedicado al proyecto en la plataforma conversacional que utilice
 
 Ese espacio debe recibir como contexto:
 
-- el repositorio IA-DOS o, cuando la plataforma no permita conectarlo completo, al menos `README.md` y `ORCHESTRATOR.md`;
+- el repositorio IA-DOS o, cuando la plataforma no permita conectarlo completo, al menos `README.md`, `ORCHESTRATOR.md` y `docs/index.md`;
 - la instrucción general del proyecto;
 - cualquier fuente inicial disponible, como notas, documentos, referencias visuales o restricciones.
+
+Cuando la plataforma permita instrucciones persistentes, puede aplicarse de forma opcional `templates/project-instructions.template.md`. Esta plantilla complementa IA-DOS, pero no reemplaza `ORCHESTRATOR.md` ni debe contener estado cambiante.
 
 El asistente debe reconocer que IA-DOS define cómo trabajar, no qué producto construir.
 
@@ -28,20 +30,14 @@ El asistente debe ayudar a aclarar, de forma progresiva y sin convertir la conve
 - cuál es el alcance inicial;
 - qué queda fuera de alcance;
 - cómo se espera que opere;
-- cuáles son los flujos principales;
+- cuáles son sus flujos principales;
 - cómo debería verse y sentirse;
 - qué datos, integraciones o servicios podría necesitar;
 - qué restricciones existen de tiempo, coste, seguridad o tecnología;
 - qué decisiones todavía están abiertas;
 - cómo se reconocerá que la primera versión funciona.
 
-El asistente debe distinguir claramente:
-
-- hechos;
-- preferencias;
-- supuestos;
-- propuestas;
-- decisiones confirmadas.
+El asistente debe distinguir claramente hechos, preferencias, supuestos, propuestas y decisiones confirmadas.
 
 No debe transformar preferencias tempranas en decisiones técnicas definitivas sin confirmación.
 
@@ -67,7 +63,7 @@ Todavía no debe afirmar que existe una aplicación, arquitectura o integración
 
 ## 4. Crear la LLM Wiki
 
-Después de definir el proyecto, el orquestador debe abrir o proponer una conversación específica:
+Después de definir el proyecto, el orquestador debe abrir o proponer:
 
 ```text
 90 — Wiki y memoria
@@ -75,37 +71,57 @@ Después de definir el proyecto, el orquestador debe abrir o proponer una conver
 
 Esa conversación utiliza la síntesis de dirección para crear la primera LLM Wiki del proyecto.
 
-La wiki debe separar lo que ya está decidido de lo que sigue siendo una propuesta.
-
-En un proyecto nuevo, `current-state.md` debe indicar que el producto todavía no está implementado y registrar únicamente los activos que sí existen.
+La wiki debe separar lo que ya está decidido de lo que sigue siendo una propuesta. En un proyecto nuevo, `current-state.md` debe indicar que el producto todavía no está implementado y registrar únicamente los activos que sí existen.
 
 Consulta [Crear la LLM Wiki](bootstrap-llm-wiki.md).
 
-## 5. Separar conversaciones solo cuando aporten claridad
+## 5. Crear Conversation Spaces de forma progresiva
 
-Después de crear la base del proyecto, el orquestador puede proponer conversaciones como:
+No abras una taxonomía completa de conversaciones desde el primer día.
+
+El mínimo inicial es:
 
 ```text
 00 — Dirección y orquestación
+90 — Wiki y memoria
+```
+
+La conversación `00` comienza como `Dirección y definición` y, después de esa etapa, pasa a operar como `Dirección y orquestación`.
+
+Cuando comience el trabajo técnico, agrega:
+
+```text
+30 — Ejecución y desarrollo
+```
+
+Su función es preparar `Execution Tasks`, realizar handoffs hacia coding agents y revisar `Execution Reports`.
+
+Agrega conversaciones opcionales solo cuando exista actividad recurrente, mezcla de contexto, fuentes propias, varias tareas relacionadas o necesidad de revisión especializada. Ejemplos:
+
+```text
 10 — Producto y UX
 20 — Arquitectura y datos
-30 — Desarrollo
 40 — QA y seguridad
-90 — Wiki y memoria
 ```
 
-No es necesario abrirlas todas desde el primer día.
+Un proyecto pequeño puede mantenerse solo con `00`, `30` y `90`. No abras un chat solo porque un dominio existe conceptualmente.
 
-Un proyecto pequeño puede comenzar con:
+## 6. Relación con Codex, Antigravity u otros coding agents
+
+No existe una relación uno a uno entre Conversation Spaces y coding agents.
+
+La unidad de ejecución es:
 
 ```text
-00 — Dirección y orquestación
-90 — Wiki y memoria
+1 Execution Task
+→ 1 ejecución acotada del coding agent
+→ 1 resultado verificable
+→ 1 Execution Report
 ```
 
-Las demás se crean cuando el volumen o la especialización del contexto lo justifique.
+Un Conversation Space puede originar múltiples tareas. Las sesiones del coding agent ejecutan trabajo; no conservan la memoria canónica del proyecto.
 
-## 6. Preparar el entorno local
+## 7. Preparar el entorno local
 
 Cuando el proyecto vaya a entrar en desarrollo, se crea o incorpora el workspace local recomendado:
 
@@ -119,7 +135,7 @@ proyectos/
 
 La capa conversacional puede existir antes que estas carpetas. La clonación local comienza cuando el usuario necesita trabajar con repositorios, archivos, agentes de desarrollo o Git.
 
-## 7. Primera salida hacia desarrollo
+## 8. Primera salida hacia desarrollo
 
 El orquestador no debe pedir al coding agent que construya todo el producto de una vez.
 
@@ -140,5 +156,5 @@ Al finalizar este recorrido deben existir:
 - una definición inicial del proyecto;
 - una LLM Wiki mínima;
 - una separación clara entre decisiones, propuestas y preguntas abiertas;
-- una estructura inicial de conversaciones;
+- una estructura mínima de conversaciones;
 - una primera tarea de desarrollo acotada.
