@@ -34,7 +34,12 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - gate mínimo de alineación para comenzar a organizar y construir sin exigir una especificación completa;
 - `Launch Mode` para responder a la intención explícita del usuario de avanzar;
 - estrategia de avance basada en vertical slices, arquitectura suficiente, ejecución verificable y aprendizaje;
-- obligación de recomendar Conversation Spaces útiles y entregar un prompt inicial listo para copiar en cada uno;
+- secuencia explícita de apertura de Conversation Spaces: `90` y `10`, luego `20`, y finalmente `30`;
+- convención de títulos limpios sin repetir el nombre del proyecto dentro de un Project o Gem dedicado;
+- plantilla `Conversation Space Handoff` para transferir contexto entre chats que no comparten historial;
+- obligación de declarar en cada handoff el espacio de destino y evitar reiniciar onboarding o reclasificar el proyecto;
+- handoff de salida obligatorio entre Producto, Arquitectura y Ejecución;
+- regla especial para que `20 — Arquitectura y stack` no herede automáticamente tecnologías de sistemas anteriores;
 - creación temprana de `90 — Wiki y memoria` como memoria viva, no como etapa final de la definición;
 - regla para tratar hipótesis, preguntas abiertas y decisiones por explorar como trabajo futuro y no como bloqueo;
 - criterio para resolver decisiones delegadas a mejores prácticas mediante una recomendación provisional y avance controlado;
