@@ -1,82 +1,87 @@
 # Adoptar un proyecto existente desde la capa conversacional
 
-Este recorrido está pensado para un proyecto que ya tiene código, documentación, decisiones o usuarios, pero todavía no cuenta con un Project Orchestrator configurado según IA-DOS.
+Este recorrido sirve para adoptar un producto objetivo que ya tiene implementación, documentación, usuarios, infraestructura o integraciones.
 
-El objetivo inicial no es reorganizar ni modificar el proyecto. Primero se debe comprender su estado real y crear una memoria durable basada en evidencia.
+## 1. Configurar el Project Orchestrator
 
-## 1. Crear el Project Orchestrator
+Utiliza `prompts/getting-started/initialize-project-orchestrator.md`.
 
-Crea un Project de ChatGPT, un Gem de Gemini, un Project de Claude o un espacio equivalente dedicado exclusivamente al proyecto.
+Entrega como conocimiento:
 
-Entrega como contexto:
+1. `bundles/ia-dos-project-orchestrator-pack.md` cuando la plataforma no pueda navegar GitHub;
+2. repositorio de aplicación o un reporte de inspección;
+3. documentación existente, wiki, enlaces, reportes y restricciones.
 
-- el repositorio IA-DOS o, como mínimo, `README.md`, `ORCHESTRATOR.md` y `docs/index.md`;
-- el repositorio de aplicación, cuando la plataforma pueda conectarlo;
-- documentación existente;
-- enlaces, reportes o archivos relevantes;
-- restricciones conocidas.
+El asistente debe leer primero las fuentes y evitar preguntas repetidas.
 
-Cuando la plataforma permita instrucciones persistentes, puede aplicarse opcionalmente `templates/project-instructions.template.md`. Debe contener reglas estables, no tareas ni estado cambiante.
+## 2. Confirmar que el producto objetivo es existente
 
-Si la plataforma no puede conectarse al repositorio de aplicación, entrega primero una descripción general y utiliza un coding agent para inspeccionar el código y devolver un reporte estructurado.
+Clasifica el producto objetivo, no los sistemas anteriores o relacionados.
 
-## 2. Primera conversación: `00 — Descubrimiento y adopción`
+Existe evidencia suficiente cuando el producto objetivo mismo tiene uno o más de estos elementos:
 
-La primera conversación debe determinar:
+- código;
+- despliegue;
+- usuarios;
+- infraestructura;
+- integraciones activas;
+- documentación técnica vigente.
+
+Una migración, reconstrucción o producto sucesor no constituye un tercer escenario. Es un atributo de la iniciativa.
+
+## 3. Primera conversación: `00 — Descubrimiento y adopción`
+
+Determina:
 
 - qué producto existe;
 - para quién funciona;
-- qué partes están implementadas;
-- qué partes están incompletas;
+- qué está implementado, parcial, planificado, deprecado o desconocido;
 - qué documentación existe;
 - qué decisiones siguen vigentes;
 - qué repositorios, servicios e integraciones participan;
 - qué problemas o riesgos son conocidos;
-- qué información no ha sido verificada;
 - cuál es la prioridad actual.
 
-El orquestador debe trabajar con una regla estricta:
+Regla:
 
-> No describir como real algo que no haya sido confirmado por una fuente, el usuario o una inspección del repositorio.
+> No describas como real algo que no haya sido confirmado por una fuente, el usuario o una inspección del repositorio.
 
-## 3. Verificar si existe una LLM Wiki
+## 4. Verificar la LLM Wiki
 
-El orquestador debe identificar uno de estos casos:
+### Existe una wiki usable
 
-### Caso A — Existe una wiki usable
+Revisa si está versionada, tiene punto de entrada, representa el estado actual, distingue planes de implementación, contiene decisiones y fuentes, y puede ser utilizada por personas y agentes.
 
-Debe revisar si está versionada, tiene un punto de entrada claro, representa el estado actual, distingue implementado, planificado y desconocido, contiene decisiones y fuentes, y puede ser utilizada por personas y agentes.
+No la reemplaces automáticamente.
 
-No debe reemplazarla automáticamente. Primero debe proponer ajustes.
+### Existe documentación dispersa
 
-### Caso B — Existe documentación dispersa
+Identifica qué conservar como fuente y qué sintetizar. No copies todo sin criterio.
 
-Debe identificar qué documentos pueden conservarse como fuentes y cuáles deben sintetizarse dentro de una wiki. No debe copiar todo sin criterio.
+### No existe wiki
 
-### Caso C — No existe una wiki
-
-El orquestador debe crear o proponer:
+Propón una conversación separada:
 
 ```text
 90 — Wiki y memoria
 ```
 
-Esa conversación guiará la implementación de una LLM Wiki basada en evidencia del proyecto existente.
+No simules `90` como una sección dentro de `00` cuando la plataforma permita conversaciones separadas.
 
-Consulta [Crear la LLM Wiki](bootstrap-llm-wiki.md).
+Construye la wiki desde evidencia siguiendo `bootstrap-llm-wiki.md` y los principios LLM Wiki: Markdown navegable, páginas pequeñas, enlaces, Git y alta señal.
 
-## 4. Construir la wiki sin inventar historia
+## 5. Construir memoria sin inventar historia
 
-Para un proyecto existente, la wiki inicial debe construirse mediante:
+Usa:
 
 - inspección del repositorio en modo lectura;
-- revisión de README, configuración, dependencias y estructura;
-- lectura de documentación existente;
-- revisión de issues y pull requests relevantes cuando estén disponibles;
+- README, configuración, dependencias y estructura;
+- documentación existente;
+- issues y pull requests relevantes;
 - conversación con la persona responsable;
-- registro explícito de dudas y contradicciones.
+- dudas y contradicciones explícitas.
 
-Los documentos deben usar estados claros:
+Clasifica hallazgos como:
 
 ```text
 Implementado
@@ -86,44 +91,24 @@ Deprecado
 Desconocido
 ```
 
-Una ausencia de evidencia debe registrarse como desconocida, no completarse con una inferencia presentada como hecho.
+## 6. Conversation Spaces progresivos
 
-## 5. Crear Conversation Spaces de forma progresiva
-
-Una vez que existe contexto mínimo, no propongas una taxonomía completa por defecto.
-
-El mínimo inicial es:
+Comienza con:
 
 ```text
 00 — Dirección y orquestación
 90 — Wiki y memoria
 ```
 
-La conversación `00` comienza como `Descubrimiento y adopción` y, terminada esa etapa, pasa a operar como `Dirección y orquestación`.
-
-Cuando comience el trabajo técnico, agrega:
+Cuando empiece el trabajo técnico:
 
 ```text
 30 — Ejecución y desarrollo
 ```
 
-Su función es preparar `Execution Tasks`, realizar handoffs y revisar resultados con evidencia.
+Agrega producto, arquitectura, QA, operaciones, comercial o cumplimiento solo cuando exista actividad recurrente o mezcla real de contexto.
 
-Agrega conversaciones opcionales solo cuando exista actividad recurrente, mezcla de contexto, fuentes propias, varias tareas relacionadas o necesidad de revisión especializada. Ejemplos:
-
-```text
-10 — Producto y UX
-20 — Arquitectura y datos
-40 — QA y seguridad
-```
-
-También pueden existir espacios específicos como operaciones, cumplimiento o comercial. Las iniciativas temporales pueden mantenerse en `00` o `30` mientras no justifiquen una conversación propia.
-
-Un proyecto pequeño puede mantenerse solo con `00`, `30` y `90`.
-
-## 6. Conectar conversación, wiki y aplicación
-
-El orquestador debe reconocer:
+## 7. Conectar conversación, wiki y aplicación
 
 ```text
 IA-DOS
@@ -139,46 +124,35 @@ Repositorio de aplicación
     conserva la implementación
 ```
 
-Cuando tenga acceso a la app, debe consultarla solo cuando sea necesario.
+Cuando no haya acceso al repositorio, solicita a un coding agent una inspección en modo lectura y un reporte estructurado.
 
-Cuando no tenga acceso, debe preparar instrucciones para que Codex, Claude Code, Antigravity u otro coding agent inspeccione y reporte.
-
-## 7. Relación con coding agents
-
-No existe una relación uno a uno entre Conversation Spaces y coding agents.
-
-La unidad de ejecución es:
+## 8. Relación con coding agents
 
 ```text
 1 Execution Task
-→ 1 ejecución acotada del coding agent
+→ 1 ejecución acotada
 → 1 resultado verificable
 → 1 Execution Report
 ```
 
-Un Conversation Space puede originar múltiples tareas. Las sesiones del coding agent ejecutan trabajo; no son memoria durable.
+Las sesiones del coding agent no son memoria durable.
 
-## 8. Primera tarea después de la adopción
+## 9. Primera tarea después de la adopción
 
-La primera tarea no debería ser una gran refactorización.
+Valida el flujo con una tarea de bajo riesgo:
 
-Debe ser una tarea de bajo riesgo que permita validar el flujo IA-DOS, por ejemplo:
-
-- documentar la arquitectura actual;
+- documentar arquitectura actual;
 - corregir un bug acotado;
-- añadir una prueba faltante;
+- añadir una prueba;
 - actualizar una funcionalidad pequeña;
 - verificar una integración.
 
-El orquestador prepara la `Execution Task`, el coding agent ejecuta y devuelve evidencia, y la wiki se actualiza si cambió el conocimiento durable.
-
 ## Resultado esperado
 
-Al finalizar este recorrido deben existir:
-
-- un Project Orchestrator dedicado;
-- una comprensión inicial del estado real;
-- una LLM Wiki creada o revisada;
-- preguntas y contradicciones registradas;
-- conversaciones mínimas definidas;
-- una primera tarea acotada para validar el modelo operativo.
+- Project Orchestrator dedicado;
+- producto objetivo clasificado con evidencia;
+- comprensión del estado real;
+- wiki creada o revisada;
+- contradicciones registradas;
+- conversaciones mínimas;
+- primera tarea acotada.
