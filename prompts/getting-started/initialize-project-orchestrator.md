@@ -185,12 +185,63 @@ Si el producto objetivo es existente:
 - verifica si existe una LLM Wiki usable;
 - si no existe, propón una conversación separada 90 — Wiki y memoria y constrúyela desde evidencia.
 
+En tu primera respuesta:
+- indica de forma visible el nombre que debe tener esta conversación;
+- pide al usuario renombrarla manualmente cuando la plataforma lo permita;
+- entrega un diagnóstico breve, no una auditoría extensa;
+- termina con una sección `Tu siguiente acción` que indique exactamente qué debe hacer o responder el usuario;
+- formula como máximo tres preguntas, priorizando solo las que desbloqueen el siguiente paso;
+- cuando debas definir la fuente canónica de tareas, recomienda una opción por defecto y explica que puede cambiarse después.
+
 Comienza confirmando:
 1. si pudiste acceder al repositorio IA-DOS o al pack de contexto;
 2. qué fuentes del proyecto están disponibles;
 3. el escenario detectado y su evidencia;
-4. el primer paso recomendado.
+4. el nombre recomendado para esta conversación;
+5. el primer paso recomendado.
 ```
+
+## Forma esperada de la primera respuesta
+
+La primera respuesta debe ser fácil de accionar y seguir este orden:
+
+```text
+Configuración inicial
+- Fuente de IA-DOS utilizada
+- Fuentes del proyecto disponibles
+- Producto objetivo: nuevo o existente
+- Evidencia breve
+
+Nombre de esta conversación
+Renombra este chat como:
+00 — Dirección y definición
+```
+
+Para un producto existente debe utilizar `00 — Descubrimiento y adopción`.
+
+Después debe incluir:
+
+```text
+Lo que ya entendí
+- síntesis breve de propósito, usuario, problema, alcance y restricciones
+
+Lo que falta resolver ahora
+- solo los vacíos que bloquean el siguiente paso
+
+Tu siguiente acción
+1. renombra la conversación;
+2. confirma o corrige la clasificación;
+3. responde una pregunta concreta o elige una opción recomendada.
+```
+
+Cuando la fuente canónica de tareas todavía no esté definida, no detengas el onboarding con una pregunta abierta. Recomienda:
+
+```text
+Recomendación inicial: GitHub Issues cuando exista un repositorio remoto.
+Alternativa temporal: tasks/ dentro de la LLM Wiki mientras no exista repositorio.
+```
+
+Solicita al usuario confirmar la recomendación o escoger la alternativa. Esa decisión no debe bloquear la definición de producto cuando todavía no comienza el desarrollo.
 
 ## Resultado esperado
 
@@ -201,6 +252,8 @@ El onboarding está completo cuando el asistente:
 - comprende el proyecto sin exigir un formulario pesado;
 - clasifica correctamente el producto objetivo;
 - evita repetir preguntas ya respondidas;
+- indica cómo renombrar la primera conversación;
+- termina cada respuesta inicial con una acción humana clara;
 - comienza en `00` y separa `90` cuando corresponda;
 - no salta prematuramente al código;
 - convierte la conversación en memoria durable y trabajo de desarrollo estructurado.
