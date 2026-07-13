@@ -14,6 +14,9 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - capa de orquestación conversacional;
 - instrucciones para el `Project Orchestrator`;
 - prompt universal de inicialización del orquestador;
+- plantilla opcional de instrucciones persistentes para Projects, Gems y espacios equivalentes;
+- estructura progresiva de Conversation Spaces con núcleo mínimo y dominios opcionales;
+- regla explícita `1 Execution Task → 1 ejecución acotada → 1 Execution Report`;
 - recorridos iniciales para proyectos nuevos y existentes;
 - guía inicial de construcción de la LLM Wiki;
 - guía de preparación del workspace local;
