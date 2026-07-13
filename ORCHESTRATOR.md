@@ -166,6 +166,59 @@ Cuando propongas alternativas:
 
 El bloque `Configuración inicial` y la instrucción para renombrar la conversación se muestran solo en la primera respuesta, salvo que cambie el escenario o el usuario solicite repetirlos.
 
+## Niveles de definición
+
+Avanza desde lo general hacia lo específico:
+
+```text
+1. Resultado esperado
+2. Comportamiento del producto
+3. Interacción del usuario
+4. Diseño de interfaz
+5. Implementación técnica
+```
+
+Reglas:
+
+- resuelve la decisión en el nivel actual;
+- desciende como máximo un nivel cuando la decisión anterior esté confirmada;
+- prioriza la decisión mínima, reversible y tecnológicamente neutral;
+- no inventes pantallas, botones, colores, tiempos, componentes, APIs o tecnologías antes de llegar al nivel correspondiente;
+- trata cualquier ejemplo más específico como propuesta no confirmada;
+- deriva el detalle visual a `Producto y UX` y el detalle técnico a `Arquitectura y datos` o `Ejecución y desarrollo` cuando corresponda.
+
+Ejemplo:
+
+```text
+Correcto: el usuario recibe una confirmación clara y puede continuar.
+Prematuro: aparece una notificación verde durante dos segundos y luego se limpia la pantalla.
+```
+
+## Ciclo de vida, reglas de negocio y permisos
+
+Cuando el flujo incluya transacciones, aprobaciones, estados, cierres o acciones auditables, define primero el ciclo de vida antes de decidir permisos, interfaz o implementación.
+
+Distingue, cuando corresponda:
+
+```text
+antes de confirmar → corrección
+tras confirmar → anulación o reversión
+tras cerrar → ajuste o proceso separado
+```
+
+No uses como sinónimos `editar`, `eliminar`, `anular`, `revertir` y `ajustar`. Cada acción debe tener un efecto y un momento explícitos.
+
+Antes de proponer permisos:
+
+- identifica los estados y transiciones relevantes;
+- define qué invariantes o totales derivados deben mantenerse correctos;
+- conserva el registro original y la trazabilidad cuando la operación sea sensible o auditable;
+- separa la regla de negocio del mecanismo visual o técnico de autorización;
+- asigna permisos a roles y contexto —por ejemplo, propiedad, sesión o estado—, no a nombres de personas;
+- no limites una capacidad a “la última operación” u otra regla temporal arbitraria sin evidencia.
+
+Cuando corresponda auditabilidad, registra al menos quién realizó la acción, cuándo ocurrió y por qué.
+
 ## Gate de salida de `00 — Dirección y definición`
 
 No propongas cerrar `00` ni crear `90 — Wiki y memoria` hasta que exista una síntesis suficiente y el usuario la apruebe explícitamente.

@@ -64,7 +64,47 @@ Una decisión solo se vuelve durable cuando queda registrada en `90 — Wiki y m
 
 Nunca describas al usuario como bloqueo. Utiliza `Pendiente de definición`, `Dependencia externa` o `Condición de detención`.
 
-## 5. Resultado de `00`
+## 5. Niveles de definición
+
+Avanza en este orden:
+
+```text
+Resultado esperado
+→ Comportamiento del producto
+→ Interacción del usuario
+→ Diseño de interfaz
+→ Implementación técnica
+```
+
+- resuelve la decisión en el nivel actual;
+- desciende como máximo un nivel cuando la decisión anterior esté confirmada;
+- prioriza la decisión mínima, reversible y tecnológicamente neutral;
+- no inventes pantallas, botones, tiempos, componentes, APIs o tecnologías antes del nivel correspondiente;
+- registra cualquier detalle más específico como propuesta no confirmada.
+
+## 6. Ciclo de vida y permisos
+
+En flujos con transacciones, aprobaciones, cierres o acciones auditables, define primero el ciclo de vida.
+
+Distingue cuando corresponda:
+
+```text
+antes de confirmar → corrección
+tras confirmar → anulación o reversión
+tras cerrar → ajuste o proceso separado
+```
+
+No mezcles `editar`, `eliminar`, `anular`, `revertir` y `ajustar`.
+
+Antes de definir permisos:
+
+- identifica estados y transiciones;
+- aclara qué totales o invariantes deben mantenerse correctos;
+- conserva trazabilidad en operaciones sensibles;
+- asigna permisos a roles y contexto, no a nombres de personas;
+- separa la regla de negocio del mecanismo visual o técnico de autorización.
+
+## 7. Resultado de `00`
 
 Produce una síntesis estructurada con:
 
@@ -87,7 +127,7 @@ No afirmes que existe una aplicación, arquitectura o integración que no haya s
 
 El bloque de configuración inicial y la instrucción para renombrar la conversación se muestran solo en la primera respuesta.
 
-## 6. Gate de salida de `00`
+## 8. Gate de salida de `00`
 
 No cierres `00` ni propongas `90 — Wiki y memoria` hasta que exista una síntesis suficiente y el usuario la apruebe explícitamente.
 
@@ -104,7 +144,7 @@ Verifica al menos:
 - ausencia de contradicciones críticas pendientes;
 - aprobación explícita del usuario a la síntesis inicial.
 
-## 7. Crear `90 — Wiki y memoria`
+## 9. Crear `90 — Wiki y memoria`
 
 Solo después de superar el gate anterior, propón una conversación separada:
 
@@ -116,7 +156,7 @@ No simules `90` como una sección dentro de `00` cuando la plataforma permita co
 
 La wiki se construye siguiendo `bootstrap-llm-wiki.md` y los principios LLM Wiki: Markdown navegable, páginas pequeñas, enlaces, Git, alta señal y separación entre fuentes, hechos, propuestas, decisiones y estado.
 
-## 8. Conversation Spaces progresivos
+## 10. Conversation Spaces progresivos
 
 Comienza con:
 
@@ -133,7 +173,7 @@ Cuando empiece el desarrollo:
 
 Agrega `10 — Producto y UX`, `20 — Arquitectura y datos`, `40 — QA y seguridad` u otros espacios solo cuando exista actividad recurrente o mezcla real de contexto.
 
-## 9. Preparar el entorno local
+## 11. Preparar el entorno local
 
 Cuando el proyecto entre en desarrollo:
 
@@ -147,7 +187,7 @@ proyectos/
 
 La capa conversacional puede existir antes de estas carpetas.
 
-## 10. Primera salida hacia desarrollo
+## 12. Primera salida hacia desarrollo
 
 Prepara una `Execution Task` pequeña, por ejemplo:
 

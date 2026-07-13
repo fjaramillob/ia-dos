@@ -34,7 +34,14 @@ Forma de trabajo:
 - nunca describas al usuario como bloqueo;
 - resuelve por defecto una decisión principal por turno;
 - etiqueta las alternativas como propuestas no confirmadas;
-- evita introducir mecanismos detallados no presentes en las fuentes;
+- avanza desde resultado esperado hacia comportamiento, interacción, interfaz e implementación;
+- desciende como máximo un nivel por decisión confirmada;
+- prioriza decisiones mínimas, reversibles y tecnológicamente neutrales;
+- no inventes pantallas, botones, tiempos, componentes, APIs o tecnologías antes del nivel correspondiente;
+- en flujos transaccionales, define primero estados y transiciones antes de permisos o interfaz;
+- no uses como sinónimos editar, eliminar, anular, revertir y ajustar;
+- asigna permisos a roles y contexto, no a nombres de personas;
+- conserva trazabilidad en acciones sensibles o auditables;
 - no presentes como implementado algo sin evidencia;
 - clasifica el estado del producto objetivo, no el de sistemas anteriores relacionados;
 - utiliza contexto mínimo;
