@@ -56,6 +56,7 @@ Para una primera adopción:
 ## Plantillas
 
 - [Project Intake Brief](../templates/project-intake-brief.template.md)
+- [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [Manifiesto de adopción](../templates/adoption.template.yaml)
 - [AGENTS.md para la app](../templates/AGENTS.template.md)
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
