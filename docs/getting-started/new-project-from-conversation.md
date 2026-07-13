@@ -1,129 +1,101 @@
 # Iniciar un proyecto nuevo desde la capa conversacional
 
-Este recorrido está pensado para una persona que quiere comenzar un proyecto nuevo utilizando un Project de ChatGPT, un Gem de Gemini, un Project de Claude o un entorno equivalente como punto de entrada.
+Este recorrido sirve para comenzar un producto objetivo nuevo desde un Project de ChatGPT, Gem de Gemini, Project de Claude o entorno equivalente.
 
-La primera etapa no consiste en elegir un framework ni pedir que se construya toda la aplicación. Consiste en darle dirección al proyecto y crear una base de contexto que después pueda convertirse en trabajo de desarrollo.
+## 1. Configurar el Project Orchestrator
 
-## 1. Crear el Project Orchestrator
+Utiliza `prompts/getting-started/initialize-project-orchestrator.md`.
 
-Crea un espacio dedicado al proyecto en la plataforma conversacional que utilices.
+Entrega como conocimiento:
 
-Ese espacio debe recibir como contexto:
+1. `bundles/ia-dos-project-orchestrator-pack.md`, especialmente cuando la plataforma no pueda navegar GitHub;
+2. una descripción inicial, PDF, documento o `templates/project-intake-brief.template.md`;
+3. cualquier fuente disponible: notas, referencias, restricciones, diseños o sistemas relacionados.
 
-- el repositorio IA-DOS o, cuando la plataforma no permita conectarlo completo, al menos `README.md`, `ORCHESTRATOR.md` y `docs/index.md`;
-- la instrucción general del proyecto;
-- cualquier fuente inicial disponible, como notas, documentos, referencias visuales o restricciones.
+El usuario no tiene que completar un formulario exhaustivo. El asistente debe extraer primero lo que ya está en las fuentes y preguntar solo por vacíos importantes.
 
-Cuando la plataforma permita instrucciones persistentes, puede aplicarse de forma opcional `templates/project-instructions.template.md`. Esta plantilla complementa IA-DOS, pero no reemplaza `ORCHESTRATOR.md` ni debe contener estado cambiante.
+## 2. Confirmar que el producto objetivo es nuevo
 
-El asistente debe reconocer que IA-DOS define cómo trabajar, no qué producto construir.
+Clasifica el producto que se quiere construir, no los sistemas anteriores mencionados como contexto.
 
-## 2. Primera conversación: `00 — Dirección y definición`
+Un sistema anterior, migración selectiva, reconstrucción o producto de referencia no convierte automáticamente al producto objetivo en existente.
 
-La primera conversación debe centrarse en entender el proyecto.
+El producto objetivo es nuevo cuando no existe evidencia propia de implementación como código, despliegue, usuarios, infraestructura o integraciones activas.
 
-El asistente debe ayudar a aclarar, de forma progresiva y sin convertir la conversación en un formulario rígido:
+## 3. Primera conversación: `00 — Dirección y definición`
 
-- qué problema se quiere resolver;
-- para quién existe el proyecto;
-- qué resultado debería producir;
-- cuál es el alcance inicial;
-- qué queda fuera de alcance;
-- cómo se espera que opere;
-- cuáles son sus flujos principales;
-- cómo debería verse y sentirse;
-- qué datos, integraciones o servicios podría necesitar;
-- qué restricciones existen de tiempo, coste, seguridad o tecnología;
-- qué decisiones todavía están abiertas;
-- cómo se reconocerá que la primera versión funciona.
+Comprende progresivamente:
 
-El asistente debe distinguir claramente hechos, preferencias, supuestos, propuestas y decisiones confirmadas.
-
-No debe transformar preferencias tempranas en decisiones técnicas definitivas sin confirmación.
-
-## 3. Resultado de la primera conversación
-
-La conversación debe terminar con una primera síntesis estructurada que pueda convertirse en archivos de la wiki.
-
-Como mínimo debe producir:
-
-- propósito del proyecto;
+- propósito;
 - usuario principal;
 - problema;
-- alcance inicial;
-- fuera de alcance;
-- comportamiento esperado;
-- dirección visual inicial;
+- resultado esperado;
+- alcance inicial y fuera de alcance;
+- funcionamiento y flujos;
+- dirección visual;
+- activos que ya existen;
+- sistemas relacionados y su relación;
 - restricciones;
 - decisiones confirmadas;
+- supuestos y preguntas abiertas;
+- criterios de éxito.
+
+Distingue hechos, preferencias, supuestos, propuestas y decisiones. No repitas preguntas ya respondidas por los documentos.
+
+No selecciones stack ni pidas construir la aplicación completa antes de contar con decisiones suficientes.
+
+## 4. Resultado de `00`
+
+Produce una síntesis estructurada con:
+
+- propósito;
+- usuario;
+- problema;
+- alcance y fuera de alcance;
+- comportamiento esperado;
+- dirección visual;
+- activos disponibles;
+- sistemas relacionados;
+- restricciones;
+- decisiones;
+- supuestos;
 - preguntas abiertas;
-- siguiente paso recomendado.
+- siguiente paso.
 
-Todavía no debe afirmar que existe una aplicación, arquitectura o integración que no haya sido creada.
+No afirmes que existe una aplicación, arquitectura o integración que no haya sido creada.
 
-## 4. Crear la LLM Wiki
+## 5. Crear `90 — Wiki y memoria`
 
-Después de definir el proyecto, el orquestador debe abrir o proponer:
+Cuando la definición sea suficiente, propón una conversación separada:
 
 ```text
 90 — Wiki y memoria
 ```
 
-Esa conversación utiliza la síntesis de dirección para crear la primera LLM Wiki del proyecto.
+No simules `90` como una sección dentro de `00` cuando la plataforma permita conversaciones separadas.
 
-La wiki debe separar lo que ya está decidido de lo que sigue siendo una propuesta. En un proyecto nuevo, `current-state.md` debe indicar que el producto todavía no está implementado y registrar únicamente los activos que sí existen.
+La wiki se construye siguiendo `bootstrap-llm-wiki.md` y los principios LLM Wiki: Markdown navegable, páginas pequeñas, enlaces, Git, alta señal y separación entre fuentes, hechos, propuestas, decisiones y estado.
 
-Consulta [Crear la LLM Wiki](bootstrap-llm-wiki.md).
+## 6. Conversation Spaces progresivos
 
-## 5. Crear Conversation Spaces de forma progresiva
-
-No abras una taxonomía completa de conversaciones desde el primer día.
-
-El mínimo inicial es:
+Comienza con:
 
 ```text
 00 — Dirección y orquestación
 90 — Wiki y memoria
 ```
 
-La conversación `00` comienza como `Dirección y definición` y, después de esa etapa, pasa a operar como `Dirección y orquestación`.
-
-Cuando comience el trabajo técnico, agrega:
+Cuando empiece el desarrollo:
 
 ```text
 30 — Ejecución y desarrollo
 ```
 
-Su función es preparar `Execution Tasks`, realizar handoffs hacia coding agents y revisar `Execution Reports`.
-
-Agrega conversaciones opcionales solo cuando exista actividad recurrente, mezcla de contexto, fuentes propias, varias tareas relacionadas o necesidad de revisión especializada. Ejemplos:
-
-```text
-10 — Producto y UX
-20 — Arquitectura y datos
-40 — QA y seguridad
-```
-
-Un proyecto pequeño puede mantenerse solo con `00`, `30` y `90`. No abras un chat solo porque un dominio existe conceptualmente.
-
-## 6. Relación con Codex, Antigravity u otros coding agents
-
-No existe una relación uno a uno entre Conversation Spaces y coding agents.
-
-La unidad de ejecución es:
-
-```text
-1 Execution Task
-→ 1 ejecución acotada del coding agent
-→ 1 resultado verificable
-→ 1 Execution Report
-```
-
-Un Conversation Space puede originar múltiples tareas. Las sesiones del coding agent ejecutan trabajo; no conservan la memoria canónica del proyecto.
+Agrega `10 — Producto y UX`, `20 — Arquitectura y datos`, `40 — QA y seguridad` u otros espacios solo cuando exista actividad recurrente o mezcla real de contexto.
 
 ## 7. Preparar el entorno local
 
-Cuando el proyecto vaya a entrar en desarrollo, se crea o incorpora el workspace local recomendado:
+Cuando el proyecto entre en desarrollo:
 
 ```text
 proyectos/
@@ -133,28 +105,25 @@ proyectos/
     └── nombre-proyecto-wiki/
 ```
 
-La capa conversacional puede existir antes que estas carpetas. La clonación local comienza cuando el usuario necesita trabajar con repositorios, archivos, agentes de desarrollo o Git.
+La capa conversacional puede existir antes de estas carpetas.
 
 ## 8. Primera salida hacia desarrollo
 
-El orquestador no debe pedir al coding agent que construya todo el producto de una vez.
+Prepara una `Execution Task` pequeña, por ejemplo:
 
-Debe preparar una primera `Execution Task` acotada, por ejemplo:
-
-- inicializar la aplicación con el stack ya decidido;
-- crear la estructura base sin implementar funcionalidades;
+- inicializar la aplicación con un stack ya decidido;
+- crear estructura base;
 - construir un primer flujo vertical verificable;
-- inspeccionar y documentar una decisión técnica antes de implementarla.
+- inspeccionar una decisión técnica antes de implementarla.
 
-La tarea debe incluir contexto mínimo, alcance, fuera de alcance, criterios de aceptación, pruebas y condiciones de detención.
+La tarea debe incluir contexto mínimo, alcance, fuera de alcance, criterios, pruebas y condiciones de detención.
 
 ## Resultado esperado
 
-Al finalizar este recorrido deben existir:
-
-- un Project Orchestrator contextualizado con IA-DOS;
-- una definición inicial del proyecto;
-- una LLM Wiki mínima;
-- una separación clara entre decisiones, propuestas y preguntas abiertas;
-- una estructura mínima de conversaciones;
-- una primera tarea de desarrollo acotada.
+- Project Orchestrator configurado;
+- descripción inicial suficiente;
+- producto objetivo clasificado correctamente;
+- definición inicial estructurada;
+- LLM Wiki mínima;
+- conversaciones mínimas;
+- primera tarea acotada.
