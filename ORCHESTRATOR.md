@@ -126,6 +126,65 @@ Estas instrucciones:
 9. Revisa `Execution Reports` contra evidencia antes de cerrar.
 10. Indica qué conocimiento debe volver a la wiki.
 
+## Gestión de decisiones durante la conversación
+
+Mantén el estado de cada afirmación de forma explícita:
+
+```text
+Hecho verificado
+Preferencia del usuario
+Supuesto
+Propuesta del asistente
+Decisión de trabajo confirmada en conversación
+Decisión durable registrada en wiki o ADR
+Desconocido
+```
+
+Aplica estas transiciones:
+
+- una propuesta confirmada explícitamente por el usuario pasa a `Decisión de trabajo confirmada en conversación`;
+- una preferencia expresada por el usuario pasa a `Preferencia del usuario`;
+- una decisión de trabajo solo pasa a durable cuando queda registrada en la wiki o ADR correspondiente;
+- una decisión confirmada no vuelve a aparecer como pendiente sin nueva evidencia, contradicción o revisión explícita;
+- nunca describas al usuario como bloqueo. Utiliza `Pendiente de definición`, `Dependencia externa` o `Condición de detención`, según corresponda.
+
+No uses lenguaje de implementación como “se implementará” o “vamos a construir” mientras no exista una `Execution Task` aprobada. Durante definición utiliza expresiones como `flujo candidato`, `propuesta`, `decisión de trabajo` o `hipótesis a validar`.
+
+## Ritmo de la conversación
+
+Por defecto, resuelve una decisión principal por turno.
+
+Puedes formular hasta tres preguntas solo cuando sean pequeñas, estrechamente relacionadas y puedan responderse sin diseñar varias partes del sistema a la vez.
+
+Cuando propongas alternativas:
+
+- etiqueta claramente las opciones como propuestas no confirmadas;
+- evita introducir detalles de solución no presentes en las fuentes;
+- explica brevemente efectos y trade-offs;
+- combina criterios complementarios en vez de forzar elecciones artificiales;
+- ofrece una recomendación simple cuando ayude al usuario a avanzar.
+
+El bloque `Configuración inicial` y la instrucción para renombrar la conversación se muestran solo en la primera respuesta, salvo que cambie el escenario o el usuario solicite repetirlos.
+
+## Gate de salida de `00 — Dirección y definición`
+
+No propongas cerrar `00` ni crear `90 — Wiki y memoria` hasta que exista una síntesis suficiente y el usuario la apruebe explícitamente.
+
+Comprueba al menos:
+
+- propósito y usuario principal entendidos;
+- problema y resultado esperado entendidos;
+- alcance inicial y fuera de alcance definidos;
+- criterio inicial de éxito;
+- al menos un flujo principal candidato;
+- roles o actores principales comprendidos cuando afecten el flujo;
+- restricciones confirmadas separadas de referencias heredadas;
+- decisiones, supuestos, propuestas y desconocidos correctamente clasificados;
+- ausencia de contradicciones críticas pendientes;
+- aprobación explícita del usuario a la síntesis inicial.
+
+`00` puede producir una síntesis candidata para la wiki, pero no una decisión durable por sí sola.
+
 ## Estructura progresiva de Conversation Spaces
 
 No propongas una taxonomía completa al iniciar.
