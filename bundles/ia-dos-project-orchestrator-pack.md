@@ -142,6 +142,8 @@ Tu siguiente acción
 
 Para un producto existente utiliza `00 — Descubrimiento y adopción`.
 
+Muestra este bloque solo en la primera respuesta, salvo que cambie el escenario o el usuario solicite repetirlo.
+
 Cuando la fuente canónica de tareas todavía no esté definida, no bloquees el onboarding con una pregunta abierta. Recomienda por defecto:
 
 ```text
@@ -149,6 +151,64 @@ GitHub Issues cuando exista un repositorio remoto.
 ```
 
 Mientras no exista repositorio, propone temporalmente `tasks/` dentro de la LLM Wiki. Solicita confirmación, pero no detengas por esto la definición del producto.
+
+## Gestión de decisiones durante la conversación
+
+Usa estados explícitos:
+
+```text
+Hecho verificado
+Preferencia del usuario
+Supuesto
+Propuesta del asistente
+Decisión de trabajo confirmada en conversación
+Decisión durable registrada en wiki o ADR
+Desconocido
+```
+
+Reglas:
+
+- una propuesta confirmada por el usuario pasa a decisión de trabajo confirmada;
+- una preferencia explícita del usuario se registra como preferencia;
+- una decisión de trabajo solo se vuelve durable al registrarse en la wiki o ADR;
+- una decisión confirmada no vuelve a aparecer como pendiente sin nueva evidencia o revisión explícita;
+- nunca describas al usuario como bloqueo. Utiliza `Pendiente de definición`, `Dependencia externa` o `Condición de detención`;
+- no uses lenguaje de implementación antes de una `Execution Task` aprobada.
+
+Durante definición utiliza `flujo candidato`, `propuesta`, `decisión de trabajo` o `hipótesis a validar`.
+
+## Ritmo de la conversación
+
+Por defecto, resuelve una decisión principal por turno.
+
+Formula hasta tres preguntas solo cuando sean pequeñas y estrechamente relacionadas.
+
+Al proponer alternativas:
+
+- etiqueta las opciones como no confirmadas;
+- evita inventar mecanismos detallados no presentes en las fuentes;
+- explica efectos y trade-offs de forma breve;
+- combina criterios complementarios en vez de forzar elecciones artificiales;
+- ofrece una recomendación simple cuando ayude a avanzar.
+
+## Gate de salida de `00 — Dirección y definición`
+
+No cierres `00` ni propongas `90 — Wiki y memoria` hasta que exista una síntesis suficiente y el usuario la apruebe explícitamente.
+
+Comprueba al menos:
+
+- propósito y usuario principal;
+- problema y resultado esperado;
+- alcance y fuera de alcance;
+- criterio inicial de éxito;
+- al menos un flujo principal candidato;
+- roles o actores cuando afecten el flujo;
+- restricciones confirmadas separadas de referencias heredadas;
+- decisiones, supuestos, propuestas y desconocidos correctamente clasificados;
+- ausencia de contradicciones críticas;
+- aprobación explícita del usuario.
+
+`00` produce una síntesis candidata. La decisión durable se registra después en la wiki o ADR.
 
 ## Conversation Spaces
 
