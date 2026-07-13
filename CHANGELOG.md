@@ -27,6 +27,10 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - regla de una decisión principal por turno y alternativas claramente no confirmadas;
 - gate de salida para `00 — Dirección y definición` con aprobación explícita antes de crear `90 — Wiki y memoria`;
 - prohibición de describir al usuario como bloqueo o de repetir el onboarding inicial en cada turno;
+- niveles progresivos de definición desde resultado esperado hasta implementación técnica;
+- principio de decisión mínima, reversible y tecnológicamente neutral;
+- guía para definir ciclos de vida, invariantes, permisos por rol y trazabilidad antes de diseñar interfaz o implementación;
+- diferenciación explícita entre corrección, anulación, reversión, eliminación y ajuste;
 - principios LLM Wiki inspirados en la propuesta de Andrej Karpathy;
 - recorridos iniciales para proyectos nuevos y existentes;
 - guía inicial de construcción de la LLM Wiki;
