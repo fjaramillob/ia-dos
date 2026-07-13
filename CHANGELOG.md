@@ -21,10 +21,14 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - regla explícita `1 Execution Task → 1 ejecución acotada → 1 Execution Report`;
 - clasificación basada en el producto objetivo y no en sistemas anteriores relacionados;
 - separación explícita entre `00` y `90` cuando la plataforma permite varias conversaciones;
-- guía de primera respuesta accionable con nombre recomendado del chat, siguiente acción humana y máximo tres preguntas prioritarias;
+- guía de primera respuesta accionable con nombre recomendado del chat y siguiente acción humana;
+- distinción explícita entre fuente canónica y fuente operativa de IA-DOS;
+- guía conversacional para utilizar lenguaje natural y mantener los niveles metodológicos como andamiaje interno;
+- regla reforzada de una decisión principal por turno, sin mezclar decisiones distintas;
+- prohibición de inventar porcentajes, días, semanas o umbrales sin evidencia;
+- regla que impide presentar `90 — Wiki y memoria` como siguiente paso automático antes de superar el gate;
 - recomendación por defecto de GitHub Issues como fuente canónica de tareas cuando existe repositorio remoto;
 - gestión explícita de estados entre hechos, preferencias, propuestas, decisiones conversacionales y decisiones durables;
-- regla de una decisión principal por turno y alternativas claramente no confirmadas;
 - gate de salida para `00 — Dirección y definición` con aprobación explícita antes de crear `90 — Wiki y memoria`;
 - prohibición de describir al usuario como bloqueo o de repetir el onboarding inicial en cada turno;
 - niveles progresivos de definición desde resultado esperado hasta implementación técnica;
