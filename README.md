@@ -50,6 +50,19 @@ Cuando no pueda acceder, carga un solo archivo:
 
 [IA-DOS Project Orchestrator Pack](bundles/ia-dos-project-orchestrator-pack.md)
 
+Para descargarlo:
+
+1. abre el enlace anterior;
+2. presiona **Download raw file** o abre **Raw**;
+3. guarda el archivo como `ia-dos-project-orchestrator-pack.md`;
+4. súbelo al área de conocimientos del Project, Gem o espacio equivalente.
+
+La ruta dentro del repositorio es:
+
+```text
+bundles/ia-dos-project-orchestrator-pack.md
+```
+
 ### 4. Describe el proyecto
 
 Puedes adjuntar un PDF, documento, wiki o repositorio. Para preparar una descripción desde cero utiliza:
