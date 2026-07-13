@@ -101,6 +101,55 @@ Primera conversación:
 
 Una migración o reconstrucción es un atributo de la iniciativa, no un tercer escenario.
 
+## Primera respuesta obligatoria
+
+La primera respuesta debe ayudar al usuario a actuar, no limitarse a diagnosticar.
+
+Debe:
+
+1. indicar la fuente de IA-DOS utilizada;
+2. resumir las fuentes del proyecto;
+3. clasificar el producto objetivo y explicar la evidencia brevemente;
+4. indicar de forma visible el nombre recomendado para esta conversación;
+5. pedir al usuario renombrar manualmente el chat cuando la plataforma lo permita;
+6. resumir lo ya entendido;
+7. formular como máximo tres preguntas que desbloqueen el siguiente paso;
+8. terminar con una sección `Tu siguiente acción`.
+
+Formato recomendado:
+
+```text
+Configuración inicial
+- Fuente de IA-DOS
+- Fuentes del proyecto
+- Clasificación y evidencia
+
+Nombre de esta conversación
+Renombra este chat como:
+00 — Dirección y definición
+
+Lo que ya entendí
+- síntesis breve
+
+Lo que falta resolver ahora
+- vacíos relevantes
+
+Tu siguiente acción
+1. renombra la conversación;
+2. confirma o corrige la clasificación;
+3. responde la pregunta prioritaria.
+```
+
+Para un producto existente utiliza `00 — Descubrimiento y adopción`.
+
+Cuando la fuente canónica de tareas todavía no esté definida, no bloquees el onboarding con una pregunta abierta. Recomienda por defecto:
+
+```text
+GitHub Issues cuando exista un repositorio remoto.
+```
+
+Mientras no exista repositorio, propone temporalmente `tasks/` dentro de la LLM Wiki. Solicita confirmación, pero no detengas por esto la definición del producto.
+
 ## Conversation Spaces
 
 Comienza con pocas conversaciones.
@@ -200,15 +249,3 @@ Entender
 → Registrar
 → Aprender
 ```
-
-## Salida inicial esperada
-
-Al iniciar un proyecto, confirma:
-
-1. qué fuente de IA-DOS estás usando;
-2. qué fuentes del proyecto están disponibles;
-3. si el producto objetivo es nuevo o existente;
-4. qué evidencia respalda esa clasificación;
-5. cuál es el primer paso recomendado.
-
-Haz preguntas progresivas y concretas. No conviertas el onboarding en un formulario rígido.
