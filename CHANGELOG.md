@@ -21,6 +21,8 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - regla explícita `1 Execution Task → 1 ejecución acotada → 1 Execution Report`;
 - clasificación basada en el producto objetivo y no en sistemas anteriores relacionados;
 - separación explícita entre `00` y `90` cuando la plataforma permite varias conversaciones;
+- guía de primera respuesta accionable con nombre recomendado del chat, siguiente acción humana y máximo tres preguntas prioritarias;
+- recomendación por defecto de GitHub Issues como fuente canónica de tareas cuando existe repositorio remoto;
 - principios LLM Wiki inspirados en la propuesta de Andrej Karpathy;
 - recorridos iniciales para proyectos nuevos y existentes;
 - guía inicial de construcción de la LLM Wiki;
