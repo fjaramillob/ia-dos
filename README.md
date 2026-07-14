@@ -2,9 +2,9 @@
 
 **Intelligence-Assisted Development Operating System**
 
-Framework abierto para organizar proyectos de software desarrollados con asistencia de inteligencia artificial.
+IA-DOS es un framework operativo abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, memoria durable, ejecución acotada y verificación basada en evidencia.
 
-IA-DOS coordina:
+Coordina:
 
 - la persona que dirige el proyecto;
 - ChatGPT, Gemini, Claude u otros asistentes conversacionales;
@@ -12,6 +12,8 @@ IA-DOS coordina:
 - la LLM Wiki;
 - el repositorio de aplicación;
 - tareas, decisiones, pruebas y revisiones.
+
+IA-DOS no es un sistema operativo, un curso de Python ni una librería para construir agentes autónomos.
 
 ## Qué problema resuelve
 
@@ -40,13 +42,29 @@ El producto toma forma mediante ciclos reales de producto, arquitectura, desarro
 
 Para personas que construyen con IA y necesitan mantener control sobre producto, arquitectura, repositorios, datos, tareas y agentes, aunque no sean programadores expertos.
 
+## Accesos rápidos
+
+- [Instalar IA-DOS en el workspace local](docs/getting-started/install-ia-dos.md)
+- [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
+- [Consultar la documentación](docs/index.md)
+
 ## Empieza en cinco pasos
 
-### 1. Crea el espacio del proyecto
+### 1. Instala IA-DOS en el workspace local
+
+Cuando el proyecto vaya a trabajar con repositorios, archivos, Git o coding agents, sigue:
+
+[Instalar IA-DOS en el workspace local](docs/getting-started/install-ia-dos.md)
+
+La guía incluye comandos para Windows PowerShell, macOS y Linux, además de verificaciones y condiciones de detención.
+
+La instalación local no es obligatoria para comenzar desde un asistente conversacional.
+
+### 2. Crea el espacio del proyecto
 
 Utiliza un Project de ChatGPT, Gem de Gemini, Project de Claude o equivalente.
 
-### 2. Configura el Project Orchestrator
+### 3. Configura el Project Orchestrator
 
 Sigue:
 
@@ -59,7 +77,7 @@ Ese recorrido entrega:
 - conocimientos que debes cargar;
 - primer mensaje.
 
-### 3. Entrega IA-DOS al asistente
+### 4. Entrega IA-DOS al asistente y describe el proyecto
 
 Cuando la plataforma pueda navegar GitHub, utiliza este repositorio.
 
@@ -73,8 +91,6 @@ Para descargarlo:
 2. presiona **Download raw file** o abre **Raw**;
 3. guarda el archivo como `ia-dos-project-orchestrator-pack.md`;
 4. súbelo al área de conocimientos del Project, Gem o espacio equivalente.
-
-### 4. Describe el proyecto
 
 Puedes adjuntar un PDF, documento, wiki o repositorio. Para preparar una descripción desde cero utiliza:
 
@@ -119,21 +135,16 @@ En un producto nuevo comienza como:
 00 — Dirección y definición
 ```
 
-Después de la alineación mínima, una configuración frecuente es:
+Después de la alineación mínima, una secuencia frecuente es:
 
 ```text
+90 — Wiki y memoria
 10 — Producto y UX
 20 — Arquitectura y stack
-90 — Wiki y memoria
-```
-
-Cuando exista un primer flujo candidato y una dirección técnica suficiente:
-
-```text
 30 — Ejecución y desarrollo
 ```
 
-Los espacios se adaptan al proyecto. No se crean por obligación.
+`20` debe recibir el handoff de producto y `30` debe recibir producto y arquitectura. Los espacios se adaptan al proyecto y no se crean por obligación.
 
 ## Flujo de ejecución
 
@@ -172,12 +183,23 @@ Es una recomendación fuerte, no una obligación.
 
 IA-DOS no es:
 
+- un sistema operativo DOS;
+- un curso o módulo educativo de Python;
+- una librería Python;
+- un tutorial para construir agentes autónomos;
+- un framework basado necesariamente en LangChain o LangGraph;
 - un evaluador de ideas;
 - una herramienta que programa sola;
 - un agente autónomo sin supervisión;
 - una aplicación SaaS;
 - un reemplazo de GitHub, Obsidian, Spec Kit, OpenSpec o coding agents;
 - una garantía de ausencia de errores.
+
+## Discoverability
+
+IA-DOS busca ser comprensible para personas, buscadores y asistentes de IA a partir de sus fuentes públicas verificables.
+
+Consulta [Discoverability de IA-DOS](docs/discoverability/index.md).
 
 ## Documentación
 
