@@ -1,168 +1,145 @@
 # Modelo operativo
 
-IA-DOS organiza el desarrollo asistido por inteligencia artificial mediante un ciclo simple:
+IA-DOS organiza el desarrollo asistido por inteligencia artificial mediante un ciclo simple y repetible:
 
 ```text
 Dirigir
-→ entender
-→ documentar
+→ explorar
+→ decidir
 → delimitar
-→ ejecutar
+→ materializar
 → verificar
-→ registrar
+→ registrar y aprender
 ```
+
+La documentación y la LLM Wiki acompañan todo el ciclo. No constituyen una fase exhaustiva previa al desarrollo.
 
 ## 1. Dirigir
 
-El proyecto comienza en una capa de dirección y orquestación.
+La persona responsable y el Project Orchestrator mantienen propósito, prioridades, restricciones y siguiente resultado.
 
-Puede implementarse mediante un Project de ChatGPT, un Gem de Gemini, un Project de Claude u otro asistente conversacional.
+La conversación principal no debe acumular todos los detalles. Debe saber dónde vive cada tema, qué decisión falta y qué espacio o tarea desbloquea el siguiente paso.
 
-Esta capa debe:
+## 2. Explorar
 
-- mantener la visión general del proyecto;
-- separar conversaciones por dominio cuando sea útil;
-- identificar prioridades y decisiones abiertas;
-- distinguir conversaciones exploratorias de decisiones aprobadas;
-- convertir necesidades en trabajo estructurado;
-- seleccionar el contexto necesario para cada tarea;
-- coordinar el retorno de resultados hacia la wiki.
+Se revisa la evidencia suficiente para reducir supuestos:
 
-La conversación principal de dirección no debe acumular todos los detalles. Debe saber dónde vive cada tema y cuál es el siguiente paso correcto.
-
-## 2. Entender
-
-Antes de modificar un proyecto, se debe revisar su estado real.
-
-Esto puede incluir:
-
-- propósito del producto;
-- estructura del repositorio;
-- arquitectura actual;
+- propósito y usuario;
+- estado real del producto;
+- repositorios y documentación relevante;
 - decisiones vigentes;
-- riesgos;
-- pruebas existentes;
-- cambios locales pendientes;
-- límites de acceso, coste o seguridad.
+- riesgos, accesos y restricciones;
+- pruebas o cambios pendientes cuando existan.
 
-El objetivo es reducir supuestos.
+Explorar no significa auditar todo. Si falta acceso, debe declararse y no completarse el vacío mediante invención.
 
-El orquestador puede consultar la wiki y el repositorio de aplicación. Si no tiene acceso suficiente, debe señalarlo y evitar inventar información.
+## 3. Decidir
 
-## 3. Documentar
+Se confirma la decisión mínima que permite avanzar. Puede ser una decisión de producto, comportamiento, arquitectura, alcance o prioridad.
 
-El contexto importante debe quedar fuera de la conversación.
+Distingue:
 
-IA-DOS recomienda una LLM Wiki versionada que contenga, según corresponda:
+```text
+hecho verificado
+preferencia
+supuesto
+propuesta
+decisión de trabajo
+decisión durable
+desconocido
+```
 
-- visión y alcance;
-- usuarios y producto;
-- estado actual;
-- arquitectura;
-- decisiones;
-- riesgos;
-- fuentes;
-- preguntas abiertas;
-- Context Packs.
-
-La wiki describe el proyecto. No reemplaza el código ni debe contener secretos.
-
-Las decisiones tomadas en ChatGPT, Gemini u otro asistente deben regresar a la wiki, a un ADR, a un issue o al artefacto canónico correspondiente.
+Las decisiones durables regresan a la wiki, un ADR o el artefacto canónico correspondiente.
 
 ## 4. Delimitar
 
-Antes de pedir una implementación, se define una unidad de trabajo acotada.
+Antes de modificar un repositorio se define una unidad de trabajo acotada.
 
-La `Execution Task` debe indicar:
+La `Execution Task` indica:
 
 - objetivo;
-- problema o evidencia inicial;
-- contexto mínimo y rutas que deben leerse;
-- alcance;
-- fuera de alcance;
+- evidencia o contexto inicial;
+- rutas que deben leerse;
+- alcance y fuera de alcance;
 - archivos o repositorios autorizados;
-- guardrails;
 - criterios de aceptación;
-- pruebas esperadas;
+- pruebas y validaciones;
 - condiciones de detención;
 - documentación que debe actualizarse;
 - formato del reporte final.
 
-El orquestador utiliza esta información para preparar un prompt adaptado a Codex, Claude Code, Antigravity u otro coding agent.
-
-## 5. Ejecutar
+## 5. Materializar
 
 El coding agent trabaja dentro de los límites declarados.
 
-Durante esta etapa debe:
+Debe:
 
 - inspeccionar antes de modificar;
-- leer únicamente el contexto necesario;
+- leer solo el contexto necesario;
 - evitar cambios no solicitados;
-- no introducir dependencias sin justificación;
-- detenerse si falta una decisión importante;
-- registrar los archivos modificados;
-- devolver un reporte estructurado.
+- detenerse ante una decisión faltante o riesgo crítico;
+- modificar únicamente rutas autorizadas;
+- ejecutar las validaciones aplicables;
+- devolver un `Execution Report`.
 
-El coding agent no debe recibir automáticamente todo IA-DOS, toda la wiki o todos los proyectos del workspace.
+La materialización puede afectar código, documentación o LLM Wiki según la tarea autorizada.
 
 ## 6. Verificar
 
-El resultado se comprueba mediante evidencia aplicable al tipo de cambio.
-
-Puede incluir:
+El resultado se comprueba mediante evidencia aplicable al cambio:
 
 - revisión del diff;
-- lint;
-- typecheck;
-- build;
+- lint, typecheck o build;
 - pruebas unitarias o de integración;
-- revisión visual;
+- revisión visual o manual reproducible;
 - revisión de seguridad;
-- prueba manual reproducible;
-- capturas o logs relevantes.
+- validación de Markdown, enlaces, YAML o estructura documental;
+- capturas y logs relevantes.
 
-No todos los controles aplican a todas las tareas, pero toda tarea debe indicar cómo fue verificada.
+El Project Orchestrator compara el resultado con la tarea. La afirmación del agente no reemplaza la evidencia.
 
-El orquestador compara el reporte con la `Execution Task`, identifica faltantes y evita tratar una afirmación del agente como prueba suficiente.
-
-## 7. Registrar
+## 7. Registrar y aprender
 
 Al cerrar el trabajo se actualiza la fuente de verdad correspondiente:
 
-- código en el repositorio de aplicación;
-- decisión en la wiki;
+- implementación en el repositorio de aplicación;
+- decisión, estado o arquitectura en la wiki;
 - evidencia en el pull request o reporte;
-- estado de la tarea en el issue o mecanismo elegido;
-- documentación cuando cambió el comportamiento del sistema;
-- Context Pack cuando cambió información transversal o de dominio.
+- estado de la tarea en el issue;
+- documentación cuando cambió el comportamiento;
+- Context Pack cuando cambió información transversal.
+
+La wiki se puebla progresivamente. No necesita actualizarse por cada conversación o cambio menor.
 
 ## Arquitectura de trabajo
 
 ```text
 IA-DOS
-    define cómo trabajar
+    define el método
+
+Persona responsable
+    dirige, confirma y autoriza
 
 Project Orchestrator
-    dirige, separa conversaciones y prepara trabajo
+    organiza, delimita y revisa
 
-Wiki del proyecto
-    explica qué se construye, por qué y cuál es su estado
+Conversation Spaces
+    razonan por dominio
 
-Repositorio de aplicación
-    contiene la implementación
-
-Issues o Execution Tasks
-    delimitan el trabajo
+Execution Tasks
+    delimitan cambios
 
 Coding agents
-    inspeccionan, implementan y prueban
+    inspeccionan, materializan y prueban
 
-Branches, commits y pull requests
-    trazan los cambios
+Repositorios y Git
+    contienen y trazan cambios
 
-Pruebas y revisiones
-    verifican el resultado
+Pruebas, PRs y reportes
+    verifican resultados
+
+LLM Wiki
+    conserva contexto y aprendizaje durable
 ```
 
 ## Flujo de contexto
@@ -173,27 +150,25 @@ IA-DOS
 Project Orchestrator
     ↓ CORE + Context Pack + Execution Task
 Coding agent
-    ↓ código + pruebas + reporte
-Project Orchestrator
-    ↓ revisión y síntesis
+    ↓ cambios + pruebas + Execution Report
+Project Orchestrator y persona responsable
+    ↓ revisión, decisión y aprobación
 Wiki / issue / ADR / PR
 ```
 
 ## Fuentes de verdad
 
-IA-DOS busca evitar que la misma información se mantenga manualmente en varios lugares.
-
 | Tipo de información | Destino recomendado |
 |---|---|
-| Propósito y estado del proyecto | Wiki |
-| Arquitectura vigente | Wiki |
-| Decisión durable | Registro de decisión en la wiki |
+| Propósito y estado del proyecto | LLM Wiki |
+| Arquitectura vigente | LLM Wiki |
+| Decisión durable | ADR o registro de decisión en la wiki |
 | Instrucciones del orquestador | Configuración del Project, Gem o archivo de orquestación |
 | Instrucciones para coding agents | `AGENTS.md` |
-| Trabajo pendiente | GitHub Issue o mecanismo elegido por el proyecto |
+| Trabajo pendiente | GitHub Issue o mecanismo elegido |
 | Alcance del cambio | `Execution Task` |
 | Implementación | Repositorio de aplicación |
-| Revisión y evidencia del cambio | Pull request o reporte de ejecución |
-| Estándar común reutilizable | Repositorio IA-DOS |
+| Revisión y evidencia | Pull request y `Execution Report` |
+| Estándar reutilizable | Repositorio IA-DOS |
 
-La tarea puede enlazar estos artefactos, pero no debe duplicarlos sin necesidad.
+Los artefactos pueden enlazarse, pero no deben duplicarse sin necesidad.
