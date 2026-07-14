@@ -2,7 +2,7 @@
 
 La LLM Wiki es la memoria durable del proyecto. Permite que personas y asistentes comprendan qué se está construyendo, cuál es su estado real, qué decisiones están vigentes y dónde encontrar las fuentes.
 
-No reemplaza el código, los issues ni los pull requests. Tampoco debe convertirse en una copia completa del repositorio o del historial de chats.
+No reemplaza el código, los issues ni los pull requests. Tampoco debe convertirse en una copia completa del repositorio, una auditoría permanente ni un duplicado del historial de chats.
 
 ## Principios LLM Wiki
 
@@ -31,27 +31,51 @@ IA-DOS agrega encima de estos principios:
 
 Esto es una implementación inspirada y compatible con esos principios, no una distribución oficial del sistema de Karpathy.
 
-## Cuándo crearla
+## Principio operativo
 
-Créala:
+La wiki se **instala temprano y se puebla progresivamente**.
+
+Su propósito inicial no es documentar todo el proyecto. Es ofrecer una estructura mínima y estable para que el Project Orchestrator, Codex, Antigravity, Claude Code u otro coding agent sepan:
+
+- qué proyecto están leyendo;
+- qué está confirmado;
+- qué existe realmente;
+- qué falta decidir;
+- dónde están las fuentes;
+- qué contexto deben cargar para la siguiente tarea.
+
+No detengas el primer vertical slice para completar documentación sin evidencia.
+
+## Cuándo crearla o conectarla
+
+Créala o conéctala:
 
 - después de la primera definición de un proyecto nuevo;
 - al adoptar un proyecto existente sin memoria estructurada;
-- cuando la documentación está dispersa o desactualizada;
-- antes de aumentar el número de agentes o conversaciones;
-- antes de delegar tareas complejas que dependen de historia o decisiones previas.
+- antes de delegar tareas que dependan de historia o decisiones previas;
+- antes de aumentar significativamente el número de agentes o conversaciones;
+- cuando la documentación existente no permite saber con claridad dónde está parado el proyecto.
 
-## Conversación recomendada
+## `90 — Wiki y memoria` es opcional
 
-Utiliza una conversación separada:
+No es obligatorio abrir `90 — Wiki y memoria` para instalar la wiki inicial.
+
+La estructura mínima puede crearse mediante una tarea documental acotada usando decisiones ya confirmadas en `00`.
+
+Abre una conversación separada cuando exista trabajo real de:
+
+- síntesis;
+- contradicciones;
+- consolidación de decisiones durables;
+- mantenimiento documental;
+- recuperación de una wiki desordenada;
+- preparación de contexto para varios agentes.
 
 ```text
 90 — Wiki y memoria
 ```
 
-La conversación `00` puede preparar una síntesis candidata, pero no debe simular `90` como una sección dentro del mismo chat cuando la plataforma permite conversaciones separadas.
-
-`90` sintetiza, ordena, enlaza y mantiene conocimiento confirmado. No toma por sí sola decisiones de producto o arquitectura.
+`90` ordena y mantiene conocimiento confirmado. No debe transformarse en una auditoría exhaustiva previa al desarrollo ni tomar por sí sola decisiones de producto o arquitectura.
 
 ## Estructura mínima recomendada
 
@@ -75,7 +99,22 @@ nombre-proyecto-wiki/
     └── core.md
 ```
 
-Agrega nuevas carpetas solo cuando exista contenido y una necesidad real.
+Esta es una estructura base, no una obligación de llenar todos los archivos de inmediato.
+
+Agrega nuevas carpetas solo cuando exista contenido y una necesidad real. No crees páginas receptoras, plantillas o secciones vacías solo para anticipar conversaciones futuras.
+
+## Poblamiento inicial mínimo
+
+Al comenzar, basta con poblar:
+
+- `index.md`;
+- `project-brief.md`;
+- `current-state.md`;
+- `AGENTS.md`;
+- `.ia-dos.yaml`;
+- `context-packs/core.md`.
+
+`architecture.md`, ADRs, tareas, fuentes y otras páginas se completan cuando exista evidencia o una decisión real que registrar.
 
 ## Función de cada archivo
 
@@ -85,7 +124,7 @@ Punto de entrada y mapa de navegación. Debe indicar qué contiene la wiki, cuá
 
 ### `project-brief.md`
 
-Resume propósito, usuario, problema, propuesta de valor, alcance, fuera de alcance, comportamiento esperado, dirección visual y restricciones.
+Resume propósito, usuario, problema, propuesta de valor, alcance, fuera de alcance, comportamiento esperado y restricciones conocidas.
 
 Puede construirse desde `templates/project-intake-brief.template.md`, un documento adjunto o una síntesis de la conversación `00`.
 
@@ -105,7 +144,7 @@ En un proyecto nuevo debe indicar claramente que todavía no existe implementaci
 
 ### `architecture.md`
 
-Describe arquitectura vigente o una propuesta confirmada. No presenta componentes hipotéticos como implementados.
+Describe arquitectura vigente o una propuesta confirmada. No presenta componentes hipotéticos como implementados. Puede permanecer mínimo hasta que `20 — Arquitectura y stack` produzca una decisión suficiente.
 
 ### `decisions/`
 
@@ -142,7 +181,7 @@ Declara la adopción de IA-DOS, versión o commit utilizado, rutas, modelo de ad
 
 ## Proyecto nuevo
 
-Construye la wiki desde decisiones confirmadas en `00 — Dirección y definición`.
+Instala primero la estructura mínima y construye la wiki desde decisiones confirmadas en `00 — Dirección y definición`.
 
 Registra:
 
@@ -152,7 +191,7 @@ Registra:
 - cuál será el primer incremento;
 - qué supuestos necesitan validación.
 
-No inventes arquitectura para completar archivos.
+No inventes arquitectura para completar archivos ni detengas el primer vertical slice para llenar la wiki.
 
 ## Proyecto existente
 
@@ -166,6 +205,8 @@ Construye la wiki desde evidencia:
 - registro de contradicciones y desconocidos.
 
 Un coding agent puede inspeccionar y reportar, pero el reporte debe revisarse antes de considerarlo definitivo.
+
+No conviertas la adopción inicial en una reorganización total. Primero instala el punto de entrada, el estado y las fuentes de verdad; luego normaliza solo lo que realmente obstaculiza el trabajo.
 
 ## Repositorio separado o documentación interna
 
@@ -195,7 +236,9 @@ opcionalmente uno secundario
 
 Las decisiones durables tomadas en chats deben volver a la wiki.
 
-## Mantenimiento
+## Poblamiento progresivo y mantenimiento
+
+Producto, Arquitectura, Ejecución y Verificación deben devolver a la wiki únicamente decisiones, estado, evidencia y aprendizaje durable.
 
 Actualiza la wiki cuando:
 
@@ -211,19 +254,19 @@ No necesita actualizarse por cada conversación o commit menor.
 
 ## Verificación
 
-Antes de considerar la wiki inicial terminada, verifica:
+Antes de considerar la wiki inicial utilizable, verifica:
 
 - [ ] Existe un punto de entrada claro.
 - [ ] El propósito se entiende.
 - [ ] El estado no confunde planes con implementación.
-- [ ] La arquitectura distingue vigente y propuesta.
 - [ ] Las decisiones importantes tienen destino.
 - [ ] Las fuentes están identificadas.
-- [ ] Las páginas son pequeñas y enlazables.
 - [ ] Existe un `CORE` pequeño.
 - [ ] Los agentes tienen instrucciones.
 - [ ] No contiene secretos.
 - [ ] Puede retomarse sin leer chats anteriores.
+
+No es necesario que todas las páginas estén completas.
 
 ## Resultado esperado
 
