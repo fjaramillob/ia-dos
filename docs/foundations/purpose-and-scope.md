@@ -2,23 +2,26 @@
 
 ## Propósito
 
-IA-DOS es una capa operativa común para proyectos de software desarrollados con asistencia de inteligencia artificial.
+IA-DOS es un método operativo abierto para dirigir proyectos de software junto a inteligencia artificial.
 
-Su función es ayudar a ordenar:
+Su función no es reemplazar la forma de trabajar de una persona, sino hacerla explícita, reproducible y transferible entre asistentes conversacionales, coding agents, repositorios y herramientas distintas.
 
-- la dirección conversacional del proyecto;
-- la separación de chats o espacios de trabajo;
+IA-DOS ayuda a ordenar:
+
+- la dirección del proyecto;
+- la separación de conversaciones por responsabilidad;
 - el workspace local;
 - la aplicación;
-- la memoria del proyecto;
+- la memoria durable;
 - las instrucciones para agentes;
 - el contexto entregado a cada herramienta;
 - las tareas;
 - las decisiones;
+- la ejecución;
 - la verificación;
-- el registro del trabajo realizado.
+- el aprendizaje acumulado.
 
-IA-DOS busca que una persona pueda utilizar distintos asistentes y agentes sin depender de conversaciones aisladas ni perder el control del proyecto.
+El método separa dirección, razonamiento, materialización y verificación para que distintas herramientas colaboren sin crear fuentes de verdad paralelas ni hacer perder el control del proyecto.
 
 ## Problema que aborda
 
@@ -44,14 +47,17 @@ Esta capa puede vivir en un Project de ChatGPT, un Gem de Gemini, un Project de 
 
 Su función es:
 
-- comprender el proyecto desde la wiki y los repositorios;
-- ayudar al usuario a separar conversaciones por dominio;
+- comprender el proyecto desde la wiki y las fuentes disponibles;
+- capturar dirección y criterio;
+- separar conversaciones por dominio cuando reduzca complejidad;
 - mantener una visión transversal;
 - transformar decisiones y necesidades en `Execution Tasks`;
 - preparar prompts optimizados para coding agents;
 - seleccionar el contexto mínimo necesario;
 - revisar reportes y evidencia;
-- indicar qué debe actualizarse en la wiki.
+- indicar qué conocimiento debe volver a la memoria durable.
+
+El Project Orchestrator no reemplaza al coding agent. Piensa, organiza, delimita y revisa; la modificación material de repositorios pertenece a herramientas con acceso controlado de ejecución.
 
 Para muchas personas no programadoras expertas, esta será la interfaz principal de IA-DOS.
 
@@ -69,13 +75,13 @@ IA-DOS define una forma de trabajo que puede aplicarse a:
 - proyectos nuevos;
 - proyectos existentes.
 
-El framework recomienda prácticas y estructuras. No impone un lenguaje, framework, proveedor cloud, asistente conversacional o coding agent específico.
+El método recomienda prácticas y estructuras. No impone un lenguaje, framework, proveedor cloud, asistente conversacional o coding agent específico.
 
 ## Formas de consumo
 
 IA-DOS puede consumirse:
 
-- como repositorio de referencia entregado a ChatGPT, Gemini, Claude u otro asistente;
+- como repositorio de referencia entregado a un asistente conversacional;
 - como repositorio clonado una vez en el workspace local;
 - mediante archivos, prompts y plantillas incorporados en cada proyecto;
 - mediante una versión publicada y referenciada por el proyecto.
@@ -101,8 +107,9 @@ IA-DOS no:
 La primera versión define:
 
 - propósito y público objetivo;
+- método de trabajo IA-DOS;
 - capa de orquestación conversacional;
-- principios y modelo operativo básico;
+- principios y modelo operativo;
 - terminología;
 - estructura recomendada del workspace;
 - forma inicial de adopción;
@@ -111,4 +118,4 @@ La primera versión define:
 - guardrails y verificación básica;
 - gobierno y contribución.
 
-Los componentes prácticos se agregarán en incrementos separados dentro de la misma versión alpha.
+Los componentes prácticos se agregan en incrementos separados dentro de la misma versión alpha.
