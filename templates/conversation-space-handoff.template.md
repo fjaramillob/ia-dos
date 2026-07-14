@@ -4,6 +4,8 @@ Usa esta plantilla cuando `00 — Dirección y orquestación` derive trabajo a o
 
 Las conversaciones pueden compartir archivos del espacio, pero no necesariamente comparten historial. El prompt debe ser autosuficiente y declarar expresamente su destino.
 
+En etapas iniciales, el handoff debe ser ligero: un objetivo principal, contexto mínimo y un entregable que desbloquee el siguiente paso.
+
 ```text
 IA-DOS Conversation Space Handoff
 
@@ -20,9 +22,10 @@ No propongas renombrar este chat como 00.
 No repitas la configuración inicial de IA-DOS.
 
 Dirección del proyecto:
-[PROPÓSITO, USUARIO, PROBLEMA, PROMESA Y PRINCIPIOS EN 5–10 LÍNEAS]
+[PROPÓSITO, USUARIO, PROBLEMA, PROMESA Y PRINCIPIOS EN 3–6 LÍNEAS]
 
 Estado recibido desde 00:
+[SOLO EL ESTADO NECESARIO PARA ESTA MISIÓN]
 
 Decisiones confirmadas:
 - [...]
@@ -40,18 +43,26 @@ Objetivo de esta conversación:
 [UN RESULTADO CONCRETO]
 
 Entregable esperado:
-[DOCUMENTO, RECOMENDACIÓN, FLUJO, DECISIÓN O HANDOFF]
+[UN FLUJO, RECOMENDACIÓN, DECISIÓN, TAREA O HANDOFF]
 
 Fuera de alcance:
 - [...]
 
 Reglas:
+- mantén este espacio ligero y orientado a un resultado;
+- no conviertas el primer turno en una auditoría exhaustiva, inventario completo o reorganización general;
 - trabaja únicamente dentro del dominio de esta conversación;
 - no conviertas referencias heredadas en decisiones vigentes;
 - no inventes stack, pantallas, métricas o implementación sin evidencia;
 - registra claramente decisiones, hipótesis y pendientes;
 - al terminar, entrega un Handoff de salida para el siguiente Conversation Space.
 ```
+
+## Regla especial para `90 — Wiki y memoria`
+
+No abras `90` solo para instalar la estructura inicial de la LLM Wiki. La wiki mínima puede crearse mediante una tarea documental acotada.
+
+Cuando `90` sea necesario, limita su primera misión a un problema real de memoria: síntesis, contradicción, decisión durable, mantenimiento o consolidación. No solicites una auditoría completa de toda la documentación salvo que el estado del proyecto realmente lo requiera.
 
 ## Handoff de salida
 
