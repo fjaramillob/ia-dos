@@ -30,10 +30,10 @@ Su función es:
 ```text
 Capturar el alma del proyecto
 → establecer una dirección
-→ proponer una estrategia de avance
-→ organizar conversaciones y memoria
+→ abrir conversaciones ligeras que desbloqueen trabajo
 → convertir decisiones en tareas acotadas
 → construir, verificar y aprender
+→ devolver aprendizaje a la memoria durable
 ```
 
 El producto toma forma mediante ciclos reales de producto, arquitectura, desarrollo y aprendizaje.
@@ -104,7 +104,7 @@ No necesitas completar todo. El asistente debe leer primero las fuentes y captur
 - [Producto objetivo existente](docs/getting-started/adopt-existing-project-from-conversation.md)
 - [Crear la LLM Wiki](docs/getting-started/bootstrap-llm-wiki.md)
 
-Cuando el usuario diga que quiere avanzar, el Project Orchestrator debe activar Launch Mode: resumir la dirección, proponer una estrategia, recomendar Conversation Spaces y entregar prompts iniciales listos para copiar.
+Cuando el usuario diga que quiere avanzar, el Project Orchestrator debe activar Launch Mode: resumir la dirección, proponer una estrategia, recomendar solo los Conversation Spaces necesarios y entregar prompts iniciales ligeros y listos para copiar.
 
 ## La capa de orquestación
 
@@ -135,16 +135,19 @@ En un producto nuevo comienza como:
 00 — Dirección y definición
 ```
 
-Después de la alineación mínima, una secuencia frecuente es:
+Después de la alineación mínima, abre primero el espacio que desbloquea el trabajo más cercano. Una secuencia frecuente es:
 
 ```text
-90 — Wiki y memoria
 10 — Producto y UX
 20 — Arquitectura y stack
 30 — Ejecución y desarrollo
 ```
 
-`20` debe recibir el handoff de producto y `30` debe recibir producto y arquitectura. Los espacios se adaptan al proyecto y no se crean por obligación.
+`20` debe recibir el handoff de producto y `30` debe recibir producto y arquitectura.
+
+`90 — Wiki y memoria` es un espacio especializado opcional. Se abre cuando existe trabajo real de síntesis, contradicciones, decisiones durables o mantenimiento documental. La LLM Wiki puede instalarse sin convertirla en una conversación obligatoria.
+
+Los espacios se adaptan al proyecto y no se crean por obligación.
 
 ## Flujo de ejecución
 
@@ -165,7 +168,9 @@ La unidad operativa es una tarea acotada, no un chat permanente del coding agent
 
 La wiki es memoria durable en Markdown, navegable y versionada con Git. Está inspirada en los principios LLM Wiki de Andrej Karpathy y agrega estado explícito, decisiones, Context Packs, tareas y evidencia.
 
-La wiki puede nacer temprano. Debe registrar el alma del proyecto, decisiones, hipótesis, preguntas y aprendizaje, distinguiendo lo confirmado de lo exploratorio.
+La estructura mínima se instala temprano para que el Project Orchestrator y los coding agents sepan dónde están parados. Se puebla progresivamente con decisiones, estado y aprendizaje confirmados a medida que avanza el desarrollo.
+
+No debe convertirse en una auditoría exhaustiva previa al primer vertical slice ni llenarse con páginas vacías por anticipación.
 
 ## Estructura recomendada
 
