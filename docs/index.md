@@ -32,6 +32,7 @@ Para una primera adopción:
 ## Orquestación
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
+- [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
 - [Prompt para inicializar el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md)
 - [Pack para plataformas sin acceso al repositorio](../bundles/ia-dos-project-orchestrator-pack.md)
 - [Plantilla opcional de instrucciones persistentes](../templates/project-instructions.template.md)
@@ -40,10 +41,13 @@ Para una primera adopción:
 ## Ejecución
 
 - [Coding agents](execution/coding-agents.md)
+- [Actualizar la LLM Wiki](execution/updating-the-llm-wiki.md)
 - [Execution Task](../templates/execution-task.template.md)
+- [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
 - [Preparar y revisar el handoff](getting-started/execution-handoff.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
+- [Entregar una actualización de wiki](../prompts/execution/update-llm-wiki.md)
 
 ## Primeros pasos
 
@@ -62,6 +66,7 @@ Para una primera adopción:
 - [Crear un proyecto nuevo](../prompts/getting-started/create-new-project-workspace.md)
 - [Incorporar un proyecto existente](../prompts/getting-started/incorporate-existing-project-workspace.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
+- [Actualizar la LLM Wiki con un coding agent](../prompts/execution/update-llm-wiki.md)
 
 ## Plantillas
 
@@ -72,6 +77,7 @@ Para una primera adopción:
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Wiki inicial](../templates/wiki-starter/)
 - [Execution Task](../templates/execution-task.template.md)
+- [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
 
 ## Estado
