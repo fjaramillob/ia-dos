@@ -9,9 +9,10 @@ Para una primera adopción:
 1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
 2. Carga [IA-DOS Project Orchestrator Pack](../bundles/ia-dos-project-orchestrator-pack.md) cuando la plataforma no pueda navegar GitHub.
 3. Entrega una descripción del proyecto o usa [Project Intake Brief](../templates/project-intake-brief.template.md).
-4. Sigue el recorrido de [proyecto nuevo](getting-started/new-project-from-conversation.md) o [proyecto existente](getting-started/adopt-existing-project-from-conversation.md).
-5. Crea o revisa la [LLM Wiki](getting-started/bootstrap-llm-wiki.md).
-6. Convierte el siguiente cambio en una tarea acotada y materialízalo con un coding agent.
+4. Captura el alma y la prioridad sin intentar definir todo.
+5. Abre solo el Conversation Space que desbloquee el siguiente resultado.
+6. Sigue [Avance concreto y transición a coding agents](orchestration/concrete-execution-flow.md) y entrega pronto una tarea acotada.
+7. Crea o revisa la [LLM Wiki](getting-started/bootstrap-llm-wiki.md) de forma progresiva.
 
 ## Fundamentos
 
@@ -32,6 +33,7 @@ Para una primera adopción:
 ## Orquestación
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
+- [Avance concreto y transición a coding agents](orchestration/concrete-execution-flow.md)
 - [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
 - [Prompt para inicializar el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md)
 - [Pack para plataformas sin acceso al repositorio](../bundles/ia-dos-project-orchestrator-pack.md)
