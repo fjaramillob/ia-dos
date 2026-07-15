@@ -8,6 +8,12 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Added
 
+- método de trabajo maestro basado en `entender → decidir → delimitar → materializar → verificar y aprender`;
+- separación explícita entre dirección, razonamiento, materialización y verificación;
+- arquitectura operativa completa desde la persona responsable hasta la actualización de memoria durable;
+- frontera clara: el Project Orchestrator define qué debe cambiar y por qué, mientras el coding agent realiza el cambio físico y entrega evidencia;
+- guía dedicada para coding agents, incluyendo entrada mínima, conducta, evidencia, Git y tipos de materialización;
+- reconocimiento inicial de `Application Execution Task`, `Documentation Execution Task` y `Wiki Update Task`;
 - definición inicial de propósito y alcance;
 - público objetivo;
 - principios;
