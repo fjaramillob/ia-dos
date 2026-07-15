@@ -8,6 +8,13 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Added
 
+- flujo explícito `conocimiento confirmado → Wiki Update Task → coding agent → evidencia → revisión → merge`;
+- definición de `90 — Wiki y memoria` como Conversation Space de gobierno y síntesis, no como ejecutor físico;
+- guía operativa para crear y mantener la LLM Wiki mediante Codex, Antigravity, Claude Code u otro coding agent;
+- plantilla especializada `Wiki Update Task`;
+- prompt operativo para entregar una actualización de wiki a un coding agent;
+- criterios de validación para estructura, Markdown, YAML, enlaces, fuentes, estados y secretos;
+- separación explícita entre conocimiento propuesto, modificación física y evidencia del repositorio;
 - método de trabajo maestro basado en `entender → decidir → delimitar → materializar → verificar y aprender`;
 - separación explícita entre dirección, razonamiento, materialización y verificación;
 - arquitectura operativa completa desde la persona responsable hasta la actualización de memoria durable;
