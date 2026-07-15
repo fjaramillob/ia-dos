@@ -9,6 +9,7 @@ Coordina:
 - la persona que dirige el proyecto;
 - ChatGPT, Gemini, Claude u otros asistentes conversacionales;
 - Codex, Claude Code, Antigravity u otros coding agents;
+- Conversation Spaces especializados;
 - la LLM Wiki;
 - el repositorio de aplicación;
 - tareas, decisiones, pruebas y revisiones.
@@ -21,6 +22,33 @@ Cuando un proyecto se desarrolla con varios chats, agentes y herramientas aparec
 
 IA-DOS reduce esa fricción mediante una estructura simple, explícita y reutilizable.
 
+## Método de trabajo
+
+IA-DOS separa dirección, razonamiento, materialización y verificación.
+
+```text
+Entender
+→ decidir
+→ delimitar
+→ materializar
+→ verificar y aprender
+```
+
+Estos movimientos se repiten en ciclos pequeños. No son fases rígidas ni exigen completar toda la definición antes de construir.
+
+La regla de frontera es:
+
+```text
+La persona responsable dirige.
+El Project Orchestrator organiza.
+Los Conversation Spaces razonan.
+Los coding agents materializan.
+GitHub traza.
+La LLM Wiki recuerda.
+```
+
+Consulta [Método de trabajo](docs/foundations/working-method.md).
+
 ## Qué hace realmente
 
 IA-DOS no busca completar una entrevista perfecta antes de comenzar a construir.
@@ -31,9 +59,10 @@ Su función es:
 Capturar el alma del proyecto
 → establecer una dirección
 → abrir conversaciones ligeras que desbloqueen trabajo
-→ convertir decisiones en tareas acotadas
-→ construir, verificar y aprender
-→ devolver aprendizaje a la memoria durable
+→ confirmar decisiones pequeñas y útiles
+→ convertirlas en tareas acotadas
+→ materializar, verificar y aprender
+→ devolver conocimiento confirmado a la memoria durable
 ```
 
 El producto toma forma mediante ciclos reales de producto, arquitectura, desarrollo y aprendizaje.
@@ -47,6 +76,8 @@ Para personas que construyen con IA y necesitan mantener control sobre producto,
 - [Instalar IA-DOS en el workspace local](docs/getting-started/install-ia-dos.md)
 - [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
 - [Consultar la documentación](docs/index.md)
+- [Conocer el método de trabajo](docs/foundations/working-method.md)
+- [Trabajar con coding agents](docs/execution/coding-agents.md)
 
 ## Empieza en cinco pasos
 
@@ -55,8 +86,6 @@ Para personas que construyen con IA y necesitan mantener control sobre producto,
 Cuando el proyecto vaya a trabajar con repositorios, archivos, Git o coding agents, sigue:
 
 [Instalar IA-DOS en el workspace local](docs/getting-started/install-ia-dos.md)
-
-La guía incluye comandos para Windows PowerShell, macOS y Linux, además de verificaciones y condiciones de detención.
 
 La instalación local no es obligatoria para comenzar desde un asistente conversacional.
 
@@ -85,28 +114,22 @@ Cuando no pueda acceder, carga:
 
 [IA-DOS Project Orchestrator Pack](bundles/ia-dos-project-orchestrator-pack.md)
 
-Para descargarlo:
-
-1. abre el enlace anterior;
-2. presiona **Download raw file** o abre **Raw**;
-3. guarda el archivo como `ia-dos-project-orchestrator-pack.md`;
-4. súbelo al área de conocimientos del Project, Gem o espacio equivalente.
-
-Puedes adjuntar un PDF, documento, wiki o repositorio. Para preparar una descripción desde cero utiliza:
+También puedes utilizar:
 
 [Project Intake Brief](templates/project-intake-brief.template.md)
 
 No necesitas completar todo. El asistente debe leer primero las fuentes y capturar propósito, usuario, problema, promesa, principios y primer resultado a demostrar.
 
-### 5. Avanza con estrategia
+### 5. Avanza con una tarea verificable
 
 - [Producto objetivo nuevo](docs/getting-started/new-project-from-conversation.md)
 - [Producto objetivo existente](docs/getting-started/adopt-existing-project-from-conversation.md)
 - [Crear la LLM Wiki](docs/getting-started/bootstrap-llm-wiki.md)
+- [Preparar un handoff de ejecución](docs/getting-started/execution-handoff.md)
 
-Cuando el usuario diga que quiere avanzar, el Project Orchestrator debe activar Launch Mode: resumir la dirección, proponer una estrategia, recomendar solo los Conversation Spaces necesarios y entregar prompts iniciales ligeros y listos para copiar.
+Cuando el usuario indique que quiere avanzar, el Project Orchestrator debe activar Launch Mode: resumir la dirección, proponer una estrategia, recomendar solo los Conversation Spaces necesarios y conducir el siguiente cambio hacia una `Execution Task` acotada.
 
-## La capa de orquestación
+## Project Orchestrator
 
 El asistente conversacional funciona como **Project Orchestrator**:
 
@@ -114,10 +137,14 @@ El asistente conversacional funciona como **Project Orchestrator**:
 - captura el alma y la dirección del producto;
 - propone una estrategia de avance;
 - recomienda los Conversation Spaces necesarios;
+- distingue hechos, hipótesis, propuestas y decisiones;
 - transforma necesidades en `Execution Tasks`;
+- define qué debe cambiar, por qué y bajo qué límites;
 - prepara handoffs para coding agents;
-- revisa resultados y evidencia;
+- revisa resultados, diffs y evidencia;
 - mantiene alineadas conversación, memoria y desarrollo.
+
+El Orchestrator organiza y revisa. La modificación física corresponde a un coding agent o herramienta con acceso real al artefacto.
 
 Consulta [ORCHESTRATOR.md](ORCHESTRATOR.md).
 
@@ -143,22 +170,37 @@ Después de la alineación mínima, abre primero el espacio que desbloquea el tr
 30 — Ejecución y desarrollo
 ```
 
-`20` debe recibir el handoff de producto y `30` debe recibir producto y arquitectura.
+`90 — Wiki y memoria` es un espacio especializado opcional. Se abre cuando existe trabajo real de síntesis, contradicciones, decisiones durables o mantenimiento documental.
 
-`90 — Wiki y memoria` es un espacio especializado opcional. Se abre cuando existe trabajo real de síntesis, contradicciones, decisiones durables o mantenimiento documental. La LLM Wiki puede instalarse sin convertirla en una conversación obligatoria.
+Los espacios razonan y producen handoffs. No son fases obligatorias ni memoria durable.
 
-Los espacios se adaptan al proyecto y no se crean por obligación.
+## Coding agents
+
+Los coding agents materializan una `Execution Task` autorizada sobre archivos, repositorios o entornos reales.
+
+Pueden:
+
+- modificar implementación;
+- actualizar documentación;
+- construir o mantener la LLM Wiki;
+- ejecutar comandos y pruebas;
+- trabajar con branches, commits y pull requests;
+- entregar un `Execution Report` con evidencia.
+
+No deben ampliar alcance, asumir decisiones ni fusionar cambios sin autorización.
+
+Consulta [Coding agents](docs/execution/coding-agents.md).
 
 ## Flujo de ejecución
 
 ```text
 Dirección o necesidad
-→ decisión o hipótesis
+→ decisión confirmada
 → Execution Task
 → ejecución acotada del coding agent
-→ código + pruebas + Execution Report
-→ revisión de evidencia
-→ aprendizaje
+→ cambios + pruebas + Execution Report
+→ revisión humana y del Orchestrator
+→ merge autorizado
 → actualización de memoria durable
 ```
 
@@ -168,9 +210,7 @@ La unidad operativa es una tarea acotada, no un chat permanente del coding agent
 
 La wiki es memoria durable en Markdown, navegable y versionada con Git. Está inspirada en los principios LLM Wiki de Andrej Karpathy y agrega estado explícito, decisiones, Context Packs, tareas y evidencia.
 
-La estructura mínima se instala temprano para que el Project Orchestrator y los coding agents sepan dónde están parados. Se puebla progresivamente con decisiones, estado y aprendizaje confirmados a medida que avanza el desarrollo.
-
-No debe convertirse en una auditoría exhaustiva previa al primer vertical slice ni llenarse con páginas vacías por anticipación.
+La estructura mínima se instala temprano y se puebla progresivamente con información confirmada. No debe convertirse en una auditoría exhaustiva previa al primer vertical slice ni llenarse con páginas vacías por anticipación.
 
 ## Estructura recomendada
 
@@ -212,7 +252,7 @@ Consulta [docs/index.md](docs/index.md).
 
 ## Estado
 
-IA-DOS está en fase alpha. La primera versión se validará mediante proyectos reales antes de publicarse como release estable.
+IA-DOS está en fase alpha. La primera versión se valida mediante proyectos reales antes de publicarse como release estable.
 
 ## Licencia
 

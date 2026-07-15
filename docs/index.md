@@ -1,6 +1,6 @@
 # Documentación de IA-DOS
 
-Esta documentación explica cómo utilizar IA-DOS para ordenar proyectos de software desarrollados con asistentes conversacionales y coding agents.
+Esta documentación explica cómo utilizar IA-DOS para dirigir proyectos de software con asistentes conversacionales y coding agents sin perder contexto, control ni trazabilidad.
 
 ## Empieza aquí
 
@@ -11,12 +11,14 @@ Para una primera adopción:
 3. Entrega una descripción del proyecto o usa [Project Intake Brief](../templates/project-intake-brief.template.md).
 4. Sigue el recorrido de [proyecto nuevo](getting-started/new-project-from-conversation.md) o [proyecto existente](getting-started/adopt-existing-project-from-conversation.md).
 5. Crea o revisa la [LLM Wiki](getting-started/bootstrap-llm-wiki.md).
+6. Convierte el siguiente cambio en una tarea acotada y materialízalo con un coding agent.
 
 ## Fundamentos
 
 - [Propósito y alcance](foundations/purpose-and-scope.md)
 - [Público objetivo](foundations/target-audience.md)
 - [Principios](foundations/principles.md)
+- [Método de trabajo](foundations/working-method.md)
 - [Capa de orquestación conversacional](foundations/orchestration-layer.md)
 - [Guía conversacional y autoridad de fuentes](foundations/conversational-guidance.md)
 - [Modelo operativo](foundations/operating-model.md)
@@ -27,12 +29,21 @@ Para una primera adopción:
 - [Versionado](foundations/versioning.md)
 - [Criterios editoriales y sanitización pública](foundations/editorial-guidelines.md)
 
-## Instrucciones para asistentes
+## Orquestación
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
 - [Prompt para inicializar el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md)
 - [Pack para plataformas sin acceso al repositorio](../bundles/ia-dos-project-orchestrator-pack.md)
 - [Plantilla opcional de instrucciones persistentes](../templates/project-instructions.template.md)
+- [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
+
+## Ejecución
+
+- [Coding agents](execution/coding-agents.md)
+- [Execution Task](../templates/execution-task.template.md)
+- [Execution Report](../templates/execution-report.template.md)
+- [Preparar y revisar el handoff](getting-started/execution-handoff.md)
+- [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
 
 ## Primeros pasos
 
@@ -44,7 +55,6 @@ Para una primera adopción:
 - [Crear un proyecto nuevo en el workspace](getting-started/create-new-project-workspace.md)
 - [Incorporar un proyecto existente](getting-started/incorporate-existing-project-workspace.md)
 - [Aplicar plantillas mínimas](getting-started/apply-starter-templates.md)
-- [Preparar y revisar el handoff](getting-started/execution-handoff.md)
 
 ## Prompts operativos
 
@@ -66,4 +76,4 @@ Para una primera adopción:
 
 ## Estado
 
-IA-DOS está en fase alpha. La validación práctica completa del onboarding, la wiki y el ciclo de ejecución sigue en curso.
+IA-DOS está en fase alpha. Su método se valida y consolida mediante proyectos reales antes de publicarse como release estable.
