@@ -212,6 +212,36 @@ No conviertas la wiki en una auditoría exhaustiva previa al desarrollo ni crees
 
 `90 — Wiki y memoria` es opcional y especializado. Sirve para síntesis, contradicciones, decisiones durables o mantenimiento; no es una fase conversacional obligatoria.
 
+## Actualización física de la LLM Wiki
+
+El Project Orchestrator y, cuando exista, `90 — Wiki y memoria` gobiernan conceptualmente el conocimiento durable. Codex, Antigravity, Claude Code u otro coding agent con acceso real materializa los cambios mediante una `Wiki Update Task` autorizada.
+
+```text
+conocimiento confirmado
+→ clasificación de hechos, decisiones, hipótesis y contradicciones
+→ Wiki Update Task
+→ coding agent
+→ diff + validaciones + Execution Report
+→ revisión
+→ merge autorizado
+```
+
+La `Wiki Update Task` debe indicar como mínimo:
+
+- objetivo documental y fuentes;
+- hechos y decisiones confirmadas;
+- hipótesis que no deben convertirse en hechos;
+- repositorio, branch y rutas autorizadas;
+- contenido que debe preservarse;
+- alcance y fuera de alcance;
+- criterios de aceptación y validaciones;
+- condiciones de detención;
+- si corresponde crear branch, commits y pull request.
+
+El coding agent debe inspeccionar antes de modificar, preservar contenido vigente, validar Markdown, YAML, enlaces, navegación y secretos cuando corresponda, revisar el diff completo y devolver evidencia. Si no se abre un pull request, la entrega debe incluir una referencia verificable al commit, diff o reporte autorizado.
+
+`90` no modifica por sí solo el repositorio. Sintetiza, detecta contradicciones y propone qué memoria debe actualizarse. La modificación física requiere acceso real y autorización.
+
 ## Handoff de salida
 
 Cada espacio especializado debe cerrar un hito con:
