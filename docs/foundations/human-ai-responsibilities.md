@@ -12,12 +12,13 @@ La persona que dirige el proyecto debe:
 - confirmar decisiones importantes;
 - autorizar accesos y cambios sensibles;
 - decidir qué herramientas pueden leer o modificar cada fuente;
+- aprobar el uso de conectores, MCP y capacidades de escritura cuando corresponda;
 - revisar evidencia y aceptar o rechazar resultados;
 - decidir cuándo una tarea está terminada;
 - proteger secretos, datos y recursos;
 - pedir ayuda especializada cuando el riesgo lo exige.
 
-La supervisión humana no requiere realizar manualmente cada cambio. Requiere conservar autoridad sobre dirección, riesgo y aprobación.
+La supervisión humana no requiere realizar manualmente cada cambio. Requiere conservar autoridad sobre dirección, riesgo, acceso y aprobación.
 
 ## Project Orchestrator
 
@@ -31,6 +32,9 @@ El asistente conversacional que coordina el proyecto debe:
 - ayudar a confirmar decisiones pequeñas, reversibles y útiles;
 - transformar necesidades en `Execution Tasks`;
 - seleccionar el contexto mínimo necesario;
+- identificar las capacidades requeridas por cada tarea;
+- verificar qué capacidades están disponibles realmente en la sesión o herramienta actual;
+- distinguir capacidad técnica, permiso, autorización, ejecución y verificación;
 - definir qué debe cambiar, por qué y bajo qué límites;
 - preparar handoffs claros para coding agents;
 - revisar el `Execution Report`, el diff y la evidencia disponible;
@@ -59,6 +63,7 @@ El agente que trabaja sobre archivos, repositorios o entornos debe:
 
 - leer las instrucciones y fuentes autorizadas;
 - confirmar repositorio, branch y alcance antes de modificar;
+- verificar las capacidades y permisos reales antes de ejecutar;
 - distinguir hechos de supuestos;
 - inspeccionar antes de actuar;
 - leer solamente el contexto necesario;
@@ -87,6 +92,20 @@ El Orchestrator define qué debe cambiar y por qué. El coding agent realiza el 
 
 Ninguna de estas funciones reemplaza la aprobación humana cuando existe impacto relevante en seguridad, costes, producción, datos, arquitectura o alcance.
 
+## Conectores, MCP y herramientas
+
+Los conectores, servidores MCP, APIs y herramientas nativas son mecanismos de acceso o ejecución. No son autoridades de decisión.
+
+```text
+capacidad disponible
+≠ permiso concedido
+≠ acción autorizada
+≠ acción ejecutada
+≠ acción verificada
+```
+
+Una integración debe utilizarse con el mínimo alcance necesario. La persona responsable autoriza; el Project Orchestrator delimita; la herramienta ejecuta; la evidencia demuestra.
+
 ## Límites comunes
 
 Ningún asistente o agente debe:
@@ -102,6 +121,8 @@ Ningún asistente o agente debe:
 - inventar decisiones históricas;
 - tratar su propia conversación o sesión como memoria durable;
 - asumir acceso a repositorios o archivos que no fueron entregados;
+- asumir que una capacidad existe porque estuvo disponible en otra sesión o plataforma;
+- utilizar permisos más amplios de los necesarios;
 - fusionar cambios sin la autorización correspondiente.
 
-Consulta [Método de trabajo](working-method.md) y [Coding agents](../execution/coding-agents.md).
+Consulta [Método de trabajo](working-method.md), [Coding agents](../execution/coding-agents.md) y [Modelo de capacidades](../integrations/capability-model.md).

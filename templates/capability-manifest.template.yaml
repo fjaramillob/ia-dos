@@ -1,0 +1,35 @@
+version: 1
+project: "[NOMBRE DEL PROYECTO]"
+last_verified_at: "[YYYY-MM-DD]"
+verified_by: "[PERSONA, ROL O PROCESO]"
+
+principles:
+  least_privilege: true
+  verify_per_session: true
+  no_secrets_in_manifest: true
+  explicit_authorization_for_sensitive_actions: true
+
+capabilities:
+  - tool: "[PLATAFORMA, CONECTOR, MCP O AGENTE]"
+    domain: "[github | filesystem | terminal | wiki | database | deploy | docs | other]"
+    operations:
+      - "[read | search | create | update | delete | execute | admin]"
+    status: "[verified | declared | unavailable | unknown | blocked | degraded]"
+    connected_context: "[CUENTA, WORKSPACE, PROYECTO O REPOSITORIO SIN SECRETOS]"
+    scope:
+      allowed:
+        - "[RECURSO, RUTA U OPERACIÓN]"
+      prohibited:
+        - "[RECURSO, RUTA U OPERACIÓN]"
+    approval_required:
+      - "[ACCIÓN SENSIBLE]"
+    restrictions:
+      - "[LÍMITE O CONDICIÓN]"
+    evidence:
+      type: "[METADATA, LECTURA, IDENTIFICADOR, LOG U OTRO]"
+      reference: "[URL, ID O DESCRIPCIÓN SIN CREDENCIALES]"
+    fallback: "[FLUJO ALTERNATIVO SI LA CAPACIDAD FALLA]"
+
+notes:
+  - "Este archivo no concede permisos ni reemplaza la verificación de la sesión actual."
+  - "No registrar tokens, API keys, contraseñas ni secretos."
