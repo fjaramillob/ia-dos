@@ -49,6 +49,13 @@ Para una primera adopción:
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
 - [Entregar una actualización de wiki](../prompts/execution/update-llm-wiki.md)
 
+## Integraciones y capacidades
+
+- [Índice de integraciones](integrations/README.md)
+- [Conectores y MCP](integrations/connectors-and-mcp.md)
+- [Modelo de capacidades](integrations/capability-model.md)
+- [Capability Manifest](../templates/capability-manifest.template.yaml)
+
 ## Primeros pasos
 
 - [Iniciar un proyecto nuevo](getting-started/new-project-from-conversation.md)
@@ -73,6 +80,7 @@ Para una primera adopción:
 - [Project Intake Brief](../templates/project-intake-brief.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [Manifiesto de adopción](../templates/adoption.template.yaml)
+- [Capability Manifest](../templates/capability-manifest.template.yaml)
 - [AGENTS.md para la app](../templates/AGENTS.template.md)
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Wiki inicial](../templates/wiki-starter/)
