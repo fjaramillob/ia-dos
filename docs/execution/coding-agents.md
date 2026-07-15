@@ -73,6 +73,25 @@ IA-DOS reconoce, como mínimo:
 
 La naturaleza documental de una tarea no elimina la necesidad de alcance, autorización, diff y evidencia.
 
+## Ejecución de una `Wiki Update Task`
+
+Cuando la tarea afecta la LLM Wiki, el coding agent no decide qué conocimiento debe convertirse en memoria durable. Esa definición proviene del Project Orchestrator y, cuando existe, de `90 — Wiki y memoria`.
+
+El coding agent debe:
+
+1. leer la `Wiki Update Task` y las fuentes autorizadas;
+2. inspeccionar la estructura y el estado real de la wiki;
+3. modificar únicamente las páginas permitidas;
+4. preservar contenido vigente que no fue autorizado a reemplazar;
+5. distinguir hechos, decisiones, hipótesis, propuestas y desconocidos;
+6. no convertir una hipótesis en hecho ni una propuesta en decisión vigente;
+7. validar Markdown, YAML, enlaces, navegación y referencias cuando corresponda;
+8. comprobar que no se incorporaron secretos ni datos sensibles;
+9. revisar el diff completo;
+10. devolver un `Execution Report` y el pull request cuando esté autorizado.
+
+El flujo detallado se encuentra en [Actualizar la LLM Wiki](updating-the-llm-wiki.md).
+
 ## Evidencia esperada
 
 Una ejecución no se considera verificada solo porque el agente afirma que terminó.
