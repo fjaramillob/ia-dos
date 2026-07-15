@@ -8,6 +8,12 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Added
 
+- gate explícito para pasar al coding agent tan pronto como exista una `Execution Task` verificable;
+- guía de avance concreto y transición a Codex, Antigravity, Claude Code u otro coding agent;
+- instrucción visible para abrir el proyecto correcto, pegar un prompt listo y devolver el `Execution Report`;
+- salida obligatoria de cada Conversation Space: otro handoff, prompt ejecutable, `Wiki Update Task` o una decisión humana;
+- límite operativo para mantener la primera respuesta y los handoffs breves;
+- Conversation Spaces bajo demanda, sin secuencia automática entre `10`, `20`, `30` y `90`;
 - modelo operativo para conectores, MCP, herramientas nativas, archivos adjuntos y acceso local;
 - separación explícita entre capacidad, permiso, autorización, ejecución y verificación;
 - modelo de capacidades con estados `verified`, `declared`, `unavailable`, `unknown`, `blocked` y `degraded`;
@@ -54,7 +60,6 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - `Launch Mode` para responder a la intención explícita del usuario de avanzar;
 - estrategia de avance basada en vertical slices, arquitectura suficiente, ejecución verificable y aprendizaje;
 - orquestación inicial basada en Conversation Spaces ligeros que desbloquean trabajo;
-- secuencia progresiva frecuente: `10`, luego `20` y finalmente `30`, con dependencias explícitas;
 - convención de títulos limpios sin repetir el nombre del proyecto dentro de un Project o Gem dedicado;
 - plantilla `Conversation Space Handoff` para transferir contexto entre chats que no comparten historial;
 - obligación de declarar en cada handoff el espacio de destino y evitar reiniciar onboarding o reclasificar el proyecto;
