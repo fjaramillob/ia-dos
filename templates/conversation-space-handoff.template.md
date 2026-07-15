@@ -1,15 +1,13 @@
 # Conversation Space Handoff
 
-Usa esta plantilla cuando `00 — Dirección y orquestación` derive trabajo a otra conversación del mismo Project, Gem o espacio equivalente.
+Usa esta plantilla cuando `00 — Dirección y orquestación` derive trabajo a otra conversación.
 
-Las conversaciones pueden compartir archivos del espacio, pero no necesariamente comparten historial. El prompt debe ser autosuficiente y declarar expresamente su destino.
-
-En etapas iniciales, el handoff debe ser ligero: un objetivo principal, contexto mínimo y un entregable que desbloquee el siguiente paso.
+El handoff debe ser autosuficiente, breve y orientado a un único resultado.
 
 ```text
 IA-DOS Conversation Space Handoff
 
-Conversation Space de destino:
+Destino:
 [10 — Producto y UX / 20 — Arquitectura y stack / 30 — Ejecución y desarrollo / 90 — Wiki y memoria]
 
 Proyecto:
@@ -21,74 +19,70 @@ No reclasifiques el proyecto.
 No propongas renombrar este chat como 00.
 No repitas la configuración inicial de IA-DOS.
 
-Dirección del proyecto:
-[PROPÓSITO, USUARIO, PROBLEMA, PROMESA Y PRINCIPIOS EN 3–6 LÍNEAS]
+Dirección:
+[PROPÓSITO, USUARIO, PROBLEMA, PROMESA Y PRIORIDAD EN POCAS LÍNEAS]
 
-Estado recibido desde 00:
-[SOLO EL ESTADO NECESARIO PARA ESTA MISIÓN]
-
-Decisiones confirmadas:
+Decisiones confirmadas relevantes:
 - [...]
 
-Hipótesis o referencias no confirmadas:
-- [...]
+Objetivo único:
+[RESULTADO QUE DEBE DESBLOQUEAR]
 
-Preguntas abiertas relevantes para este espacio:
-- [...]
-
-Fuentes disponibles:
-- [...]
-
-Objetivo de esta conversación:
-[UN RESULTADO CONCRETO]
-
-Entregable esperado:
-[UN FLUJO, RECOMENDACIÓN, DECISIÓN, TAREA O HANDOFF]
+Entregable:
+[DECISIÓN, FLUJO, RECOMENDACIÓN, TAREA O PROMPT EJECUTABLE]
 
 Fuera de alcance:
 - [...]
 
+Fuentes necesarias:
+- [...]
+
 Reglas:
-- mantén este espacio ligero y orientado a un resultado;
-- no conviertas el primer turno en una auditoría exhaustiva, inventario completo o reorganización general;
-- trabaja únicamente dentro del dominio de esta conversación;
-- no conviertas referencias heredadas en decisiones vigentes;
-- no inventes stack, pantallas, métricas o implementación sin evidencia;
-- registra claramente decisiones, hipótesis y pendientes;
-- al terminar, entrega un Handoff de salida para el siguiente Conversation Space.
+- usa contexto mínimo;
+- no repitas el diagnóstico completo;
+- no amplíes el alcance;
+- no inventes decisiones ni implementación;
+- resuelve una decisión principal por vez;
+- detente cuando ya puedas entregar una salida útil.
 ```
 
-## Regla especial para `90 — Wiki y memoria`
+## Gate de salida
 
-No abras `90` solo para instalar la estructura inicial de la LLM Wiki. La wiki mínima puede crearse mediante una tarea documental acotada.
-
-Cuando `90` sea necesario, limita su primera misión a un problema real de memoria: síntesis, contradicción, decisión durable, mantenimiento o consolidación. No solicites una auditoría completa de toda la documentación salvo que el estado del proyecto realmente lo requiera.
-
-## Handoff de salida
-
-Cada conversación especializada debe cerrar un hito con:
+Antes de recomendar otra conversación, evalúa:
 
 ```text
-Conversation Space de origen:
-[...]
+¿Ya existe suficiente claridad para preparar una Execution Task verificable?
+```
 
+- **Sí:** entrega un prompt listo para Codex, Antigravity, Claude Code u otro coding agent.
+- **No:** entrega un handoff para el único Conversation Space que resuelve la brecha principal.
+
+## Salidas permitidas
+
+Cada espacio debe cerrar con una sola de estas salidas:
+
+1. prompt para otro Conversation Space;
+2. prompt listo para coding agent;
+3. `Wiki Update Task` o insumos para prepararla;
+4. una única decisión humana pendiente.
+
+## Formato de cierre
+
+```text
 Resultado producido:
 [...]
 
 Decisiones confirmadas:
 - [...]
 
-Hipótesis o pendientes:
+Pendientes relevantes:
 - [...]
 
-Fuentes o artefactos creados:
-- [...]
+Salida elegida:
+[PROMPT PARA CONVERSACIÓN / PROMPT PARA CODING AGENT / WIKI UPDATE TASK / DECISIÓN HUMANA]
 
-Siguiente Conversation Space recomendado:
-[...]
-
-Contexto mínimo que debe recibir:
-[...]
+Siguiente acción:
+[INSTRUCCIÓN CONCRETA]
 ```
 
-No dependas de que el siguiente chat pueda leer esta conversación. El handoff debe poder copiarse íntegramente.
+No dependas de que el siguiente chat o coding agent pueda leer la conversación anterior.
