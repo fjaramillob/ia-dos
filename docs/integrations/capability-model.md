@@ -86,13 +86,15 @@ Una capacidad puede estar:
 
 ## Verificación mínima
 
-Una capacidad se considera `verified` cuando existe evidencia suficiente, por ejemplo:
+Que una herramienta aparezca en la sesión solo permite tratarla como `declared`. No basta para marcar una capacidad como `verified`.
 
-- la herramienta aparece en la sesión;
-- una operación de lectura confirma el recurso correcto;
-- la cuenta, workspace, proyecto o repositorio fue identificado;
+Una capacidad se considera `verified` cuando existe evidencia suficiente de que la identidad, el recurso y la operación requeridos corresponden al contexto actual, por ejemplo:
+
+- la cuenta, workspace, proyecto o repositorio conectado fue identificado;
+- una operación de lectura o metadata confirma el recurso correcto;
+- la operación requerida aparece disponible para esa identidad y alcance;
 - el resultado devuelve un identificador verificable;
-- una prueba no destructiva confirma el alcance.
+- una prueba no destructiva confirma el contexto y la operación esperados.
 
 No realices una escritura solo para comprobar que la escritura funciona. Usa metadata, permisos declarados o una acción segura y reversible cuando corresponda.
 
