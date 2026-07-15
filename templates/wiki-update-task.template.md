@@ -124,5 +124,5 @@ Devuelve un `Execution Report` que incluya:
 - validaciones ejecutadas y resultados;
 - contradicciones o pendientes;
 - fuera de alcance respetado;
-- referencia al pull request;
+- referencia al pull request cuando se haya abierto; de lo contrario, referencia verificable al commit, diff o reporte autorizado;
 - recomendación de revisión para el Project Orchestrator.
