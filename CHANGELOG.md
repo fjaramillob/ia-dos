@@ -8,6 +8,12 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Added
 
+- modelo operativo para conectores, MCP, herramientas nativas, archivos adjuntos y acceso local;
+- separación explícita entre capacidad, permiso, autorización, ejecución y verificación;
+- modelo de capacidades con estados `verified`, `declared`, `unavailable`, `unknown`, `blocked` y `degraded`;
+- reglas de mínimo privilegio, contexto mínimo y degradación segura cuando una capacidad no está disponible;
+- plantilla opcional `Capability Manifest` para registrar herramientas, operaciones, alcance, restricciones y evidencia sin secretos;
+- criterios de seguridad y trazabilidad para integraciones, credenciales y acciones sensibles;
 - flujo explícito `conocimiento confirmado → Wiki Update Task → coding agent → evidencia → revisión → merge`;
 - definición de `90 — Wiki y memoria` como Conversation Space de gobierno y síntesis, no como ejecutor físico;
 - guía operativa para crear y mantener la LLM Wiki mediante Codex, Antigravity, Claude Code u otro coding agent;
