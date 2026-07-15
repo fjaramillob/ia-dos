@@ -14,7 +14,8 @@ Esta sección define cómo IA-DOS trabaja con conectores, MCP, herramientas nati
 necesidad
 → capacidades requeridas
 → capacidades verificadas
-→ permisos autorizados
+→ permisos técnicos disponibles
+→ autorización humana
 → ejecución
 → evidencia
 ```
