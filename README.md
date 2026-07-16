@@ -4,255 +4,101 @@
 
 IA-DOS es un framework operativo abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, memoria durable, ejecución acotada y verificación basada en evidencia.
 
-Coordina:
-
-- la persona que dirige el proyecto;
-- ChatGPT, Gemini, Claude u otros asistentes conversacionales;
-- Codex, Claude Code, Antigravity u otros coding agents;
-- Conversation Spaces especializados;
-- la LLM Wiki;
-- el repositorio de aplicación;
-- tareas, decisiones, pruebas y revisiones.
-
-IA-DOS no es un sistema operativo, un curso de Python ni una librería para construir agentes autónomos.
-
-## Qué problema resuelve
-
-Cuando un proyecto se desarrolla con varios chats, agentes y herramientas aparecen contexto fragmentado, decisiones perdidas, cambios fuera de alcance, código no utilizado, documentación desactualizada y dificultad para saber qué está realmente terminado.
-
-IA-DOS reduce esa fricción mediante una estructura simple, explícita y reutilizable.
+Coordina a la persona responsable, el Project Orchestrator, Conversation Spaces especializados, coding agents, repositorios de producto, LLM Wikis y fuentes de trazabilidad.
 
 ## Método de trabajo
 
-IA-DOS separa dirección, razonamiento, materialización y verificación.
-
 ```text
-Entender
-→ decidir
-→ delimitar
-→ materializar
-→ verificar y aprender
+conversación 00
+→ orientación y prioridad
+→ Conversation Space solo si desbloquea una brecha
+→ Execution Task
+→ preparación local cuando la ejecución lo requiera
+→ coding agent
+→ Execution Report al espacio de origen
+→ revisión e iteración
 ```
 
-Estos movimientos se repiten en ciclos pequeños. No son fases rígidas ni exigen completar toda la definición antes de construir.
-
-La regla de frontera es:
-
-```text
-La persona responsable dirige.
-El Project Orchestrator organiza.
-Los Conversation Spaces razonan.
-Los coding agents materializan.
-GitHub traza.
-La LLM Wiki recuerda.
-```
-
-Consulta [Método de trabajo](docs/foundations/working-method.md).
-
-## Qué hace realmente
-
-IA-DOS no busca completar una entrevista perfecta antes de comenzar a construir.
-
-Su función es:
-
-```text
-Capturar el alma del proyecto
-→ establecer una dirección
-→ abrir conversaciones ligeras que desbloqueen trabajo
-→ confirmar decisiones pequeñas y útiles
-→ convertirlas en tareas acotadas
-→ materializar, verificar y aprender
-→ devolver conocimiento confirmado a la memoria durable
-```
-
-El producto toma forma mediante ciclos reales de producto, arquitectura, desarrollo y aprendizaje.
-
-## Para quién está pensado
-
-Para personas que construyen con IA y necesitan mantener control sobre producto, arquitectura, repositorios, datos, tareas y agentes, aunque no sean programadores expertos.
-
-## Accesos rápidos
-
-- [Instalar IA-DOS en el workspace local](docs/getting-started/install-ia-dos.md)
-- [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
-- [Consultar la documentación](docs/index.md)
-- [Conocer el método de trabajo](docs/foundations/working-method.md)
-- [Trabajar con coding agents](docs/execution/coding-agents.md)
+La instalación local no es el punto de partida del método. IA-DOS comienza en una conversación dirigida. El entorno local se prepara cuando existe una tarea que necesita repositorios, archivos, Git o un coding agent.
 
 ## Empieza en cinco pasos
 
-### 1. Instala IA-DOS en el workspace local
+### 1. Crea el espacio conversacional del proyecto
 
-Cuando el proyecto vaya a trabajar con repositorios, archivos, Git o coding agents, sigue:
+Utiliza un Project, Gem, chat persistente o entorno equivalente.
 
-[Instalar IA-DOS en el workspace local](docs/getting-started/install-ia-dos.md)
+### 2. Inicializa el Project Orchestrator
 
-La instalación local no es obligatoria para comenzar desde un asistente conversacional.
+Sigue [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md).
 
-### 2. Crea el espacio del proyecto
+El primer chat queda identificado como:
 
-Utiliza un Project de ChatGPT, Gem de Gemini, Project de Claude o equivalente.
+- `00 — Dirección y definición` para un producto nuevo;
+- `00 — Descubrimiento y adopción` para un producto existente.
 
-### 3. Configura el Project Orchestrator
+### 3. Entrega las fuentes disponibles
 
-Sigue:
+Comparte una descripción breve, documentos, repositorios, una Wiki existente o el [Project Intake Brief](templates/project-intake-brief.template.md).
 
-[Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
+Cuando la plataforma no pueda navegar este repositorio, carga el [IA-DOS Project Orchestrator Pack](bundles/ia-dos-project-orchestrator-pack.md).
 
-Ese recorrido entrega:
+### 4. Orienta el siguiente resultado
 
-- descripción sugerida;
-- instrucciones persistentes listas para pegar;
-- conocimientos que debes cargar;
-- primer mensaje.
+El Orchestrator debe:
 
-### 4. Entrega IA-DOS al asistente y describe el proyecto
+- capturar propósito, usuario, problema y prioridad;
+- explicar la organización mínima de conversaciones;
+- abrir solo el Conversation Space que resuelva una brecha real;
+- omitir conversaciones innecesarias;
+- preparar una `Execution Task` tan pronto como exista claridad suficiente.
 
-Cuando la plataforma pueda navegar GitHub, utiliza este repositorio.
+Consulta:
 
-Cuando no pueda acceder, carga:
+- [Iniciar un producto nuevo](docs/getting-started/new-project-from-conversation.md)
+- [Adoptar un producto existente](docs/getting-started/adopt-existing-project-from-conversation.md)
 
-[IA-DOS Project Orchestrator Pack](bundles/ia-dos-project-orchestrator-pack.md)
+### 5. Prepara el entorno local solo cuando haga falta ejecutar
 
-También puedes utilizar:
+Cuando la tarea requiera acceso real a repositorios, archivos, Git o herramientas locales, el Orchestrator debe indicar el paso correspondiente:
 
-[Project Intake Brief](templates/project-intake-brief.template.md)
-
-No necesitas completar todo. El asistente debe leer primero las fuentes y capturar propósito, usuario, problema, promesa, principios y primer resultado a demostrar.
-
-### 5. Avanza con una tarea verificable
-
-- [Producto objetivo nuevo](docs/getting-started/new-project-from-conversation.md)
-- [Producto objetivo existente](docs/getting-started/adopt-existing-project-from-conversation.md)
-- [Crear la LLM Wiki](docs/getting-started/bootstrap-llm-wiki.md)
+- [Preparar el workspace local](docs/getting-started/workspace-setup.md)
+- [Instalar IA-DOS en el workspace](docs/getting-started/install-ia-dos.md)
+- [Crear un proyecto nuevo en el workspace](docs/getting-started/create-new-project-workspace.md)
+- [Incorporar un proyecto existente](docs/getting-started/incorporate-existing-project-workspace.md)
 - [Preparar un handoff de ejecución](docs/getting-started/execution-handoff.md)
 
-Cuando el usuario indique que quiere avanzar, el Project Orchestrator debe activar Launch Mode: resumir la dirección, proponer una estrategia, recomendar solo los Conversation Spaces necesarios y conducir el siguiente cambio hacia una `Execution Task` acotada.
+No prepares infraestructura local por anticipación si todavía no existe una tarea que la necesite.
 
-## Project Orchestrator
+## Conversation Spaces bajo demanda
 
-El asistente conversacional funciona como **Project Orchestrator**:
+`00` mantiene la dirección. Otros espacios se abren solo cuando desbloquean trabajo:
 
-- comprende el proyecto mediante fuentes, wiki y repositorios;
-- captura el alma y la dirección del producto;
-- propone una estrategia de avance;
-- recomienda los Conversation Spaces necesarios;
-- distingue hechos, hipótesis, propuestas y decisiones;
-- transforma necesidades en `Execution Tasks`;
-- define qué debe cambiar, por qué y bajo qué límites;
-- prepara handoffs para coding agents;
-- revisa resultados, diffs y evidencia;
-- mantiene alineadas conversación, memoria y desarrollo.
+- `10 — Producto y UX`: comportamiento, flujo o experiencia;
+- `20 — Arquitectura y stack`: decisiones técnicas o auditorías;
+- `30 — Ejecución y desarrollo`: preparación de tareas complejas, solo si aporta;
+- `90 — Wiki y memoria`: síntesis, contradicciones o mantenimiento documental complejo.
 
-El Orchestrator organiza y revisa. La modificación física corresponde a un coding agent o herramienta con acceso real al artefacto.
-
-Consulta [ORCHESTRATOR.md](ORCHESTRATOR.md).
-
-## Conversation Spaces progresivos
-
-Mantén:
-
-```text
-00 — Dirección y orquestación
-```
-
-En un producto nuevo comienza como:
-
-```text
-00 — Dirección y definición
-```
-
-Después de la alineación mínima, abre primero el espacio que desbloquea el trabajo más cercano. Una secuencia frecuente es:
-
-```text
-10 — Producto y UX
-20 — Arquitectura y stack
-30 — Ejecución y desarrollo
-```
-
-`90 — Wiki y memoria` es un espacio especializado opcional. Se abre cuando existe trabajo real de síntesis, contradicciones, decisiones durables o mantenimiento documental.
-
-Los espacios razonan y producen handoffs. No son fases obligatorias ni memoria durable.
+No constituyen una secuencia obligatoria.
 
 ## Coding agents
 
-Los coding agents materializan una `Execution Task` autorizada sobre archivos, repositorios o entornos reales.
-
-Pueden:
-
-- modificar implementación;
-- actualizar documentación;
-- construir o mantener la LLM Wiki;
-- ejecutar comandos y pruebas;
-- trabajar con branches, commits y pull requests;
-- entregar un `Execution Report` con evidencia.
-
-No deben ampliar alcance, asumir decisiones ni fusionar cambios sin autorización.
-
-Consulta [Coding agents](docs/execution/coding-agents.md).
-
-## Flujo de ejecución
-
-```text
-Dirección o necesidad
-→ decisión confirmada
-→ Execution Task
-→ ejecución acotada del coding agent
-→ cambios + pruebas + Execution Report
-→ revisión humana y del Orchestrator
-→ merge autorizado
-→ actualización de memoria durable
-```
-
-La unidad operativa es una tarea acotada, no un chat permanente del coding agent.
+Los coding agents materializan `Execution Tasks` autorizadas, ejecutan verificaciones y devuelven un `Execution Report`. No deben ampliar alcance ni fusionar cambios sin autorización.
 
 ## LLM Wiki
 
-La wiki es memoria durable en Markdown, navegable y versionada con Git. Está inspirada en los principios LLM Wiki de Andrej Karpathy y agrega estado explícito, decisiones, Context Packs, tareas y evidencia.
+La Wiki conserva memoria durable en Markdown y se puebla progresivamente. Puede actualizarse en la misma tarea que modifica el producto cuando el conocimiento sea claro y acotado.
 
-La estructura mínima se instala temprano y se puebla progresivamente con información confirmada. No debe convertirse en una auditoría exhaustiva previa al primer vertical slice ni llenarse con páginas vacías por anticipación.
+## Accesos rápidos
 
-## Estructura recomendada
-
-```text
-proyectos/
-├── 00-ia-dos/
-└── nombre-proyecto/
-    ├── nombre-proyecto-app/
-    └── nombre-proyecto-wiki/
-```
-
-Es una recomendación fuerte, no una obligación.
-
-## Qué no es
-
-IA-DOS no es:
-
-- un sistema operativo DOS;
-- un curso o módulo educativo de Python;
-- una librería Python;
-- un tutorial para construir agentes autónomos;
-- un framework basado necesariamente en LangChain o LangGraph;
-- un evaluador de ideas;
-- una herramienta que programa sola;
-- un agente autónomo sin supervisión;
-- una aplicación SaaS;
-- un reemplazo de GitHub, Obsidian, Spec Kit, OpenSpec o coding agents;
-- una garantía de ausencia de errores.
-
-## Discoverability
-
-IA-DOS busca ser comprensible para personas, buscadores y asistentes de IA a partir de sus fuentes públicas verificables.
-
-Consulta [Discoverability de IA-DOS](docs/discoverability/index.md).
-
-## Documentación
-
-Consulta [docs/index.md](docs/index.md).
+- [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
+- [Consultar la documentación](docs/index.md)
+- [Conocer el método de trabajo](docs/foundations/working-method.md)
+- [Avance concreto y transición a ejecución](docs/orchestration/concrete-execution-flow.md)
+- [Trabajar con coding agents](docs/execution/coding-agents.md)
 
 ## Estado
 
-IA-DOS está en fase alpha. La primera versión se valida mediante proyectos reales antes de publicarse como release estable.
+IA-DOS está en fase alpha y se valida mediante proyectos reales antes de una release estable.
 
 ## Licencia
 
