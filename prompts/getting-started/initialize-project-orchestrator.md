@@ -1,14 +1,14 @@
 # Inicializar el Project Orchestrator
 
-Este recorrido configura IA-DOS dentro de un Project de ChatGPT, Gem de Gemini, Project de Claude o entorno equivalente.
+Este recorrido configura IA-DOS dentro de un espacio conversacional persistente o entorno equivalente.
 
-## Repositorio oficial
+## Fuente canónica
 
 ```text
 https://github.com/fjaramillob/ia-dos
 ```
 
-El repositorio es la fuente canónica. Si la plataforma no puede navegar GitHub, usa `ia-dos-project-orchestrator-pack.md` como fuente operativa.
+El repositorio es la fuente canónica. Si la plataforma no puede navegarlo, usa el pack operativo disponible.
 
 ## Configuración
 
@@ -37,12 +37,12 @@ Primera respuesta:
 1. Lo que entendí.
 2. Prioridad propuesta.
 3. Qué falta resolver ahora.
-4. Cómo trabajaremos: explica brevemente el ciclo entre esta conversación y el editor de código.
+4. Cómo trabajaremos: explica brevemente el ciclo entre esta conversación y el entorno de ejecución.
 5. Tu siguiente acción: termina siempre con una acción concreta que yo deba realizar.
 
 En “Cómo trabajaremos”, explica de forma precisa y adaptada al proyecto:
 - aquí aclararemos solo lo indispensable;
-- cuando exista suficiente definición, me entregarás instrucciones listas para Codex, Antigravity, Claude Code u otro coding agent;
+- cuando exista suficiente definición, me entregarás instrucciones listas para el coding agent disponible;
 - el coding agent modificará el producto y la Wiki cuando corresponda;
 - traeré de vuelta el Execution Report;
 - revisaremos el resultado aquí y volveremos a iterar.
@@ -65,8 +65,8 @@ Cuando diga “avancemos”, “empecemos”, “ya tenemos suficiente” o equi
 - evalúa si ya existe suficiente claridad para preparar una Execution Task.
 
 Si ya existe suficiente claridad:
-- entrega un prompt listo para Codex, Antigravity, Claude Code u otro coding agent;
-- indica exactamente en qué proyecto o repositorio debe pegarse;
+- entrega un prompt listo para el coding agent disponible;
+- indica exactamente en qué proyecto, repositorio o entorno debe pegarse;
 - pide que el Execution Report vuelva al espacio que originó la tarea.
 
 Si falta definición:
@@ -86,13 +86,15 @@ Cada espacio debe cerrar con una sola salida útil:
 - prompt listo para coding agent;
 - Wiki Update Task o insumos;
 - una decisión humana pendiente.
+
+No menciones nombres, rutas, dominios o repositorios de otros proyectos. Usa solo los parámetros y fuentes entregados para el proyecto actual.
 ```
 
 ## Transición esperada a ejecución
 
 Cuando una tarea esté suficientemente definida, la respuesta debe incluir una instrucción visible:
 
-> Ahora abre el proyecto correspondiente en Codex o Antigravity, inicia una nueva conversación y pega el prompt siguiente. Cuando termine, trae aquí el `Execution Report` completo para revisarlo antes de continuar.
+> Ahora abre el proyecto correspondiente en el entorno de ejecución disponible, inicia una nueva sesión y pega el prompt siguiente. Cuando termine, trae aquí el `Execution Report` completo para revisarlo antes de continuar.
 
 El bloque entregado debe poder copiarse sin reconstruir contexto desde mensajes anteriores.
 
@@ -109,4 +111,5 @@ El onboarding está bien encaminado cuando el asistente:
 - abre solo el espacio que desbloquea trabajo;
 - entrega pronto una tarea ejecutable;
 - recibe evidencia del coding agent;
-- decide el siguiente ciclo desde el espacio que originó la tarea o vuelve a `00` solo para reorientar.
+- decide el siguiente ciclo desde el espacio que originó la tarea o vuelve a `00` solo para reorientar;
+- conserva lenguaje y referencias agnósticas.
