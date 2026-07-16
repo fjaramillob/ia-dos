@@ -11,15 +11,32 @@ Coordina a la persona responsable, el Project Orchestrator, Conversation Spaces 
 ```text
 conversación 00
 → orientación y prioridad
-→ Conversation Space solo si desbloquea una brecha
-→ Execution Task
+→ tópico especializado solo si desbloquea una brecha
+→ Execution Task clasificada
 → preparación local cuando la ejecución lo requiera
 → coding agent
 → Execution Report al espacio de origen
 → revisión e iteración
 ```
 
-La instalación local no es el punto de partida del método. IA-DOS comienza en una conversación dirigida. El entorno local se prepara cuando existe una tarea que necesita repositorios, archivos, Git o un coding agent.
+La instalación local no es el punto de partida. IA-DOS comienza en una conversación dirigida y prepara el entorno local cuando una tarea necesita repositorios, archivos, Git o un coding agent.
+
+## Dos registros operativos
+
+IA-DOS utiliza dos registros complementarios para evitar que cada asistente improvise la organización:
+
+- [Registro de tópicos conversacionales](docs/orchestration/topic-routing-registry.md): decide dónde razonar, cuándo abrir un Conversation Space y qué salida debe producir.
+- [Registro de tipos de ejecución](docs/execution/execution-task-types.md): decide cómo debe trabajar el coding agent, qué evidencia se espera y qué autorizaciones no se presumen.
+
+```text
+tópico conversacional
+→ define dónde se resuelve la decisión
+
+tipo de ejecución
+→ define cómo se materializa el resultado
+```
+
+Los registros no crean una secuencia obligatoria. Aportan clasificación, defaults y gates de salida.
 
 ## Empieza en cinco pasos
 
@@ -42,15 +59,17 @@ Comparte una descripción breve, documentos, repositorios, una Wiki existente o 
 
 Cuando la plataforma no pueda navegar este repositorio, carga el [IA-DOS Project Orchestrator Pack](bundles/ia-dos-project-orchestrator-pack.md).
 
-### 4. Orienta el siguiente resultado
+### 4. Orienta y clasifica el siguiente resultado
 
 El Orchestrator debe:
 
 - capturar propósito, usuario, problema y prioridad;
-- explicar la organización mínima de conversaciones;
+- identificar la decisión dominante;
+- enrutarla usando el registro de tópicos;
 - abrir solo el Conversation Space que resuelva una brecha real;
 - omitir conversaciones innecesarias;
-- preparar una `Execution Task` tan pronto como exista claridad suficiente.
+- clasificar la tarea con un tipo de ejecución;
+- preparar una `Execution Task` tan pronto exista claridad suficiente.
 
 Consulta:
 
@@ -69,20 +88,27 @@ Cuando la tarea requiera acceso real a repositorios, archivos, Git o herramienta
 
 No prepares infraestructura local por anticipación si todavía no existe una tarea que la necesite.
 
-## Conversation Spaces bajo demanda
+## Tópicos conversacionales bajo demanda
 
-`00` mantiene la dirección. Otros espacios se abren solo cuando desbloquean trabajo:
+- `00 — Dirección y orquestación`: prioridad, límites y reorientación;
+- `10 — Producto y UX`: comportamiento, flujo y experiencia;
+- `20 — Arquitectura y stack`: arquitectura, datos, integraciones y decisiones técnicas;
+- `30 — Ejecución y desarrollo`: descomposición compleja, solo cuando aporta;
+- `40 — Calidad, seguridad y cumplimiento`: validación y riesgo con contexto propio;
+- `50 — Operación y entrega`: entornos, releases, observabilidad y continuidad;
+- `90 — Wiki y memoria`: síntesis y gobierno documental complejo.
 
-- `10 — Producto y UX`: comportamiento, flujo o experiencia;
-- `20 — Arquitectura y stack`: decisiones técnicas o auditorías;
-- `30 — Ejecución y desarrollo`: preparación de tareas complejas, solo si aporta;
-- `90 — Wiki y memoria`: síntesis, contradicciones o mantenimiento documental complejo.
+No constituyen etapas obligatorias. Consulta el registro antes de abrir un nuevo espacio.
 
-No constituyen una secuencia obligatoria.
+## Tipos de ejecución
+
+Toda `Execution Task` declara un tipo principal: `INSPECT`, `BOOTSTRAP`, `BUILD`, `FIX`, `REFACTOR`, `MIGRATE`, `TEST`, `HARDEN`, `DOCUMENT`, `WIKI`, `RELEASE` u `OPERATE`.
+
+El tipo orienta el modo de trabajo, pero no concede permisos sobre escritura, Git, despliegue, datos, costes o producción.
 
 ## Coding agents
 
-Los coding agents materializan `Execution Tasks` autorizadas, ejecutan verificaciones y devuelven un `Execution Report`. No deben ampliar alcance ni fusionar cambios sin autorización.
+Los coding agents materializan tareas autorizadas, ejecutan verificaciones y devuelven un `Execution Report` al Conversation Space de origen. No deben ampliar alcance ni fusionar cambios sin autorización.
 
 ## LLM Wiki
 
@@ -92,7 +118,8 @@ La Wiki conserva memoria durable en Markdown y se puebla progresivamente. Puede 
 
 - [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
 - [Consultar la documentación](docs/index.md)
-- [Conocer el método de trabajo](docs/foundations/working-method.md)
+- [Registro de tópicos conversacionales](docs/orchestration/topic-routing-registry.md)
+- [Registro de tipos de ejecución](docs/execution/execution-task-types.md)
 - [Avance concreto y transición a ejecución](docs/orchestration/concrete-execution-flow.md)
 - [Trabajar con coding agents](docs/execution/coding-agents.md)
 
