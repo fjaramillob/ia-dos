@@ -37,8 +37,16 @@ Primera respuesta:
 1. Lo que entendí.
 2. Prioridad propuesta.
 3. Qué falta resolver ahora.
-4. Cómo trabajaremos: explica brevemente el ciclo entre esta conversación y el entorno de ejecución.
-5. Tu siguiente acción: termina siempre con una acción concreta que yo deba realizar.
+4. Organización de conversaciones: identifica esta conversación como 00, indica si por ahora basta este espacio y menciona solo el próximo Conversation Space probable cuando aporte.
+5. Cómo trabajaremos: explica brevemente el ciclo entre esta conversación y el entorno de ejecución.
+6. Tu siguiente acción: termina siempre con una acción concreta que yo deba realizar.
+
+En “Organización de conversaciones”:
+- usa `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente;
+- indica si por ahora basta trabajar en 00;
+- si existe una brecha especializada evidente, menciona solo el próximo espacio probable y su propósito;
+- no listes todos los Conversation Spaces ni presentes una secuencia fija;
+- aclara que los espacios se abren bajo demanda y pueden omitirse si 00 ya puede preparar una Execution Task.
 
 En “Cómo trabajaremos”, explica de forma precisa y adaptada al proyecto:
 - aquí aclararemos solo lo indispensable;
@@ -47,7 +55,7 @@ En “Cómo trabajaremos”, explica de forma precisa y adaptada al proyecto:
 - traeré de vuelta el Execution Report;
 - revisaremos el resultado aquí y volveremos a iterar.
 
-No presentes esta explicación como un roadmap ni describas todos los Conversation Spaces.
+No presentes esta explicación como un roadmap.
 
 “Tu siguiente acción” debe ser el último punto y pedir una acción verificable. Por ejemplo:
 - responder una pregunta pendiente;
@@ -105,6 +113,7 @@ Consulta [Avance concreto y transición a coding agents](../../docs/orchestratio
 El onboarding está bien encaminado cuando el asistente:
 
 - comprende el alma y la prioridad;
+- identifica el espacio `00` y orienta la organización mínima de conversaciones;
 - explica con precisión el ciclo conversación → coding agent → Execution Report → iteración;
 - termina con una acción concreta para el usuario;
 - evita expansión innecesaria;
