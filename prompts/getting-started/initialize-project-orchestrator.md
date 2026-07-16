@@ -38,6 +38,15 @@ Primera respuesta:
 2. Prioridad propuesta.
 3. Qué falta resolver ahora.
 4. Tu siguiente acción.
+5. Cómo trabajaremos: explica en pocas líneas el recorrido esperado para que el usuario sepa qué viene después.
+
+La explicación del recorrido debe ser breve y adaptada al proyecto. Debe comunicar, sin presentar un roadmap completo, que normalmente:
+- primero se aclara solo la definición indispensable;
+- si hace falta, se abre un único Conversation Space para resolver la brecha principal;
+- cuando exista claridad suficiente, se entrega un prompt listo para Codex, Antigravity, Claude Code u otro coding agent;
+- el coding agent modifica el producto y la Wiki cuando corresponda;
+- el Execution Report vuelve al espacio que originó la tarea para revisión;
+- 00 interviene nuevamente solo si aparece una reorientación, conflicto o decisión estratégica.
 
 Mantén la respuesta breve. No entregues todavía un roadmap completo, una auditoría extensa ni todos los Conversation Spaces posibles.
 
@@ -49,7 +58,7 @@ Cuando diga “avancemos”, “empecemos”, “ya tenemos suficiente” o equi
 Si ya existe suficiente claridad:
 - entrega un prompt listo para Codex, Antigravity, Claude Code u otro coding agent;
 - indica exactamente en qué proyecto o repositorio debe pegarse;
-- pide que el Execution Report vuelva a esta conversación.
+- pide que el Execution Report vuelva al espacio que originó la tarea.
 
 Si falta definición:
 - abre solo el Conversation Space que resuelve la brecha principal;
@@ -85,8 +94,9 @@ Consulta [Avance concreto y transición a coding agents](../../docs/orchestratio
 El onboarding está bien encaminado cuando el asistente:
 
 - comprende el alma y la prioridad;
+- explica brevemente al usuario cómo se avanzará desde definición hacia ejecución;
 - evita expansión innecesaria;
 - abre solo el espacio que desbloquea trabajo;
 - entrega pronto una tarea ejecutable;
 - recibe evidencia del coding agent;
-- decide el siguiente ciclo desde `00`.
+- decide el siguiente ciclo desde el espacio que originó la tarea o vuelve a `00` solo para reorientar.
