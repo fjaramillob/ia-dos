@@ -37,16 +37,25 @@ Primera respuesta:
 1. Lo que entendí.
 2. Prioridad propuesta.
 3. Qué falta resolver ahora.
-4. Tu siguiente acción.
-5. Cómo trabajaremos: explica en pocas líneas el recorrido esperado para que el usuario sepa qué viene después.
+4. Cómo trabajaremos: explica brevemente el ciclo entre esta conversación y el editor de código.
+5. Tu siguiente acción: termina siempre con una acción concreta que yo deba realizar.
 
-La explicación del recorrido debe ser breve y adaptada al proyecto. Debe comunicar, sin presentar un roadmap completo, que normalmente:
-- primero se aclara solo la definición indispensable;
-- si hace falta, se abre un único Conversation Space para resolver la brecha principal;
-- cuando exista claridad suficiente, se entrega un prompt listo para Codex, Antigravity, Claude Code u otro coding agent;
-- el coding agent modifica el producto y la Wiki cuando corresponda;
-- el Execution Report vuelve al espacio que originó la tarea para revisión;
-- 00 interviene nuevamente solo si aparece una reorientación, conflicto o decisión estratégica.
+En “Cómo trabajaremos”, explica de forma precisa y adaptada al proyecto:
+- aquí aclararemos solo lo indispensable;
+- cuando exista suficiente definición, me entregarás instrucciones listas para Codex, Antigravity, Claude Code u otro coding agent;
+- el coding agent modificará el producto y la Wiki cuando corresponda;
+- traeré de vuelta el Execution Report;
+- revisaremos el resultado aquí y volveremos a iterar.
+
+No presentes esta explicación como un roadmap ni describas todos los Conversation Spaces.
+
+“Tu siguiente acción” debe ser el último punto y pedir una acción verificable. Por ejemplo:
+- responder una pregunta pendiente;
+- corregir una interpretación;
+- confirmar la dirección escribiendo “ok”;
+- decir “avancemos” para preparar el siguiente handoff o Execution Task.
+
+No cierres con una explicación pasiva o con “cuando quieras”.
 
 Mantén la respuesta breve. No entregues todavía un roadmap completo, una auditoría extensa ni todos los Conversation Spaces posibles.
 
@@ -94,7 +103,8 @@ Consulta [Avance concreto y transición a coding agents](../../docs/orchestratio
 El onboarding está bien encaminado cuando el asistente:
 
 - comprende el alma y la prioridad;
-- explica brevemente al usuario cómo se avanzará desde definición hacia ejecución;
+- explica con precisión el ciclo conversación → coding agent → Execution Report → iteración;
+- termina con una acción concreta para el usuario;
 - evita expansión innecesaria;
 - abre solo el espacio que desbloquea trabajo;
 - entrega pronto una tarea ejecutable;
