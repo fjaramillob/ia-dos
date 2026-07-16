@@ -9,10 +9,19 @@ La primera adopción sigue este orden:
 1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
 2. Entrega una descripción breve, documentos, repositorios o usa [Project Intake Brief](../templates/project-intake-brief.template.md).
 3. Abre `00 — Dirección y definición` o `00 — Descubrimiento y adopción`.
-4. Organiza solo las conversaciones que desbloqueen el siguiente resultado.
-5. Prepara una `Execution Task` cuando exista claridad suficiente.
-6. Instala o prepara el entorno local solo cuando la ejecución necesite repositorios, archivos, Git o un coding agent.
-7. Devuelve el `Execution Report` al espacio que originó la tarea.
+4. Clasifica la brecha con el [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md).
+5. Abre solo el Conversation Space que desbloquee el siguiente resultado.
+6. Clasifica la materialización con el [Registro de tipos de ejecución](execution/execution-task-types.md).
+7. Prepara una `Execution Task` cuando exista claridad suficiente.
+8. Instala o prepara el entorno local solo cuando la ejecución necesite repositorios, archivos, Git o un coding agent.
+9. Devuelve el `Execution Report` al espacio que originó la tarea.
+
+## Registros operativos
+
+- [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md): gobierna dónde se resuelve cada decisión, cuándo abrir un espacio y cuándo cerrarlo.
+- [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa el trabajo, qué evidencia requiere y qué permisos no se presumen.
+
+Los registros aportan clasificación y valores predeterminados; no sustituyen la decisión concreta del Orchestrator ni convierten los espacios en etapas obligatorias.
 
 ## Recorridos principales
 
@@ -35,12 +44,14 @@ Estas guías no son requisitos previos para iniciar el onboarding conversacional
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
 - [Pack operativo](../bundles/ia-dos-project-orchestrator-pack.md)
+- [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md)
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
 
 ## Ejecución
 
+- [Registro de tipos de ejecución](execution/execution-task-types.md)
 - [Coding agents](execution/coding-agents.md)
 - [Execution Task](../templates/execution-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
