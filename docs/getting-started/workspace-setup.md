@@ -1,62 +1,42 @@
 # Preparar el workspace local
 
-El workspace es la carpeta raíz donde conviven IA-DOS y los proyectos que adoptan el framework.
+El workspace local se prepara cuando una tarea definida en conversación necesita acceso real a repositorios, archivos, Git o un coding agent. No es un requisito previo para iniciar IA-DOS.
 
-IA-DOS recomienda utilizar una estructura reconocible, simple y predecible:
+La secuencia correcta es:
+
+```text
+00 orienta
+→ se define una tarea verificable
+→ se confirma que requiere ejecución local
+→ se prepara el workspace
+→ se ejecuta y se devuelve evidencia
+```
+
+## Estructura recomendada
 
 ```text
 proyectos/
 ├── 00-ia-dos/
-│
 ├── proyecto-a/
 │   ├── proyecto-a-app/
 │   └── proyecto-a-wiki/
-│
 └── proyecto-b/
     ├── proyecto-b-app/
     └── proyecto-b-wiki/
 ```
 
-## Ruta recomendada
+La ubicación por defecto puede ser `$HOME\proyectos` en Windows o `~/proyectos` en macOS y Linux, pero es una convención, no una obligación.
 
-La ubicación por defecto es una carpeta llamada `proyectos` dentro del directorio personal del usuario.
+## Principios
 
-### Windows PowerShell
+- IA-DOS se instala una sola vez como `00-ia-dos/`;
+- cada proyecto mantiene su implementación y su memoria durable;
+- app y Wiki pueden estar separadas o convivir cuando una excepción documentada lo justifique;
+- la carpeta exterior del proyecto normalmente no es un repositorio Git;
+- un coding agent recibe solo los repositorios y rutas necesarios para la tarea actual;
+- no se mueve un proyecto existente solo para cumplir esta estructura.
 
-```text
-$HOME\proyectos
-```
-
-### macOS y Linux
-
-```text
-~/proyectos
-```
-
-Esta ubicación es una convención, no una obligación. Puede utilizarse otra ruta cuando exista una razón clara, por ejemplo:
-
-- una unidad de trabajo separada;
-- políticas corporativas;
-- cifrado;
-- poco espacio disponible;
-- un workspace ya establecido.
-
-La ruta elegida debe mantenerse estable y documentada.
-
-## Por qué IA-DOS se llama `00-ia-dos`
-
-El prefijo `00-` permite que el framework aparezca primero al ordenar las carpetas alfabéticamente.
-
-```text
-proyectos/
-├── 00-ia-dos/
-├── proyecto-a/
-└── proyecto-b/
-```
-
-IA-DOS se instala una sola vez por workspace. No se copia dentro de cada proyecto.
-
-## Estructura de cada proyecto
+## Proyecto nuevo
 
 La estructura recomendada es:
 
@@ -66,116 +46,36 @@ nombre-proyecto/
 └── nombre-proyecto-wiki/
 ```
 
-### `nombre-proyecto-app/`
+La creación física debe ocurrir después de contar con una definición inicial en `00 — Dirección y definición` y con autorización para crear carpetas o repositorios.
 
-Contiene la implementación:
+## Proyecto existente
 
-- código;
-- dependencias;
-- configuración;
-- pruebas;
-- scripts propios de la aplicación;
-- `AGENTS.md` técnico.
+Antes de mover o reorganizar, revisa:
 
-### `nombre-proyecto-wiki/`
-
-Contiene la memoria durable:
-
-- propósito;
-- estado actual;
-- arquitectura;
-- decisiones;
-- riesgos;
-- fuentes;
-- Context Packs;
-- instrucciones para mantener la wiki.
-
-IA-DOS recomienda con fuerza separar app y wiki porque cumplen funciones distintas. Sin embargo, un proyecto puede utilizar un monorepo o mantener la documentación dentro de la app cuando la separación agregaría fricción innecesaria. La excepción debe quedar documentada.
-
-## Repositorios Git
-
-La configuración de referencia utiliza dos repositorios Git independientes:
-
-```text
-nombre-proyecto-app/.git
-nombre-proyecto-wiki/.git
-```
-
-La carpeta exterior `nombre-proyecto/` normalmente no es un repositorio Git.
-
-Esto permite:
-
-- controlar accesos por separado;
-- mantener la wiki privada aunque la app sea pública;
-- versionar la memoria sin mezclarla con el código;
-- evitar que un coding agent modifique la wiki sin autorización.
-
-No conviertas automáticamente la carpeta exterior en un repositorio. Evalúa primero si el proyecto realmente necesita un monorepo.
-
-## Acceso para asistentes y coding agents
-
-No abras toda la carpeta `proyectos/` como contexto cotidiano de un agente.
-
-Para una tarea normal, abre únicamente:
-
-```text
-nombre-proyecto-app/
-```
-
-Y entrega rutas concretas de la wiki cuando sean necesarias:
-
-```text
-../nombre-proyecto-wiki/current-state.md
-../nombre-proyecto-wiki/architecture.md
-../nombre-proyecto-wiki/decisions/
-```
-
-El acceso al repositorio `00-ia-dos/` se reserva principalmente para:
-
-- iniciar o adoptar proyectos;
-- consultar una guía;
-- copiar una plantilla;
-- preparar prompts;
-- revisar cambios entre versiones.
-
-Un coding agent no necesita leer IA-DOS completo en cada tarea.
-
-## Proyectos existentes
-
-No muevas un proyecto existente solo para cumplir esta estructura.
-
-Antes de reorganizarlo, revisa:
-
-- rutas absolutas o relativas;
+- rutas absolutas y relativas;
 - variables de entorno;
+- scripts y pipelines;
 - configuraciones del editor;
-- scripts;
-- pipelines;
 - despliegues;
 - enlaces entre repositorios;
-- workspaces de herramientas;
-- accesos de otros colaboradores.
+- accesos de colaboradores.
 
-Cuando mover el proyecto sea riesgoso, mantén su ubicación actual y documenta la excepción.
+Cuando mover sea riesgoso, conserva la ubicación actual y documenta la excepción.
 
-## Windows y WSL
+## Acceso de agentes
 
-Evita mezclar sin necesidad un workspace de Windows con uno de WSL.
+No abras toda la carpeta `proyectos/` como contexto cotidiano. Para una tarea normal, entrega únicamente:
 
-Ejemplo:
+- el repositorio de producto correspondiente;
+- las rutas específicas de la Wiki necesarias;
+- la `Execution Task`;
+- instrucciones técnicas aplicables.
 
-```text
-Windows: C:\Users\usuario\proyectos
-WSL:     /home/usuario/proyectos
-```
+El repositorio `00-ia-dos/` se consulta para guías, plantillas, prompts o cambios de versión, no como contexto completo de cada ejecución.
 
-Elige el entorno desde el que ejecutarás Git y los coding agents, y conserva los repositorios dentro de ese entorno para reducir problemas de permisos, rutas y rendimiento.
+## Seguridad
 
-## Qué no debe guardarse aquí
-
-El workspace no debe convertirse en un almacén de secretos.
-
-No guardes en IA-DOS ni en la wiki:
+No guardes en IA-DOS ni en la Wiki:
 
 - contraseñas;
 - API keys;
@@ -185,20 +85,18 @@ No guardes en IA-DOS ni en la wiki:
 - archivos `.env` con valores reales;
 - datos personales sensibles.
 
-Los secretos deben mantenerse en los mecanismos seguros definidos por cada proyecto.
-
 ## Verificación
 
-Antes de continuar, comprueba:
+Antes de ejecutar una tarea, confirma:
 
-- [ ] Existe una carpeta raíz estable para los proyectos.
-- [ ] IA-DOS tendrá una sola ubicación dentro del workspace.
-- [ ] Cada proyecto tiene una carpeta reconocible.
-- [ ] La app y la wiki están separadas o la excepción está documentada.
-- [ ] La carpeta exterior no fue convertida en repositorio sin necesidad.
-- [ ] Los agentes no reciben acceso automático a todos los proyectos.
-- [ ] No hay secretos dentro de la wiki ni del repositorio IA-DOS.
+- [ ] la ruta del workspace es estable;
+- [ ] IA-DOS tiene una sola ubicación;
+- [ ] el proyecto y sus repositorios están identificados;
+- [ ] app y Wiki están separadas o la excepción está documentada;
+- [ ] no se entregará acceso a proyectos no relacionados;
+- [ ] no existen secretos dentro del contexto compartido;
+- [ ] la tarea que justificó preparar el workspace sigue vigente.
 
 ## Siguiente paso
 
-Continúa con [Instalar IA-DOS localmente](install-ia-dos.md).
+Continúa con [Instalar IA-DOS en el workspace](install-ia-dos.md) solo cuando la tarea requiera acceso local al framework, sus plantillas o sus guías.

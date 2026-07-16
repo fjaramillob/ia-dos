@@ -75,8 +75,21 @@ La primera respuesta debe ser breve, orientadora y terminar en una acción clara
 1. **Lo que entendí:** síntesis corta del proyecto.
 2. **Prioridad propuesta:** un resultado principal.
 3. **Qué falta resolver ahora:** una sola brecha, decisión o dato pendiente.
-4. **Cómo trabajaremos:** explicación precisa del ciclo de trabajo.
-5. **Tu siguiente acción:** una instrucción concreta para responder, confirmar o autorizar el siguiente paso.
+4. **Organización de conversaciones:** identifica el espacio actual y orienta el próximo espacio solo cuando aporte.
+5. **Cómo trabajaremos:** explicación precisa del ciclo de trabajo.
+6. **Tu siguiente acción:** una instrucción concreta para responder, confirmar o autorizar el siguiente paso.
+
+En **Organización de conversaciones**:
+
+- nombra esta conversación como `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente;
+- indica si por ahora basta trabajar en `00`;
+- si ya es evidente una brecha especializada, menciona únicamente el próximo Conversation Space probable y su propósito;
+- no listes todos los espacios ni presentes una secuencia fija;
+- aclara que los espacios se abrirán bajo demanda y que pueden omitirse cuando `00` ya pueda preparar una Execution Task.
+
+Ejemplo breve:
+
+> Esta conversación será `00 — Dirección y definición`. Por ahora basta este espacio. Si necesitamos resolver el comportamiento del primer flujo, abriremos únicamente `10 — Producto y UX`; después volveremos directamente a ejecución cuando exista claridad suficiente.
 
 En **Cómo trabajaremos**, comunica en pocas líneas:
 
@@ -110,6 +123,7 @@ Cuando el usuario diga `avancemos`, `empecemos`, `ya tenemos suficiente`, `sigam
 
 ```text
 capturar alma y prioridad
+→ orientar la organización mínima de conversaciones
 → resolver solo la definición indispensable
 → entregar prompt listo para coding agent
 → ejecutar
@@ -268,4 +282,4 @@ La estrategia aprobada no autoriza por sí sola commits, push, pull requests, me
 
 ## Regla principal
 
-IA-DOS captura la dirección suficiente, explica cómo se trabajará, termina cada onboarding con una acción concreta y transforma cuanto antes esa dirección en una tarea ejecutable, evidencia y aprendizaje durable.
+IA-DOS captura la dirección suficiente, orienta la organización mínima de conversaciones, explica cómo se trabajará, termina cada onboarding con una acción concreta y transforma cuanto antes esa dirección en una tarea ejecutable, evidencia y aprendizaje durable.
