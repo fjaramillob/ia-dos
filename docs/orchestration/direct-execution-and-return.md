@@ -1,6 +1,6 @@
 # Ejecución directa y retorno acotado a 00
 
-IA-DOS busca comenzar cuanto antes a construir, reparar o reformular el producto en un editor de código, manteniendo la aplicación y la LLM Wiki alineadas con evidencia.
+IA-DOS busca comenzar cuanto antes a construir, reparar o reformular el producto en el entorno de ejecución disponible, manteniendo el producto y la LLM Wiki alineados con evidencia.
 
 ## Camino operativo
 
@@ -8,7 +8,7 @@ IA-DOS busca comenzar cuanto antes a construir, reparar o reformular el producto
 00 orienta
 → el Conversation Space necesario resuelve la brecha
 → ese mismo espacio prepara el prompt para el coding agent
-→ el coding agent modifica aplicación y Wiki cuando corresponde
+→ el coding agent modifica producto y Wiki cuando corresponde
 → el Execution Report vuelve al espacio de origen
 → el espacio revisa, corrige o prepara el siguiente ciclo
 → 00 interviene solo cuando hace falta reorientar
@@ -28,9 +28,9 @@ Antes de cerrar, el espacio evalúa:
 
 Entrega directamente:
 
-1. la instrucción para abrir el repositorio correcto en Codex, Antigravity, Claude Code u otro coding agent;
+1. la instrucción para abrir el repositorio correcto en el entorno de ejecución disponible;
 2. un prompt completo y listo para pegar;
-3. el alcance de aplicación y Wiki cuando corresponda;
+3. el alcance de producto y Wiki cuando corresponda;
 4. el formato requerido del `Execution Report`;
 5. la instrucción de devolver el reporte al espacio que originó la tarea.
 
@@ -56,6 +56,21 @@ El retorno a `00` corresponde solo cuando existe:
 - imposibilidad de definir con seguridad el siguiente resultado verificable.
 
 Terminar un análisis no es razón suficiente para volver a `00`.
+
+## Agnosticismo operativo
+
+Las reglas deben referirse a roles, no a proveedores:
+
+- `asistente conversacional`;
+- `Conversation Space`;
+- `coding agent`;
+- `entorno de ejecución`;
+- `repositorio de producto`;
+- `LLM Wiki`.
+
+Los nombres concretos de plataformas, modelos, editores o agentes pueden usarse solo como ejemplos no vinculantes.
+
+Cada handoff, Execution Task y Execution Report debe contener únicamente referencias del proyecto actual. No reutilices nombres, dominios, repositorios, rutas o decisiones de proyectos empleados durante pruebas o conversaciones anteriores.
 
 ## Prompt de retorno a 00
 
@@ -104,13 +119,13 @@ Ese espacio revisa:
 1. cumplimiento del objetivo;
 2. evidencia y verificaciones;
 3. respeto del alcance;
-4. estado de aplicación y Wiki;
+4. estado del producto y la Wiki;
 5. bloqueos o trabajo parcial;
 6. siguiente resultado lógico.
 
 Solo deriva a `00` si el reporte revela una condición real de reorientación.
 
-## Aplicación y Wiki en la misma ejecución
+## Producto y Wiki en la misma ejecución
 
 La actualización normal de la Wiki debe incluirse en la misma `Execution Task` que modifica el producto cuando el conocimiento sea claro, acotado y consecuencia directa del cambio.
 
@@ -128,7 +143,8 @@ Ejemplos:
 
 ```text
 Resolver en conversación solo lo indispensable.
-Materializar cuanto antes en el editor.
+Materializar cuanto antes en el entorno disponible.
 Documentar junto con la ejecución.
+Usar únicamente referencias del proyecto actual.
 Volver a 00 únicamente para reorientar.
 ```
