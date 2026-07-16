@@ -1,147 +1,87 @@
 # Adoptar un proyecto existente desde la capa conversacional
 
-Este recorrido sirve para adoptar un producto objetivo que ya tiene implementación, documentación, usuarios, infraestructura o integraciones.
+Este recorrido comienza en conversación y pasa al entorno local cuando hace falta inspeccionar o modificar artefactos reales.
 
-## 1. Configurar el Project Orchestrator
+## 1. Inicializar el Project Orchestrator
 
-Utiliza `prompts/getting-started/initialize-project-orchestrator.md`.
+Utiliza `prompts/getting-started/initialize-project-orchestrator.md` y entrega las fuentes disponibles: repositorio, Wiki, documentación, reportes, enlaces y restricciones.
 
-Entrega como conocimiento:
+## 2. Confirmar el escenario
 
-1. `bundles/ia-dos-project-orchestrator-pack.md` cuando la plataforma no pueda navegar GitHub;
-2. repositorio de aplicación o un reporte de inspección;
-3. documentación existente, wiki, enlaces, reportes y restricciones.
+Clasifica el producto objetivo como existente cuando el propio producto tiene evidencia de implementación, usuarios, despliegue, infraestructura, integraciones o documentación técnica vigente.
 
-El asistente debe leer primero las fuentes y evitar preguntas repetidas.
+Una migración, reconstrucción o producto sucesor es un atributo, no un tercer escenario.
 
-## 2. Confirmar que el producto objetivo es existente
+## 3. Abrir `00 — Descubrimiento y adopción`
 
-Clasifica el producto objetivo, no los sistemas anteriores o relacionados.
-
-Existe evidencia suficiente cuando el producto objetivo mismo tiene uno o más de estos elementos:
-
-- código;
-- despliegue;
-- usuarios;
-- infraestructura;
-- integraciones activas;
-- documentación técnica vigente.
-
-Una migración, reconstrucción o producto sucesor no constituye un tercer escenario. Es un atributo de la iniciativa.
-
-## 3. Primera conversación: `00 — Descubrimiento y adopción`
-
-Determina:
+`00` debe comprender:
 
 - qué producto existe;
-- para quién funciona;
 - qué está implementado, parcial, planificado, deprecado o desconocido;
-- qué documentación existe;
+- qué fuentes y repositorios participan;
 - qué decisiones siguen vigentes;
-- qué repositorios, servicios e integraciones participan;
 - qué problemas o riesgos son conocidos;
 - cuál es la prioridad actual.
 
-Regla:
+No describas como real algo que no tenga evidencia.
 
-> No describas como real algo que no haya sido confirmado por una fuente, el usuario o una inspección del repositorio.
+## 4. Organizar conversaciones bajo demanda
 
-## 4. Verificar la LLM Wiki
+`00` debe indicar si basta continuar allí o si una brecha requiere un único espacio especializado:
 
-### Existe una wiki usable
+- `10 — Producto y UX` para comportamiento o experiencia;
+- `20 — Arquitectura y stack` para una auditoría o decisión técnica;
+- `30 — Ejecución y desarrollo` solo si una tarea compleja necesita preparación adicional;
+- `90 — Wiki y memoria` para síntesis, contradicciones o mantenimiento documental complejo.
 
-Revisa si está versionada, tiene punto de entrada, representa el estado actual, distingue planes de implementación, contiene decisiones y fuentes, y puede ser utilizada por personas y agentes.
+No abras `90` automáticamente porque exista documentación dispersa ni abras `30` por rutina. Si el espacio actual ya puede preparar una `Execution Task`, pasa directamente a ejecución.
 
-No la reemplaces automáticamente.
+## 5. Usar inspección en modo lectura cuando falte evidencia
 
-### Existe documentación dispersa
+Cuando el asistente conversacional no tenga acceso suficiente al estado real, prepara una tarea de inspección para el coding agent:
 
-Identifica qué conservar como fuente y qué sintetizar. No copies todo sin criterio.
+- solo lectura;
+- repositorios y rutas explícitos;
+- verificaciones no destructivas;
+- formato de evidencia;
+- ninguna modificación remota sin autorización.
 
-### No existe wiki
+El reporte vuelve al espacio que originó la inspección.
 
-Propón una conversación separada:
+## 6. Preparar el entorno local cuando corresponda
 
-```text
-90 — Wiki y memoria
-```
+La instalación local no es requisito previo del onboarding. Se recomienda cuando la siguiente tarea necesita acceso real a repositorios, archivos, Git o herramientas locales.
 
-No simules `90` como una sección dentro de `00` cuando la plataforma permita conversaciones separadas.
+En ese momento, usa:
 
-Construye la wiki desde evidencia siguiendo `bootstrap-llm-wiki.md` y los principios LLM Wiki: Markdown navegable, páginas pequeñas, enlaces, Git y alta señal.
+- [Preparar el workspace local](workspace-setup.md)
+- [Instalar IA-DOS](install-ia-dos.md)
+- [Incorporar el proyecto existente](incorporate-existing-project-workspace.md)
+- [Crear o revisar la LLM Wiki](bootstrap-llm-wiki.md)
+- [Preparar el handoff de ejecución](execution-handoff.md)
 
-## 5. Construir memoria sin inventar historia
+No muevas, renombres ni reorganices un proyecto existente solo para cumplir una estructura recomendada.
 
-Usa:
-
-- inspección del repositorio en modo lectura;
-- README, configuración, dependencias y estructura;
-- documentación existente;
-- issues y pull requests relevantes;
-- conversación con la persona responsable;
-- dudas y contradicciones explícitas.
-
-Clasifica hallazgos como:
-
-```text
-Implementado
-Parcialmente implementado
-Planificado
-Deprecado
-Desconocido
-```
-
-## 6. Conversation Spaces progresivos
-
-Comienza con:
+## 7. Ejecutar y retornar
 
 ```text
-00 — Dirección y orquestación
-90 — Wiki y memoria
+Conversation Space de origen
+→ Execution Task
+→ coding agent
+→ cambios y verificaciones
+→ Execution Report
+→ regreso al espacio de origen
+→ revisión e iteración
 ```
 
-Cuando empiece el trabajo técnico:
+Solo vuelve a `00` cuando aparezca una reorientación real.
 
-```text
-30 — Ejecución y desarrollo
-```
+## Primera tarea recomendada
 
-Agrega producto, arquitectura, QA, operaciones, comercial o cumplimiento solo cuando exista actividad recurrente o mezcla real de contexto.
+Comienza con un resultado de bajo riesgo y verificable, por ejemplo:
 
-## 7. Conectar conversación, wiki y aplicación
-
-```text
-IA-DOS
-    define cómo trabajar
-
-Project Orchestrator
-    dirige y convierte conversaciones en trabajo
-
-LLM Wiki
-    conserva contexto, decisiones y estado
-
-Repositorio de aplicación
-    conserva la implementación
-```
-
-Cuando no haya acceso al repositorio, solicita a un coding agent una inspección en modo lectura y un reporte estructurado.
-
-## 8. Relación con coding agents
-
-```text
-1 Execution Task
-→ 1 ejecución acotada
-→ 1 resultado verificable
-→ 1 Execution Report
-```
-
-Las sesiones del coding agent no son memoria durable.
-
-## 9. Primera tarea después de la adopción
-
-Valida el flujo con una tarea de bajo riesgo:
-
-- documentar arquitectura actual;
+- inspeccionar arquitectura actual;
+- documentar un flujo existente;
 - corregir un bug acotado;
 - añadir una prueba;
 - actualizar una funcionalidad pequeña;
@@ -149,10 +89,10 @@ Valida el flujo con una tarea de bajo riesgo:
 
 ## Resultado esperado
 
-- Project Orchestrator dedicado;
-- producto objetivo clasificado con evidencia;
-- comprensión del estado real;
-- wiki creada o revisada;
-- contradicciones registradas;
-- conversaciones mínimas;
-- primera tarea acotada.
+- producto clasificado con evidencia;
+- estado real comprendido sin inventar historia;
+- organización mínima de conversaciones;
+- entorno local preparado solo cuando hace falta;
+- primera tarea acotada;
+- evidencia devuelta al espacio de origen;
+- Wiki creada o actualizada progresivamente.
