@@ -2,22 +2,19 @@
 
 Usa esta plantilla cuando un Conversation Space derive trabajo a otra conversación.
 
-Consulta [Registro de tópicos conversacionales](../docs/orchestration/topic-routing-registry.md). El handoff debe ser autosuficiente, breve y orientado a una sola decisión dominante.
+El handoff debe ser autosuficiente, breve y orientado a una sola decisión dominante.
 
 ```text
 IA-DOS Conversation Space Handoff
 
+Proyecto:
+[NOMBRE]
+
 Tópico de origen:
 [00 / 10 / 20 / 30 / 40 / 50 / 90]
 
-Tópico de destino:
-[00 / 10 / 20 / 30 / 40 / 50 / 90]
-
-Nombre del espacio de destino:
-[NOMBRE CANÓNICO O ESPECIALIZACIÓN JUSTIFICADA]
-
-Proyecto:
-[NOMBRE]
+Tópico y nombre del espacio de destino:
+[TÓPICO — NOMBRE]
 
 Esta conversación es el espacio indicado arriba.
 No reinicies el onboarding.
@@ -25,7 +22,7 @@ No reclasifiques el proyecto.
 No repitas la configuración inicial de IA-DOS.
 
 Por qué este tópico debe resolverlo:
-[DECISIÓN DOMINANTE Y MOTIVO DEL ENRUTAMIENTO]
+[DECISIÓN DOMINANTE Y MOTIVO]
 
 Dirección confirmada:
 [PROPÓSITO, USUARIO, PROBLEMA, PROMESA Y PRIORIDAD]
@@ -33,14 +30,14 @@ Dirección confirmada:
 Decisiones relevantes:
 - [...]
 
+Estado del resultado:
+[Propuesto / En validación / Aceptado / Bloqueado / Reemplazado]
+
 Objetivo único:
 [RESULTADO QUE DEBE DESBLOQUEAR]
 
 Entradas mínimas:
-- [FUENTES, RUTAS O ARTEFACTOS DEL PROYECTO ACTUAL]
-
-Entregable:
-[DECISIÓN / FLUJO / RECOMENDACIÓN / EXECUTION TASK]
+- [FUENTES, ARTEFACTOS O ENTORNOS AUTORIZADOS]
 
 Fuera de alcance:
 - [...]
@@ -48,37 +45,57 @@ Fuera de alcance:
 Condición de cierre:
 [CUÁNDO DEBE DEJAR DE ANALIZAR]
 
-Espacio de retorno de una eventual ejecución:
-[TÓPICO Y NOMBRE]
+Propiedad del ciclo:
+- Cycle Owner actual: [ESPACIO]
+- Regla de transferencia: [EL DESTINO SE CONVIERTE EN CYCLE OWNER SI CONFIRMA EL RESULTADO / CONSERVAR PROPIEDAD / OTRA]
+- Destino del Implementation Plan: [ESPACIO O NO APLICA]
+- Destino del Execution Report: [ESPACIO]
+- Espacio de escalamiento: [NORMALMENTE 00 — DIRECCIÓN Y ORQUESTACIÓN]
 
 Reglas:
 - usa contexto mínimo;
-- no repitas el diagnóstico completo;
 - no amplíes el alcance;
 - no inventes decisiones ni implementación;
-- resuelve una decisión principal por vez;
-- no menciones referencias de otros proyectos;
-- prepara una Execution Task tan pronto exista claridad suficiente.
+- no regreses automáticamente a 00;
+- aplica el gate de planificación;
+- entrega una Planning Task cuando haga falta inspección o diseño técnico;
+- entrega una Execution Task solo cuando exista una unidad pequeña y verificable;
+- devuelve cada artefacto al destino declarado;
+- escala solo por una condición real fuera de la autoridad del Cycle Owner.
 ```
 
 ## Gate de salida
 
-Antes de recomendar otra conversación, evalúa:
+Evalúa:
 
 ```text
-¿Ya existe suficiente claridad para preparar una Execution Task verificable?
+¿El siguiente resultado puede ejecutarse directamente
+o necesita primero un plan técnico basado en el estado real?
 ```
 
-- **Sí:** clasifica el tipo de ejecución y entrega la tarea al coding agent.
-- **No:** deriva solo cuando la brecha pertenece realmente a otro tópico.
+- **Necesita plan:** entrega una Planning Task.
+- **Puede ejecutarse:** entrega una Execution Task pequeña.
+- **Falta otra decisión de dominio:** deriva únicamente al tópico correcto.
+- **Requiere reorientación:** escala a `00`.
+
+## Gate de tamaño
+
+Antes de entregar una Execution Task:
+
+```text
+¿Puede completarse, verificarse y reportarse
+sin mezclar resultados independientes?
+```
+
+Si no, solicita o prepara un plan dividido.
 
 ## Salidas permitidas
 
-Cada espacio debe cerrar con una sola salida:
-
-1. decisión humana pendiente;
-2. handoff a otro tópico;
-3. `Execution Task` lista para un coding agent;
-4. actualización durable acotada.
+1. Planning Task;
+2. Execution Task;
+3. decisión humana pendiente;
+4. handoff a otro tópico;
+5. escalamiento justificado;
+6. actualización durable acotada.
 
 No dependas de que el siguiente espacio pueda leer la conversación anterior.

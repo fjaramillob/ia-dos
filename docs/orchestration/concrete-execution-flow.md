@@ -8,186 +8,204 @@ IA-DOS debe producir avances verificables sin depender de una plataforma, provee
 capturar alma y prioridad
 → identificar el siguiente resultado concreto
 → resolver solo la definición indispensable
-→ preparar una Execution Task desde el espacio que resolvió la brecha
-→ entregar un prompt listo para el coding agent disponible
-→ ejecutar cambios de producto y Wiki cuando corresponda
-→ recibir un Execution Report en el espacio de origen
-→ revisar, corregir o preparar el siguiente ciclo
-→ volver a 00 solo cuando haga falta reorientar
+→ asignar Cycle Owner
+→ decidir entre Planning Task y Execution Task
+→ devolver el artefacto al destino declarado
+→ revisar, corregir o continuar
+→ escalar a 00 solo cuando corresponda
 ```
 
-`00 — Dirección y orquestación` no es una parada obligatoria entre definición y ejecución. La conversación se expande por especialización solo cuando esa especialización desbloquea trabajo.
+`00 — Dirección y orquestación` no es una parada obligatoria entre definición, planificación y ejecución.
 
-## Gate antes de abrir otra conversación o volver a 00
+## Gate de planificación
 
-Cada Conversation Space debe evaluar:
+Cada Cycle Owner debe evaluar:
 
 ```text
-¿Existe suficiente claridad dentro de este espacio para preparar una tarea acotada, verificable y segura?
+¿El siguiente resultado está suficientemente definido,
+es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
 ```
 
-### Cuando la respuesta es sí
+### Sí
 
-No abras otra conversación ni regreses a `00` por rutina. Entrega inmediatamente:
+Prepara una Execution Task pequeña y verificable.
 
-1. una instrucción visible para abrir el proyecto correcto en el entorno de ejecución disponible;
-2. un prompt autosuficiente listo para copiar;
-3. el alcance de producto y Wiki cuando corresponda;
-4. la indicación de devolver el `Execution Report` completo al espacio que originó la tarea.
+### No porque falta inspección o diseño técnico
 
-### Cuando la respuesta es no, pero la brecha pertenece al mismo espacio
+Prepara una Planning Task de solo lectura.
 
-Continúa únicamente hasta resolver esa brecha.
+### No porque falta una decisión del mismo dominio
 
-### Cuando la respuesta es no porque apareció una cuestión fuera del alcance
+Continúa únicamente hasta resolver esa decisión.
 
-Entrega un único prompt autosuficiente para `00 — Dirección y orquestación`. El retorno debe explicar qué se resolvió, qué nueva brecha apareció y qué salida concreta debe producir `00` después de interactuar con el usuario.
+### No porque apareció una cuestión fuera del dominio
 
-## Cuándo volver a 00
+Deriva al Conversation Space correspondiente o escala a `00` cuando sea transversal o estratégica.
 
-El retorno a `00` corresponde solo cuando existe:
+## Planning Task
 
-- cambio de objetivo o dirección;
-- expansión importante de alcance;
-- conflicto entre producto, arquitectura, ejecución o negocio;
-- nueva brecha fuera del dominio del espacio actual;
-- decisión humana estratégica;
-- imposibilidad de definir con seguridad el siguiente resultado verificable.
+La Planning Task solicita al coding agent inspeccionar fuentes y estado real para proponer cómo implementar.
 
-Terminar un análisis no es razón suficiente para volver a `00`.
+```text
+Planning Task
+→ inspección en solo lectura
+→ Implementation Plan
+→ revisión del Cycle Owner
+→ aprobación de una unidad
+→ Execution Task
+```
 
-## Formato de transición visible
+No autoriza escritura, commits, cambios remotos, despliegues, recursos externos ni costes.
+
+Usa:
+
+- `templates/planning-task.template.md`;
+- `templates/implementation-plan.template.md`.
+
+## Gate de tamaño
+
+Antes de aprobar una Execution Task, pregunta:
+
+```text
+¿Puede completarse, verificarse y reportarse como una sola unidad
+sin mezclar resultados independientes?
+```
+
+Si no, divide el plan. No agrupes una iniciativa amplia bajo un solo tipo de ejecución.
+
+## Propiedad y destinos
+
+Todo handoff técnico declara por separado:
+
+- Cycle Owner;
+- destino del Implementation Plan;
+- destino del Execution Report;
+- espacio de escalamiento.
+
+El plan y el reporte no tienen que volver a `00`. Vuelven al espacio responsable indicado.
+
+## Readiness del entorno
+
+Antes de delegar, confirma únicamente:
+
+- entorno disponible: local, remoto o combinado;
+- fuentes y artefactos accesibles;
+- recursos faltantes;
+- trabajo previo que debe preservarse;
+- permisos reales;
+- datos, secretos o recursos externos restringidos.
+
+No impongas una carpeta, repositorio, proveedor, Wiki, plataforma o herramienta específica.
+
+Consulta `docs/execution/source-and-artifact-authority.md`.
+
+## Transición visible a planificación
 
 Usa una instrucción equivalente a:
 
-> Ahora abre el proyecto `[PROYECTO O REPOSITORIO]` en el entorno de ejecución disponible, inicia una nueva sesión y pega el prompt siguiente. No amplíes el alcance. Cuando termine, trae el `Execution Report` completo a esta conversación para revisarlo antes de continuar.
+> Abre el entorno disponible para el proyecto e inicia una sesión de planificación en solo lectura. Pega la Planning Task siguiente. Devuelve el `Implementation Plan` completo al Conversation Space indicado; no ejecutes cambios.
 
-Después incluye un único bloque listo para copiar. El usuario no debe reconstruir la tarea combinando varios mensajes o handoffs.
+## Transición visible a ejecución
 
-## Contenido mínimo del prompt ejecutable
+Usa una instrucción equivalente a:
+
+> Abre el entorno disponible para el proyecto e inicia una sesión de ejecución. Pega la Execution Task siguiente. No amplíes el alcance. Devuelve el `Execution Report` completo al Conversation Space indicado.
+
+El usuario no debe reconstruir la tarea combinando varios mensajes.
+
+## Contenido mínimo de una Planning Task
 
 ```text
-Rol y repositorio
-Objetivo
-Estado o problema observado
-Fuentes y contexto mínimo
-Alcance de producto y Wiki
+Cycle Owner y destinos
+Objetivo del plan
+Contexto mínimo
+Autoridad de fuentes, artefactos y entorno
+Inspección requerida
 Fuera de alcance
-Rutas autorizadas y prohibidas
-Capacidades requeridas
+Gate de tamaño
+Condiciones de detención
+Formato del Implementation Plan
+```
+
+## Contenido mínimo de una Execution Task
+
+```text
+Cycle Owner y destino del reporte
+Tipo de ejecución
+Objetivo único
+Contexto mínimo
+Autoridad y acceso de recursos
+Alcance y fuera de alcance
 Criterios de aceptación
 Pruebas o verificaciones
 Condiciones de detención
-Reglas de control de versiones y cambios remotos
+Autorizaciones
 Formato del Execution Report
 ```
 
-Declara de forma explícita si la tarea es:
+## Revisión del Implementation Plan
 
-- solo lectura;
-- modificación local sin commit;
-- branch y commits autorizados;
-- apertura de cambio remoto autorizada;
-- integración final no autorizada salvo confirmación posterior.
+El Cycle Owner debe:
 
-## Retorno del Execution Report
+1. comprobar que el plan se basa en fuentes autorizadas;
+2. separar hechos, inferencias y propuestas;
+3. revisar contradicciones y riesgos;
+4. comprobar dependencias y condiciones de detención;
+5. aplicar el gate de tamaño;
+6. resolver decisiones humanas pendientes;
+7. aprobar solo la primera unidad ejecutable.
 
-El `Execution Report` vuelve inicialmente al Conversation Space que preparó la tarea.
+Plan producido no equivale a plan aprobado ni a ejecución autorizada.
 
-Ese espacio revisa:
+## Revisión del Execution Report
 
-1. cumplimiento del objetivo;
-2. evidencia y verificaciones;
-3. respeto del alcance;
-4. estado del producto y la Wiki;
-5. bloqueos o trabajo parcial;
-6. siguiente resultado lógico.
+El destino declarado revisa:
 
-Solo deriva a `00` si el reporte revela una condición real de reorientación.
+1. objetivo versus resultado;
+2. alcance versus cambios reales;
+3. criterios versus evidencia;
+4. verificaciones solicitadas versus ejecutadas;
+5. autorizaciones versus acciones realizadas;
+6. estado de memoria y documentación;
+7. bloqueos o trabajo parcial;
+8. siguiente resultado lógico.
 
-## Producto y Wiki en la misma ejecución
+Solo escala a `00` si aparece una condición real de reorientación.
 
-La actualización normal de la Wiki debe incluirse en la misma `Execution Task` que modifica el producto cuando el conocimiento sea claro, acotado y consecuencia directa del cambio.
+## Producto y memoria en la misma ejecución
 
-Ejemplos:
+La actualización normal de memoria puede incluirse en la Execution Task cuando el conocimiento sea claro, acotado y consecuencia directa del cambio.
 
-- actualizar el estado de implementación;
-- registrar una decisión aprobada;
-- documentar un flujo construido;
-- corregir instrucciones obsoletas;
-- añadir evidencia, rutas y referencias relevantes.
-
-`90 — Wiki y memoria` se abre solo cuando la actualización requiere síntesis compleja, resolución de contradicciones, reorganización durable o gobierno documental que no puede describirse con seguridad dentro de la tarea actual.
+No registres propuestas como estado implementado.
 
 ## Neutralidad de referencias
 
-Toda Execution Task, handoff y Execution Report debe usar únicamente:
+Toda tarea y reporte usa únicamente:
 
-- el nombre del proyecto actual recibido como parámetro;
+- el proyecto actual;
 - sus fuentes autorizadas;
-- sus rutas y repositorios explícitos;
-- las capacidades reales del entorno actual.
+- sus recursos reales;
+- las capacidades del entorno disponible.
 
-No incluyas nombres, dominios, repositorios, rutas, marcas o detalles de otros proyectos usados durante pruebas, validaciones o conversaciones anteriores.
-
-Los nombres de herramientas concretas pueden aparecer solo como ejemplos opcionales y deben reemplazarse por el rol genérico cuando formen parte de una regla normativa.
-
-## Prompt de retorno a 00
-
-Cuando una cuestión se sale del tema, entrega un bloque listo para copiar con:
-
-```text
-Esta conversación es 00 — Dirección y orquestación.
-No reinicies el onboarding ni repitas el diagnóstico completo.
-
-Proyecto:
-[NOMBRE]
-
-Espacio de origen:
-[10 / 20 / 30 / 90]
-
-Objetivo que se estaba resolviendo:
-[...]
-
-Decisiones ya confirmadas:
-- [...]
-
-Resultado alcanzado:
-[...]
-
-Nueva brecha o conflicto:
-[...]
-
-Por qué el espacio de origen no debe resolverlo:
-[...]
-
-Decisión que debe conducir 00:
-[...]
-
-Salida esperada:
-[prompt para otro Conversation Space / prompt para coding agent / decisión humana pendiente]
-```
-
-Después de interactuar con el usuario, `00` entrega una sola salida útil y lista para copiar.
+No incluyas detalles de proyectos usados como pruebas salvo que sean fuentes explícitas del proyecto actual.
 
 ## Guardrails
 
-- no enviar al coding agent una intención vaga como “mejora lo necesario”;
-- no entregar toda la Wiki cuando basta un Context Pack;
-- no pedir ejecución física a un Conversation Space;
+- no enviar una intención vaga al coding agent;
+- no ejecutar antes de resolver decisiones indispensables;
+- no usar planificación para autorizar escritura implícita;
+- no abrir otra conversación para posponer una tarea que ya está lista;
+- no regresar a `00` por rutina;
 - no asumir acceso, permisos o herramientas;
-- no convertir una estrategia aprobada en autorización de escritura;
-- no abrir otra conversación para posponer una tarea que ya puede ejecutarse;
-- no regresar a `00` solo para resumir o volver a redactar una tarea;
-- no contaminar un proyecto con referencias de otro;
-- no declarar completado algo sin diff, pruebas o evidencia aplicable.
+- no declarar completado algo sin evidencia;
+- no mezclar objetivos independientes en una sola tarea.
 
 ## Regla principal
 
 ```text
-Resolver en conversación solo lo indispensable.
-Materializar cuanto antes en el entorno disponible.
-Documentar junto con la ejecución.
-Usar únicamente referencias del proyecto actual.
-Volver a 00 únicamente para reorientar.
+Conversar solo lo indispensable.
+Planificar cuando reduzca incertidumbre real.
+Ejecutar unidades pequeñas.
+Devolver cada artefacto al responsable declarado.
+Escalar únicamente para reorientar.
 ```

@@ -14,7 +14,7 @@ El repositorio es la fuente canónica. Si la plataforma no puede navegarlo, usa 
 
 1. Usa el nombre del proyecto como nombre del espacio.
 2. Copia [Instrucciones persistentes](../../templates/project-instructions.template.md).
-3. Carga el pack, una descripción breve y las fuentes disponibles.
+3. Carga una descripción breve y las fuentes disponibles.
 4. Envía el primer mensaje siguiente.
 
 ## Primer mensaje
@@ -28,7 +28,7 @@ Descripción inicial:
 [RESUMEN BREVE O REFERENCIA A UN ARCHIVO]
 
 Fuentes disponibles:
-- [REPOSITORIO, WIKI, DOCUMENTOS, URL O NINGUNA]
+- [REPOSITORIO, WIKI, DOCUMENTOS, SERVICIO, URL O NINGUNA]
 
 Lee primero las fuentes y no repitas preguntas respondidas.
 Clasifica el producto objetivo como nuevo o existente.
@@ -37,72 +37,81 @@ Primera respuesta:
 1. Lo que entendí.
 2. Prioridad propuesta.
 3. Qué falta resolver ahora.
-4. Organización de conversaciones: identifica esta conversación como 00, indica si por ahora basta este espacio y menciona solo el próximo Conversation Space probable cuando aporte.
-5. Cómo trabajaremos: explica brevemente el ciclo entre esta conversación y el entorno de ejecución.
-6. Tu siguiente acción: termina siempre con una acción concreta que yo deba realizar.
+4. Organización de conversaciones.
+5. Cómo trabajaremos.
+6. Tu siguiente acción.
 
 En “Organización de conversaciones”:
 - usa `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente;
 - indica si por ahora basta trabajar en 00;
-- si existe una brecha especializada evidente, menciona solo el próximo espacio probable y su propósito;
-- no listes todos los Conversation Spaces ni presentes una secuencia fija;
-- aclara que los espacios se abren bajo demanda y pueden omitirse si 00 ya puede preparar una Execution Task.
+- menciona solo el próximo Conversation Space cuando aporte;
+- no listes todos los espacios ni presentes una secuencia fija;
+- aclara que se abren bajo demanda.
 
-En “Cómo trabajaremos”, explica de forma precisa y adaptada al proyecto:
-- aquí aclararemos solo lo indispensable;
-- cuando exista suficiente definición, me entregarás instrucciones listas para el coding agent disponible;
-- el coding agent modificará el producto y la Wiki cuando corresponda;
-- traeré de vuelta el Execution Report;
-- revisaremos el resultado aquí y volveremos a iterar.
+En “Cómo trabajaremos”, explica brevemente:
+- 00 orienta la prioridad;
+- el espacio que confirma el siguiente resultado se convierte en Cycle Owner;
+- el Cycle Owner decide si corresponde planificación técnica o ejecución directa;
+- un Implementation Plan vuelve al destino declarado para revisión;
+- una Execution Task aprobada produce un Execution Report que vuelve al destino declarado;
+- 00 recibe solo reorientaciones o escalamiento real.
 
-No presentes esta explicación como un roadmap.
-
-“Tu siguiente acción” debe ser el último punto y pedir una acción verificable. Por ejemplo:
-- responder una pregunta pendiente;
-- corregir una interpretación;
-- confirmar la dirección escribiendo “ok”;
-- decir “avancemos” para preparar el siguiente handoff o Execution Task.
-
-No cierres con una explicación pasiva o con “cuando quieras”.
-
-Mantén la respuesta breve. No entregues todavía un roadmap completo, una auditoría extensa ni todos los Conversation Spaces posibles.
+“Tu siguiente acción” debe ser el último punto y pedir una acción verificable.
+Mantén la respuesta breve. No entregues todavía un roadmap completo ni una auditoría extensa.
 
 Cuando diga “avancemos”, “empecemos”, “ya tenemos suficiente” o equivalente:
 - deja de repetir el diagnóstico;
 - identifica el siguiente resultado verificable;
-- evalúa si ya existe suficiente claridad para preparar una Execution Task.
+- abre como máximo un Conversation Space cuando exista una brecha real;
+- asigna el Cycle Owner;
+- aplica el gate de planificación.
 
-Si ya existe suficiente claridad:
-- entrega un prompt listo para el coding agent disponible;
-- indica exactamente en qué proyecto, repositorio o entorno debe pegarse;
-- pide que el Execution Report vuelva al espacio que originó la tarea.
+Gate de planificación:
+¿El siguiente resultado está suficientemente definido, es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
+- Sí: prepara una Execution Task.
+- No porque falta inspección o diseño técnico: prepara una Planning Task.
+- No porque falta una decisión de dominio: continúa o deriva al Conversation Space correspondiente.
+- No porque requiere reorientación: escala a 00.
 
-Si falta definición:
-- abre solo el Conversation Space que resuelve la brecha principal;
-- entrega un handoff breve y autosuficiente.
+Una Planning Task:
+- es de solo lectura;
+- produce un Implementation Plan;
+- no autoriza escritura, commits, cambios remotos, despliegue, datos, recursos externos ni costes;
+- vuelve al destino de revisión declarado.
 
-No abras 10, 20, 30 y 90 como una secuencia automática.
+Antes de aprobar una Execution Task aplica el gate de tamaño:
+¿Puede completarse, verificarse y reportarse como una sola unidad sin mezclar resultados independientes?
+Si no, divide el plan y aprueba solo la primera unidad.
 
-Usa Conversation Spaces bajo demanda:
-- 10 — Producto y UX: comportamiento o experiencia;
-- 20 — Arquitectura y stack: decisión arquitectónica o lectura de una auditoría;
-- 30 — Ejecución y desarrollo: preparación de tareas complejas, solo si aporta;
-- 90 — Wiki y memoria: síntesis o mantenimiento durable complejo.
+Todo handoff técnico debe declarar por separado:
+- Cycle Owner;
+- destino del Implementation Plan;
+- destino del Execution Report;
+- espacio de escalamiento;
+- estado del resultado.
 
-Cada espacio debe cerrar con una sola salida útil:
-- prompt para otra conversación;
-- prompt listo para coding agent;
-- Wiki Update Task o insumos;
-- una decisión humana pendiente.
+Antes de enviar trabajo al coding agent, identifica los recursos reales y declara para cada uno:
+- rol;
+- autoridad para qué ámbito;
+- acceso permitido;
+- limitaciones.
 
-No menciones nombres, rutas, dominios o repositorios de otros proyectos. Usa solo los parámetros y fuentes entregados para el proyecto actual.
+No impongas carpetas, repositorios separados, una Wiki independiente, GitHub, trabajo local, proveedor, agente o stack concreto.
+
+No menciones nombres, rutas, dominios o repositorios de otros proyectos salvo que sean fuentes explícitas del proyecto actual.
 ```
+
+## Transición esperada a planificación
+
+Cuando corresponda una Planning Task, la respuesta debe incluir una instrucción visible:
+
+> Abre el entorno disponible para el proyecto e inicia una sesión de planificación en solo lectura. Pega la Planning Task siguiente. Devuelve el `Implementation Plan` completo al Conversation Space indicado y no ejecutes cambios.
 
 ## Transición esperada a ejecución
 
-Cuando una tarea esté suficientemente definida, la respuesta debe incluir una instrucción visible:
+Cuando corresponda una Execution Task, la respuesta debe incluir una instrucción visible:
 
-> Ahora abre el proyecto correspondiente en el entorno de ejecución disponible, inicia una nueva sesión y pega el prompt siguiente. Cuando termine, trae aquí el `Execution Report` completo para revisarlo antes de continuar.
+> Abre el entorno disponible para el proyecto e inicia una sesión de ejecución. Pega la Execution Task siguiente. No amplíes el alcance. Devuelve el `Execution Report` completo al Conversation Space indicado.
 
 El bloque entregado debe poder copiarse sin reconstruir contexto desde mensajes anteriores.
 
@@ -110,15 +119,15 @@ Consulta [Avance concreto y transición a coding agents](../../docs/orchestratio
 
 ## Resultado esperado
 
-El onboarding está bien encaminado cuando el asistente:
+El onboarding está bien encaminado cuando:
 
 - comprende el alma y la prioridad;
-- identifica el espacio `00` y orienta la organización mínima de conversaciones;
-- explica con precisión el ciclo conversación → coding agent → Execution Report → iteración;
-- termina con una acción concreta para el usuario;
-- evita expansión innecesaria;
+- identifica `00` y orienta la organización mínima;
 - abre solo el espacio que desbloquea trabajo;
-- entrega pronto una tarea ejecutable;
-- recibe evidencia del coding agent;
-- decide el siguiente ciclo desde el espacio que originó la tarea o vuelve a `00` solo para reorientar;
+- asigna propiedad explícita del ciclo;
+- distingue planificación de ejecución;
+- evita tareas demasiado grandes;
+- no presupone estructura física ni herramientas;
+- devuelve planes y reportes a destinos explícitos;
+- reserva `00` para dirección y escalamiento;
 - conserva lenguaje y referencias agnósticas.

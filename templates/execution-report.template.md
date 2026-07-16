@@ -5,24 +5,29 @@
 - Task ID: `[TASK-ID]`
 - Título: `[TÍTULO]`
 - Tópico de origen: `[00 | 10 | 20 | 30 | 40 | 50 | 90]`
-- Conversation Space de retorno: `[NOMBRE]`
-- Tipo de ejecución solicitado: `[TIPO]`
-- Tipo de ejecución realizado: `[TIPO]`
-- Rama: `[RAMA O NO APLICA]`
-- Commit o PR: `[SHA, URL O NO APLICA]`
+- Cycle Owner: `[CONVERSATION SPACE]`
+- Destino del reporte: `[CONVERSATION SPACE]`
+- Espacio de escalamiento: `[NORMALMENTE 00 — DIRECCIÓN Y ORQUESTACIÓN]`
+- Tipo solicitado: `[TIPO]`
+- Tipo realizado: `[TIPO]`
+- Entorno: `[LOCAL / REMOTO / COMBINADO / OTRO]`
+- Rama, versión o equivalente: `[REFERENCIA O NO APLICA]`
+- Commit, cambio remoto o equivalente: `[REFERENCIA O NO APLICA]`
 - Estado: `Completada | Parcial | Bloqueada | No iniciada`
 
 ## Resumen
 
 Describe qué se hizo y cuál es el resultado observable.
 
-## Fuentes y artefactos revisados
+## Recursos utilizados
 
-- `[RUTA, REPOSITORIO O FUENTE]` — `[USO]`
+| Recurso | Rol | Acceso utilizado | Cambio realizado | Evidencia |
+|---|---|---|---|---|
+| `[RECURSO]` | `[ROL]` | `[LECTURA / ESCRITURA / ACCIÓN]` | `[CAMBIO O NINGUNO]` | `[EVIDENCIA]` |
 
-## Archivos modificados
+## Artefactos modificados
 
-- `[RUTA]` — `[CAMBIO REALIZADO]`
+- `[RUTA, RECURSO O IDENTIFICADOR]` — `[CAMBIO]`
 
 Usa `Ninguno` cuando la tarea fue solo lectura.
 
@@ -40,54 +45,59 @@ No marques una prueba como aprobada sin haberla ejecutado o revisado.
 
 ## Autorizaciones utilizadas
 
-- Lectura: `[USO REAL]`
-- Escritura local: `[USO REAL]`
-- Branch, commit, push o PR: `[USO REAL]`
-- Merge, despliegue o producción: `[USO REAL]`
-- Recursos externos, datos o costes: `[USO REAL]`
+- lectura:
+- escritura:
+- control de versiones:
+- cambios remotos:
+- integración, despliegue o producción:
+- datos, recursos externos o costes:
 
 No declares una acción que no haya ocurrido.
 
 ## Fuera de alcance
 
-Confirma qué elementos no fueron modificados.
+- `[ELEMENTO NO MODIFICADO]`
 
-- `[ELEMENTO]`
-
-## Desviaciones respecto de la tarea
+## Desviaciones
 
 - `Ninguna`, o
 - `[DESVIACIÓN, MOTIVO Y APROBACIÓN]`
 
-Indica expresamente si el tipo de ejecución cambió durante el trabajo.
+Indica si el tipo o el objetivo cambiaron durante el trabajo.
 
-## Riesgos y limitaciones
+## Gate de tamaño observado
 
-- `[RIESGO O LIMITACIÓN]`
+- [ ] La tarea conservó un solo resultado.
+- [ ] No se ejecutaron fases adicionales no autorizadas.
+- [ ] El trabajo nuevo detectado se dejó como siguiente unidad y no se incorporó silenciosamente.
 
-## Decisiones pendientes
+## Riesgos, limitaciones y decisiones pendientes
 
-- `[DECISIÓN REQUERIDA]`
+- `[ELEMENTO]`
 
 ## Condiciones de detención activadas
 
 - `Ninguna`, o
-- `[CONDICIÓN Y ACCIÓN TOMADA]`
+- `[CONDICIÓN Y ACCIÓN]`
 
-## Actualizaciones recomendadas para documentación o Wiki
+## Actualización durable recomendada
 
-- `[RUTA O CONOCIMIENTO DURABLE]`
+- `[RECURSO O CONOCIMIENTO]`
+
+No presentes propuestas como implementación.
 
 ## Próxima acción recomendada
 
-Propón una sola acción verificable. No decidas automáticamente abrir otro Conversation Space: indica el tópico solo cuando exista una brecha real fuera del espacio de origen.
+Propón una sola acción verificable al Cycle Owner.
+
+No escales a `00` salvo que exista reorientación, conflicto entre dominios, expansión importante de alcance o decisión estratégica.
 
 ## Declaración final
 
-- [ ] Revisé el diff completo o confirmé que no hubo escritura.
-- [ ] Reporté todas las verificaciones ejecutadas y omitidas.
+- [ ] Revisé los cambios completos o confirmé que no hubo escritura.
+- [ ] Reporté verificaciones ejecutadas y omitidas.
 - [ ] No oculté fallos ni trabajo incompleto.
 - [ ] No amplié alcance sin aprobación.
-- [ ] No utilicé referencias de otros proyectos.
+- [ ] Respeté la autoridad y acceso de cada recurso.
 - [ ] No expuse secretos o datos sensibles.
-- [ ] Este reporte debe volver al Conversation Space indicado en la identificación.
+- [ ] Este reporte vuelve al destino indicado.

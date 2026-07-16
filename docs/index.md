@@ -7,30 +7,34 @@ Esta documentación explica cómo utilizar IA-DOS para dirigir proyectos de soft
 La primera adopción sigue este orden:
 
 1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
-2. Entrega una descripción breve, documentos, repositorios o usa [Project Intake Brief](../templates/project-intake-brief.template.md).
+2. Entrega una descripción breve y las fuentes disponibles.
 3. Abre `00 — Dirección y definición` o `00 — Descubrimiento y adopción`.
-4. Clasifica la brecha con el [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md).
+4. Clasifica la brecha con el [Registro de tópicos](orchestration/topic-routing-registry.md).
 5. Abre solo el Conversation Space que desbloquee el siguiente resultado.
-6. Clasifica la materialización con el [Registro de tipos de ejecución](execution/execution-task-types.md).
-7. Prepara una `Execution Task` cuando exista claridad suficiente.
-8. Instala o prepara el entorno local solo cuando la ejecución necesite repositorios, archivos, Git o un coding agent.
-9. Devuelve el `Execution Report` al espacio que originó la tarea.
+6. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
+7. Decide entre `Planning Task` y `Execution Task`.
+8. Confirma la autoridad de fuentes, artefactos y entornos.
+9. Devuelve el `Implementation Plan` o `Execution Report` al destino declarado.
+10. Escala a `00` solo cuando exista reorientación real.
 
-## Registros operativos
+## Contratos operativos
 
-- [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md): gobierna dónde se resuelve cada decisión, cuándo abrir un espacio y cuándo cerrarlo.
-- [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa el trabajo, qué evidencia requiere y qué permisos no se presumen.
+- [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md): gobierna dónde se resuelve cada decisión.
+- [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md): gobierna quién mantiene objetivo, límites y revisión.
+- [Avance concreto y transición](orchestration/concrete-execution-flow.md): decide cuándo planificar y cuándo ejecutar.
+- [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa una unidad aprobada.
+- [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md): gobierna qué demuestra cada recurso y qué acceso está permitido.
 
-Los registros aportan clasificación y valores predeterminados; no sustituyen la decisión concreta del Orchestrator ni convierten los espacios en etapas obligatorias.
+Estos contratos no crean una secuencia obligatoria ni imponen herramientas o estructuras físicas.
 
 ## Recorridos principales
 
 - [Iniciar un producto nuevo desde conversación](getting-started/new-project-from-conversation.md)
 - [Adoptar un producto existente desde conversación](getting-started/adopt-existing-project-from-conversation.md)
 - [Avance concreto y transición a coding agents](orchestration/concrete-execution-flow.md)
-- [Preparar y revisar el handoff de ejecución](getting-started/execution-handoff.md)
+- [Preparar y revisar un handoff técnico](getting-started/execution-handoff.md)
 
-## Preparación local, cuando corresponda
+## Preparación del entorno, cuando corresponda
 
 - [Preparar el workspace local](getting-started/workspace-setup.md)
 - [Instalar IA-DOS](getting-started/install-ia-dos.md)
@@ -38,16 +42,23 @@ Los registros aportan clasificación y valores predeterminados; no sustituyen la
 - [Incorporar un proyecto existente](getting-started/incorporate-existing-project-workspace.md)
 - [Crear o revisar la LLM Wiki](getting-started/bootstrap-llm-wiki.md)
 
-Estas guías no son requisitos previos para iniciar el onboarding conversacional.
+Estas guías son opciones de implementación, no requisitos normativos del método.
 
 ## Orquestación
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
 - [Pack operativo](../bundles/ia-dos-project-orchestrator-pack.md)
-- [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md)
+- [Registro de tópicos](orchestration/topic-routing-registry.md)
+- [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md)
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
+
+## Planificación
+
+- [Planning Task](../templates/planning-task.template.md)
+- [Implementation Plan](../templates/implementation-plan.template.md)
+- [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md)
 
 ## Ejecución
 
@@ -82,7 +93,8 @@ Estas guías no son requisitos previos para iniciar el onboarding conversacional
 - [Project Intake Brief](../templates/project-intake-brief.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
-- [Wiki inicial](../templates/wiki-starter/)
+- [Planning Task](../templates/planning-task.template.md)
+- [Implementation Plan](../templates/implementation-plan.template.md)
 - [Execution Task](../templates/execution-task.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)

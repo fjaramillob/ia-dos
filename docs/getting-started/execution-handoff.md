@@ -1,144 +1,194 @@
 # Handoff entre Conversation Space y coding agent
 
-Este flujo convierte una necesidad confirmada en una tarea acotada, verificable y trazable.
+Este flujo convierte una necesidad confirmada en planificación técnica o ejecución acotada, verificable y trazable.
 
 Consulta primero:
 
 - [Registro de tópicos conversacionales](../orchestration/topic-routing-registry.md);
-- [Registro de tipos de ejecución](../execution/execution-task-types.md).
+- [Propiedad y retorno del ciclo](../orchestration/cycle-ownership.md);
+- [Avance concreto y transición a coding agents](../orchestration/concrete-execution-flow.md);
+- [Registro de tipos de ejecución](../execution/execution-task-types.md);
+- [Autoridad de fuentes, artefactos y entornos](../execution/source-and-artifact-authority.md).
 
 ## Flujo
 
 ```text
-Conversation Space de origen
-→ decisión o resultado esperado
-→ tipo de ejecución
-→ Execution Task
-→ preparación local si hace falta
+Conversation Space
+→ resultado esperado
+→ Cycle Owner
+→ Planning Task o Execution Task
 → coding agent
-→ cambios y verificaciones
-→ Execution Report
-→ regreso al espacio de origen
+→ Implementation Plan o Execution Report
+→ destino declarado
 → revisión e iteración
 ```
 
-`00` no es una parada obligatoria entre definición y ejecución. El reporte vuelve primero al espacio que preparó la tarea.
+`00` no es una parada obligatoria.
 
-## 1. Confirmar el tópico de origen
+## 1. Confirmar propiedad y destinos
 
 Antes de delegar, registra:
 
-- tópico y nombre del Conversation Space;
-- decisión que quedó confirmada;
-- resultado verificable esperado;
-- motivo por el que la ejecución debe regresar a ese espacio.
+- tópico y nombre del espacio;
+- estado del resultado;
+- Cycle Owner;
+- destino del Implementation Plan;
+- destino del Execution Report;
+- espacio de escalamiento.
 
-El tópico gobierna quién revisará el resultado, no qué herramienta concreta debe ejecutarlo.
+No uses un único campo `Retorno` cuando pueda confundirse el destino de distintos artefactos.
 
-## 2. Elegir el tipo de ejecución
+## 2. Aplicar el gate de planificación
 
-Toda tarea debe declarar un tipo principal:
+Pregunta:
+
+```text
+¿El resultado está suficientemente definido,
+es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
+```
+
+- **Sí:** prepara una Execution Task.
+- **No por falta de inspección o diseño:** prepara una Planning Task.
+- **No por una decisión de dominio pendiente:** continúa o deriva.
+- **No por reorientación:** escala a `00`.
+
+## 3. Preparar una Planning Task
+
+Usa `templates/planning-task.template.md`.
+
+Debe incluir:
+
+- objetivo del plan;
+- Cycle Owner y destinos;
+- contexto mínimo;
+- autoridad y acceso de fuentes, artefactos y entornos;
+- inspección requerida;
+- fuera de alcance;
+- gate de tamaño;
+- condiciones de detención;
+- formato del Implementation Plan.
+
+La Planning Task es solo lectura.
+
+## 4. Revisar el Implementation Plan
+
+Usa `templates/implementation-plan.template.md`.
+
+El Cycle Owner compara:
+
+- objetivo versus resultado propuesto;
+- hechos versus inferencias;
+- fuentes autorizadas versus fuentes utilizadas;
+- dependencias y riesgos;
+- unidades propuestas;
+- decisiones humanas pendientes;
+- primera tarea recomendada.
+
+Aprueba solo una unidad ejecutable.
+
+Plan producido no equivale a plan aprobado ni a ejecución autorizada.
+
+## 5. Elegir el tipo de ejecución
+
+Toda Execution Task declara un tipo principal:
 
 ```text
 INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE
 TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE
 ```
 
-Elige el tipo según el resultado dominante. No mezcles varios tipos para ocultar objetivos independientes.
+La planificación no es un tipo de materialización. Usa Planning Task cuando el objetivo sea diseñar cómo implementar.
 
-El tipo aporta valores predeterminados sobre lectura, escritura, evidencia y detención, pero no concede permisos.
+No mezcles varios tipos para ocultar objetivos independientes.
 
-## 3. Preparar la Execution Task
+## 6. Aplicar el gate de tamaño
 
-Usa `templates/execution-task.template.md`. Debe incluir:
+Confirma:
 
-- tópico y espacio de origen;
+```text
+¿La tarea puede completarse, verificarse y reportarse
+como una sola unidad sin mezclar resultados independientes?
+```
+
+Si no, divide antes de ejecutar.
+
+## 7. Preparar la Execution Task
+
+Usa `templates/execution-task.template.md`.
+
+Debe incluir:
+
+- Cycle Owner y destino del reporte;
 - tipo de ejecución;
-- espacio de retorno;
 - objetivo único;
 - contexto mínimo;
+- autoridad y acceso de recursos;
+- readiness del entorno;
 - alcance y fuera de alcance;
-- repositorios y rutas autorizadas;
-- capacidades y autorizaciones explícitas;
+- zonas autorizadas;
 - criterios de aceptación;
-- verificaciones y evidencia esperada;
+- verificaciones;
 - condiciones de detención;
-- documentación o memoria a actualizar;
-- formato del `Execution Report`.
+- documentación o memoria;
+- autorizaciones explícitas.
 
-La tarea debe poder ejecutarse sin reconstruir información desde varios mensajes.
+## 8. Preparar el entorno
 
-## 4. Preparar el entorno
+Confirma únicamente:
 
-Si la ejecución requiere repositorios locales, archivos, Git o herramientas de desarrollo, indica previamente:
+- entorno disponible: local, remoto o combinado;
+- recursos accesibles y faltantes;
+- trabajo que debe preservarse;
+- permisos reales;
+- secretos o datos restringidos;
+- acciones externas o con coste.
 
-- qué repositorios deben estar disponibles;
-- qué ruta o workspace se utilizará;
-- qué instalación local es necesaria;
-- qué accesos no deben entregarse;
-- qué estado Git debe verificarse antes de escribir.
+No impongas una estructura física o herramienta concreta.
 
-No prepares ni expongas todo el workspace por rutina.
-
-## 5. Ejecutar con el coding agent
+## 9. Ejecutar con el coding agent
 
 El agente debe:
 
-1. confirmar tópico de origen, tipo, repositorios, ramas y rutas;
-2. revisar instrucciones técnicas aplicables;
-3. ejecutar `git status` antes de escribir;
-4. inspeccionar el estado real;
-5. respetar los defaults del tipo y las autorizaciones concretas;
-6. modificar solo el alcance autorizado;
-7. detenerse ante contradicciones o riesgos;
-8. ejecutar verificaciones aplicables;
-9. revisar el diff completo;
-10. devolver un `Execution Report` al espacio indicado.
+1. confirmar objetivo, Cycle Owner y destino;
+2. revisar instrucciones aplicables;
+3. inspeccionar el estado real antes de escribir;
+4. respetar autoridad, acceso y autorizaciones;
+5. modificar solo el alcance aprobado;
+6. detenerse ante contradicciones o riesgos;
+7. ejecutar verificaciones aplicables;
+8. revisar los cambios completos;
+9. devolver el artefacto requerido al destino indicado.
 
-## 6. Revisar el Execution Report
-
-El espacio de origen compara:
-
-- tipo solicitado versus tipo realmente realizado;
-- objetivo versus resultado;
-- criterios versus evidencia;
-- alcance versus diff;
-- verificaciones solicitadas versus ejecutadas;
-- autorizaciones versus acciones realizadas;
-- estado declarado versus estado real;
-- riesgos, bloqueos y decisiones pendientes.
-
-Una afirmación del agente no sustituye evidencia.
-
-## 7. Cerrar el ciclo
+## 10. Cerrar el ciclo
 
 Después de aprobar el resultado:
 
 - conserva implementación y evidencia en sus fuentes correspondientes;
-- actualiza la Wiki cuando exista conocimiento durable confirmado;
-- prepara una corrección o la siguiente tarea desde el mismo espacio;
-- vuelve a `00` solo cuando haya una reorientación real.
+- actualiza memoria solo con conocimiento confirmado;
+- prepara una corrección o la siguiente unidad desde el mismo Cycle Owner;
+- transfiere propiedad de forma explícita cuando cambie el dominio;
+- escala a `00` solo por reorientación real.
 
 ## Rechaza el cierre cuando
 
-- el reporte no identifica tópico, tipo o espacio de retorno;
-- el tipo realizado no coincide y no existe justificación;
+- falta Cycle Owner o destino;
+- una Planning Task produjo cambios;
+- un plan se presenta como implementación;
+- la Execution Task mezcla resultados independientes;
 - faltan verificaciones exigidas sin explicación;
-- los criterios no tienen evidencia;
 - aparecen cambios fuera de alcance;
-- el reporte no coincide con el diff o el estado Git;
-- se tomaron decisiones o acciones no autorizadas;
-- la documentación presenta propuestas como implementadas.
+- se tomaron acciones no autorizadas;
+- memoria o documentación presenta propuestas como hechos.
 
 ## Verificación final
 
-- [ ] El tópico de origen está declarado.
-- [ ] El tipo de ejecución representa el resultado dominante.
-- [ ] El objetivo es único y terminable.
-- [ ] El contexto es mínimo y suficiente.
-- [ ] Las referencias pertenecen al proyecto actual.
-- [ ] Alcance, fuera de alcance y rutas están explícitos.
+- [ ] El resultado y su estado están declarados.
+- [ ] El Cycle Owner está definido.
+- [ ] Los destinos de plan, reporte y escalamiento están separados.
+- [ ] Se aplicó el gate de planificación.
+- [ ] Se aplicó el gate de tamaño.
+- [ ] La autoridad y acceso de recursos están explícitos.
+- [ ] El entorno real fue confirmado sin imponer topología.
 - [ ] Los criterios y verificaciones son observables.
 - [ ] Las autorizaciones están declaradas.
-- [ ] El reporte vuelve al espacio de origen.
-- [ ] La memoria durable tiene un destino definido.
+- [ ] El artefacto vuelve al destino correcto.
