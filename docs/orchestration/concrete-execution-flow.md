@@ -8,48 +8,59 @@ IA-DOS debe producir avances verificables, no expandir indefinidamente el análi
 capturar alma y prioridad
 → identificar el siguiente resultado concreto
 → resolver solo la definición indispensable
-→ preparar una Execution Task
+→ preparar una Execution Task desde el espacio que resolvió la brecha
 → entregar un prompt listo para el coding agent
-→ ejecutar
-→ recibir un Execution Report
-→ revisar en 00
-→ decidir el siguiente ciclo
+→ ejecutar cambios de aplicación y Wiki cuando corresponda
+→ recibir un Execution Report en el espacio de origen
+→ revisar, corregir o preparar el siguiente ciclo
+→ volver a 00 solo cuando haga falta reorientar
 ```
 
-La conversación se expande por especialización solo cuando esa especialización desbloquea trabajo. No debe acumular toda la definición dentro de `00` ni abrir todos los espacios por anticipación.
+`00 — Dirección y orquestación` no es una parada obligatoria entre definición y ejecución. La conversación se expande por especialización solo cuando esa especialización desbloquea trabajo.
 
-## Gate antes de abrir otra conversación
+## Gate antes de abrir otra conversación o volver a 00
 
-El Project Orchestrator debe evaluar:
+Cada Conversation Space debe evaluar:
 
 ```text
-¿Existe suficiente claridad para preparar una tarea acotada, verificable y segura?
+¿Existe suficiente claridad dentro de este espacio para preparar una tarea acotada, verificable y segura?
 ```
 
 ### Cuando la respuesta es sí
 
-No abras otra conversación por rutina. Entrega inmediatamente:
+No abras otra conversación ni regreses a `00` por rutina. Entrega inmediatamente:
 
 1. una instrucción visible para abrir el proyecto correcto en Codex, Antigravity, Claude Code u otro coding agent;
 2. un prompt autosuficiente listo para copiar;
-3. la indicación de traer de vuelta el `Execution Report` completo.
+3. el alcance de aplicación y Wiki cuando corresponda;
+4. la indicación de devolver el `Execution Report` completo al espacio que originó la tarea.
 
-### Cuando la respuesta es no
+### Cuando la respuesta es no, pero la brecha pertenece al mismo espacio
 
-Identifica la brecha principal y abre solo el espacio que la resuelve:
+Continúa únicamente hasta resolver esa brecha.
 
-- `10 — Producto y UX`: comportamiento, flujo, usuario o experiencia;
-- `20 — Arquitectura y stack`: límites técnicos, alternativas o decisión arquitectónica;
-- `30 — Ejecución y desarrollo`: preparación de una tarea compleja que no puede producirse con claridad desde el espacio actual;
-- `90 — Wiki y memoria`: síntesis, contradicciones o mantenimiento durable complejo.
+### Cuando la respuesta es no porque apareció una cuestión fuera del alcance
 
-`30` no es un paso obligatorio. Cualquier espacio puede producir una `Execution Task` cuando dispone de suficiente definición.
+Entrega un único prompt autosuficiente para `00 — Dirección y orquestación`. El retorno debe explicar qué se resolvió, qué nueva brecha apareció y qué salida concreta debe producir `00` después de interactuar con el usuario.
+
+## Cuándo volver a 00
+
+El retorno a `00` corresponde solo cuando existe:
+
+- cambio de objetivo o dirección;
+- expansión importante de alcance;
+- conflicto entre producto, arquitectura, ejecución o negocio;
+- nueva brecha fuera del dominio del espacio actual;
+- decisión humana estratégica;
+- imposibilidad de definir con seguridad el siguiente resultado verificable.
+
+Terminar un análisis no es razón suficiente para volver a `00`.
 
 ## Formato de transición visible
 
 Usa una instrucción equivalente a:
 
-> Ahora abre el proyecto `[PROYECTO O REPOSITORIO]` en Codex o Antigravity, inicia una nueva conversación y pega el prompt siguiente. No amplíes el alcance. Cuando termine, trae aquí el `Execution Report` completo para revisarlo antes de continuar.
+> Ahora abre el proyecto `[PROYECTO O REPOSITORIO]` en Codex o Antigravity, inicia una nueva conversación y pega el prompt siguiente. No amplíes el alcance. Cuando termine, trae el `Execution Report` completo a esta conversación para revisarlo antes de continuar.
 
 Después incluye un único bloque listo para copiar. El usuario no debe reconstruir la tarea combinando varios mensajes o handoffs.
 
@@ -60,7 +71,7 @@ Rol y repositorio
 Objetivo
 Estado o problema observado
 Fuentes y contexto mínimo
-Alcance
+Alcance de aplicación y Wiki
 Fuera de alcance
 Rutas autorizadas y prohibidas
 Capacidades requeridas
@@ -79,42 +90,72 @@ Declara de forma explícita si la tarea es:
 - apertura de pull request autorizada;
 - merge no autorizado salvo confirmación posterior.
 
-## Regreso al Project Orchestrator
+## Retorno del Execution Report
 
-Cuando el coding agent finalice, el usuario devuelve su respuesta al espacio que originó la tarea, normalmente `00`.
+El `Execution Report` vuelve inicialmente al Conversation Space que preparó la tarea.
 
-La revisión debe responder únicamente:
+Ese espacio revisa:
 
-1. ¿se cumplió el objetivo?;
-2. ¿los criterios tienen evidencia?;
-3. ¿el diff respetó el alcance?;
-4. ¿qué quedó bloqueado o parcial?;
-5. ¿qué decisión o tarea sigue?;
-6. ¿qué aprendizaje debe registrarse en la wiki?
+1. cumplimiento del objetivo;
+2. evidencia y verificaciones;
+3. respeto del alcance;
+4. estado de aplicación y Wiki;
+5. bloqueos o trabajo parcial;
+6. siguiente resultado lógico.
 
-No repitas la auditoría completa si el reporte ya contiene evidencia suficiente.
+Solo deriva a `00` si el reporte revela una condición real de reorientación.
 
-## Salida obligatoria de los Conversation Spaces
+## Aplicación y Wiki en la misma ejecución
 
-Cada espacio debe detener su expansión cuando pueda entregar una de estas salidas:
+La actualización normal de la Wiki debe incluirse en la misma `Execution Task` que modifica el producto cuando el conocimiento sea claro, acotado y consecuencia directa del cambio.
 
-1. prompt para otro Conversation Space;
-2. prompt listo para coding agent;
-3. `Wiki Update Task` o insumos para ella;
-4. una única decisión humana pendiente.
+Ejemplos:
 
-Un documento largo no es mejor por ser largo. El entregable debe contener solo lo necesario para desbloquear la siguiente acción.
+- actualizar el estado de implementación;
+- registrar una decisión aprobada;
+- documentar un flujo construido;
+- corregir instrucciones obsoletas;
+- añadir evidencia, rutas y referencias relevantes.
 
-## Ejemplo mínimo
+`90 — Wiki y memoria` se abre solo cuando la actualización requiere síntesis compleja, resolución de contradicciones, reorganización durable o gobierno documental que no puede describirse con seguridad dentro de la tarea actual.
+
+## Prompt de retorno a 00
+
+Cuando una cuestión se sale del tema, entrega un bloque listo para copiar con:
 
 ```text
-Lo suficiente ya está definido para revisar la implementación.
+Esta conversación es 00 — Dirección y orquestación.
+No reinicies el onboarding ni repitas el diagnóstico completo.
 
-Ahora abre el proyecto en Codex o Antigravity y pega el prompt siguiente.
-Cuando termine, trae aquí el Execution Report completo.
+Proyecto:
+[NOMBRE]
 
-[PROMPT EJECUTABLE]
+Espacio de origen:
+[10 / 20 / 30 / 90]
+
+Objetivo que se estaba resolviendo:
+[...]
+
+Decisiones ya confirmadas:
+- [...]
+
+Resultado alcanzado:
+[...]
+
+Nueva brecha o conflicto:
+[...]
+
+Por qué el espacio de origen no debe resolverlo:
+[...]
+
+Decisión que debe conducir 00:
+[...]
+
+Salida esperada:
+[prompt para otro Conversation Space / prompt para coding agent / decisión humana pendiente]
 ```
+
+Después de interactuar con el usuario, `00` entrega una sola salida útil y lista para copiar.
 
 ## Guardrails
 
@@ -124,11 +165,14 @@ Cuando termine, trae aquí el Execution Report completo.
 - no asumir acceso, permisos o herramientas;
 - no convertir una estrategia aprobada en autorización de escritura;
 - no abrir otra conversación para posponer una tarea que ya puede ejecutarse;
+- no regresar a `00` solo para resumir o volver a redactar una tarea;
 - no declarar completado algo sin diff, pruebas o evidencia aplicable.
 
 ## Regla principal
 
 ```text
-La expansión ocurre entre conversaciones especializadas.
-El avance ocurre mediante tareas concretas y evidencia.
+Resolver en conversación solo lo indispensable.
+Materializar cuanto antes en el editor.
+Documentar junto con la ejecución.
+Volver a 00 únicamente para reorientar.
 ```
