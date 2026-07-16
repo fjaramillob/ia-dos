@@ -2,13 +2,17 @@
 
 Este flujo convierte una necesidad confirmada en una tarea acotada, verificable y trazable.
 
-No consiste en reenviar todo el historial del proyecto ni en pedir al agente que “resuelva lo necesario”.
+Consulta primero:
+
+- [Registro de tópicos conversacionales](../orchestration/topic-routing-registry.md);
+- [Registro de tipos de ejecución](../execution/execution-task-types.md).
 
 ## Flujo
 
 ```text
 Conversation Space de origen
 → decisión o resultado esperado
+→ tipo de ejecución
 → Execution Task
 → preparación local si hace falta
 → coding agent
@@ -20,42 +24,51 @@ Conversation Space de origen
 
 `00` no es una parada obligatoria entre definición y ejecución. El reporte vuelve primero al espacio que preparó la tarea.
 
-## Entradas mínimas
+## 1. Confirmar el tópico de origen
 
-Antes de delegar, debe existir:
+Antes de delegar, registra:
 
-- objetivo confirmado;
-- fuentes del proyecto actual;
-- estado inicial conocido o una instrucción de inspección;
+- tópico y nombre del Conversation Space;
+- decisión que quedó confirmada;
+- resultado verificable esperado;
+- motivo por el que la ejecución debe regresar a ese espacio.
+
+El tópico gobierna quién revisará el resultado, no qué herramienta concreta debe ejecutarlo.
+
+## 2. Elegir el tipo de ejecución
+
+Toda tarea debe declarar un tipo principal:
+
+```text
+INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE
+TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE
+```
+
+Elige el tipo según el resultado dominante. No mezcles varios tipos para ocultar objetivos independientes.
+
+El tipo aporta valores predeterminados sobre lectura, escritura, evidencia y detención, pero no concede permisos.
+
+## 3. Preparar la Execution Task
+
+Usa `templates/execution-task.template.md`. Debe incluir:
+
+- tópico y espacio de origen;
+- tipo de ejecución;
+- espacio de retorno;
+- objetivo único;
+- contexto mínimo;
 - alcance y fuera de alcance;
 - repositorios y rutas autorizadas;
-- criterios de aceptación verificables;
-- pruebas o verificaciones aplicables;
-- condiciones de detención;
-- autorización explícita sobre escritura y cambios remotos.
-
-No es obligatorio crear un `CORE` o Context Pack para una tarea pequeña si el prompt ya contiene contexto mínimo suficiente.
-
-## Preparar la Execution Task
-
-Usa `templates/execution-task.template.md` cuando aporte estructura. La tarea debe incluir:
-
-- rol y entorno;
-- objetivo;
-- contexto mínimo;
-- alcance;
-- fuera de alcance;
-- rutas autorizadas y prohibidas;
-- capacidades requeridas;
+- capacidades y autorizaciones explícitas;
 - criterios de aceptación;
-- verificaciones;
+- verificaciones y evidencia esperada;
 - condiciones de detención;
-- reglas de Git y cambios remotos;
+- documentación o memoria a actualizar;
 - formato del `Execution Report`.
 
 La tarea debe poder ejecutarse sin reconstruir información desde varios mensajes.
 
-## Preparar el entorno
+## 4. Preparar el entorno
 
 Si la ejecución requiere repositorios locales, archivos, Git o herramientas de desarrollo, indica previamente:
 
@@ -67,24 +80,26 @@ Si la ejecución requiere repositorios locales, archivos, Git o herramientas de 
 
 No prepares ni expongas todo el workspace por rutina.
 
-## Ejecutar con el coding agent
+## 5. Ejecutar con el coding agent
 
 El agente debe:
 
-1. confirmar repositorios, ramas y rutas;
+1. confirmar tópico de origen, tipo, repositorios, ramas y rutas;
 2. revisar instrucciones técnicas aplicables;
 3. ejecutar `git status` antes de escribir;
 4. inspeccionar el estado real;
-5. modificar solo el alcance autorizado;
-6. detenerse ante contradicciones o riesgos;
-7. ejecutar verificaciones aplicables;
-8. revisar el diff completo;
-9. devolver un `Execution Report`.
+5. respetar los defaults del tipo y las autorizaciones concretas;
+6. modificar solo el alcance autorizado;
+7. detenerse ante contradicciones o riesgos;
+8. ejecutar verificaciones aplicables;
+9. revisar el diff completo;
+10. devolver un `Execution Report` al espacio indicado.
 
-## Revisar el Execution Report
+## 6. Revisar el Execution Report
 
 El espacio de origen compara:
 
+- tipo solicitado versus tipo realmente realizado;
 - objetivo versus resultado;
 - criterios versus evidencia;
 - alcance versus diff;
@@ -95,7 +110,7 @@ El espacio de origen compara:
 
 Una afirmación del agente no sustituye evidencia.
 
-## Cerrar el ciclo
+## 7. Cerrar el ciclo
 
 Después de aprobar el resultado:
 
@@ -106,6 +121,8 @@ Después de aprobar el resultado:
 
 ## Rechaza el cierre cuando
 
+- el reporte no identifica tópico, tipo o espacio de retorno;
+- el tipo realizado no coincide y no existe justificación;
 - faltan verificaciones exigidas sin explicación;
 - los criterios no tienen evidencia;
 - aparecen cambios fuera de alcance;
@@ -115,6 +132,8 @@ Después de aprobar el resultado:
 
 ## Verificación final
 
+- [ ] El tópico de origen está declarado.
+- [ ] El tipo de ejecución representa el resultado dominante.
 - [ ] El objetivo es único y terminable.
 - [ ] El contexto es mínimo y suficiente.
 - [ ] Las referencias pertenecen al proyecto actual.
