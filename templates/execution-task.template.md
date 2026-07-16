@@ -54,6 +54,8 @@ No copies toda la historia del proyecto.
 |---|---|---|---|---|
 | `[RECURSO]` | `[ROL]` | `[ÁMBITO]` | `[LECTURA / ESCRITURA / ACCIÓN]` | `[LÍMITES]` |
 
+Incluye obligatoriamente las instrucciones locales aplicables del repositorio o entorno, por ejemplo `AGENTS.md`, archivos equivalentes, convenciones de contribución o políticas técnicas. Si no existen, decláralo.
+
 ## Readiness del entorno
 
 - Entorno: `[LOCAL / REMOTO / COMBINADO / OTRO]`
@@ -103,6 +105,7 @@ Describe qué ocurre hoy y qué evidencia lo confirma.
 
 - no ampliar alcance sin aprobación;
 - respetar la autoridad de cada recurso;
+- cumplir las instrucciones locales aplicables;
 - no modificar secretos ni datos sensibles;
 - no cambiar arquitectura, dependencias o seguridad salvo alcance explícito;
 - preservar comportamiento y trabajo no relacionados;
@@ -126,6 +129,7 @@ Detente y reporta cuando:
 
 - falte información crítica;
 - exista trabajo previo no identificado que pueda perderse;
+- aparezca una instrucción local aplicable no declarada;
 - sea necesario tocar recursos no autorizados;
 - falle una verificación crítica;
 - aparezca un riesgo de seguridad, pérdida de datos o coste;
@@ -147,6 +151,7 @@ El coding agent debe devolver un `Execution Report` al destino declarado, incluy
 
 - resultado observable;
 - recursos revisados y modificados;
+- instrucciones locales consultadas;
 - pruebas y evidencia;
 - autorizaciones utilizadas;
 - fuera de alcance respetado;
