@@ -2,7 +2,7 @@
 
 Usa esta plantilla cuando `00 — Dirección y orquestación` derive trabajo a otra conversación.
 
-El handoff debe ser autosuficiente, breve y orientado a un único resultado.
+El handoff debe ser autosuficiente, breve, agnóstico y orientado a un único resultado.
 
 ```text
 IA-DOS Conversation Space Handoff
@@ -35,7 +35,7 @@ Fuera de alcance:
 - [...]
 
 Fuentes necesarias:
-- [...]
+- [RUTAS, DOCUMENTOS O REPOSITORIOS DEL PROYECTO ACTUAL]
 
 Reglas:
 - usa contexto mínimo;
@@ -43,6 +43,8 @@ Reglas:
 - no amplíes el alcance;
 - no inventes decisiones ni implementación;
 - resuelve una decisión principal por vez;
+- usa roles genéricos para herramientas y agentes;
+- no menciones nombres, rutas, dominios o repositorios de otros proyectos;
 - detente cuando ya puedas entregar una salida útil.
 ```
 
@@ -54,7 +56,7 @@ Antes de recomendar otra conversación, evalúa:
 ¿Ya existe suficiente claridad para preparar una Execution Task verificable?
 ```
 
-- **Sí:** entrega un prompt listo para Codex, Antigravity, Claude Code u otro coding agent.
+- **Sí:** entrega un prompt listo para el coding agent disponible.
 - **No:** entrega un handoff para el único Conversation Space que resuelve la brecha principal.
 
 ## Salidas permitidas
