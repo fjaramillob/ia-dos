@@ -2,9 +2,9 @@
 
 **Intelligence-Assisted Development Operating System**
 
-IA-DOS es un framework operativo abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, memoria durable, ejecución acotada y verificación basada en evidencia.
+IA-DOS es un framework operativo abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, memoria durable, planificación técnica, ejecución acotada y verificación basada en evidencia.
 
-Coordina a la persona responsable, el Project Orchestrator, Conversation Spaces especializados, coding agents, repositorios de producto, LLM Wikis y fuentes de trazabilidad.
+Coordina a la persona responsable, el Project Orchestrator, Conversation Spaces, coding agents, fuentes, artefactos, entornos y mecanismos de trazabilidad.
 
 ## Método de trabajo
 
@@ -12,31 +12,40 @@ Coordina a la persona responsable, el Project Orchestrator, Conversation Spaces 
 conversación 00
 → orientación y prioridad
 → tópico especializado solo si desbloquea una brecha
-→ Execution Task clasificada
-→ preparación local cuando la ejecución lo requiera
-→ coding agent
-→ Execution Report al espacio de origen
-→ revisión e iteración
+→ asignación de Cycle Owner
+→ Planning Task o Execution Task
+→ Implementation Plan o Execution Report
+→ revisión en el destino declarado
+→ iteración o escalamiento
 ```
 
-La instalación local no es el punto de partida. IA-DOS comienza en una conversación dirigida y prepara el entorno local cuando una tarea necesita repositorios, archivos, Git o un coding agent.
+`00` no es una parada obligatoria entre definición, planificación y ejecución.
 
-## Dos registros operativos
+IA-DOS no impone una topología concreta de carpetas, repositorios, servicios, herramientas o proveedores.
 
-IA-DOS utiliza dos registros complementarios para evitar que cada asistente improvise la organización:
+## Tres registros operativos
 
-- [Registro de tópicos conversacionales](docs/orchestration/topic-routing-registry.md): decide dónde razonar, cuándo abrir un Conversation Space y qué salida debe producir.
-- [Registro de tipos de ejecución](docs/execution/execution-task-types.md): decide cómo debe trabajar el coding agent, qué evidencia se espera y qué autorizaciones no se presumen.
+IA-DOS utiliza tres contratos complementarios:
+
+- [Registro de tópicos conversacionales](docs/orchestration/topic-routing-registry.md): decide dónde resolver una brecha.
+- [Propiedad y retorno del ciclo](docs/orchestration/cycle-ownership.md): decide quién gobierna el resultado y dónde vuelve cada artefacto.
+- [Registro de tipos de ejecución](docs/execution/execution-task-types.md): decide cómo materializar una unidad aprobada.
+
+Además, [Autoridad de fuentes, artefactos y entornos](docs/execution/source-and-artifact-authority.md) define qué demuestra cada recurso y qué acceso está permitido.
 
 ```text
-tópico conversacional
-→ define dónde se resuelve la decisión
+tópico
+→ dónde se razona
 
-tipo de ejecución
-→ define cómo se materializa el resultado
+Cycle Owner
+→ quién gobierna el resultado
+
+Planning Task
+→ cómo diseñar la implementación sin escribir
+
+Execution Task
+→ cómo materializar una unidad aprobada
 ```
-
-Los registros no crean una secuencia obligatoria. Aportan clasificación, defaults y gates de salida.
 
 ## Empieza en cinco pasos
 
@@ -55,73 +64,102 @@ El primer chat queda identificado como:
 
 ### 3. Entrega las fuentes disponibles
 
-Comparte una descripción breve, documentos, repositorios, una Wiki existente o el [Project Intake Brief](templates/project-intake-brief.template.md).
+Comparte una descripción breve, documentos, repositorios, servicios, una memoria existente o el [Project Intake Brief](templates/project-intake-brief.template.md).
 
 Cuando la plataforma no pueda navegar este repositorio, carga el [IA-DOS Project Orchestrator Pack](bundles/ia-dos-project-orchestrator-pack.md).
 
-### 4. Orienta y clasifica el siguiente resultado
+### 4. Orienta y asigna propiedad
 
 El Orchestrator debe:
 
 - capturar propósito, usuario, problema y prioridad;
 - identificar la decisión dominante;
-- enrutarla usando el registro de tópicos;
-- abrir solo el Conversation Space que resuelva una brecha real;
-- omitir conversaciones innecesarias;
-- clasificar la tarea con un tipo de ejecución;
-- preparar una `Execution Task` tan pronto exista claridad suficiente.
+- abrir solo el Conversation Space necesario;
+- asignar un Cycle Owner;
+- decidir entre planificación técnica y ejecución directa;
+- devolver cada artefacto al destino declarado;
+- escalar a `00` solo para reorientar.
 
-Consulta:
+### 5. Prepara el entorno solo cuando haga falta
 
-- [Iniciar un producto nuevo](docs/getting-started/new-project-from-conversation.md)
-- [Adoptar un producto existente](docs/getting-started/adopt-existing-project-from-conversation.md)
+Antes de planificar o ejecutar, identifica el entorno real, los recursos disponibles, el trabajo que debe preservarse y los permisos efectivos.
 
-### 5. Prepara el entorno local solo cuando haga falta ejecutar
+No prepares infraestructura ni impongas una estructura física por anticipación.
 
-Cuando la tarea requiera acceso real a repositorios, archivos, Git o herramientas locales, el Orchestrator debe indicar el paso correspondiente:
+## Planning Task
 
-- [Preparar el workspace local](docs/getting-started/workspace-setup.md)
-- [Instalar IA-DOS en el workspace](docs/getting-started/install-ia-dos.md)
-- [Crear un proyecto nuevo en el workspace](docs/getting-started/create-new-project-workspace.md)
-- [Incorporar un proyecto existente](docs/getting-started/incorporate-existing-project-workspace.md)
-- [Preparar un handoff de ejecución](docs/getting-started/execution-handoff.md)
+Usa una Planning Task cuando el siguiente resultado requiera inspección o diseño técnico antes de autorizar escritura.
 
-No prepares infraestructura local por anticipación si todavía no existe una tarea que la necesite.
+```text
+Planning Task
+→ coding agent en solo lectura
+→ Implementation Plan
+→ revisión del Cycle Owner
+→ aprobación de una unidad
+```
+
+Plan producido no equivale a plan aprobado ni a ejecución autorizada.
+
+## Gate de tamaño
+
+Antes de aprobar una Execution Task:
+
+```text
+¿Puede completarse, verificarse y reportarse
+como una sola unidad sin mezclar resultados independientes?
+```
+
+Si no, divide el plan y aprueba solo la primera unidad.
 
 ## Tópicos conversacionales bajo demanda
 
-- `00 — Dirección y orquestación`: prioridad, límites y reorientación;
-- `10 — Producto y UX`: comportamiento, flujo y experiencia;
-- `20 — Arquitectura y stack`: arquitectura, datos, integraciones y decisiones técnicas;
-- `30 — Ejecución y desarrollo`: descomposición compleja, solo cuando aporta;
-- `40 — Calidad, seguridad y cumplimiento`: validación y riesgo con contexto propio;
-- `50 — Operación y entrega`: entornos, releases, observabilidad y continuidad;
-- `90 — Wiki y memoria`: síntesis y gobierno documental complejo.
+- `00 — Dirección y orquestación`;
+- `10 — Producto y UX`;
+- `20 — Arquitectura y stack`;
+- `30 — Ejecución y desarrollo`;
+- `40 — Calidad, seguridad y cumplimiento`;
+- `50 — Operación y entrega`;
+- `90 — Wiki y memoria`.
 
-No constituyen etapas obligatorias. Consulta el registro antes de abrir un nuevo espacio.
+No constituyen etapas obligatorias.
 
 ## Tipos de ejecución
 
-Toda `Execution Task` declara un tipo principal: `INSPECT`, `BOOTSTRAP`, `BUILD`, `FIX`, `REFACTOR`, `MIGRATE`, `TEST`, `HARDEN`, `DOCUMENT`, `WIKI`, `RELEASE` u `OPERATE`.
+Toda `Execution Task` declara un tipo principal:
 
-El tipo orienta el modo de trabajo, pero no concede permisos sobre escritura, Git, despliegue, datos, costes o producción.
+`INSPECT`, `BOOTSTRAP`, `BUILD`, `FIX`, `REFACTOR`, `MIGRATE`, `TEST`, `HARDEN`, `DOCUMENT`, `WIKI`, `RELEASE` u `OPERATE`.
+
+La planificación se realiza mediante `Planning Task`; no es un tipo de materialización.
 
 ## Coding agents
 
-Los coding agents materializan tareas autorizadas, ejecutan verificaciones y devuelven un `Execution Report` al Conversation Space de origen. No deben ampliar alcance ni fusionar cambios sin autorización.
+Los coding agents pueden:
 
-## LLM Wiki
+- inspeccionar en solo lectura y producir un Implementation Plan;
+- materializar una Execution Task autorizada;
+- ejecutar verificaciones;
+- devolver el artefacto requerido al destino declarado.
 
-La Wiki conserva memoria durable en Markdown y se puebla progresivamente. Puede actualizarse en la misma tarea que modifica el producto cuando el conocimiento sea claro y acotado.
+No deben ampliar alcance ni tomar decisiones no autorizadas.
+
+## Memoria durable
+
+La memoria del proyecto conserva decisiones y estado confirmado. Las conversaciones y sesiones de coding agents no son memoria durable.
+
+Las propuestas no deben registrarse como implementación.
 
 ## Accesos rápidos
 
 - [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
 - [Consultar la documentación](docs/index.md)
-- [Registro de tópicos conversacionales](docs/orchestration/topic-routing-registry.md)
-- [Registro de tipos de ejecución](docs/execution/execution-task-types.md)
-- [Avance concreto y transición a ejecución](docs/orchestration/concrete-execution-flow.md)
-- [Trabajar con coding agents](docs/execution/coding-agents.md)
+- [Registro de tópicos](docs/orchestration/topic-routing-registry.md)
+- [Propiedad del ciclo](docs/orchestration/cycle-ownership.md)
+- [Avance concreto](docs/orchestration/concrete-execution-flow.md)
+- [Autoridad de fuentes y artefactos](docs/execution/source-and-artifact-authority.md)
+- [Planning Task](templates/planning-task.template.md)
+- [Implementation Plan](templates/implementation-plan.template.md)
+- [Execution Task](templates/execution-task.template.md)
+- [Execution Report](templates/execution-report.template.md)
 
 ## Estado
 
