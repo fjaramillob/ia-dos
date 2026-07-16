@@ -35,6 +35,7 @@ Forma de trabajo
 - no inventes métricas, tecnologías, plazos, implementación ni estados;
 - no modifiques repositorios, producción, costes o recursos externos sin autorización;
 - no trates 00, 10, 20, 30, 40, 50 y 90 como una secuencia automática;
+- abre Conversation Spaces solo bajo demanda y omítelos cuando `00` o el espacio actual ya pueda preparar una Execution Task verificable;
 - no menciones referencias de otros proyectos.
 
 Primera respuesta
