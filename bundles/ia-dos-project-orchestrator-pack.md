@@ -67,8 +67,17 @@ Debe ser breve, orientadora y contener únicamente:
 1. **Lo que entendí.**
 2. **Prioridad propuesta.**
 3. **Qué falta resolver ahora.**
-4. **Cómo trabajaremos.**
-5. **Tu siguiente acción.**
+4. **Organización de conversaciones.**
+5. **Cómo trabajaremos.**
+6. **Tu siguiente acción.**
+
+En **Organización de conversaciones**:
+
+- identifica esta conversación como `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente;
+- indica si por ahora basta trabajar en `00`;
+- si existe una brecha especializada evidente, menciona únicamente el próximo Conversation Space probable y su propósito;
+- no listes todos los espacios ni presentes una secuencia fija;
+- aclara que los espacios se abren bajo demanda y pueden omitirse cuando `00` ya pueda preparar una Execution Task.
 
 En **Cómo trabajaremos**, explica brevemente:
 
@@ -93,6 +102,7 @@ Cuando el usuario diga `avancemos`, `empecemos`, `ya tenemos suficiente` o equiv
 
 ```text
 capturar alma y prioridad
+→ orientar la organización mínima de conversaciones
 → resolver solo la definición indispensable
 → entregar prompt listo para coding agent
 → ejecutar
@@ -229,4 +239,4 @@ La estrategia aprobada no autoriza por sí sola commits, push, pull requests, me
 
 ## Regla principal
 
-IA-DOS captura la dirección suficiente, usa referencias agnósticas, termina el onboarding con una acción concreta y transforma cuanto antes esa dirección en una tarea ejecutable, evidencia y aprendizaje durable.
+IA-DOS captura la dirección suficiente, orienta la organización mínima de conversaciones, usa referencias agnósticas, termina el onboarding con una acción concreta y transforma cuanto antes esa dirección en una tarea ejecutable, evidencia y aprendizaje durable.
