@@ -3,10 +3,12 @@
 Consulta:
 
 - `docs/execution/execution-task-types.md`;
-- `docs/execution/source-and-artifact-authority.md`.
+- `docs/execution/source-and-artifact-authority.md`;
+- `docs/orchestration/agent-role-and-artifact-loop.md`.
 
 ## Identificación
 
+- Cycle ID: `[CYCLE-ID]`
 - ID: `[TASK-ID]`
 - Título: `[TÍTULO BREVE]`
 - Estado: `Propuesta | Aprobada | En ejecución | Bloqueada | Completada | Cancelada`
@@ -18,9 +20,30 @@ Consulta:
 - Tipo secundario, solo si es inseparable: `[TIPO O NINGUNO]`
 - Responsable humano: `[ROL O PERSONA]`
 - Coding agent o entorno: `[ROL O HERRAMIENTA DISPONIBLE]`
+- Agent Session: `[RESULTADO, POR EJEMPLO BOOTSTRAP]`
+- Rol activo: `Coding Agent — Execution`
 - Implementation Plan aprobado: `[REFERENCIA O NO APLICA]`
+- Acceso a IA-DOS: `Embedded Contract | Remote Repository | Local Reference`
+- Referencia local de IA-DOS: `[RUTA O NO DISPONIBLE]`
+
+Incluye `templates/agent-role-contract.template.md` como contrato embebido.
 
 El tipo clasifica el trabajo, pero no concede permisos.
+
+## Contrato de sesión
+
+Abre una sesión independiente para esta ejecución. No reutilices la sesión de planificación.
+
+Cuando la herramienta permita nombrar sesiones, usa exactamente el nombre declarado en `Agent Session`.
+
+Ejemplo:
+
+```text
+PLAN — BOOTSTRAP  → planificación de solo lectura
+BOOTSTRAP         → ejecución autorizada
+```
+
+Cuando la herramienta no permita nombrarla, declara el nombre lógico en el Execution Report.
 
 ## Objetivo
 
@@ -55,6 +78,27 @@ No copies toda la historia del proyecto.
 | `[RECURSO]` | `[ROL]` | `[ÁMBITO]` | `[LECTURA / ESCRITURA / ACCIÓN]` | `[LÍMITES]` |
 
 Incluye obligatoriamente las instrucciones locales aplicables del repositorio o entorno, por ejemplo `AGENTS.md`, archivos equivalentes, convenciones de contribución o políticas técnicas. Si no existen, decláralo.
+
+## Acceso al método
+
+La tarea debe ser autosuficiente.
+
+- usa el contrato embebido;
+- consulta la fuente remota cuando esté disponible;
+- usa una referencia local compartida cuando haya sido declarada;
+- no clones IA-DOS dentro del repositorio del producto;
+- no realices un clon silencioso;
+- solicita autorización antes de crear una referencia local.
+
+Una configuración local válida, no obligatoria, es:
+
+```text
+Proyectos/
+├── 00-ia-dos/
+└── [Proyecto]/
+    ├── [proyecto-app]/
+    └── [proyecto-wiki]/
+```
 
 ## Readiness del entorno
 
@@ -101,8 +145,12 @@ Describe qué ocurre hoy y qué evidencia lo confirma.
 - Despliegue o producción: `Autorizado | No autorizado | No aplica`
 - Datos, recursos externos o costes: `[AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]`
 
-## Guardrails
+## Guardrails de rol
 
+- no actuar como `00` ni como Project Orchestrator;
+- no cambiar Cycle Owner, objetivo o destino;
+- no aprobar el propio resultado;
+- no iniciar otra unidad;
 - no ampliar alcance sin aprobación;
 - respetar la autoridad de cada recurso;
 - cumplir las instrucciones locales aplicables;
@@ -135,7 +183,8 @@ Detente y reporta cuando:
 - aparezca un riesgo de seguridad, pérdida de datos o coste;
 - sea necesaria una decisión no confirmada;
 - el tipo declarado ya no represente el trabajo;
-- la tarea revele varios resultados independientes.
+- la tarea revele varios resultados independientes;
+- se requiera crear o clonar una referencia local no autorizada.
 
 ## Documentación y memoria
 
@@ -144,6 +193,18 @@ Detente y reporta cuando:
 - ADR o equivalente requerido: `Sí | No`
 
 No registres propuestas como estado implementado.
+
+## Encabezado de retorno obligatorio
+
+```text
+Artifact: Execution Report
+Execution Task ID: [TASK-ID]
+Cycle ID: [CYCLE-ID]
+Agent Session: [RESULTADO]
+Cycle Owner: [CONVERSATION SPACE]
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Decisión requerida: Aprobar | Corregir | Revertir | Escalar
+```
 
 ## Entrega requerida
 
@@ -159,3 +220,5 @@ El coding agent debe devolver un `Execution Report` al destino declarado, incluy
 - estado del entorno y del control de versiones;
 - actualización durable recomendada;
 - una sola siguiente acción.
+
+El coding agent no determina que su trabajo quedó aprobado y no inicia automáticamente el siguiente ciclo.
