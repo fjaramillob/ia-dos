@@ -8,10 +8,25 @@ Usa esta plantilla cuando el coding agent deba inspeccionar y proponer cómo imp
 - Proyecto: `[NOMBRE]`
 - Estado: `Propuesta | Aprobada | En análisis | Bloqueada | Completada | Cancelada`
 - Tópico de origen: `[00 | 10 | 20 | 30 | 40 | 50 | 90]`
+- Preparada por: `[CONVERSATION SPACE ESPECIALISTA]`
+- Ejecutada por: `[CODING AGENT O ENTORNO TÉCNICO DISPONIBLE]`
+- Revisada por: `[CYCLE OWNER, NORMALMENTE EL MISMO ESPECIALISTA]`
 - Cycle Owner: `[CONVERSATION SPACE]`
 - Destino del Implementation Plan: `[NORMALMENTE EL CYCLE OWNER]`
 - Espacio de escalamiento: `[CONVERSATION SPACE, NORMALMENTE 00]`
-- Coding agent o entorno: `[ROL O HERRAMIENTA DISPONIBLE]`
+
+## Contrato de salida rápida
+
+La Planning Task se entrega directamente al coding agent. No se abre otro Conversation Space para que ese chat la ejecute.
+
+```text
+especialista prepara
+→ coding agent inspecciona
+→ Implementation Plan
+→ especialista revisa
+```
+
+Un Conversation Space solo puede ejecutar esta Planning Task cuando declare explícitamente que también actuará como agente de planificación técnica y tenga acceso suficiente al entorno real.
 
 ## Objetivo del plan
 
@@ -23,7 +38,7 @@ Una Planning Task no debe pedir simultáneamente una auditoría completa, una ar
 
 Confirma:
 
-- [ ] las fuentes disponibles permiten inspeccionar el estado real;
+- [ ] las fuentes disponibles permiten al coding agent inspeccionar el estado real;
 - [ ] existe suficiente contexto para proponer al menos una primera unidad segura;
 - [ ] las incógnitas restantes pueden tratarse como supuestos, alternativas o decisiones posteriores;
 - [ ] no existe una decisión humana indispensable que cambie el objetivo, los límites o la seguridad del plan.
@@ -69,6 +84,8 @@ Solicita únicamente lo necesario para responder la decisión dominante:
 - verificaciones disponibles;
 - una primera unidad de implementación candidata, cuando corresponda.
 
+Cada hallazgo que condicione la decisión debe incluir recurso, ruta o referencia, estado observado e interpretación. Una afirmación sin evidencia identificable debe marcarse como inferencia o propuesta.
+
 No conviertas esta sección en una auditoría exhaustiva por defecto. Si aparece otra brecha independiente, declárala sin desarrollarla.
 
 ## Resultado requerido
@@ -98,7 +115,8 @@ No es obligatorio producir un roadmap completo ni dividir toda la iniciativa cua
 - ampliar el objetivo sin aprobación;
 - resolver decisiones de otro dominio;
 - repetir auditorías durables suficientes sin una brecha de evidencia concreta;
-- bloquear el plan por preguntas que no impiden diseñar una primera unidad segura.
+- bloquear el plan por preguntas que no impiden diseñar una primera unidad segura;
+- abrir otro Conversation Space para ejecutar esta Planning Task.
 
 ## Gate de tamaño
 
@@ -124,7 +142,8 @@ No te detengas por decisiones que puedan mantenerse explícitamente como supuest
 No se modificaron artefactos.
 No se realizaron cambios remotos ni despliegues.
 El plan no constituye autorización de ejecución.
-El Implementation Plan debe volver al destino indicado.
+El Implementation Plan debe volver al Cycle Owner indicado.
 Las brechas de otros dominios fueron declaradas, no resueltas silenciosamente.
 La primera Execution Task candidata fue incluida cuando existió evidencia suficiente.
+La planificación fue ejecutada por el coding agent declarado, no por un chat intermediario.
 ```
