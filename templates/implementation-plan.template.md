@@ -5,8 +5,9 @@
 - Planning Task: `[PLAN-ID]`
 - Proyecto: `[NOMBRE]`
 - Cycle Owner: `[CONVERSATION SPACE]`
-- Destino de revisión: `[CONVERSATION SPACE]`
+- Destino de revisión: `[NORMALMENTE EL CYCLE OWNER]`
 - Estado: `Propuesto | Requiere decisión | Bloqueado | Listo para revisión`
+- Decisión técnica dominante: `[UNA SOLA DECISIÓN]`
 
 ## Fuentes y accesos utilizados
 
@@ -16,54 +17,65 @@
 
 ## Estado actual comprobado
 
-Describe:
+Describe únicamente lo relevante para la decisión dominante:
 
 - qué existe;
 - qué no existe o no pudo verificarse;
 - trabajo previo que debe preservarse;
-- contradicciones entre fuentes;
+- contradicciones aplicables;
 - riesgos o restricciones activas.
 
-Separa explícitamente hechos, inferencias y propuestas.
+Separa hechos, inferencias y propuestas.
 
-## Resultado final propuesto
+## Decisión recomendada
 
-Define el estado verificable que debería existir al cerrar la iniciativa completa, sin presentarlo como implementado.
+Expresa la recomendación que el Cycle Owner debe aceptar, corregir o rechazar.
 
-## Estrategia de implementación
+No la presentes como arquitectura aprobada ni implementación realizada.
 
-Explica únicamente la secuencia necesaria para alcanzar el resultado:
+## Estrategia mínima
 
-- dependencias;
-- decisiones técnicas o funcionales;
-- artefactos o áreas previstas;
-- verificaciones;
-- riesgos;
+Explica solo lo necesario para materializar la decisión:
+
+- dependencias indispensables;
+- artefactos o áreas afectadas;
+- verificaciones necesarias;
+- riesgos directos;
 - condiciones de detención.
 
-## División en Execution Tasks
+No conviertas el plan en un roadmap completo por defecto.
 
-| Orden | ID propuesto | Tipo | Resultado único | Dependencias | Evidencia de cierre |
-|---:|---|---|---|---|---|
-| 1 | `[TASK-ID]` | `[TIPO]` | `[RESULTADO]` | `[DEPENDENCIA]` | `[EVIDENCIA]` |
+## Primera unidad recomendada
 
-Cada tarea debe poder completarse, verificarse y reportarse por separado.
-
-No agrupes una iniciativa amplia bajo un solo tipo de ejecución.
-
-## Primera tarea recomendada
-
-- ID:
+- ID propuesto:
 - tipo principal:
-- objetivo único:
+- resultado único:
 - alcance:
 - fuera de alcance:
-- recursos que necesita:
+- recursos necesarios:
 - autorizaciones requeridas:
 - criterios de aceptación:
 - verificaciones mínimas:
 - condiciones de detención:
 - destino del Execution Report:
+
+Incluye esta sección solo cuando exista suficiente claridad para proponer una unidad ejecutable.
+
+## Unidades posteriores, solo si son necesarias
+
+Enumera únicamente dependencias inmediatas que ayuden a entender la primera unidad. No diseñes toda la iniciativa salvo que ese sea el objetivo explícito de la Planning Task.
+
+| Orden | Resultado único | Dependencia | Evidencia de cierre |
+|---:|---|---|---|
+| 2 | `[RESULTADO]` | `[DEPENDENCIA]` | `[EVIDENCIA]` |
+
+## Brechas de otro dominio
+
+- `[BRECHA Y TÓPICO AL QUE PERTENECE]`, o `Ninguna`.
+
+No resuelvas silenciosamente decisiones funcionales, estratégicas, operativas o de cumplimiento desde un plan técnico.
+
+Cuando la siguiente brecha pertenezca claramente a otro especialista y no requiera reorientación, recomienda un handoff directo a ese espacio, no un retorno intermedio a `00`.
 
 ## Decisiones humanas pendientes
 
@@ -73,7 +85,7 @@ No propongas ejecutar mientras exista una decisión indispensable sin resolver.
 
 ## Memoria y documentación
 
-Indica qué conocimiento deberá registrarse después de ser implementado y verificado. Las propuestas no se registran como estado real.
+Indica qué conocimiento deberá registrarse después de ser aceptado, implementado o verificado. Las propuestas no se registran como estado real.
 
 ## Declaración de solo lectura
 
@@ -81,4 +93,5 @@ Indica qué conocimiento deberá registrarse después de ser implementado y veri
 - [ ] No se realizaron cambios remotos ni despliegues.
 - [ ] El plan no se trató como autorización de ejecución.
 - [ ] Las limitaciones de acceso fueron declaradas.
-- [ ] El plan vuelve al Cycle Owner indicado para revisión.
+- [ ] El alcance se mantuvo proporcional a la decisión dominante.
+- [ ] El plan vuelve al destino de revisión indicado.
