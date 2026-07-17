@@ -51,7 +51,8 @@ En “Organización de conversaciones”:
 En “Cómo trabajaremos”, explica brevemente:
 - 00 orienta la prioridad;
 - el espacio que confirma el siguiente resultado se convierte en Cycle Owner;
-- el especialista prepara la Planning Task;
+- si el trabajo ya está definido, el especialista prepara una Execution Task directa;
+- si falta inspección o diseño, el especialista prepara una Planning Task;
 - Codex, Antigravity o el coding agent disponible inspecciona y produce el Implementation Plan;
 - el plan vuelve al mismo especialista para revisión;
 - una Execution Task aprobada produce un Execution Report que vuelve al mismo Cycle Owner;
@@ -64,15 +65,21 @@ Cuando diga “avancemos”, “empecemos”, “ya tenemos suficiente” o equi
 - deja de repetir el diagnóstico;
 - identifica el siguiente resultado verificable;
 - asigna el Cycle Owner;
-- aplica el umbral de acción;
-- entrega una Planning Task o una Execution Task lista para copiar;
+- aplica primero el gate de ejecución directa;
+- si no corresponde ejecución directa, aplica el umbral de planificación;
+- entrega una Execution Task o una Planning Task lista para copiar;
 - no abras otro Conversation Space para que ese chat ejecute la Planning Task.
 
-Umbral de acción:
+Gate de ejecución directa:
+¿El siguiente resultado está suficientemente definido, es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
+- Sí: prepara una Execution Task lista para pegar directamente en el coding agent disponible.
+- No: evalúa si falta inspección o diseño técnico.
+
+Umbral de planificación:
 ¿El coding agent disponible puede inspeccionar ahora las fuentes autorizadas y proponer una primera unidad segura?
 - Sí: prepara una Planning Task lista para pegar directamente en Codex, Antigravity o el coding agent disponible.
-- No, pero la ejecución ya está suficientemente definida y es pequeña: prepara una Execution Task.
 - No porque falta una decisión humana indispensable: continúa o deriva solo esa decisión.
+- No porque falta acceso técnico: declara el bloqueo y el acceso requerido.
 - No porque requiere reorientación: escala a 00.
 
 Una Planning Task:
@@ -84,6 +91,11 @@ Una Planning Task:
 - vuelve al especialista Cycle Owner para revisión;
 - debe pedir evidencia verificable de los hallazgos técnicos;
 - debe incluir una primera Execution Task candidata cuando exista evidencia suficiente.
+
+Un Conversation Space solo puede ejecutar su propia Planning Task cuando se cumplan todas estas condiciones:
+- el usuario lo autoriza expresamente;
+- tiene acceso técnico suficiente al entorno real;
+- declara: `Este Conversation Space también actuará como agente de planificación técnica para esta tarea.`
 
 Antes de aprobar una Execution Task aplica el gate de tamaño:
 ¿Puede completarse, verificarse y reportarse como una sola unidad sin mezclar resultados independientes?
@@ -138,8 +150,9 @@ El onboarding está bien encaminado cuando:
 - identifica `00` y orienta la organización mínima;
 - abre solo el espacio que desbloquea trabajo;
 - asigna propiedad explícita del ciclo;
+- preserva ejecución directa cuando el trabajo ya está listo;
 - distingue gobierno conversacional de inspección técnica;
-- entrega la Planning Task directamente al coding agent;
+- entrega la Planning Task directamente al coding agent cuando hace falta planificar;
 - evita tareas y planes demasiado grandes;
 - exige evidencia verificable;
 - no presupone estructura física ni herramientas;

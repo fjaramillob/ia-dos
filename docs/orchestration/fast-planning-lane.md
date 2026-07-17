@@ -8,39 +8,55 @@ El Conversation Space especialista gobierna el resultado. El coding agent inspec
 
 ```text
 Conversation Space especialista
-→ Planning Task lista para copiar
-→ coding agent inspecciona en solo lectura
-→ Implementation Plan
-→ vuelve al mismo especialista
-→ especialista aprueba o corrige la primera Execution Task
-→ coding agent ejecuta
-→ Execution Report al especialista
+→ Execution Task directa cuando ya está lista
+   o Planning Task cuando falta inspección
+→ coding agent ejecuta o planifica
+→ el artefacto vuelve al mismo especialista
 ```
 
 ## Responsabilidades distintas
 
 ### Conversation Space especialista
 
-- confirma el resultado que debe planificarse;
+- confirma el resultado;
 - actúa como Cycle Owner;
+- decide entre ejecución directa y planificación técnica;
 - define objetivo, límites, fuentes y condiciones de detención;
-- prepara la Planning Task;
+- prepara la Planning Task cuando falta inspección;
 - revisa el Implementation Plan;
 - aprueba, corrige o rechaza la primera Execution Task candidata;
 - revisa posteriormente el Execution Report.
 
 ### Coding agent
 
-- inspecciona las fuentes y el entorno técnico real;
+- inspecciona las fuentes y el entorno técnico real cuando recibe una Planning Task;
+- ejecuta únicamente cuando recibe una Execution Task aprobada;
 - respeta las instrucciones propias de los recursos autorizados;
 - produce evidencia verificable;
-- propone una estrategia mínima;
-- entrega una primera Execution Task candidata;
 - no escribe ni ejecuta durante la planificación.
 
-## Regla de salida
+## Gate de salida rápida
 
-Cuando ya existe suficiente dirección para que un coding agent inspeccione y proponga una primera unidad segura, el especialista debe terminar su respuesta con:
+Evalúa en este orden:
+
+```text
+1. ¿El resultado ya está suficientemente definido,
+   es pequeño y puede ejecutarse con seguridad?
+2. Si no, ¿el coding agent puede inspeccionar las fuentes
+   y proponer una primera unidad segura?
+```
+
+- **Ejecución lista:** entrega una Execution Task directamente al coding agent.
+- **Falta inspección o diseño:** entrega una Planning Task directamente al coding agent.
+- **Falta una decisión humana indispensable:** resuelve o deriva solo esa decisión.
+- **Falta acceso técnico:** declara el bloqueo y el acceso requerido.
+- **Reorientación real:** escala a `00`.
+
+La ruta rápida no obliga a planificar trabajo que ya está listo para ejecutar.
+
+## Regla de salida de una Planning Task
+
+Cuando corresponde planificación, el especialista debe terminar su respuesta con:
 
 1. una instrucción visible que indique dónde pegar la tarea;
 2. una Planning Task autosuficiente;
@@ -53,35 +69,17 @@ No debe pedir abrir otro Conversation Space para que ese chat ejecute la Plannin
 
 Un Conversation Space no debe responder su propia Planning Task como si fuera el coding agent.
 
-Solo puede hacerlo cuando se cumpla al menos una de estas condiciones:
+Solo puede hacerlo cuando se cumplan **todas** estas condiciones:
 
 - el usuario autoriza expresamente que ese mismo entorno realice la inspección técnica;
-- no existe un coding agent disponible y el espacio tiene acceso técnico suficiente;
-- la tarea no requiere inspección de artefactos o entorno técnico.
-
-Cuando ocurra una excepción, debe declararse explícitamente:
+- el espacio tiene acceso técnico suficiente a las fuentes y al entorno real;
+- el espacio declara explícitamente:
 
 ```text
 Este Conversation Space también actuará como agente de planificación técnica para esta tarea.
 ```
 
-Sin esa declaración, una Planning Task siempre se dirige al coding agent.
-
-## Umbral de acción
-
-Antes de abrir otra conversación, pregunta:
-
-```text
-¿El coding agent disponible puede inspeccionar ahora
-las fuentes autorizadas y producir un Implementation Plan seguro?
-```
-
-- **Sí:** entregar inmediatamente la Planning Task al coding agent.
-- **No por falta de una decisión humana indispensable:** resolver o derivar solo esa decisión.
-- **No por falta de acceso técnico:** declarar el bloqueo y el acceso requerido.
-- **No por reorientación:** escalar a `00`.
-
-Preguntas postergables, supuestos reversibles y alternativas técnicas no bloquean la salida.
+La ausencia de un coding agent no autoriza por sí sola la autoejecución. Sin las tres condiciones, la Planning Task debe dirigirse al coding agent o declararse bloqueada por falta de acceso.
 
 ## Evidencia mínima del Implementation Plan
 
@@ -110,4 +108,4 @@ No debe diseñar detalladamente toda la iniciativa ni producir un roadmap comple
 
 ## Regla de cierre
 
-La planificación rápida funciona cuando el usuario puede pasar del especialista al coding agent con un solo bloque copiable y regresar al mismo especialista con un artefacto verificable para aprobación.
+La ruta rápida funciona cuando el usuario puede pasar directamente del especialista al coding agent con una Execution Task lista, o con una Planning Task que vuelve al mismo especialista como Implementation Plan verificable.
