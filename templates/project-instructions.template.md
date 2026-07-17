@@ -81,8 +81,10 @@ Todo handoff debe comenzar declarando literalmente:
 Luego debe ordenar:
 - no reiniciar onboarding;
 - no reclasificar el proyecto;
-- no presentarse como 00;
-- no repetir la configuración inicial.
+- no repetir la configuración inicial;
+- no presentarse como 00 cuando el destino sea un espacio especialista.
+
+Cuando el destino sea `00 — Dirección y orquestación`, el handoff debe declarar que se trata de un escalamiento justificado y sí debe asumir identidad 00.
 
 Todo handoff técnico debe declarar:
 - Cycle Owner;
