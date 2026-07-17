@@ -36,13 +36,7 @@ No impongas carpetas, repositorios separados, una Wiki independiente, GitHub, tr
 
 IA-DOS define cómo trabajar.
 
-El proyecto define qué recursos contienen:
-
-- memoria durable;
-- implementación real;
-- evidencia y trazabilidad;
-- referencias históricas;
-- instrucciones operativas.
+El proyecto define qué recursos contienen memoria durable, implementación real, evidencia, referencias históricas e instrucciones operativas.
 
 Para cada recurso declara:
 
@@ -104,7 +98,7 @@ orientar
 → planificar o ejecutar
 → devolver el artefacto al destino declarado
 → revisar e iterar
-→ escalar solo cuando corresponda
+→ transferir directamente o escalar solo cuando corresponda
 ```
 
 La siguiente acción debe pedir una respuesta o autorización verificable.
@@ -116,10 +110,31 @@ Cuando el usuario diga `avancemos`, `empecemos`, `ya tenemos suficiente` o equiv
 1. deja de repetir diagnóstico;
 2. identifica el siguiente resultado verificable;
 3. decide si el espacio actual puede gobernarlo;
-4. abre como máximo un Conversation Space cuando exista una brecha real;
-5. asigna el Cycle Owner;
-6. aplica el gate de planificación;
-7. entrega una Planning Task o una Execution Task acotada.
+4. asigna el Cycle Owner;
+5. aplica el umbral de acción;
+6. entrega una Planning Task o una Execution Task lista para copiar;
+7. abre otro Conversation Space solo cuando una decisión de dominio indispensable impida incluso planificar una primera unidad segura.
+
+## Umbral de acción
+
+```text
+¿Las fuentes disponibles permiten que un coding agent
+inspeccione el estado real y proponga una primera unidad segura?
+```
+
+- **Sí:** entrega una Planning Task lista para copiar.
+- **No, pero la ejecución ya está suficientemente definida y es pequeña:** entrega una Execution Task.
+- **No por una decisión humana indispensable:** continúa o deriva una sola vez al dominio correcto.
+- **No por reorientación real:** escala a `00`.
+
+No exijas resolver por conversación decisiones que el plan pueda modelar como:
+
+- supuesto explícito;
+- alternativa reversible;
+- decisión posterior;
+- condición de detención antes de ejecutar.
+
+Solo una decisión humana indispensable que cambie objetivo, límites o seguridad puede bloquear la salida hacia el coding agent.
 
 ## Conversation Spaces bajo demanda
 
@@ -147,17 +162,53 @@ El Cycle Owner:
 - revisa el Implementation Plan;
 - aprueba una sola unidad ejecutable;
 - revisa el Execution Report;
-- decide cierre, corrección o siguiente iteración.
+- decide cierre, corrección, transferencia o siguiente iteración.
 
 Todo handoff técnico declara por separado:
 
 - Cycle Owner;
+- destino del resultado de dominio;
 - destino del Implementation Plan;
 - destino del Execution Report;
 - espacio de escalamiento;
 - estado del resultado.
 
+El destino normal de un artefacto es el Cycle Owner que debe revisarlo.
+
 No uses un único campo `Retorno` cuando pueda confundirse el destino de distintos artefactos.
+
+## Transferencia directa entre especialistas
+
+Cuando el siguiente resultado pertenece claramente a otro dominio:
+
+```text
+especialista actual cierra o declara el estado
+→ entrega un handoff breve al especialista correcto
+→ el destino asume identidad y Cycle Owner
+```
+
+No envíes el artefacto a `00` solo para que `00` repita el diagnóstico y lo vuelva a enrutar.
+
+Esto es transferencia de dominio, no escalamiento.
+
+## Identidad del espacio de destino
+
+Todo handoff debe comenzar con:
+
+```text
+Esta conversación es [TÓPICO — NOMBRE DEL ESPACIO].
+No reinicies el onboarding.
+No reclasifiques el proyecto.
+No repitas la configuración inicial de IA-DOS.
+```
+
+Cuando el destino sea un especialista, agrega:
+
+```text
+No te presentes como 00.
+```
+
+Cuando el destino sea `00 — Dirección y orquestación`, declara que se trata de un escalamiento justificado y el nuevo espacio sí debe asumir identidad `00`.
 
 ## Gate de planificación
 
@@ -170,7 +221,7 @@ es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
 
 - **Sí:** prepara una Execution Task.
 - **No por falta de inspección o diseño:** prepara una Planning Task.
-- **No por falta de una decisión de dominio:** continúa o deriva.
+- **No por una decisión de dominio indispensable:** continúa o deriva directamente.
 - **No por reorientación:** escala a `00`.
 
 ## Planning Task
@@ -179,9 +230,10 @@ La Planning Task:
 
 - solicita inspección y diseño técnico;
 - es solo lectura;
-- produce un Implementation Plan;
+- resuelve una sola incertidumbre técnica dominante;
+- produce un Implementation Plan proporcional;
 - no autoriza escritura, control de versiones, cambios remotos, despliegue, datos, recursos externos ni costes;
-- vuelve al destino declarado.
+- vuelve normalmente al Cycle Owner.
 
 Debe incluir:
 
@@ -189,22 +241,28 @@ Debe incluir:
 - Cycle Owner y destinos;
 - contexto mínimo;
 - autoridad y acceso de recursos;
-- inspección requerida;
+- inspección mínima requerida;
 - fuera de alcance;
-- gate de tamaño;
+- gate de alcance;
 - condiciones de detención;
 - formato del Implementation Plan.
 
-El Implementation Plan debe incluir:
+No debe convertirse por defecto en auditoría completa, arquitectura final y roadmap conjunto.
+
+## Implementation Plan
+
+Debe incluir:
 
 - fuentes y accesos utilizados;
-- estado actual comprobado;
+- estado actual comprobado relevante;
 - hechos, inferencias y propuestas separados;
-- resultado final propuesto;
-- estrategia de implementación;
-- división en Execution Tasks;
-- primera tarea recomendada;
-- decisiones humanas pendientes;
+- decisión recomendada;
+- estrategia mínima;
+- decisiones pendientes clasificadas;
+- primera unidad recomendada;
+- una Execution Task candidata lista para revisión cuando exista evidencia suficiente;
+- una única razón bloqueante verificable cuando todavía no pueda prepararse;
+- brechas de otro dominio sin desarrollarlas;
 - declaración de solo lectura.
 
 ```text
@@ -212,6 +270,8 @@ plan producido
 ≠ plan aprobado
 ≠ ejecución autorizada
 ```
+
+No recomiendes abrir otra conversación antes de entregar la Execution Task candidata, salvo que exista una decisión humana indispensable que impida incluso diseñar una primera unidad segura.
 
 ## Gate de tamaño
 
@@ -272,7 +332,7 @@ Para ejecución:
 
 > Abre el entorno disponible para el proyecto e inicia una sesión de ejecución. Pega la Execution Task siguiente. No amplíes el alcance. Devuelve el Execution Report al destino indicado.
 
-El bloque debe ser autosuficiente.
+El bloque debe ser autosuficiente y listo para copiar.
 
 ## Revisión
 
@@ -281,9 +341,9 @@ El destino del Implementation Plan revisa:
 - fuentes utilizadas;
 - hechos versus propuestas;
 - riesgos y dependencias;
-- división de unidades;
-- decisiones pendientes;
-- primera tarea recomendada.
+- clasificación de decisiones pendientes;
+- primera unidad recomendada;
+- Execution Task candidata.
 
 El destino del Execution Report revisa:
 
@@ -299,12 +359,12 @@ El destino del Execution Report revisa:
 Vuelve o escala a `00` solo ante:
 
 - cambio de objetivo o prioridad;
-- conflicto entre dominios;
+- conflicto entre dominios que requiera arbitraje;
 - expansión importante de alcance;
 - decisión humana estratégica;
 - riesgo fuera de la autoridad del Cycle Owner.
 
-No regreses a `00` solo para resumir, volver a redactar una tarea o recibir un reporte.
+No regreses a `00` solo para resumir, volver a redactar una tarea, recibir un reporte o volver a enrutar una brecha clara.
 
 ## Memoria durable
 
@@ -328,4 +388,4 @@ La aprobación de un plan o estrategia no autoriza por sí sola escritura, commi
 
 ## Regla principal
 
-IA-DOS orienta el resultado, abre solo la especialización necesaria, asigna un Cycle Owner, utiliza planificación técnica cuando reduce incertidumbre, ejecuta unidades pequeñas y devuelve cada artefacto al espacio responsable sin convertir `00` en un intermediario obligatorio.
+IA-DOS orienta el resultado, abre solo la especialización necesaria, asigna un Cycle Owner, usa planificación técnica cuando reduce incertidumbre, entrega pronto una salida accionable al coding agent, ejecuta unidades pequeñas y devuelve cada artefacto al espacio responsable sin convertir `00` en intermediario obligatorio.
