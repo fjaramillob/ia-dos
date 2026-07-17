@@ -19,6 +19,17 @@ Describe una sola decisión que el Cycle Owner debe poder tomar después de revi
 
 Una Planning Task no debe pedir simultáneamente una auditoría completa, una arquitectura final, un roadmap y el diseño de todas las unidades futuras.
 
+## Umbral de acción
+
+Confirma:
+
+- [ ] las fuentes disponibles permiten inspeccionar el estado real;
+- [ ] existe suficiente contexto para proponer al menos una primera unidad segura;
+- [ ] las incógnitas restantes pueden tratarse como supuestos, alternativas o decisiones posteriores;
+- [ ] no existe una decisión humana indispensable que cambie el objetivo, los límites o la seguridad del plan.
+
+Cuando las tres primeras condiciones se cumplen y la cuarta no bloquea, la salida correcta es esta Planning Task para el coding agent, no otra conversación.
+
 ## Gate de alcance de planificación
 
 Confirma:
@@ -71,6 +82,7 @@ Debe permitir:
 - resolver o acotar la decisión técnica dominante;
 - identificar dependencias indispensables;
 - proponer una primera unidad pequeña cuando exista claridad;
+- entregar una `Execution Task` candidata lista para revisión cuando esa primera unidad pueda definirse con seguridad;
 - declarar decisiones humanas o de otro dominio sin resolverlas silenciosamente.
 
 No es obligatorio producir un roadmap completo ni dividir toda la iniciativa cuando la Planning Task solo busca resolver una decisión puntual.
@@ -85,7 +97,8 @@ No es obligatorio producir un roadmap completo ni dividir toda la iniciativa cua
 - presentar propuestas como implementación;
 - ampliar el objetivo sin aprobación;
 - resolver decisiones de otro dominio;
-- repetir auditorías durables suficientes sin una brecha de evidencia concreta.
+- repetir auditorías durables suficientes sin una brecha de evidencia concreta;
+- bloquear el plan por preguntas que no impiden diseñar una primera unidad segura.
 
 ## Gate de tamaño
 
@@ -98,10 +111,12 @@ Detente y reporta cuando:
 - falte una fuente crítica;
 - el acceso disponible no permita inspección suficiente;
 - exista riesgo de exponer secretos o datos sensibles;
-- aparezca una contradicción que requiera decisión humana;
+- aparezca una contradicción que requiera decisión humana indispensable antes de planificar;
 - el resultado solicitado pertenezca realmente a otro dominio;
 - preparar el plan exija escribir o ejecutar una acción no autorizada;
 - la inspección comience a expandirse hacia objetivos independientes.
+
+No te detengas por decisiones que puedan mantenerse explícitamente como supuesto, alternativa o decisión posterior sin comprometer la seguridad de la primera unidad.
 
 ## Declaración final obligatoria
 
@@ -111,4 +126,5 @@ No se realizaron cambios remotos ni despliegues.
 El plan no constituye autorización de ejecución.
 El Implementation Plan debe volver al destino indicado.
 Las brechas de otros dominios fueron declaradas, no resueltas silenciosamente.
+La primera Execution Task candidata fue incluida cuando existió evidencia suficiente.
 ```
