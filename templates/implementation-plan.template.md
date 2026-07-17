@@ -1,11 +1,27 @@
 # Implementation Plan
 
+## Encabezado de retorno
+
+```text
+Artifact: Implementation Plan
+Planning Task ID: [PLAN-ID]
+Cycle ID: [CYCLE-ID]
+Agent Session: PLAN — [RESULTADO]
+Cycle Owner: [CONVERSATION SPACE]
+Estado: LISTO PARA REVISIÓN | BLOQUEADO
+Cambios realizados: Ninguno
+Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
+```
+
 ## Identificación
 
 - Planning Task: `[PLAN-ID]`
+- Cycle ID: `[CYCLE-ID]`
 - Proyecto: `[NOMBRE]`
 - Cycle Owner: `[CONVERSATION SPACE]`
 - Destino de revisión: `[NORMALMENTE EL CYCLE OWNER]`
+- Agent Session: `PLAN — [RESULTADO]`
+- Rol ejecutado: `Coding Agent — Planning`
 - Estado: `Propuesto | Requiere decisión | Bloqueado | Listo para revisión`
 - Decisión técnica dominante: `[UNA SOLA DECISIÓN]`
 
@@ -14,6 +30,16 @@
 | Recurso | Rol | Autoridad para | Acceso utilizado | Limitaciones observadas |
 |---|---|---|---|---|
 | `[RECURSO]` | `[ROL]` | `[ÁMBITO]` | `Lectura` | `[LÍMITES]` |
+
+## Evidencia verificable
+
+Cada hallazgo que condicione la decisión debe registrar:
+
+| Recurso | Ruta o referencia | Estado observado | Interpretación | Límite |
+|---|---|---|---|---|
+| `[RECURSO]` | `[RUTA O ID]` | `[HECHO]` | `[SIGNIFICADO]` | `[LO QUE NO DEMUESTRA]` |
+
+Una afirmación sin evidencia identificable debe marcarse como inferencia o propuesta.
 
 ## Estado actual comprobado
 
@@ -66,6 +92,7 @@ Solo una decisión bloqueante antes de ejecutar impide preparar la primera Execu
 - verificaciones mínimas:
 - condiciones de detención:
 - destino del Execution Report:
+- Agent Session de ejecución: `[RESULTADO]`
 
 Incluye esta sección siempre que exista evidencia suficiente para definir una primera unidad segura.
 
@@ -77,8 +104,22 @@ La tarea candidata:
 
 - no autoriza ejecución hasta que el Cycle Owner la apruebe;
 - debe contener un único resultado verificable;
-- debe declarar supuestos, autorizaciones y condiciones de detención;
+- debe conservar el mismo Cycle ID;
+- debe usar un Task ID distinto;
+- debe declarar una sesión de ejecución independiente;
+- debe declarar `Coding Agent — Execution` como rol activo;
+- debe contener supuestos, autorizaciones y condiciones de detención;
 - no debe exigir al usuario reconstruirla desde el resto del plan.
+
+Ejemplo de separación de sesiones:
+
+```text
+PLAN — BOOTSTRAP
+→ Implementation Plan
+→ aprobación del Cycle Owner
+→ BOOTSTRAP
+→ Execution Report
+```
 
 Cuando no pueda prepararse, identifica una sola decisión bloqueante y explica por qué impide incluso definir una unidad segura.
 
@@ -110,6 +151,17 @@ No propongas ejecutar mientras exista una decisión indispensable sin resolver. 
 
 Indica qué conocimiento deberá registrarse después de ser aceptado, implementado o verificado. Las propuestas no se registran como estado real.
 
+## Decisión requerida del Cycle Owner
+
+Selecciona exactamente una:
+
+- `Aprobar la Execution Task candidata`;
+- `Corregir un aspecto acotado del plan`;
+- `Rechazar la recomendación`;
+- `Escalar una decisión indispensable`.
+
+El coding agent no toma esta decisión por sí mismo.
+
 ## Declaración de solo lectura
 
 - [ ] No se modificaron artefactos.
@@ -120,3 +172,5 @@ Indica qué conocimiento deberá registrarse después de ser aceptado, implement
 - [ ] Las decisiones pendientes fueron clasificadas como bloqueantes o no bloqueantes.
 - [ ] Se incluyó una Execution Task candidata o una única razón bloqueante verificable.
 - [ ] El plan vuelve al destino de revisión indicado.
+- [ ] No se cambió el Cycle Owner ni se abrió otro ciclo.
+- [ ] La sesión de ejecución propuesta es independiente de la sesión de planificación.

@@ -2,6 +2,10 @@
 
 Tipo: complemento del pack operativo para asistentes conversacionales sin acceso al repositorio canónico.
 
+Complemento requerido: `ia-dos-agent-role-and-artifact-loop-addon.md`.
+
+Ese complemento agrega el contrato de rol, `Cycle ID`, `Task ID`, `Agent Session` y encabezados de retorno al flujo offline.
+
 ## Propósito
 
 Asegurar una salida rápida desde el Conversation Space especialista hacia Codex, Antigravity o el coding agent disponible.
@@ -65,6 +69,8 @@ Debe declarar:
 - condiciones de detención;
 - formato del plan.
 
+Aplica además los campos de rol, ciclo y sesión definidos en el complemento requerido.
+
 ## Implementation Plan mínimo
 
 Debe incluir:
@@ -77,6 +83,8 @@ Debe incluir:
 - primera unidad segura;
 - Execution Task candidata lista para copiar;
 - una única razón bloqueante cuando no pueda prepararse.
+
+El encabezado de retorno debe conservar `Cycle ID` y `Agent Session`.
 
 No debe convertirse por defecto en auditoría integral, arquitectura final y roadmap completo.
 

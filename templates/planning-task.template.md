@@ -4,6 +4,7 @@ Usa esta plantilla cuando el coding agent deba inspeccionar y proponer cómo imp
 
 ## Identificación
 
+- Cycle ID: `[CYCLE-ID]`
 - ID: `[PLAN-ID]`
 - Proyecto: `[NOMBRE]`
 - Estado: `Propuesta | Aprobada | En análisis | Bloqueada | Completada | Cancelada`
@@ -12,8 +13,14 @@ Usa esta plantilla cuando el coding agent deba inspeccionar y proponer cómo imp
 - Ejecutada por: `[CODING AGENT O ENTORNO TÉCNICO DISPONIBLE]`
 - Revisada por: `[CYCLE OWNER, NORMALMENTE EL MISMO ESPECIALISTA]`
 - Cycle Owner: `[CONVERSATION SPACE]`
+- Agent Session: `PLAN — [RESULTADO]`
+- Rol activo: `Coding Agent — Planning`
 - Destino del Implementation Plan: `[NORMALMENTE EL CYCLE OWNER]`
 - Espacio de escalamiento: `[CONVERSATION SPACE, NORMALMENTE 00]`
+- Acceso a IA-DOS: `Embedded Contract | Remote Repository | Local Reference`
+- Referencia local de IA-DOS: `[RUTA O NO DISPONIBLE]`
+
+Incluye `templates/agent-role-contract.template.md` como contrato embebido.
 
 ## Contrato de salida rápida
 
@@ -21,12 +28,15 @@ La Planning Task se entrega directamente al coding agent. No se abre otro Conver
 
 ```text
 especialista prepara
+→ sesión PLAN — [RESULTADO]
 → coding agent inspecciona
 → Implementation Plan
 → especialista revisa
 ```
 
-Un Conversation Space solo puede ejecutar esta Planning Task cuando declare explícitamente que también actuará como agente de planificación técnica y tenga acceso suficiente al entorno real.
+La sesión de planificación es independiente de cualquier futura sesión de ejecución.
+
+Un Conversation Space solo puede ejecutar esta Planning Task cuando se cumplan todas las condiciones de autoejecución definidas por IA-DOS.
 
 ## Objetivo del plan
 
@@ -73,10 +83,32 @@ Cuando alguna respuesta sea negativa, divide la Planning Task o reduce su objeti
 
 La Planning Task es de solo lectura. Una excepción requiere una tarea distinta y autorización explícita.
 
+## Acceso al método
+
+La tarea debe ser autosuficiente.
+
+- usa el contrato embebido siempre;
+- consulta la fuente remota cuando esté disponible;
+- usa una referencia local compartida cuando haya sido declarada;
+- no clones IA-DOS dentro del repositorio del producto;
+- no realices un clon silencioso;
+- si se requiere crear una referencia local, solicita autorización explícita.
+
+Una configuración local válida, no obligatoria, es:
+
+```text
+Proyectos/
+├── 00-ia-dos/
+└── [Proyecto]/
+    ├── [proyecto-app]/
+    └── [proyecto-wiki]/
+```
+
 ## Inspección requerida
 
 Solicita únicamente lo necesario para responder la decisión dominante:
 
+- instrucciones locales aplicables;
 - estado real de los recursos relevantes;
 - convenciones y dependencias que condicionan la decisión;
 - contradicciones entre fuentes aplicables;
@@ -102,6 +134,8 @@ Debe permitir:
 - entregar una `Execution Task` candidata lista para revisión cuando esa primera unidad pueda definirse con seguridad;
 - declarar decisiones humanas o de otro dominio sin resolverlas silenciosamente.
 
+La Execution Task candidata debe declarar una sesión independiente con nombre `[RESULTADO]`; por ejemplo, `BOOTSTRAP` después de `PLAN — BOOTSTRAP`.
+
 No es obligatorio producir un roadmap completo ni dividir toda la iniciativa cuando la Planning Task solo busca resolver una decisión puntual.
 
 ## Fuera de alcance
@@ -116,7 +150,10 @@ No es obligatorio producir un roadmap completo ni dividir toda la iniciativa cua
 - resolver decisiones de otro dominio;
 - repetir auditorías durables suficientes sin una brecha de evidencia concreta;
 - bloquear el plan por preguntas que no impiden diseñar una primera unidad segura;
-- abrir otro Conversation Space para ejecutar esta Planning Task.
+- abrir otro Conversation Space para ejecutar esta Planning Task;
+- aprobar o ejecutar la Execution Task candidata;
+- cambiar el Cycle Owner;
+- clonar IA-DOS sin autorización.
 
 ## Gate de tamaño
 
@@ -132,9 +169,23 @@ Detente y reporta cuando:
 - aparezca una contradicción que requiera decisión humana indispensable antes de planificar;
 - el resultado solicitado pertenezca realmente a otro dominio;
 - preparar el plan exija escribir o ejecutar una acción no autorizada;
-- la inspección comience a expandirse hacia objetivos independientes.
+- la inspección comience a expandirse hacia objetivos independientes;
+- se requiera crear o clonar una referencia local no autorizada.
 
 No te detengas por decisiones que puedan mantenerse explícitamente como supuesto, alternativa o decisión posterior sin comprometer la seguridad de la primera unidad.
+
+## Encabezado de retorno obligatorio
+
+```text
+Artifact: Implementation Plan
+Planning Task ID: [PLAN-ID]
+Cycle ID: [CYCLE-ID]
+Agent Session: PLAN — [RESULTADO]
+Cycle Owner: [CONVERSATION SPACE]
+Estado: LISTO PARA REVISIÓN | BLOQUEADO
+Cambios realizados: Ninguno
+Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
+```
 
 ## Declaración final obligatoria
 
