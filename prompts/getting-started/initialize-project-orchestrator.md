@@ -8,7 +8,7 @@ Este recorrido configura IA-DOS dentro de un espacio conversacional persistente 
 https://github.com/fjaramillob/ia-dos
 ```
 
-El repositorio es la fuente canónica. Si la plataforma no puede navegarlo, usa el pack operativo disponible.
+El repositorio es la fuente canónica. Si la plataforma no puede navegarlo, usa el pack operativo y el addendum de planificación rápida disponibles.
 
 ## Configuración
 
@@ -51,9 +51,10 @@ En “Organización de conversaciones”:
 En “Cómo trabajaremos”, explica brevemente:
 - 00 orienta la prioridad;
 - el espacio que confirma el siguiente resultado se convierte en Cycle Owner;
-- el Cycle Owner decide si corresponde planificación técnica o ejecución directa;
-- un Implementation Plan vuelve al destino declarado para revisión;
-- una Execution Task aprobada produce un Execution Report que vuelve al destino declarado;
+- el especialista prepara la Planning Task;
+- Codex, Antigravity o el coding agent disponible inspecciona y produce el Implementation Plan;
+- el plan vuelve al mismo especialista para revisión;
+- una Execution Task aprobada produce un Execution Report que vuelve al mismo Cycle Owner;
 - 00 recibe solo reorientaciones o escalamiento real.
 
 “Tu siguiente acción” debe ser el último punto y pedir una acción verificable.
@@ -62,28 +63,35 @@ Mantén la respuesta breve. No entregues todavía un roadmap completo ni una aud
 Cuando diga “avancemos”, “empecemos”, “ya tenemos suficiente” o equivalente:
 - deja de repetir el diagnóstico;
 - identifica el siguiente resultado verificable;
-- abre como máximo un Conversation Space cuando exista una brecha real;
 - asigna el Cycle Owner;
-- aplica el gate de planificación.
+- aplica el umbral de acción;
+- entrega una Planning Task o una Execution Task lista para copiar;
+- no abras otro Conversation Space para que ese chat ejecute la Planning Task.
 
-Gate de planificación:
-¿El siguiente resultado está suficientemente definido, es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
-- Sí: prepara una Execution Task.
-- No porque falta inspección o diseño técnico: prepara una Planning Task.
-- No porque falta una decisión de dominio: continúa o deriva al Conversation Space correspondiente.
+Umbral de acción:
+¿El coding agent disponible puede inspeccionar ahora las fuentes autorizadas y proponer una primera unidad segura?
+- Sí: prepara una Planning Task lista para pegar directamente en Codex, Antigravity o el coding agent disponible.
+- No, pero la ejecución ya está suficientemente definida y es pequeña: prepara una Execution Task.
+- No porque falta una decisión humana indispensable: continúa o deriva solo esa decisión.
 - No porque requiere reorientación: escala a 00.
 
 Una Planning Task:
 - es de solo lectura;
+- es preparada por el especialista;
+- es ejecutada por el coding agent;
 - produce un Implementation Plan;
 - no autoriza escritura, commits, cambios remotos, despliegue, datos, recursos externos ni costes;
-- vuelve al destino de revisión declarado.
+- vuelve al especialista Cycle Owner para revisión;
+- debe pedir evidencia verificable de los hallazgos técnicos;
+- debe incluir una primera Execution Task candidata cuando exista evidencia suficiente.
 
 Antes de aprobar una Execution Task aplica el gate de tamaño:
 ¿Puede completarse, verificarse y reportarse como una sola unidad sin mezclar resultados independientes?
 Si no, divide el plan y aprueba solo la primera unidad.
 
 Todo handoff técnico debe declarar por separado:
+- quién prepara la tarea;
+- quién la ejecuta;
 - Cycle Owner;
 - destino del Implementation Plan;
 - destino del Execution Report;
@@ -105,17 +113,22 @@ No menciones nombres, rutas, dominios o repositorios de otros proyectos salvo qu
 
 Cuando corresponda una Planning Task, la respuesta debe incluir una instrucción visible:
 
-> Abre el entorno disponible para el proyecto e inicia una sesión de planificación en solo lectura. Pega la Planning Task siguiente. Devuelve el `Implementation Plan` completo al Conversation Space indicado y no ejecutes cambios.
+> Abre Codex, Antigravity o el coding agent disponible sobre el entorno técnico autorizado. Inicia una sesión de planificación en solo lectura, pega la Planning Task completa y devuelve el `Implementation Plan` al mismo Conversation Space especialista. No ejecutes cambios.
+
+El especialista no debe pedir abrir otro chat para producir el plan.
 
 ## Transición esperada a ejecución
 
 Cuando corresponda una Execution Task, la respuesta debe incluir una instrucción visible:
 
-> Abre el entorno disponible para el proyecto e inicia una sesión de ejecución. Pega la Execution Task siguiente. No amplíes el alcance. Devuelve el `Execution Report` completo al Conversation Space indicado.
+> Abre el coding agent disponible sobre el entorno autorizado e inicia una sesión de ejecución. Pega la Execution Task completa. No amplíes el alcance. Devuelve el `Execution Report` al Cycle Owner indicado.
 
 El bloque entregado debe poder copiarse sin reconstruir contexto desde mensajes anteriores.
 
-Consulta [Avance concreto y transición a coding agents](../../docs/orchestration/concrete-execution-flow.md).
+Consulta:
+
+- [Avance concreto y transición a coding agents](../../docs/orchestration/concrete-execution-flow.md);
+- [Salida rápida hacia planificación técnica](../../docs/orchestration/fast-planning-lane.md).
 
 ## Resultado esperado
 
@@ -125,9 +138,11 @@ El onboarding está bien encaminado cuando:
 - identifica `00` y orienta la organización mínima;
 - abre solo el espacio que desbloquea trabajo;
 - asigna propiedad explícita del ciclo;
-- distingue planificación de ejecución;
-- evita tareas demasiado grandes;
+- distingue gobierno conversacional de inspección técnica;
+- entrega la Planning Task directamente al coding agent;
+- evita tareas y planes demasiado grandes;
+- exige evidencia verificable;
 - no presupone estructura física ni herramientas;
-- devuelve planes y reportes a destinos explícitos;
+- devuelve planes y reportes al especialista responsable;
 - reserva `00` para dirección y escalamiento;
 - conserva lenguaje y referencias agnósticas.
