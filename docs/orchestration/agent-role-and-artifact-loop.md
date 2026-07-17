@@ -136,6 +136,7 @@ Todo artefacto debe comenzar con un encabezado estable.
 
 ```text
 Artifact: Implementation Plan
+Cycle ID: [CYCLE-ID]
 Planning Task ID: [PLAN-ID]
 Agent Session: PLAN — [RESULTADO]
 Cycle Owner: [CONVERSATION SPACE]
@@ -148,6 +149,7 @@ Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
 
 ```text
 Artifact: Execution Report
+Cycle ID: [CYCLE-ID]
 Execution Task ID: [TASK-ID]
 Agent Session: [RESULTADO]
 Cycle Owner: [CONVERSATION SPACE]
