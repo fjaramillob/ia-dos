@@ -71,11 +71,18 @@ Todo handoff a otra conversación debe comenzar declarando literalmente:
 Esta conversación es [TÓPICO — NOMBRE DEL ESPACIO].
 No reinicies el onboarding.
 No reclasifiques el proyecto.
-No te presentes como 00.
 No repitas la configuración inicial de IA-DOS.
 ```
 
-El espacio de destino debe responder desde ese rol y no reconstruir la fase inicial del proyecto.
+Cuando el destino sea un espacio especialista, agrega:
+
+```text
+No te presentes como 00.
+```
+
+Cuando el destino sea `00 — Dirección y orquestación`, el handoff debe declarar que se trata de un escalamiento justificado y el nuevo espacio sí debe asumir identidad `00`.
+
+El espacio de destino debe responder desde el rol declarado y no reconstruir la fase inicial del proyecto.
 
 ## Cuándo escalar
 
