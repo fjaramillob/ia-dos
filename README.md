@@ -2,164 +2,154 @@
 
 **Intelligence-Assisted Development Operating System**
 
-IA-DOS es un framework operativo abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, memoria durable, planificación técnica, ejecución acotada y verificación basada en evidencia.
+IA-DOS es un framework operativo abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, planificación técnica, ejecución acotada, memoria durable y verificación basada en evidencia.
 
-Coordina a la persona responsable, el Project Orchestrator, Conversation Spaces, coding agents, fuentes, artefactos, entornos y mecanismos de trazabilidad.
-
-## Método de trabajo
+Su objetivo es mantener separados:
 
 ```text
-conversación 00
-→ orientación y prioridad
-→ tópico especializado solo si desbloquea una brecha
-→ asignación de Cycle Owner
-→ Planning Task o Execution Task
-→ Implementation Plan o Execution Report
-→ revisión en el destino declarado
-→ iteración o escalamiento
+dirección y decisión
+≠ inspección técnica
+≠ ejecución
+≠ verificación
 ```
 
-`00` no es una parada obligatoria entre definición, planificación y ejecución.
-
-IA-DOS no impone una topología concreta de carpetas, repositorios, servicios, herramientas o proveedores.
-
-## Tres registros operativos
-
-IA-DOS utiliza tres contratos complementarios:
-
-- [Registro de tópicos conversacionales](docs/orchestration/topic-routing-registry.md): decide dónde resolver una brecha.
-- [Propiedad y retorno del ciclo](docs/orchestration/cycle-ownership.md): decide quién gobierna el resultado y dónde vuelve cada artefacto.
-- [Registro de tipos de ejecución](docs/execution/execution-task-types.md): decide cómo materializar una unidad aprobada.
-
-Además, [Autoridad de fuentes, artefactos y entornos](docs/execution/source-and-artifact-authority.md) define qué demuestra cada recurso y qué acceso está permitido.
+## Flujo actual
 
 ```text
-tópico
-→ dónde se razona
-
-Cycle Owner
-→ quién gobierna el resultado
-
-Planning Task
-→ cómo diseñar la implementación sin escribir
-
-Execution Task
-→ cómo materializar una unidad aprobada
+Conversation Space orienta y gobierna
+→ tarea tipada y compacta
+→ coding agent planifica o ejecuta
+→ artefacto verificable
+→ Cycle Owner revisa y decide
 ```
 
-## Empieza en cinco pasos
+`00` orienta prioridad y recibe solo reorientaciones o escalamiento real. El especialista que confirma el siguiente resultado se convierte en Cycle Owner.
 
-### 1. Crea el espacio conversacional del proyecto
+## Tipos de artefacto
 
-Utiliza un Project, Gem, chat persistente o entorno equivalente.
+Cada bloque transferible declara su tipo, receptor y salida esperada:
 
-### 2. Inicializa el Project Orchestrator
+- `Specialist Handoff` → Conversation Space;
+- `Planning Task` → Coding Agent — Planning;
+- `Implementation Plan` → Cycle Owner;
+- `Execution Task` → Coding Agent — Execution;
+- `Execution Report` → Cycle Owner.
 
-Sigue [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md).
+Esto evita que una conversación especialista ejecute por error una tarea destinada al coding agent.
 
-El primer chat queda identificado como:
+Consulta [Tipado de artefactos y validación del receptor](docs/orchestration/typed-artifact-routing.md).
 
-- `00 — Dirección y definición` para un producto nuevo;
-- `00 — Descubrimiento y adopción` para un producto existente.
+## Planificación técnica
 
-### 3. Entrega las fuentes disponibles
-
-Comparte una descripción breve, documentos, repositorios, servicios, una memoria existente o el [Project Intake Brief](templates/project-intake-brief.template.md).
-
-Cuando la plataforma no pueda navegar este repositorio, carga el [IA-DOS Project Orchestrator Pack](bundles/ia-dos-project-orchestrator-pack.md).
-
-### 4. Orienta y asigna propiedad
-
-El Orchestrator debe:
-
-- capturar propósito, usuario, problema y prioridad;
-- identificar la decisión dominante;
-- abrir solo el Conversation Space necesario;
-- asignar un Cycle Owner;
-- decidir entre planificación técnica y ejecución directa;
-- devolver cada artefacto al destino declarado;
-- escalar a `00` solo para reorientar.
-
-### 5. Prepara el entorno solo cuando haga falta
-
-Antes de planificar o ejecutar, identifica el entorno real, los recursos disponibles, el trabajo que debe preservarse y los permisos efectivos.
-
-No prepares infraestructura ni impongas una estructura física por anticipación.
-
-## Planning Task
-
-Usa una Planning Task cuando el siguiente resultado requiera inspección o diseño técnico antes de autorizar escritura.
+Cuando falta inspección o diseño:
 
 ```text
 Planning Task
+→ sesión PLAN — [RESULTADO]
 → coding agent en solo lectura
 → Implementation Plan
 → revisión del Cycle Owner
-→ aprobación de una unidad
 ```
 
-Plan producido no equivale a plan aprobado ni a ejecución autorizada.
+La salida operativa por defecto usa la [Planning Task compacta](templates/planning-task-compact.template.md). La [Planning Task completa](templates/planning-task.template.md) funciona como referencia de diseño y validación.
 
-## Gate de tamaño
+El plan debe cerrar una sola decisión técnica dominante y proponer una primera unidad segura. No debe convertirse por defecto en auditoría completa, arquitectura final o roadmap integral.
+
+## Ejecución
+
+Cuando el trabajo ya está definido y aprobado:
+
+```text
+Execution Task
+→ sesión [RESULTADO]
+→ coding agent ejecuta
+→ Execution Report
+→ revisión del Cycle Owner
+```
+
+La sesión de ejecución es independiente de la sesión de planificación. El coding agent no aprueba su propio resultado ni inicia automáticamente otra unidad.
+
+## Roles y trazabilidad
+
+Cada tarea dirigida a un coding agent declara:
+
+- rol activo;
+- Cycle ID;
+- Task ID;
+- Agent Session;
+- Cycle Owner;
+- artefacto de entrada;
+- artefacto de salida;
+- destino;
+- autoridad.
+
+Consulta [Roles, sesiones y ciclo de artefactos](docs/orchestration/agent-role-and-artifact-loop.md).
+
+## Gate de tamaño y complejidad
 
 Antes de aprobar una Execution Task:
 
 ```text
-¿Puede completarse, verificarse y reportarse
-como una sola unidad sin mezclar resultados independientes?
+¿Puede una sola sesión implementarla, verificarla y reportarla
+sin mezclar resultados independientes ni tomar decisiones mayores no resueltas?
 ```
 
-Si no, divide el plan y aprueba solo la primera unidad.
+Si no, se divide el plan y se aprueba solo la primera unidad.
 
-## Tópicos conversacionales bajo demanda
+## Aprobación comprensible
 
-- `00 — Dirección y orquestación`;
-- `10 — Producto y UX`;
-- `20 — Arquitectura y stack`;
-- `30 — Ejecución y desarrollo`;
-- `40 — Calidad, seguridad y cumplimiento`;
-- `50 — Operación y entrega`;
-- `90 — Wiki y memoria`.
+Antes de pedir una aprobación, el especialista debe resumir en lenguaje simple:
 
-No constituyen etapas obligatorias.
+- qué cambiará;
+- qué comportamiento quedará disponible;
+- qué permisos se conceden;
+- qué acciones externas pueden ocurrir;
+- qué no está autorizado;
+- cómo se verificará.
 
-## Tipos de ejecución
+Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 
-Toda `Execution Task` declara un tipo principal:
+## Empieza
 
-`INSPECT`, `BOOTSTRAP`, `BUILD`, `FIX`, `REFACTOR`, `MIGRATE`, `TEST`, `HARDEN`, `DOCUMENT`, `WIKI`, `RELEASE` u `OPERATE`.
+1. Crea un Project, Gem, chat persistente o entorno equivalente.
+2. Sigue [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md).
+3. Entrega una descripción breve y las fuentes disponibles.
+4. Abre `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente.
+5. Avanza mediante tareas tipadas que regresan al Cycle Owner.
 
-La planificación se realiza mediante `Planning Task`; no es un tipo de materialización.
+Cuando la plataforma no pueda navegar el repositorio, carga el [pack operativo](bundles/ia-dos-project-orchestrator-pack.md) y sus complementos obligatorios.
 
-## Coding agents
+## Contratos principales
 
-Los coding agents pueden:
-
-- inspeccionar en solo lectura y producir un Implementation Plan;
-- materializar una Execution Task autorizada;
-- ejecutar verificaciones;
-- devolver el artefacto requerido al destino declarado.
-
-No deben ampliar alcance ni tomar decisiones no autorizadas.
-
-## Memoria durable
-
-La memoria del proyecto conserva decisiones y estado confirmado. Las conversaciones y sesiones de coding agents no son memoria durable.
-
-Las propuestas no deben registrarse como implementación.
-
-## Accesos rápidos
-
-- [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md)
-- [Consultar la documentación](docs/index.md)
+- [Project Orchestrator](ORCHESTRATOR.md)
+- [Documentación](docs/index.md)
 - [Registro de tópicos](docs/orchestration/topic-routing-registry.md)
 - [Propiedad del ciclo](docs/orchestration/cycle-ownership.md)
-- [Avance concreto](docs/orchestration/concrete-execution-flow.md)
+- [Salida rápida](docs/orchestration/fast-planning-lane.md)
+- [Tipado de artefactos](docs/orchestration/typed-artifact-routing.md)
+- [Roles y sesiones](docs/orchestration/agent-role-and-artifact-loop.md)
 - [Autoridad de fuentes y artefactos](docs/execution/source-and-artifact-authority.md)
-- [Planning Task](templates/planning-task.template.md)
+
+## Plantillas principales
+
+- [Project Intake Brief](templates/project-intake-brief.template.md)
+- [Specialist Handoff](templates/conversation-space-handoff.template.md)
+- [Planning Task compacta](templates/planning-task-compact.template.md)
+- [Planning Task completa](templates/planning-task.template.md)
+- [Project Start Planning Brief](templates/project-start-planning-brief.template.md)
 - [Implementation Plan](templates/implementation-plan.template.md)
 - [Execution Task](templates/execution-task.template.md)
 - [Execution Report](templates/execution-report.template.md)
+
+## Acceso al método
+
+Las tareas pueden usar:
+
+- `Embedded Contract`;
+- `Remote Repository`;
+- `Local Reference`.
+
+Una referencia local compartida puede existir fuera del producto. IA-DOS no debe clonarse silenciosamente ni dentro del repositorio de la aplicación.
 
 ## Estado
 
