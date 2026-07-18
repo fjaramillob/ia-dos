@@ -117,7 +117,7 @@ Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 4. Abre `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente.
 5. Avanza mediante tareas tipadas que regresan al Cycle Owner.
 
-Cuando la plataforma no pueda navegar el repositorio, carga el [pack operativo](bundles/ia-dos-project-orchestrator-pack.md) y sus complementos obligatorios.
+Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline consolidado actual](bundles/ia-dos-current-offline-pack.md). El pack histórico y sus addenda permanecen como referencia modular.
 
 ## Contratos principales
 
