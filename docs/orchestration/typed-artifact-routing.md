@@ -4,7 +4,7 @@ Este contrato evita que un bloque destinado a un Conversation Space sea interpre
 
 ## Regla principal
 
-Todo bloque transferible debe comenzar con un encabezado de transporte:
+Todo bloque transferible nuevo debe comenzar con un encabezado de transporte:
 
 ```text
 Artifact Type: [TIPO]
@@ -16,6 +16,24 @@ Task ID: [TASK-ID O NO APLICA]
 ```
 
 El receptor debe validar el encabezado antes de actuar.
+
+## Compatibilidad de transición
+
+Los artefactos anteriores que comienzan con:
+
+```text
+Artifact: Implementation Plan
+```
+
+o:
+
+```text
+Artifact: Execution Report
+```
+
+siguen siendo válidos como alias heredado de `Artifact Type` cuando el cuerpo contiene Cycle ID, Task ID, Agent Session, Cycle Owner, estado y decisión requerida.
+
+Las salidas nuevas deben usar `Artifact Type:` y añadir `Destination Role`, `Expected Output` y `Forbidden Output`. La compatibilidad heredada evita invalidar templates existentes mientras se completa su migración.
 
 ## Tipos permitidos
 
