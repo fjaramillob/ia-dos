@@ -5,13 +5,16 @@ Complemento obligatorio del pack operativo para plataformas sin acceso al reposi
 Usa este archivo junto con:
 
 - `ia-dos-project-orchestrator-pack.md`;
-- `ia-dos-fast-planning-addon.md`.
+- `ia-dos-fast-planning-addon.md`;
+- `ia-dos-typed-compact-addon.md`.
+
+El complemento tipado y compacto prevalece para gate de salida, encabezados de transporte y formato operativo de Planning Task.
 
 ## Flujo
 
 ```text
 Conversation Space especialista
-→ tarea autosuficiente
+→ tarea autosuficiente y tipada
 → sesión acotada del coding agent
 → Implementation Plan o Execution Report
 → revisión del Cycle Owner
@@ -72,8 +75,13 @@ Execution Report: ER-[RESULTADO]-[N]
 
 ## Encabezado del Implementation Plan
 
+Las salidas nuevas usan:
+
 ```text
-Artifact: Implementation Plan
+Artifact Type: Implementation Plan
+Destination Role: Cycle Owner — Conversation Space
+Expected Output: Aprobar | Corregir | Rechazar | Escalar
+Forbidden Output: ejecución automática
 Cycle ID: [CYCLE-ID]
 Planning Task ID: [PLAN-ID]
 Agent Session: PLAN — [RESULTADO]
@@ -83,10 +91,17 @@ Cambios realizados: Ninguno
 Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
 ```
 
+`Artifact: Implementation Plan` se acepta como alias heredado durante la transición cuando conserva los campos trazables.
+
 ## Encabezado del Execution Report
 
+Las salidas nuevas usan:
+
 ```text
-Artifact: Execution Report
+Artifact Type: Execution Report
+Destination Role: Cycle Owner — Conversation Space
+Expected Output: Cerrar | Corregir | Revertir | Escalar
+Forbidden Output: iniciar automáticamente el siguiente ciclo
 Cycle ID: [CYCLE-ID]
 Execution Task ID: [TASK-ID]
 Agent Session: [RESULTADO]
@@ -94,6 +109,8 @@ Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Decisión requerida: Aprobar | Corregir | Revertir | Escalar
 ```
+
+`Artifact: Execution Report` se acepta como alias heredado durante la transición cuando conserva los campos trazables.
 
 ## Acceso a IA-DOS
 
