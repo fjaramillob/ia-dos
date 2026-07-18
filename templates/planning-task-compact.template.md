@@ -41,4 +41,34 @@ INSPECCIÓN MÍNIMA
 
 ENTREGABLE
 Devuelve un Implementation Plan proporcional con estado comprobado, evidencia, decisión recomendada, estrategia mínima, dependencias inmediatas, riesgos y una sola Execution Task candidata, o una única razón bloqueante.
+
+FUERA DE ALCANCE
+- implementar o modificar artefactos;
+- diseñar la arquitectura o roadmap completos;
+- desarrollar unidades futuras independientes;
+- copiar automáticamente una implementación heredada;
+- ampliar fuentes o accesos sin autorización;
+- aprobar o ejecutar la Execution Task candidata.
+
+CONDICIONES DE DETENCIÓN
+Detente solo cuando falte una fuente indispensable, el acceso sea insuficiente, exista riesgo de secretos o datos, se requiera escritura, o una decisión humana indispensable impida definir una primera unidad segura.
+
+CONTRATO DE RETORNO
+Artifact Type: Implementation Plan
+Destination Role: Cycle Owner — Conversation Space
+Cycle ID: [CYCLE-ID]
+Planning Task ID: [PLAN-ID]
+Agent Session: PLAN — [RESULTADO]
+Cycle Owner: [CONVERSATION SPACE]
+Estado: LISTO PARA REVISIÓN | BLOQUEADO
+Cambios realizados: Ninguno
+Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
+
+No implementes cambios. No actúes como Project Orchestrator. No cambies el Cycle Owner. No inicies otro ciclo.
 ```
+
+## Regla de compresión
+
+El bloque operativo debe referenciar documentos extensos en vez de copiarlos, evitar reglas duplicadas, incluir solo fuentes necesarias y limitarse a la primera decisión y primera unidad.
+
+Amplía el bloque únicamente cuando una restricción específica del proyecto lo exija.
