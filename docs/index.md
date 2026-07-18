@@ -13,15 +13,18 @@ La primera adopción sigue este orden:
 5. Abre solo el Conversation Space que desbloquee el siguiente resultado.
 6. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
 7. Decide entre `Planning Task` y `Execution Task`.
-8. Confirma la autoridad de fuentes, artefactos y entornos.
-9. Devuelve el `Implementation Plan` o `Execution Report` al destino declarado.
-10. Escala a `00` solo cuando exista reorientación real.
+8. Tipifica el bloque y valida el rol receptor.
+9. Confirma la autoridad de fuentes, artefactos y entornos.
+10. Devuelve el `Implementation Plan` o `Execution Report` al destino declarado.
+11. Escala a `00` solo cuando exista reorientación real.
 
 ## Contratos operativos
 
 - [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md): gobierna dónde se resuelve cada decisión.
 - [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md): gobierna quién mantiene objetivo, límites y revisión.
 - [Avance concreto y transición](orchestration/concrete-execution-flow.md): decide cuándo planificar y cuándo ejecutar.
+- [Tipado de artefactos y validación del receptor](orchestration/typed-artifact-routing.md): evita entregar un artefacto al rol equivocado.
+- [Roles, sesiones y ciclo de artefactos](orchestration/agent-role-and-artifact-loop.md): conserva identidad, permisos y retorno.
 - [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa una unidad aprobada.
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md): gobierna qué demuestra cada recurso y qué acceso está permitido.
 
@@ -50,15 +53,21 @@ Estas guías son opciones de implementación, no requisitos normativos del méto
 - [Pack operativo](../bundles/ia-dos-project-orchestrator-pack.md)
 - [Registro de tópicos](orchestration/topic-routing-registry.md)
 - [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md)
+- [Tipado de artefactos](orchestration/typed-artifact-routing.md)
+- [Roles y sesiones](orchestration/agent-role-and-artifact-loop.md)
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
 
 ## Planificación
 
-- [Planning Task](../templates/planning-task.template.md)
+- [Planning Task compacta](../templates/planning-task-compact.template.md)
+- [Planning Task completa](../templates/planning-task.template.md)
+- [Project Start Planning Brief](../templates/project-start-planning-brief.template.md)
 - [Implementation Plan](../templates/implementation-plan.template.md)
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md)
+
+La plantilla compacta es la salida operativa por defecto para pegar en el coding agent. La plantilla completa funciona como referencia de diseño, validación y casos excepcionales.
 
 ## Ejecución
 
@@ -93,7 +102,8 @@ Estas guías son opciones de implementación, no requisitos normativos del méto
 - [Project Intake Brief](../templates/project-intake-brief.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [Instrucciones persistentes](../templates/project-instructions.template.md)
-- [Planning Task](../templates/planning-task.template.md)
+- [Planning Task compacta](../templates/planning-task-compact.template.md)
+- [Planning Task completa](../templates/planning-task.template.md)
 - [Implementation Plan](../templates/implementation-plan.template.md)
 - [Execution Task](../templates/execution-task.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
