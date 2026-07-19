@@ -4,7 +4,7 @@ Este contrato evita que un bloque destinado a un Conversation Space sea interpre
 
 ## Regla principal
 
-Todo bloque transferible nuevo debe comenzar con un encabezado de transporte:
+Todo bloque transferible nuevo debe comenzar con:
 
 ```text
 Artifact Type: [TIPO]
@@ -15,25 +15,11 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [TASK-ID O NO APLICA]
 ```
 
-El receptor debe validar el encabezado antes de actuar.
+El receptor valida el encabezado antes de actuar.
 
 ## Compatibilidad de transición
 
-Los artefactos anteriores que comienzan con:
-
-```text
-Artifact: Implementation Plan
-```
-
-o:
-
-```text
-Artifact: Execution Report
-```
-
-siguen siendo válidos como alias heredado de `Artifact Type` cuando el cuerpo contiene Cycle ID, Task ID, Agent Session, Cycle Owner, estado y decisión requerida.
-
-Las salidas nuevas deben usar `Artifact Type:` y añadir `Destination Role`, `Expected Output` y `Forbidden Output`. La compatibilidad heredada evita invalidar templates existentes mientras se completa su migración.
+`Artifact: Implementation Plan` y `Artifact: Execution Report` siguen siendo alias heredados cuando el cuerpo conserva IDs, sesión, Cycle Owner, estado y decisión requerida. Las salidas nuevas usan `Artifact Type:`.
 
 ## Tipos permitidos
 
@@ -46,16 +32,25 @@ Expected Output: decisión de dominio | Planning Task | Execution Task
 Forbidden Output: Implementation Plan | Execution Report | cambios técnicos
 ```
 
-Un Specialist Handoff transfiere gobierno o una decisión. No autoriza al Conversation Space a actuar como coding agent.
-
 ### Planning Task
 
 ```text
 Artifact Type: Planning Task
 Destination Role: Coding Agent — Planning
 Expected Output: Implementation Plan
-Forbidden Output: cambios, commits, despliegues, Execution Report
+Forbidden Output: cambios | commits | despliegues | Execution Report
 ```
+
+### Environment Preflight
+
+```text
+Artifact Type: Environment Preflight
+Destination Role: Coding Agent — Planning
+Expected Output: Environment Readiness Report
+Forbidden Output: cambios | instalaciones | inicio de servicios | ejecución
+```
+
+El preflight conserva el ciclo vigente y solo comprueba precondiciones.
 
 ### Implementation Plan
 
@@ -75,6 +70,17 @@ Expected Output: Execution Report
 Forbidden Output: ampliar alcance | aprobar el propio resultado | iniciar otra unidad
 ```
 
+### Execution Resume
+
+```text
+Artifact Type: Execution Resume
+Destination Role: Coding Agent — Execution
+Expected Output: Execution Report
+Forbidden Output: nueva Planning Task | replantear arquitectura | ampliar alcance
+```
+
+Conserva Cycle ID y Task ID. Reanuda una tarea aprobada después de resolver una condición bloqueante.
+
 ### Execution Report
 
 ```text
@@ -91,28 +97,18 @@ Antes de responder, valida:
 1. ¿Mi rol coincide con `Destination Role`?
 2. ¿El artefacto solicitado coincide con `Expected Output`?
 3. ¿La acción requerida está autorizada?
-4. ¿Existe una contradicción entre el encabezado y el cuerpo?
+4. ¿Existe una contradicción entre encabezado y cuerpo?
 
-Cuando el rol no coincida:
+Cuando el rol no coincida, no ejecutes: indica el rol esperado y devuelve el bloque sin transformarlo silenciosamente. Ante contradicción prevalece la opción más restrictiva.
 
-- no ejecutes el artefacto;
-- indica el rol esperado;
-- devuelve el bloque al usuario sin transformarlo silenciosamente.
+## Reglas por receptor
 
-Cuando el encabezado y el cuerpo discrepen, prevalece la opción más restrictiva y se solicita corrección al emisor.
+Un Conversation Space puede recibir Specialist Handoff, Environment Readiness Report, Implementation Plan o Execution Report.
 
-## Regla para Conversation Spaces
+Un coding agent puede recibir Planning Task, Environment Preflight, Execution Task o Execution Resume.
 
-Un Conversation Space puede recibir un Specialist Handoff, Implementation Plan o Execution Report.
-
-No debe recibir una Planning Task o Execution Task como si fuera el coding agent, salvo que se cumpla la excepción explícita de doble rol definida por IA-DOS.
-
-## Regla para coding agents
-
-Un coding agent puede recibir una Planning Task o Execution Task.
-
-No debe asumir identidad de Conversation Space, Cycle Owner o Project Orchestrator, ni decidir el siguiente ciclo.
+Ningún coding agent asume identidad de Conversation Space, Cycle Owner o Project Orchestrator ni decide el siguiente ciclo.
 
 ## Cierre
 
-El encabezado de transporte funciona como un tipo fuerte: declara quién puede actuar, qué puede producir y qué está prohibido. Ningún receptor debe inferir o cambiar silenciosamente el tipo del artefacto.
+El encabezado funciona como un tipo fuerte: declara quién puede actuar, qué puede producir y qué está prohibido.
