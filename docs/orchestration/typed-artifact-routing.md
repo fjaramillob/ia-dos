@@ -52,6 +52,17 @@ Forbidden Output: cambios | instalaciones | inicio de servicios | ejecución
 
 El preflight conserva el ciclo vigente y solo comprueba precondiciones.
 
+### Environment Readiness Report
+
+```text
+Artifact Type: Environment Readiness Report
+Destination Role: Cycle Owner — Conversation Space
+Expected Output: Autorizar ejecución | Resolver dependencia | Corregir preflight | Escalar
+Forbidden Output: iniciar ejecución automáticamente | modificar el entorno
+```
+
+El reporte declara `LISTO PARA EJECUCIÓN`, `NO LISTO` o `DESCONOCIDO` y no autoriza escritura por sí mismo.
+
 ### Implementation Plan
 
 ```text
