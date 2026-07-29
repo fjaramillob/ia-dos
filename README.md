@@ -31,13 +31,35 @@ Cada bloque transferible declara su tipo, receptor y salida esperada:
 
 - `Specialist Handoff` → Conversation Space;
 - `Planning Task` → Coding Agent — Planning;
+- `Environment Preflight` → Coding Agent — Planning;
+- `Environment Readiness Report` → Cycle Owner;
 - `Implementation Plan` → Cycle Owner;
 - `Execution Task` → Coding Agent — Execution;
+- `Execution Resume` → Coding Agent — Execution;
 - `Execution Report` → Cycle Owner.
 
 Esto evita que una conversación especialista ejecute por error una tarea destinada al coding agent.
 
 Consulta [Tipado de artefactos y validación del receptor](docs/orchestration/typed-artifact-routing.md).
+
+## Compresión de contexto por autoridad
+
+IA-DOS evita reenviar la historia completa del proyecto en cada iteración.
+
+```text
+fuentes de autoridad
++ artefacto previo válido
++ delta del ciclo
++ contrato operativo explícito
+```
+
+- la memoria durable conserva contexto y decisiones estables;
+- la implementación demuestra el estado técnico real;
+- cada tarea transporta solo el cambio activo;
+- permisos, límites, criterios y condiciones de detención permanecen explícitos;
+- cuando una fuente no es accesible, se incluye solo el extracto indispensable.
+
+Consulta [Compresión de contexto por autoridad](docs/orchestration/context-compression-by-authority.md).
 
 ## Planificación técnica
 
@@ -66,6 +88,8 @@ Execution Task
 → Execution Report
 → revisión del Cycle Owner
 ```
+
+La salida operativa por defecto puede usar la [Execution Task compacta](templates/execution-task-compact.template.md). La [Execution Task completa](templates/execution-task.template.md) conserva la referencia exhaustiva para validación y casos excepcionales.
 
 La sesión de ejecución es independiente de la sesión de planificación. El coding agent no aprueba su propio resultado ni inicia automáticamente otra unidad.
 
@@ -128,6 +152,7 @@ Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline con
 - [Salida rápida](docs/orchestration/fast-planning-lane.md)
 - [Tipado de artefactos](docs/orchestration/typed-artifact-routing.md)
 - [Roles y sesiones](docs/orchestration/agent-role-and-artifact-loop.md)
+- [Compresión de contexto](docs/orchestration/context-compression-by-authority.md)
 - [Autoridad de fuentes y artefactos](docs/execution/source-and-artifact-authority.md)
 
 ## Plantillas principales
@@ -138,7 +163,8 @@ Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline con
 - [Planning Task completa](templates/planning-task.template.md)
 - [Project Start Planning Brief](templates/project-start-planning-brief.template.md)
 - [Implementation Plan](templates/implementation-plan.template.md)
-- [Execution Task](templates/execution-task.template.md)
+- [Execution Task compacta](templates/execution-task-compact.template.md)
+- [Execution Task completa](templates/execution-task.template.md)
 - [Execution Report](templates/execution-report.template.md)
 
 ## Acceso al método
