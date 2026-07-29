@@ -1,0 +1,94 @@
+# Execution Task compacta
+
+Usa este bloque como salida operativa por defecto cuando el trabajo ya está definido, el entorno está listo y el Cycle Owner ha autorizado la ejecución.
+
+```text
+Artifact Type: Execution Task
+Destination Role: Coding Agent — Execution
+Expected Output: Execution Report
+Forbidden Output: trabajo fuera de alcance, autoaprobación o siguiente unidad
+
+Método: IA-DOS
+Cycle ID: [CYCLE-ID]
+Task ID: [EXEC-ID]
+Agent Session: [RESULTADO]
+Cycle Owner: [CONVERSATION SPACE]
+Destino: [CONVERSATION SPACE]
+Tipo: [INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE | TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE]
+
+OBJETIVO ÚNICO
+[RESULTADO CONCRETO, TERMINABLE Y VERIFICABLE]
+
+FUENTES DE AUTORIDAD
+| Recurso o documento | Rol | Autoridad para | Acceso | Vigencia o referencia |
+|---|---|---|---|---|
+| [RECURSO] | [MEMORIA DURABLE / IMPLEMENTACIÓN / EVIDENCIA / REFERENCIA] | [ÁMBITO] | [LECTURA / ESCRITURA / ACCIÓN] | [RUTA, VERSIÓN, COMMIT O FECHA] |
+
+ARTEFACTO PREVIO VÁLIDO
+- [IMPLEMENTATION PLAN APROBADO, READINESS REPORT, EXECUTION REPORT O NO APLICA]
+
+DELTA DEL CICLO
+- [DECISIÓN O CAMBIO QUE HABILITA ESTA EJECUCIÓN]
+- [EVIDENCIA ACTUAL]
+- [BLOQUEO RESUELTO]
+- [TRABAJO QUE DEBE PRESERVARSE]
+
+No vuelvas a narrar el proyecto. Lee las fuentes declaradas y usa este delta como contexto activo.
+
+ALCANCE AUTORIZADO
+Incluido:
+- [CAMBIO AUTORIZADO]
+
+Fuera de alcance:
+- [CAMBIO NO AUTORIZADO]
+
+ZONAS
+- modificables: [RECURSOS O RUTAS]
+- prohibidas: [RECURSOS O RUTAS]
+- rama o modo: [RAMA / MODIFICACIÓN LOCAL / OTRO]
+
+CAPACIDADES Y AUTORIZACIONES
+- lectura: [AUTORIZADA / NO AUTORIZADA]
+- escritura: [AUTORIZADA / NO AUTORIZADA]
+- branch: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
+- commit: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
+- push: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
+- pull request: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
+- merge: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
+- despliegue o producción: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
+- datos, servicios externos o costes: [AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]
+
+CRITERIOS DE ACEPTACIÓN
+- [ ] [RESULTADO OBSERVABLE]
+
+VERIFICACIONES
+- [COMANDO, REVISIÓN O PROCEDIMIENTO]
+- evidencia esperada: [SALIDA O PRUEBA]
+
+INSTRUCCIONES LOCALES
+- [AGENTS.md, ARCHIVO EQUIVALENTE O NO EXISTEN]
+
+CONDICIONES DE DETENCIÓN
+Detente cuando falte información crítica, una fuente contradiga el estado real, una referencia no sea accesible o vigente, aparezca trabajo previo que pueda perderse, sea necesario tocar una zona o usar una capacidad no autorizizada, falle una verificación crítica, exista riesgo de seguridad, datos o coste, o la tarea revele resultados independientes.
+
+FALLBACK DE CONTEXTO
+Cuando una fuente durable no sea accesible, usa solo el extracto indispensable contenido en la tarea, conserva la referencia original y reporta la limitación. No compenses el acceso faltante ampliando el alcance.
+
+CONTRATO DE RETORNO
+Artifact Type: Execution Report
+Destination Role: Cycle Owner — Conversation Space
+Execution Task ID: [EXEC-ID]
+Cycle ID: [CYCLE-ID]
+Agent Session: [RESULTADO]
+Cycle Owner: [CONVERSATION SPACE]
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Decisión requerida: Aprobar | Corregir | Revertir | Escalar
+
+Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, pruebas y evidencia, límites respetados, desviaciones y una sola siguiente acción. No apruebes tu propio trabajo ni inicies otra unidad.
+```
+
+## Regla de compresión
+
+Aplica `docs/orchestration/context-compression-by-authority.md`.
+
+La memoria durable contiene el contexto estable. La tarea transporta referencias precisas, el delta vigente y el contrato operativo completo. Permisos, límites y condiciones de detención nunca se omiten por compresión.
