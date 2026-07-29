@@ -20,6 +20,8 @@ Define cómo organizar, planificar, ejecutar, verificar y reportar. IA-DOS norma
 
 Conserva decisiones aceptadas, contexto, arquitectura vigente y estado conocido. No demuestra por sí sola que algo esté implementado.
 
+Cuando sea accesible y vigente, referencia sus documentos concretos en vez de copiar nuevamente el contexto estable. Declara siempre el ámbito que gobierna cada referencia.
+
 ### Implementación
 
 Demuestra el estado real del producto mediante código, configuración, migraciones, pruebas, datos o artefactos desplegados.
@@ -32,6 +34,26 @@ Conserva tareas, diffs, reportes, pruebas, decisiones, revisiones y estados veri
 
 Aporta antecedentes, patrones o aprendizaje. No gobierna automáticamente el resultado actual y permanece en solo lectura salvo autorización explícita.
 
+## Compresión de contexto
+
+Aplica `docs/orchestration/context-compression-by-authority.md`.
+
+Cada artefacto operativo debe distinguir:
+
+```text
+fuentes de autoridad
++ artefacto previo válido
++ delta del ciclo
++ contrato operativo explícito
+```
+
+- el contexto estable se referencia cuando la fuente es accesible y vigente;
+- el cambio actual viaja como delta;
+- permisos, límites, criterios y condiciones de detención permanecen explícitos;
+- cuando una fuente no es accesible, incluye solo el extracto indispensable y conserva su referencia original.
+
+Una referencia genérica como `ver Wiki` no es suficiente. Usa documento, ruta, versión, commit o identificador estable y declara qué ámbito gobierna.
+
 ## Contradicciones
 
 Cuando dos fuentes discrepan:
@@ -41,6 +63,8 @@ Cuando dos fuentes discrepan:
 3. no resuelvas la contradicción copiando ambas versiones;
 4. registra la decisión en la fuente durable correspondiente;
 5. escala al Cycle Owner o a `00` cuando exceda la autoridad del espacio actual.
+
+No compactes contexto contradictorio. Resuelve primero la autoridad y la vigencia.
 
 ## Readiness del entorno
 
@@ -65,4 +89,4 @@ No impongas:
 
 ## Regla principal
 
-La estructura del proyecto pertenece al proyecto. IA-DOS gobierna el contrato de autoridad, acceso, evidencia y retorno, no la topología física obligatoria.
+La estructura del proyecto pertenece al proyecto. IA-DOS gobierna el contrato de autoridad, acceso, evidencia, compresión y retorno, no la topología física obligatoria.
