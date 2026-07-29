@@ -69,7 +69,7 @@ INSTRUCCIONES LOCALES
 - [AGENTS.md, ARCHIVO EQUIVALENTE O NO EXISTEN]
 
 CONDICIONES DE DETENCIÓN
-Detente cuando falte información crítica, una fuente contradiga el estado real, una referencia no sea accesible o vigente, aparezca trabajo previo que pueda perderse, sea necesario tocar una zona o usar una capacidad no autorizizada, falle una verificación crítica, exista riesgo de seguridad, datos o coste, o la tarea revele resultados independientes.
+Detente cuando falte información crítica, una fuente contradiga el estado real, una referencia no sea accesible o vigente, aparezca trabajo previo que pueda perderse, sea necesario tocar una zona o usar una capacidad no autorizada, falle una verificación crítica, exista riesgo de seguridad, datos o coste, o la tarea revele resultados independientes.
 
 FALLBACK DE CONTEXTO
 Cuando una fuente durable no sea accesible, usa solo el extracto indispensable contenido en la tarea, conserva la referencia original y reporta la limitación. No compenses el acceso faltante ampliando el alcance.
