@@ -1,24 +1,24 @@
 # Crear un proyecto nuevo dentro del workspace
 
-Esta guía formaliza un proyecto nuevo dentro del workspace local sin elegir stack, generar una aplicación completa ni inventar arquitectura.
+Esta guía materializa un proyecto nuevo dentro de un workspace local sin elegir stack, generar una aplicación completa ni inventar arquitectura.
 
-El resultado de este paso es una estructura segura y reconocible para continuar después con la LLM Wiki y el desarrollo.
+La estructura física depende de los recursos que el proyecto realmente necesite. IA-DOS no exige separar app, Wiki o Exchange en repositorios distintos.
 
 ## Antes de comenzar
 
 Debes contar con:
 
-- un workspace local preparado;
-- IA-DOS instalado como `00-ia-dos/` o disponible por referencia;
+- un workspace local elegido;
+- IA-DOS disponible por referencia remota o local;
 - un nombre provisional o definitivo para el proyecto;
-- una definición inicial obtenida en `00 — Dirección y definición`;
-- autorización para crear carpetas y, cuando corresponda, repositorios Git.
+- dirección inicial suficiente desde `00 — Dirección y orquestación` en modo `definición inicial`;
+- autorización para crear las carpetas y repositorios que realmente correspondan.
 
 No es necesario haber decidido framework, base de datos, proveedor cloud ni arquitectura final.
 
 ## Nombre técnico del proyecto
 
-Define un `project-slug` estable para carpetas y repositorios.
+Define un `project-slug` estable para carpetas y repositorios cuando la estructura local lo necesite.
 
 Formato recomendado:
 
@@ -35,17 +35,11 @@ Reglas:
 - sin caracteres especiales;
 - evitar nombres genéricos como `app`, `nuevo` o `proyecto`.
 
-Ejemplos genéricos válidos:
+El nombre visible puede ser distinto del `project-slug`.
 
-```text
-portal-clientes
-sistema-inventario
-agenda-equipos
-```
+## Topologías válidas
 
-El nombre comercial visible puede ser distinto del `project-slug`.
-
-## Estructura objetivo
+Una organización útil cuando se desea separar implementación y memoria es:
 
 ```text
 proyectos/
@@ -55,78 +49,95 @@ proyectos/
     └── nombre-proyecto-wiki/
 ```
 
-La carpeta exterior `nombre-proyecto/` agrupa los componentes. Normalmente no debe convertirse en repositorio Git.
+Exchange puede agregarse después como recurso hermano cuando el proyecto lo adopte.
 
-## Qué se crea en este paso
+También son válidos:
 
-### Repositorio de aplicación
+```text
+nombre-proyecto/
+└── repositorio-monorepo/
+    ├── app/
+    └── docs/
+```
 
 ```text
 nombre-proyecto-app/
-└── README.md
 ```
 
-El `README.md` inicial solo debe declarar:
+si la siguiente unidad todavía no necesita una Wiki separada.
+
+No crees una carpeta sólo porque aparece en un ejemplo.
+
+## Qué se crea en este paso
+
+Crea únicamente los recursos autorizados.
+
+### Implementación, cuando corresponda
+
+Un repositorio nuevo puede comenzar con:
+
+```text
+README.md
+```
+
+El README inicial sólo necesita declarar:
 
 - nombre del proyecto;
 - propósito resumido cuando esté confirmado;
-- estado: implementación no iniciada;
-- enlace o ruta hacia la wiki;
+- estado real, por ejemplo `implementación no iniciada`;
+- ubicación de la memoria durable cuando ya exista;
 - advertencia de no asumir stack o arquitectura todavía.
 
-No generes código, dependencias, configuración, `.env`, pipelines ni despliegues.
+No generes código, dependencias, `.env`, pipelines ni despliegues sin una tarea específica.
 
-### Repositorio de wiki
+### Memoria durable, cuando corresponda
 
-```text
-nombre-proyecto-wiki/
-└── index.md
-```
+Antes de crearla evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md).
 
-El `index.md` inicial solo debe declarar:
+Cuando el proyecto decida crear una Wiki Markdown, usa directamente `templates/wiki-starter/` y [Aplicar las plantillas mínimas de adopción](apply-starter-templates.md).
 
-- nombre del proyecto;
-- estado: wiki pendiente de bootstrap;
-- fuente inicial: conversación `00 — Dirección y definición`;
-- ruta o enlace al repositorio de aplicación;
-- siguiente paso: ejecutar la guía de creación de la LLM Wiki.
+No crees un `index.md` provisional ni una segunda estructura transitoria que luego deba migrarse.
 
-No completes archivos con contenido supuesto para llenar una estructura.
-
-## Git recomendado
-
-IA-DOS recomienda dos repositorios Git independientes:
+El starter utiliza:
 
 ```text
-nombre-proyecto-app/.git
-nombre-proyecto-wiki/.git
+00-home.md
+project-brief.md
+status/current-state.md
 ```
 
-La inicialización puede realizarse localmente antes de crear remotes.
+como núcleo inicial, con `decisions/` y `sources/` disponibles para conocimiento durable real.
+
+## Git
+
+Cada recurso puede tener su propio repositorio Git, compartir un monorepo o no usar Git todavía, según la decisión del proyecto.
+
+No conviertas la carpeta exterior en repositorio Git por defecto.
+
+Inicializa Git sólo cuando esté autorizado y la topología elegida lo requiera.
 
 ```bash
 git init -b main
 ```
 
-Crea el primer commit solamente cuando:
+Crea un commit sólo cuando:
 
-- los archivos iniciales fueron revisados;
+- los archivos fueron revisados;
 - la identidad Git está configurada;
 - no hay secretos;
-- el usuario autorizó el commit.
+- la tarea autoriza commit.
 
-No crees automáticamente repositorios públicos. La visibilidad de app y wiki debe decidirse de forma independiente.
+No crees automáticamente repositorios remotos ni definas su visibilidad sin aprobación.
 
-## Windows PowerShell
+## Ejemplo PowerShell
 
-Ejemplo estructural:
+Este ejemplo crea sólo una carpeta de proyecto y un recurso de implementación. Agrega otros recursos únicamente cuando hayan sido decididos.
 
 ```powershell
 $Workspace = Join-Path $HOME "proyectos"
 $Project = "nombre-proyecto"
 $ProjectRoot = Join-Path $Workspace $Project
 $App = Join-Path $ProjectRoot "$Project-app"
-$Wiki = Join-Path $ProjectRoot "$Project-wiki"
 
 if ($Project -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$') {
     Write-Error "El project-slug no cumple la convención recomendada."
@@ -139,21 +150,15 @@ if (Test-Path $ProjectRoot) {
 }
 
 New-Item -ItemType Directory -Path $App -Force | Out-Null
-New-Item -ItemType Directory -Path $Wiki -Force | Out-Null
 ```
 
-Después crea manualmente los archivos mínimos y revisa su contenido antes de inicializar Git.
-
-## macOS o Linux
-
-Ejemplo estructural:
+## Ejemplo macOS o Linux
 
 ```bash
 WORKSPACE="$HOME/proyectos"
 PROJECT="nombre-proyecto"
 PROJECT_ROOT="$WORKSPACE/$PROJECT"
 APP="$PROJECT_ROOT/$PROJECT-app"
-WIKI="$PROJECT_ROOT/$PROJECT-wiki"
 
 if ! printf '%s' "$PROJECT" | grep -Eq '^[a-z0-9]+(-[a-z0-9]+)*$'; then
   echo "El project-slug no cumple la convención recomendada." >&2
@@ -165,54 +170,47 @@ if [ -e "$PROJECT_ROOT" ]; then
   exit 1
 fi
 
-mkdir -p "$APP" "$WIKI"
+mkdir -p "$APP"
 ```
-
-Después crea manualmente los archivos mínimos y revisa su contenido antes de inicializar Git.
 
 ## Fuentes de verdad al finalizar
 
-Este paso establece:
+Registra sólo las que existan:
 
-| Información | Ubicación |
+| Información | Recurso |
 |---|---|
-| Identidad técnica del proyecto | nombre de la carpeta exterior |
-| Implementación | `nombre-proyecto-app/` |
-| Memoria durable | `nombre-proyecto-wiki/` |
-| Método común | `00-ia-dos/` o referencia versionada |
-| Dirección conversacional | Project de ChatGPT, Gem o equivalente |
-
-Todavía no establece una arquitectura técnica ni una versión completa de la wiki.
+| Implementación | `[RUTA O URL]` |
+| Memoria durable | `[RUTA, URL O NO APLICA]` |
+| Backlog | `[RUTA, URL O NO APLICA]` |
+| Exchange | `[RUTA, URL O NO APLICA]` |
+| Método IA-DOS | `[VERSIÓN / COMMIT / REFERENCIA]` |
+| Dirección conversacional | `[PROJECT, GEM O EQUIVALENTE]` |
 
 ## Verificación
 
-Antes de considerar el proyecto creado, confirma:
+Antes de cerrar:
 
-- [ ] El `project-slug` es estable y válido.
-- [ ] La carpeta exterior se encuentra dentro del workspace elegido.
-- [ ] Existen las carpetas app y wiki.
-- [ ] La carpeta exterior no es un repositorio Git sin justificación.
-- [ ] App y wiki son repositorios separados o existe una excepción documentada.
-- [ ] La app no contiene código ni dependencias generadas sin decisión previa.
-- [ ] La wiki no presenta propuestas como hechos.
+- [ ] El `project-slug`, si se usa, es estable.
+- [ ] No se sobrescribieron carpetas existentes.
+- [ ] Sólo se crearon recursos autorizados.
+- [ ] No se eligió stack ni arquitectura implícitamente.
+- [ ] La memoria, si se creó, usa directamente el starter vigente.
 - [ ] No existen secretos.
-- [ ] Las rutas absolutas fueron reportadas.
-- [ ] El siguiente paso está identificado.
+- [ ] Git, commits o remotes sólo se usaron cuando estaban autorizados.
+- [ ] Las rutas reales fueron reportadas.
 
 ## Condiciones de detención
 
 Detente antes de escribir cuando:
 
-- la carpeta del proyecto ya existe;
-- el nombre coincide con otro proyecto;
-- la ruta del workspace es ambigua;
-- existen repositorios anidados no planificados;
-- no está claro si app o wiki deben ser públicas;
-- la solicitud implica elegir stack o generar funcionalidades todavía no definidas;
-- falta autorización para inicializar Git o crear commits.
+- la ruta del workspace sea ambigua;
+- exista una carpeta o repositorio en conflicto;
+- la topología física no esté decidida y el cambio la haría difícil de revertir;
+- la solicitud implique elegir tecnología o generar funcionalidades aún no definidas;
+- falte autorización para crear recursos, inicializar Git o realizar commits.
 
 ## Siguiente paso
 
-Continúa con [Crear la LLM Wiki del proyecto](bootstrap-llm-wiki.md).
+Si el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) devuelve `BOOTSTRAP REQUIRED`, continúa con [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
-La primera tarea hacia un coding agent se prepara después de contar con contexto mínimo, alcance y fuentes de verdad.
+Si devuelve `PASS`, continúa con la siguiente Planning Task o Execution Task sin crear documentación adicional por ceremonia.
