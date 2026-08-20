@@ -39,8 +39,16 @@ Conversation Space gobierna
 
 ## Escenario inicial
 
-- producto nuevo: `00 — Dirección y definición`;
-- producto existente: `00 — Descubrimiento y adopción`.
+El Conversation Space inicial canónico es:
+
+```text
+00 — Dirección y orquestación
+```
+
+El escenario cambia el **modo de entrada**, no el nombre del Conversation Space:
+
+- producto nuevo: modo `definición inicial`;
+- producto existente: modo `descubrimiento y adopción`.
 
 Una migración, reconstrucción o adopción parcial es un atributo, no un tercer escenario.
 

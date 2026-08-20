@@ -8,26 +8,29 @@ La primera adopción sigue este orden:
 
 1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
 2. Entrega una descripción breve y las fuentes disponibles.
-3. Abre `00 — Dirección y definición` o `00 — Descubrimiento y adopción`.
-4. Clasifica la brecha con el [Registro de tópicos](orchestration/topic-routing-registry.md).
+3. Abre `00 — Dirección y orquestación`; usa modo `definición inicial` para un producto nuevo o `descubrimiento y adopción` para uno existente.
+4. Clasifica la brecha con el [Registro de tópicos](orchestration/topic-routing-registry.md), única lista normativa de Conversation Spaces.
 5. Abre solo el Conversation Space que desbloquee el siguiente resultado.
 6. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
 7. Decide entre `Planning Task`, `Environment Preflight`, `Execution Task` o `Execution Resume`.
 8. Tipifica el bloque y valida el rol receptor.
 9. Confirma la autoridad de fuentes, artefactos y entornos.
 10. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
-11. Cuando exista ejecución recurrente, define las [Execution Cells](execution/execution-cells-and-exchange.md) necesarias por proyecto.
-12. Devuelve el artefacto al destino declarado.
-13. Escala a `00` solo cuando exista reorientación real.
+11. Cuando exista ejecución recurrente, define solo las [Execution Cells](execution/execution-cells-and-exchange.md) que aporten continuidad real.
+12. Reutiliza la conversación activa de una Execution Cell mientras siga respondiendo bien; no abras una conversación por cada tarea.
+13. Devuelve el artefacto al Cycle Owner declarado.
+14. Escala a `00` solo cuando exista reorientación real.
+
+Si la plataforma no puede navegar el repositorio canónico, usa `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md` como contrato offline mínimo. No combines bundles o addenda heredados para un onboarding nuevo. `bundles/ia-dos-current-offline-pack.md` sólo debe usarse cuando su encabezado declare sincronización con la versión o commit adoptado.
 
 ## Contratos operativos
 
 - [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md): gobierna dónde se resuelve cada decisión.
 - [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md): gobierna quién mantiene objetivo, límites y revisión.
 - [Avance concreto y transición](orchestration/concrete-execution-flow.md): decide cuándo planificar y cuándo ejecutar.
-- [Tipado de artefactos y validación del receptor](orchestration/typed-artifact-routing.md): evita entregar un artefacto al rol equivocado.
+- [Tipado de artefactos y validación del receptor](orchestration/typed-artifact-routing.md): define el contrato semántico de los artefactos independientemente de su transporte.
 - [Roles, sesiones y ciclo de artefactos](orchestration/agent-role-and-artifact-loop.md): conserva identidad, permisos y retorno.
-- [Execution Cells y Exchange Protocol v0](execution/execution-cells-and-exchange.md): reduce conversaciones de coding agents y conserva `TASK/REPORT` fuera del chat.
+- [Execution Cells y Exchange Protocol v0](execution/execution-cells-and-exchange.md): reduce conversaciones de ejecución y conserva `TASK/REPORT` fuera del chat cuando aporte.
 - [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md): separa referencias durables, delta y contrato operativo.
 - [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa una unidad aprobada.
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md): gobierna qué demuestra cada recurso y qué acceso está permitido.
@@ -54,15 +57,16 @@ Estas guías son opciones de implementación, no requisitos normativos del méto
 ## Orquestación
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
-- [Pack operativo](../bundles/ia-dos-project-orchestrator-pack.md)
+- [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Registro de tópicos](orchestration/topic-routing-registry.md)
-- [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md)
+- [Propiedad del ciclo](orchestration/cycle-ownership.md)
 - [Tipado de artefactos](orchestration/typed-artifact-routing.md)
 - [Roles y sesiones](orchestration/agent-role-and-artifact-loop.md)
 - [Compresión de contexto](orchestration/context-compression-by-authority.md)
-- [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
+
+El [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) se conserva como artefacto de distribución, pero no debe tratarse como vigente hasta que su encabezado confirme sincronización con la versión adoptada.
 
 ## Planificación
 
@@ -73,6 +77,8 @@ Estas guías son opciones de implementación, no requisitos normativos del méto
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md)
 
 La plantilla compacta es la salida operativa por defecto para pegar en el coding agent. La plantilla completa funciona como referencia de diseño, validación y casos excepcionales.
+
+La política de persistencia o renovación de conversaciones de planificación se mantiene separada de la política de Execution Cells hasta que exista una decisión explícita.
 
 ## Ejecución
 
@@ -88,7 +94,7 @@ La plantilla compacta es la salida operativa por defecto para pegar en el coding
 - [Actualizar la LLM Wiki](execution/updating-the-llm-wiki.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
 
-La Execution Task compacta aplica referencias de autoridad, delta del ciclo y contrato explícito. La plantilla completa conserva el contrato exhaustivo para validación y casos excepcionales. Exchange v0 añade una opción manual para persistir el par `TASK/REPORT` fuera de las conversaciones.
+La Execution Task compacta y la completa representan el mismo contrato semántico con distinto nivel de detalle. Exchange v0 añade identificación y persistencia manual del par `TASK/REPORT`, pero no crea una Execution Task diferente.
 
 ## Fundamentos
 

@@ -1,6 +1,6 @@
 # Adoptar un proyecto existente desde la capa conversacional
 
-Este recorrido comienza en conversación y pasa al entorno local cuando hace falta inspeccionar o modificar artefactos reales.
+Este recorrido comienza en conversación y pasa al entorno técnico cuando hace falta inspeccionar o modificar artefactos reales.
 
 ## 1. Inicializar el Project Orchestrator
 
@@ -12,9 +12,9 @@ Clasifica el producto objetivo como existente cuando el propio producto tiene ev
 
 Una migración, reconstrucción o producto sucesor es un atributo, no un tercer escenario.
 
-## 3. Abrir `00 — Descubrimiento y adopción`
+## 3. Abrir `00 — Dirección y orquestación`
 
-`00` debe comprender:
+Para un producto existente, `00` trabaja en modo `descubrimiento y adopción` y debe comprender solo lo necesario para orientar la siguiente unidad:
 
 - qué producto existe;
 - qué está implementado, parcial, planificado, deprecado o desconocido;
@@ -27,32 +27,29 @@ No describas como real algo que no tenga evidencia.
 
 ## 4. Organizar conversaciones bajo demanda
 
-`00` debe indicar si basta continuar allí o si una brecha requiere un único espacio especializado:
+Usa `docs/orchestration/topic-routing-registry.md` como única lista normativa de Conversation Spaces.
 
-- `10 — Producto y UX` para comportamiento o experiencia;
-- `20 — Arquitectura y stack` para una auditoría o decisión técnica;
-- `30 — Ejecución y desarrollo` solo si una tarea compleja necesita preparación adicional;
-- `90 — Wiki y memoria` para síntesis, contradicciones o mantenimiento documental complejo.
+`00` debe indicar si basta continuar allí o si la brecha dominante requiere un espacio especializado con contexto persistente propio.
 
-No abras `90` automáticamente porque exista documentación dispersa ni abras `30` por rutina. Si el espacio actual ya puede preparar una `Execution Task`, pasa directamente a ejecución.
+No mantengas aquí una lista paralela de tópicos. No abras `90`, `30` ni ningún otro espacio por rutina. Si el espacio actual ya puede preparar una `Execution Task`, pasa directamente a ejecución.
 
-## 5. Usar inspección en modo lectura cuando falte evidencia
+## 5. Obtener evidencia cuando falte
 
-Cuando el asistente conversacional no tenga acceso suficiente al estado real, prepara una tarea de inspección para el coding agent:
+Cuando el asistente conversacional no tenga acceso suficiente al estado real, prepara una `Planning Task` o un `Environment Preflight` según la incertidumbre:
 
 - solo lectura;
-- repositorios y rutas explícitos;
+- fuentes, repositorios o entornos explícitos;
 - verificaciones no destructivas;
-- formato de evidencia;
+- evidencia verificable;
 - ninguna modificación remota sin autorización.
 
-El reporte vuelve al espacio que originó la inspección.
+El resultado vuelve al mismo Cycle Owner. No abras otro Conversation Space solo para ejecutar la inspección técnica.
 
-## 6. Preparar el entorno local cuando corresponda
+## 6. Preparar el entorno cuando corresponda
 
 La instalación local no es requisito previo del onboarding. Se recomienda cuando la siguiente tarea necesita acceso real a repositorios, archivos, Git o herramientas locales.
 
-En ese momento, usa:
+En ese momento, usa según corresponda:
 
 - [Preparar el workspace local](workspace-setup.md)
 - [Instalar IA-DOS](install-ia-dos.md)
@@ -65,34 +62,52 @@ No muevas, renombres ni reorganices un proyecto existente solo para cumplir una 
 ## 7. Ejecutar y retornar
 
 ```text
-Conversation Space de origen
+Conversation Space Cycle Owner
 → Execution Task
+→ Execution Cell adecuada o entorno disponible
 → coding agent
-→ cambios y verificaciones
+→ cambios + verificaciones
 → Execution Report
-→ regreso al espacio de origen
+→ mismo Cycle Owner
 → revisión e iteración
 ```
 
+Una Execution Task no obliga a crear una conversación nueva del coding agent. Cuando exista una Execution Cell adecuada y su conversación activa continúe respondiendo correctamente, reutilízala.
+
+Cada tarea vuelve a declarar alcance y permisos. La continuidad conversacional no hereda autorizaciones anteriores.
+
+Exchange Protocol v0 puede conservar `TASK/REPORT` fuera de la conversación, pero es opcional y no sustituye backlog, memoria durable ni implementación.
+
 Solo vuelve a `00` cuando aparezca una reorientación real.
 
-## Primera tarea recomendada
+## Primera unidad recomendada
 
 Comienza con un resultado de bajo riesgo y verificable, por ejemplo:
 
-- inspeccionar arquitectura actual;
+- inspeccionar una incertidumbre técnica concreta;
 - documentar un flujo existente;
 - corregir un bug acotado;
 - añadir una prueba;
 - actualizar una funcionalidad pequeña;
 - verificar una integración.
 
+No conviertas la adopción en una auditoría integral antes de poder avanzar.
+
+## Memoria durable
+
+La Wiki o mecanismo de memoria adoptado debe distinguir conocimiento vigente de historia operacional. No copies conversaciones completas ni trates un Execution Report como estado oficial sin revisión.
+
+El `Memory Bootstrap Gate` todavía no está definido en esta fase. Su contrato se cerrará en la Fase 3 junto con el Wiki Starter. Hasta entonces, no presentes un gate inexistente como regla vigente ni dependas exclusivamente de contexto histórico que sólo viva en conversaciones cuando una tarea necesite reutilizarlo de forma durable.
+
 ## Resultado esperado
 
 - producto clasificado con evidencia;
+- `00 — Dirección y orquestación` usado en modo `descubrimiento y adopción`;
 - estado real comprendido sin inventar historia;
 - organización mínima de conversaciones;
-- entorno local preparado solo cuando hace falta;
-- primera tarea acotada;
-- evidencia devuelta al espacio de origen;
-- Wiki creada o actualizada progresivamente.
+- registro canónico usado para enrutar tópicos;
+- entorno preparado solo cuando hace falta;
+- primera Planning Task, Preflight o Execution Task acotada;
+- Execution Cell reutilizada cuando corresponda;
+- evidencia devuelta al Cycle Owner;
+- memoria durable creada o actualizada progresivamente.
