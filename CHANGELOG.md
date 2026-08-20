@@ -6,6 +6,20 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ## Unreleased
 
+### Changed
+
+- unificado `Execution Task` como contrato semántico único, independientemente de si se transporta por chat, archivo, issue o Exchange;
+- redefinido `Exchange Protocol v0` como perfil opcional de identificación, persistencia y transporte, no como contrato alternativo de ejecución;
+- alineado `Exchange Execution Task v0` con tipado, autoridad, alcance, capacidades, criterios, verificaciones y condiciones de detención canónicas;
+- alineado `Exchange Execution Report v0` para separar estado de ejecución de decisión requerida del Cycle Owner;
+- estados canónicos de Execution Report: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`;
+- aclarado que `Execution Cell` aporta continuidad operacional y no sustituye `Destination Role`, `Cycle Owner` ni permisos por tarea;
+- aclarado que `Cycle ID` puede ser `NO APLICA` en Exchange v0 cuando no existe un ciclo separado;
+- documentada Exchange como historial operacional y evidencia, no como segunda memoria durable ni backlog;
+- actualizada la terminología canónica para `Cycle Owner`, `Planning Task`, `Implementation Plan`, `Execution Cell`, `Execution Report`, `Exchange Protocol v0`, `Referencias Wiki` y `Lectura requerida`;
+- eliminado un ejemplo de proyecto real de la documentación común y reemplazado por un ejemplo sintético;
+- explicitado que la política de persistencia de conversaciones de planificación continúa abierta y no debe inferirse de nombres de sesión de ejemplo.
+
 ### Added
 
 - `Execution Cell` como contexto durable de ejecución definido por proyecto;
