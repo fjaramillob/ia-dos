@@ -196,10 +196,10 @@ Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 1. Crea un Project, Gem, chat persistente o entorno equivalente.
 2. Sigue [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md).
 3. Entrega una descripción breve y las fuentes disponibles.
-4. Abre `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente.
+4. Abre `00 — Dirección y orquestación`; usa modo `definición inicial` para un producto nuevo o modo `descubrimiento y adopción` para uno existente.
 5. Avanza mediante tareas tipadas que regresan al Cycle Owner.
 
-Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline consolidado actual](bundles/ia-dos-current-offline-pack.md). La alineación integral del pack offline forma parte del siguiente bloque de consolidación del onboarding.
+Si la plataforma no puede navegar el repositorio canónico, usa como contrato offline mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`. No combines bundles heredados. El archivo `bundles/ia-dos-current-offline-pack.md` sólo debe utilizarse cuando su propio encabezado declare que está sincronizado con la versión o commit de IA-DOS adoptado.
 
 ## Contratos principales
 
