@@ -33,14 +33,11 @@ La primera respuesta debe incluir:
 
 ## 4. Organizar conversaciones bajo demanda
 
-`00` debe indicar si basta seguir allí o si existe una brecha que justifique abrir un único espacio especializado:
+Usa `docs/orchestration/topic-routing-registry.md` como única lista normativa de Conversation Spaces.
 
-- `10 — Producto y UX` para comportamiento, flujo o experiencia;
-- `20 — Arquitectura y stack` para decisiones técnicas o lectura de una auditoría;
-- `30 — Ejecución y desarrollo` solo cuando una tarea compleja necesita preparación adicional;
-- `90 — Wiki y memoria` para síntesis, contradicciones o mantenimiento documental complejo.
+`00` debe indicar si basta seguir allí o si la brecha dominante justifica abrir un único espacio especializado con contexto persistente propio.
 
-No abras estos espacios como secuencia automática. Si `00` ya puede preparar una `Execution Task`, pasa directamente a ejecución.
+No copies ni mantengas aquí una lista paralela de tópicos. No abras espacios como secuencia automática. Si `00` ya puede preparar una `Execution Task`, pasa directamente a ejecución.
 
 ## 5. Activar Launch Mode
 
@@ -48,15 +45,18 @@ Cuando el usuario indique que quiere avanzar:
 
 1. confirma la dirección en pocas líneas;
 2. identifica el siguiente resultado verificable;
-3. evalúa si existe claridad suficiente para ejecutar;
-4. abre como máximo un Conversation Space si falta una definición indispensable;
-5. prepara una `Execution Task` tan pronto como la tarea esté acotada.
+3. evalúa primero si puede ejecutarse directamente;
+4. si falta inspección o diseño técnico, prepara una `Planning Task` de solo lectura;
+5. abre otro Conversation Space solo cuando una decisión de dominio indispensable requiera contexto persistente propio;
+6. prepara una `Execution Task` tan pronto como la unidad esté definida y sea segura.
 
-## 6. Preparar el entorno local cuando corresponda
+La Planning Task vuelve al mismo Cycle Owner como `Implementation Plan`. No abre por sí sola otro ciclo ni autoriza ejecución.
+
+## 6. Preparar el entorno cuando corresponda
 
 La instalación local no es un requisito previo del onboarding. Se recomienda cuando la siguiente tarea necesita acceso real a repositorios, archivos, Git o herramientas locales.
 
-En ese momento, el Orchestrator debe enlazar o incluir las instrucciones aplicables:
+En ese momento, el Orchestrator puede enlazar las instrucciones aplicables:
 
 - [Preparar el workspace local](workspace-setup.md)
 - [Instalar IA-DOS](install-ia-dos.md)
@@ -64,26 +64,43 @@ En ese momento, el Orchestrator debe enlazar o incluir las instrucciones aplicab
 - [Crear o conectar la LLM Wiki](bootstrap-llm-wiki.md)
 - [Preparar el handoff de ejecución](execution-handoff.md)
 
+Estas guías son opciones de implementación. No impongas una topología física cuando el proyecto no la necesita.
+
 ## 7. Ejecutar y retornar
 
 ```text
-Conversation Space de origen
+Conversation Space Cycle Owner
 → Execution Task
+→ Execution Cell adecuada o entorno de ejecución disponible
 → coding agent
-→ cambios y verificaciones
+→ cambios + verificaciones
 → Execution Report
-→ regreso al espacio de origen
+→ mismo Cycle Owner
 → revisión e iteración
 ```
 
+Una `Execution Task` no implica una conversación nueva. Si el proyecto utiliza Execution Cells y ya existe una conversación activa adecuada que continúa respondiendo bien, reutilízala.
+
+Cada Execution Task vuelve a declarar permisos, alcance, criterios y condiciones de detención. La conversación puede persistir; la autorización no.
+
+Exchange Protocol v0 puede utilizarse para conservar el par `TASK/REPORT` fuera del chat, pero es opcional y no cambia el contrato de ejecución.
+
 Solo vuelve a `00` cuando exista una reorientación real: cambio de objetivo, conflicto entre dominios, expansión importante de alcance o decisión humana estratégica.
+
+## Memoria durable
+
+La memoria durable se construye de forma progresiva a partir de conocimiento confirmado. No copies conversaciones completas en la Wiki ni obligues al coding agent a leerla completa.
+
+El gate específico para asegurar un bootstrap mínimo de memoria antes de depender de contexto histórico se define por separado en la guía de memoria y no debe improvisarse dentro de este recorrido.
 
 ## Resultado esperado
 
 - dirección inicial clara;
 - organización mínima de conversaciones;
+- registro canónico usado para enrutar tópicos;
 - ningún espacio abierto por rutina;
-- primera tarea verificable preparada;
-- entorno local sugerido solo cuando la ejecución lo requiere;
-- Execution Report devuelto al espacio que originó la tarea;
-- Wiki actualizada progresivamente con conocimiento confirmado.
+- primera Planning Task o Execution Task verificable preparada;
+- entorno preparado solo cuando la ejecución lo requiere;
+- Execution Cell reutilizada cuando corresponda;
+- Execution Report devuelto al Cycle Owner;
+- memoria durable actualizada progresivamente con conocimiento confirmado.
