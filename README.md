@@ -138,7 +138,17 @@ Exchange y Wiki Update no debilitan el contrato: sólo especializan identificaci
 
 ## Exchange Protocol v0
 
-Un proyecto puede mantener un almacén de instrucciones y respuestas:
+Exchange es un componente opcional para conservar manualmente fuera de las conversaciones el historial operacional del par:
+
+```text
+Execution Task
+        ↓
+Execution Report
+```
+
+En v0 no almacena por defecto Planning Tasks, Implementation Plans, backlog ni memoria durable.
+
+Una topología posible es:
 
 ```text
 Proyecto/
@@ -149,19 +159,38 @@ Proyecto/
     ├── outbox/
     ├── archive/
     └── templates/
+        ├── TASK.md
+        └── REPORT.md
 ```
 
-Esta topología es opcional.
+Esta topología es opcional. Exchange puede vivir en otra ubicación o no existir.
 
-Exchange no sustituye la Wiki, el backlog ni el repositorio. Conserva el historial operacional de `TASK` y `REPORT` fuera de las conversaciones y permite reemplazar una conversación de coding agent sin perder el intercambio durable.
+```text
+inbox/
+→ TASK dentro del flujo activo
 
-En v0, el intercambio es manual y puede usar como `Task ID`:
+outbox/
+→ REPORT pendiente de revisión
+
+archive/
+→ intercambio revisado y fuera del flujo activo
+```
+
+Estas carpetas no constituyen una máquina de estados. En v0 el movimiento es manual y no dispara ejecuciones.
+
+Exchange no sustituye la Wiki, el backlog ni el repositorio. Permite conservar qué se pidió y qué respondió el ejecutor, incluso si una conversación de coding agent se renueva.
+
+El `Task ID` puede usar:
 
 ```text
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
 
 El `REPORT` reutiliza exactamente el mismo `Task ID` del `TASK`. Cuando no existe un ciclo separado, `Cycle ID` puede declararse `NO APLICA`.
+
+Exchange v0 no exige `REGISTRY.md`, contador compartido, sufijo anti-colisión, watcher, trigger, polling ni sincronización automática.
+
+Consulta [Crear o conectar Exchange Protocol v0](docs/getting-started/bootstrap-exchange.md).
 
 ## Memoria durable portable
 
@@ -233,6 +262,7 @@ Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 4. Abre `00 — Dirección y orquestación`; usa modo `definición inicial` para un producto nuevo o modo `descubrimiento y adopción` para uno existente.
 5. Avanza mediante tareas tipadas que regresan al Cycle Owner.
 6. Antes de depender de contexto histórico que sólo viva en chats, evalúa el Memory Bootstrap Gate.
+7. Adopta Exchange sólo cuando conservar TASK/REPORT fuera de las conversaciones aporte valor real.
 
 Si la plataforma no puede navegar el repositorio canónico, usa como contrato offline mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`. No combines bundles heredados. El archivo `bundles/ia-dos-current-offline-pack.md` sólo debe utilizarse cuando su propio encabezado declare que está sincronizado con la versión o commit de IA-DOS adoptado.
 
