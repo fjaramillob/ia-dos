@@ -81,7 +81,7 @@ Clonar IA-DOS no es requisito técnico para utilizar el método desde un asisten
 
 ## Adoptar por proyecto
 
-Cada proyecto incorpora solo los elementos que necesita. Entre los artefactos disponibles se encuentran:
+Cada proyecto incorpora sólo los elementos que necesita. Entre los artefactos disponibles se encuentran:
 
 - memoria durable o LLM Wiki;
 - `.ia-dos.yaml` mediante `templates/adoption.template.yaml`;
@@ -89,10 +89,44 @@ Cada proyecto incorpora solo los elementos que necesita. Entre los artefactos di
 - `AGENTS.md` para coding agents;
 - Planning Tasks y Execution Tasks;
 - Execution Cells cuando exista ejecución recurrente;
-- Exchange Protocol v0 cuando convenga conservar `TASK/REPORT` fuera de conversaciones;
+- Exchange Protocol v0 cuando convenga conservar `Execution Task` y `Execution Report` fuera de conversaciones;
 - guardrails y verificaciones específicas del proyecto.
 
 El trabajo cotidiano debe utilizar las fuentes del proyecto y transportar sólo el contexto necesario. No es necesario cargar IA-DOS completo ni toda la memoria durable en cada conversación o tarea.
+
+## Exchange no es un requisito de adopción
+
+Exchange se incorpora únicamente cuando resuelve una necesidad operacional concreta.
+
+Su alcance v0 es deliberadamente estrecho:
+
+```text
+Execution Task
+        ↓
+Execution Report
+```
+
+No almacena por defecto Planning Tasks, Implementation Plans, backlog, decisiones o memoria durable.
+
+Una adopción puede verse así:
+
+```text
+Backlog / Issues
+→ qué queda por hacer
+
+Exchange
+→ qué se pidió ejecutar y qué reportó el ejecutor
+
+Wiki / memoria durable
+→ qué sabemos que es verdad ahora
+
+Implementación
+→ qué está materializado
+```
+
+Cuando Exchange no aporta valor, declara `resources.exchange: NO_APLICA` o simplemente no lo incorpores si el proyecto no utiliza manifiesto.
+
+Consulta [Crear o conectar Exchange Protocol v0](../getting-started/bootstrap-exchange.md).
 
 ## Fronteras de autoridad
 
@@ -109,7 +143,10 @@ memoria durable
 → conocimiento vigente y confirmado
 
 Exchange
-→ historial operacional de TASK/REPORT
+→ historial operacional de Execution Task / Execution Report
+
+backlog
+→ trabajo pendiente
 
 implementación
 → estado materializado
@@ -130,6 +167,8 @@ Al compartir repositorios o archivos con asistentes externos, la persona respons
 Cada proyecto debe declarar qué versión o commit de IA-DOS utiliza cuando necesite una adopción reproducible.
 
 Usa `templates/adoption.template.yaml` como punto de partida cuando corresponda.
+
+Cuando Exchange se adopta, las copias locales de `TASK.md` y `REPORT.md` corresponden a esa versión adoptada. No deben cambiar automáticamente porque `main` evolucione.
 
 Los proyectos no reciben cambios del framework de forma silenciosa. Cada actualización debe revisarse antes de adoptarse.
 
