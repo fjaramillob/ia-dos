@@ -6,13 +6,15 @@ La secuencia correcta es:
 
 ```text
 00 orienta
-→ se define una tarea verificable
+→ se define una unidad verificable
 → se confirma que requiere ejecución local
-→ se prepara el workspace
+→ se prepara sólo el acceso necesario
 → se ejecuta y se devuelve evidencia
 ```
 
-## Estructura recomendada
+## Estructura posible
+
+Una organización local útil puede ser:
 
 ```text
 proyectos/
@@ -21,24 +23,28 @@ proyectos/
 │   ├── proyecto-a-app/
 │   └── proyecto-a-wiki/
 └── proyecto-b/
-    ├── proyecto-b-app/
-    └── proyecto-b-wiki/
+    └── proyecto-b-monorepo/
 ```
 
-La ubicación por defecto puede ser `$HOME\proyectos` en Windows o `~/proyectos` en macOS y Linux, pero es una convención, no una obligación.
+La ubicación puede ser `$HOME\proyectos` en Windows o `~/proyectos` en macOS y Linux, pero es una convención, no una obligación.
+
+IA-DOS no exige que todos los proyectos adopten la misma topología.
 
 ## Principios
 
-- IA-DOS se instala una sola vez como `00-ia-dos/`;
-- cada proyecto mantiene su implementación y su memoria durable;
-- app y Wiki pueden estar separadas o convivir cuando una excepción documentada lo justifique;
-- la carpeta exterior del proyecto normalmente no es un repositorio Git;
-- un coding agent recibe solo los repositorios y rutas necesarios para la tarea actual;
-- no se mueve un proyecto existente solo para cumplir esta estructura.
+- IA-DOS puede mantenerse una sola vez como referencia local compartida cuando esa instalación aporte;
+- cada proyecto identifica su implementación y memoria durable cuando exista;
+- app y Wiki pueden estar separadas, convivir en un monorepo o usar otra configuración documentada;
+- una Wiki separada no se crea por defecto: aplica el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) cuando la siguiente unidad dependa de memoria conversacional;
+- Exchange es opcional y puede vivir como recurso separado cuando el proyecto lo adopte;
+- un coding agent recibe sólo los repositorios y rutas necesarios para la tarea actual;
+- no se mueve un proyecto existente sólo para cumplir una estructura recomendada.
 
 ## Proyecto nuevo
 
-La estructura recomendada es:
+Para un producto nuevo, `00 — Dirección y orquestación` trabaja en modo `definición inicial`.
+
+Después crea únicamente los recursos necesarios para la siguiente unidad. Una configuración posible es:
 
 ```text
 nombre-proyecto/
@@ -46,36 +52,41 @@ nombre-proyecto/
 └── nombre-proyecto-wiki/
 ```
 
-La creación física debe ocurrir después de contar con una definición inicial en `00 — Dirección y definición` y con autorización para crear carpetas o repositorios.
+pero también puede comenzar sólo con implementación o usar un monorepo.
+
+La creación física ocurre después de contar con dirección suficiente y autorización para crear las rutas o repositorios involucrados.
 
 ## Proyecto existente
 
 Antes de mover o reorganizar, revisa:
 
 - rutas absolutas y relativas;
-- variables de entorno;
+- variables de entorno relevantes sin exponer secretos;
 - scripts y pipelines;
-- configuraciones del editor;
+- configuraciones del editor cuando afecten la operación;
 - despliegues;
 - enlaces entre repositorios;
-- accesos de colaboradores.
+- accesos o procesos que dependan de rutas actuales.
 
-Cuando mover sea riesgoso, conserva la ubicación actual y documenta la excepción.
+Cuando mover agregue riesgo sin beneficio operacional, conserva la ubicación actual y adopta por referencia.
 
 ## Acceso de agentes
 
 No abras toda la carpeta `proyectos/` como contexto cotidiano. Para una tarea normal, entrega únicamente:
 
-- el repositorio de producto correspondiente;
-- las rutas específicas de la Wiki necesarias;
-- la `Execution Task`;
-- instrucciones técnicas aplicables.
+- el repositorio o recurso técnico correspondiente;
+- `Contexto durable necesario`;
+- las páginas incluidas en `Lectura requerida`, cuando existan;
+- la `Execution Task` o `Planning Task`;
+- instrucciones locales aplicables.
 
-El repositorio `00-ia-dos/` se consulta para guías, plantillas, prompts o cambios de versión, no como contexto completo de cada ejecución.
+`Referencias Wiki` no implican lectura automática.
+
+La referencia local de IA-DOS se consulta para contratos, guías, plantillas o cambios de versión cuando sea necesaria; no se entrega completa como contexto de cada ejecución.
 
 ## Seguridad
 
-No guardes en IA-DOS ni en la Wiki:
+No guardes en IA-DOS, memoria durable ni Exchange:
 
 - contraseñas;
 - API keys;
@@ -83,20 +94,22 @@ No guardes en IA-DOS ni en la Wiki:
 - claves privadas;
 - credenciales cloud;
 - archivos `.env` con valores reales;
-- datos personales sensibles.
+- datos personales sensibles innecesarios.
 
 ## Verificación
 
 Antes de ejecutar una tarea, confirma:
 
-- [ ] la ruta del workspace es estable;
-- [ ] IA-DOS tiene una sola ubicación;
-- [ ] el proyecto y sus repositorios están identificados;
-- [ ] app y Wiki están separadas o la excepción está documentada;
+- [ ] la ruta del workspace o recurso objetivo es conocida;
+- [ ] no se crearon topologías o repositorios innecesarios;
+- [ ] implementación, memoria y otros recursos relevantes están identificados cuando existen;
+- [ ] el acceso del agente se limita al alcance necesario;
 - [ ] no se entregará acceso a proyectos no relacionados;
 - [ ] no existen secretos dentro del contexto compartido;
 - [ ] la tarea que justificó preparar el workspace sigue vigente.
 
 ## Siguiente paso
 
-Continúa con [Instalar IA-DOS en el workspace](install-ia-dos.md) solo cuando la tarea requiera acceso local al framework, sus plantillas o sus guías.
+Continúa con [Instalar IA-DOS en el workspace](install-ia-dos.md) sólo cuando la tarea requiera una referencia local al framework, sus plantillas o sus guías.
+
+Para crear recursos de un producto nuevo usa [Crear un proyecto nuevo dentro del workspace](create-new-project-workspace.md). Para adoptar uno existente usa [Incorporar un proyecto existente](incorporate-existing-project-workspace.md).
