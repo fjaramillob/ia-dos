@@ -8,6 +8,13 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- alineado el onboarding para que `topic-routing-registry.md` sea la única lista normativa de Conversation Spaces;
+- actualizado el initializer para usar `ia-dos-current-offline-pack.md` como única distribución offline vigente y evitar combinar addenda heredados en nuevos onboardings;
+- alineadas las instrucciones persistentes con Execution Cells, Exchange v0, memoria durable selectiva y el contrato semántico único de Execution Task;
+- aclarado en los recorridos de proyecto nuevo y existente que una Execution Task no implica abrir una conversación nueva del coding agent;
+- alineada la capa conversacional para separar Conversation Space, Execution Cell, Execution Task y memoria durable;
+- actualizado el modelo de adopción para tratar app, wiki y Exchange como opciones de topología y no como requisitos físicos;
+- actualizado el índice de documentación para reflejar el camino de onboarding vigente y la política abierta de conversaciones de planificación;
 - unificado `Execution Task` como contrato semántico único, independientemente de si se transporta por chat, archivo, issue o Exchange;
 - redefinido `Exchange Protocol v0` como perfil opcional de identificación, persistencia y transporte, no como contrato alternativo de ejecución;
 - alineado `Exchange Execution Task v0` con tipado, autoridad, alcance, capacidades, criterios, verificaciones y condiciones de detención canónicas;
