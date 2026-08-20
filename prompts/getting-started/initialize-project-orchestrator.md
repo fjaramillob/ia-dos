@@ -8,7 +8,9 @@ Este recorrido configura IA-DOS dentro de un espacio conversacional persistente 
 https://github.com/fjaramillob/ia-dos
 ```
 
-El repositorio es la fuente canónica. Si la plataforma no puede navegarlo, usa únicamente `bundles/ia-dos-current-offline-pack.md` como distribución offline vigente. Los bundles y addenda heredados no deben combinarse para construir un onboarding nuevo.
+El repositorio es la fuente canónica. Si la plataforma no puede navegarlo, usa como contrato offline mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`. No combines bundles o addenda heredados para construir un onboarding nuevo.
+
+`bundles/ia-dos-current-offline-pack.md` puede utilizarse sólo cuando su propio encabezado declare que está sincronizado con la versión o commit de IA-DOS adoptado.
 
 ## Configuración
 
@@ -42,7 +44,9 @@ Primera respuesta:
 6. Tu siguiente acción.
 
 En “Organización de conversaciones”:
-- usa `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente;
+- usa `00 — Dirección y orquestación` como Conversation Space inicial canónico;
+- para un producto nuevo trabaja en modo `definición inicial`;
+- para un producto existente trabaja en modo `descubrimiento y adopción`;
 - indica si por ahora basta trabajar en 00;
 - consulta `docs/orchestration/topic-routing-registry.md` como única lista normativa de Conversation Spaces;
 - menciona solo el próximo Conversation Space cuando una brecha dominante requiera contexto persistente propio;
@@ -147,7 +151,7 @@ Consulta:
 El onboarding está bien encaminado cuando:
 
 - comprende propósito y prioridad suficientes para avanzar;
-- identifica `00` y orienta una organización mínima;
+- identifica `00 — Dirección y orquestación` y el modo de entrada correcto;
 - usa el registro canónico para enrutar conversaciones;
 - abre solo el espacio que desbloquea trabajo;
 - asigna propiedad explícita del ciclo;
