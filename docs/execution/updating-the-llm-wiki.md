@@ -1,153 +1,131 @@
-# Actualización de la LLM Wiki
+# Actualización de la memoria durable
 
-La LLM Wiki es una fuente de verdad contextual. Su contenido se gobierna desde el Project Orchestrator y, cuando existe `90 — Wiki y memoria`, desde ese Conversation Space especializado. Su implementación física corresponde a un coding agent con acceso real al repositorio.
+Cuando el proyecto utiliza una Wiki Markdown, su contenido se gobierna desde el Project Orchestrator y, cuando aporta, desde `90 — Wiki y memoria`. La modificación física corresponde a un coding agent o a otro mecanismo autorizado con acceso real al recurso.
+
+La Wiki conserva conocimiento vigente y reusable. No es un backlog, un log operacional ni un repositorio de TASK/REPORT.
 
 ## Separación de responsabilidades
 
 ```text
-Project Orchestrator
-    comprende el conocimiento que debe registrarse
-    distingue hechos, decisiones, hipótesis y preguntas abiertas
+Project Orchestrator / Cycle Owner
+    identifica conocimiento durable
+    distingue estado, decisiones y desconocidos
     define qué debe cambiar y por qué
-    prepara una Wiki Update Task
+    prepara una Execution Task documental
 
-90 — Wiki y memoria
-    sintetiza conocimiento durable
+90 — Wiki y memoria, cuando aporta
+    sintetiza conocimiento
     detecta contradicciones y obsolescencia
-    propone páginas y contenido a actualizar
-    no modifica por sí solo el repositorio
+    propone contenido y rutas
+    no afirma cambios sin evidencia
 
 Coding agent
-    inspecciona la wiki existente
-    crea o modifica archivos autorizados
-    valida estructura, enlaces y formatos
-    revisa el diff
-    entrega evidencia y Execution Report
+    inspecciona la Wiki real
+    modifica sólo rutas autorizadas
+    mantiene Markdown portable
+    revisa enlaces y diff
+    entrega Execution Report
 ```
 
-`90` no es el agente que construye la wiki. Es el espacio conversacional que gobierna y sintetiza su contenido cuando ese trabajo requiere una conversación dedicada.
-
-## Flujo operativo
-
-```text
-Conversación, hito o evidencia nueva
-        ↓
-Project Orchestrator o 90 identifica conocimiento durable
-        ↓
-clasifica hechos, decisiones, hipótesis y contradicciones
-        ↓
-Project Orchestrator prepara una Wiki Update Task
-        ↓
-coding agent inspecciona y materializa el cambio
-        ↓
-validaciones + diff + Execution Report
-        ↓
-revisión humana y del Project Orchestrator
-        ↓
-merge autorizado
-        ↓
-wiki actualizada como memoria durable
-```
-
-## Cuándo crear una Wiki Update Task
+## Cuándo crear una actualización documental
 
 Créala cuando:
 
-- una decisión confirmada debe registrarse;
+- una decisión confirmada debe persistirse;
 - cambia el estado real del proyecto;
-- una implementación invalida información anterior;
-- cambia la arquitectura vigente;
-- aparece una contradicción entre fuentes;
-- debe crearse o actualizarse un Context Pack;
-- la wiki inicial necesita materializarse;
-- una página requiere reorganización que afectará varias rutas;
-- el conocimiento durable existe solo en conversaciones o reportes.
+- una implementación invalida información vigente;
+- una restricción o arquitectura confirmada cambia;
+- aparece una contradicción que debe resolverse en la memoria;
+- el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) devuelve `BOOTSTRAP REQUIRED`;
+- la estructura actual dificulta recuperar selectivamente conocimiento que ya existe.
 
 No es necesaria para cada conversación, commit menor o ajuste editorial sin impacto durable.
 
+## Contrato de ejecución
+
+Una actualización física de la Wiki sigue siendo una `Execution Task` canónica.
+
+Puede utilizar el perfil [Wiki Update Task](../../templates/wiki-update-task.template.md), pero ese perfil no crea un tipo de artefacto independiente ni debilita alcance, autoridad, permisos, criterios, verificaciones o condiciones de detención.
+
 ## Entrada mínima para el coding agent
 
-La Wiki Update Task debe incluir:
+La tarea debe incluir:
 
 - objetivo documental;
-- fuente del conocimiento;
-- clasificación del contenido;
-- repositorio y branch de trabajo;
-- páginas autorizadas;
-- páginas o contenido que deben preservarse;
-- decisiones confirmadas;
-- hipótesis que no deben convertirse en hechos;
-- contradicciones conocidas;
+- conocimiento confirmado que debe reflejarse;
+- fuentes o evidencia autorizadas;
+- páginas que deben leerse;
+- rutas modificables y prohibidas;
+- contenido que debe preservarse;
 - alcance y fuera de alcance;
+- autorizaciones de branch, commit, push o PR;
 - criterios de aceptación;
 - validaciones requeridas;
 - condiciones de detención;
-- formato del Execution Report.
+- destino del Execution Report.
 
-El Project Orchestrator debe entregar contexto suficiente, no toda la historia del proyecto.
+No envíes toda la historia del proyecto si la actualización necesita sólo unas pocas páginas y hechos vigentes.
 
 ## Conducta del coding agent
 
 El coding agent debe:
 
-1. confirmar repositorio, branch y rutas autorizadas;
-2. leer `AGENTS.md`, `.ia-dos.yaml`, `index.md` y las páginas relevantes;
+1. confirmar recurso, branch o modo de trabajo y rutas autorizadas;
+2. leer `AGENTS.md`, `.ia-dos.yaml` cuando exista, `00-home.md` o el home equivalente y sólo las páginas requeridas;
 3. inspeccionar antes de modificar;
 4. preservar información vigente fuera del alcance;
 5. no inventar decisiones ni completar vacíos por simetría;
-6. no convertir propuestas o hipótesis en estado implementado;
-7. mantener enlaces y navegación coherentes;
-8. actualizar `log.md` cuando las reglas de la wiki lo exijan;
+6. no convertir propuestas en hechos ni decisiones aceptadas en implementación;
+7. mantener enlaces Markdown relativos y navegación coherente;
+8. no introducir dependencia de Obsidian, plugins o wikilinks para semántica crítica;
 9. ejecutar las validaciones aplicables;
 10. revisar el diff completo;
-11. entregar un Execution Report.
+11. devolver un Execution Report.
+
+Una Wiki existente puede usar nombres de archivos distintos del starter. La tarea debe declarar las rutas reales; no renombres archivos sólo para normalizar nombres.
 
 ## Validaciones mínimas
 
 Según la estructura de cada proyecto, verifica:
 
-- Markdown legible y sin enlaces rotos conocidos;
-- YAML válido en `.ia-dos.yaml` y front matter;
+- Markdown legible;
+- enlaces relativos afectados sin roturas conocidas;
+- YAML válido cuando exista;
 - rutas y nombres coherentes;
-- navegación desde `index.md` cuando corresponda;
+- navegación desde el home vigente;
 - ausencia de secretos o datos no permitidos;
-- distinción explícita entre implementado, planificado y desconocido;
-- ausencia de duplicación innecesaria de fuentes de verdad;
+- separación explícita entre implementado, decidido/no implementado, pendiente y desconocido;
+- ausencia de duplicación innecesaria;
 - preservación del contenido fuera de alcance;
-- diff limitado a las rutas autorizadas.
+- diff limitado a rutas autorizadas.
 
-Cuando exista tooling de validación, la tarea debe indicar los comandos exactos. Cuando no exista, el agente debe realizar una revisión manual reproducible y reportarla.
+Cuando exista tooling de validación, la tarea debe indicar los comandos exactos. Cuando no exista, realiza una revisión manual reproducible y repórtala.
 
 ## Git y pull request
 
-Por defecto, una actualización significativa de la wiki debe:
+Branch, commit, push, pull request y merge son capacidades separadas y deben estar autorizizadas explícitamente por la tarea.
 
-- realizarse en una branch dedicada;
-- producir commits intencionales;
-- abrir un pull request revisable;
-- incluir resumen, fuentes, rutas modificadas y validaciones;
-- no fusionarse sin autorización explícita.
-
-Los cambios pequeños y reversibles pueden utilizar un flujo más ligero cuando el proyecto lo autorice, pero siempre deben conservar trazabilidad y evidencia.
+No asumas que una actualización documental puede fusionarse automáticamente por ser de bajo riesgo.
 
 ## Revisión
 
-El Project Orchestrator y la persona responsable deben revisar:
+El Cycle Owner y la persona responsable deben revisar:
 
 - si el contenido corresponde a decisiones o evidencia reales;
-- si las hipótesis siguen identificadas como tales;
-- si se modificaron únicamente las páginas autorizadas;
+- si el estado técnico está respaldado;
+- si hipótesis y desconocidos siguen identificados;
+- si se modificaron únicamente las rutas autorizadas;
 - si el diff preserva conocimiento vigente;
 - si las validaciones son suficientes;
-- si el cambio puede fusionarse.
+- si aparece conocimiento nuevo que requiera otra decisión.
 
 Una afirmación del coding agent no reemplaza la revisión del artefacto.
 
 ## Regla principal
 
 ```text
-El Project Orchestrator y 90 gobiernan el conocimiento.
-El coding agent materializa la LLM Wiki.
-Git y el pull request trazan el cambio.
-La persona responsable autoriza el cierre.
+Conversation Space gobierna el conocimiento
+Coding agent materializa cuando está autorizado
+Wiki conserva estado durable
+Execution Report aporta evidencia del cambio
 ```
