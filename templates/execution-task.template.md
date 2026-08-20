@@ -4,11 +4,25 @@ Consulta:
 
 - `docs/execution/execution-task-types.md`;
 - `docs/execution/source-and-artifact-authority.md`;
-- `docs/orchestration/agent-role-and-artifact-loop.md`.
+- `docs/orchestration/agent-role-and-artifact-loop.md`;
+- `docs/orchestration/typed-artifact-routing.md`.
+
+## Encabezado obligatorio
+
+```text
+Artifact Type: Execution Task
+Destination Role: Coding Agent — Execution
+Expected Output: Execution Report
+Forbidden Output: ampliar alcance | aprobar el propio resultado | iniciar otra unidad
+Cycle ID: [CYCLE-ID O NO APLICA]
+Task ID: [TASK-ID]
+```
+
+El mecanismo de transporte o almacenamiento no cambia este contrato. Si la tarea usa Exchange Protocol v0, el `Task ID` puede ser el identificador autocontenido de Exchange y `Cycle ID` puede declararse `NO APLICA` cuando no exista un ciclo separado.
 
 ## Identificación
 
-- Cycle ID: `[CYCLE-ID]`
+- Cycle ID: `[CYCLE-ID O NO APLICA]`
 - ID: `[TASK-ID]`
 - Título: `[TÍTULO BREVE]`
 - Estado: `Propuesta | Aprobada | En ejecución | Bloqueada | Completada | Cancelada`
@@ -20,30 +34,25 @@ Consulta:
 - Tipo secundario, solo si es inseparable: `[TIPO O NINGUNO]`
 - Responsable humano: `[ROL O PERSONA]`
 - Coding agent o entorno: `[ROL O HERRAMIENTA DISPONIBLE]`
-- Agent Session: `[RESULTADO, POR EJEMPLO BOOTSTRAP]`
+- Agent Session o Execution Cell: `[NOMBRE O NO APLICA]`
 - Rol activo: `Coding Agent — Execution`
 - Implementation Plan aprobado: `[REFERENCIA O NO APLICA]`
 - Acceso a IA-DOS: `Embedded Contract | Remote Repository | Local Reference`
 - Referencia local de IA-DOS: `[RUTA O NO DISPONIBLE]`
 
-Incluye `templates/agent-role-contract.template.md` como contrato embebido.
+Incluye `templates/agent-role-contract.template.md` como contrato embebido cuando corresponda.
 
-El tipo clasifica el trabajo, pero no concede permisos.
+El tipo clasifica el trabajo, pero no concede permisos. Una Execution Cell conserva continuidad operacional, pero no sustituye el rol receptor, el Cycle Owner ni las autorizaciones de esta tarea.
 
-## Contrato de sesión
+## Contrato de sesión o célula
 
-Abre una sesión independiente para esta ejecución. No reutilices la sesión de planificación.
+La frontera de autorización entre planificación y ejecución debe ser explícita.
 
-Cuando la herramienta permita nombrar sesiones, usa exactamente el nombre declarado en `Agent Session`.
+Cuando el proyecto use una `Execution Cell` persistente, puede reutilizar la conversación activa de esa célula para múltiples Execution Tasks mientras siga respondiendo bien. Reutilizar la conversación no reutiliza permisos de tareas anteriores.
 
-Ejemplo:
+Cuando el proyecto use sesiones independientes, no reutilices una sesión de planificación como si ya tuviera autorización de ejecución.
 
-```text
-PLAN — BOOTSTRAP  → planificación de solo lectura
-BOOTSTRAP         → ejecución autorizada
-```
-
-Cuando la herramienta no permita nombrarla, declara el nombre lógico en el Execution Report.
+La política de persistencia de conversaciones de planificación permanece separada de este contrato y no se resuelve por esta plantilla.
 
 ## Objetivo
 
@@ -77,13 +86,13 @@ No copies toda la historia del proyecto.
 |---|---|---|---|---|
 | `[RECURSO]` | `[ROL]` | `[ÁMBITO]` | `[LECTURA / ESCRITURA / ACCIÓN]` | `[LÍMITES]` |
 
-Incluye obligatoriamente las instrucciones locales aplicables del repositorio o entorno, por ejemplo `AGENTS.md`, archivos equivalentes, convenciones de contribución o políticas técnicas. Si no existen, decláralo.
+Incluye las instrucciones locales aplicables del repositorio o entorno, por ejemplo `AGENTS.md`, archivos equivalentes, convenciones de contribución o políticas técnicas. Si no existen, decláralo.
 
 ## Acceso al método
 
 La tarea debe ser autosuficiente.
 
-- usa el contrato embebido;
+- usa el contrato embebido cuando corresponda;
 - consulta la fuente remota cuando esté disponible;
 - usa una referencia local compartida cuando haya sido declarada;
 - no clones IA-DOS dentro del repositorio del producto;
@@ -97,7 +106,8 @@ Proyectos/
 ├── 00-ia-dos/
 └── [Proyecto]/
     ├── [proyecto-app]/
-    └── [proyecto-wiki]/
+    ├── [proyecto-wiki]/
+    └── [proyecto-exch]/
 ```
 
 ## Readiness del entorno
@@ -197,13 +207,16 @@ No registres propuestas como estado implementado.
 ## Encabezado de retorno obligatorio
 
 ```text
-Artifact: Execution Report
+Artifact Type: Execution Report
+Destination Role: Cycle Owner — Conversation Space
+Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memoria | Ninguna
+Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
-Cycle ID: [CYCLE-ID]
-Agent Session: [RESULTADO]
+Cycle ID: [CYCLE-ID O NO APLICA]
+Agent Session o Execution Cell: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Decisión requerida: Aprobar | Corregir | Revertir | Escalar
+Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
 ```
 
 ## Entrega requerida
@@ -218,7 +231,7 @@ El coding agent debe devolver un `Execution Report` al destino declarado, incluy
 - fuera de alcance respetado;
 - desviaciones, riesgos y decisiones pendientes;
 - estado del entorno y del control de versiones;
-- actualización durable recomendada;
+- conocimiento potencialmente durable o actualización durable recomendada;
 - una sola siguiente acción.
 
-El coding agent no determina que su trabajo quedó aprobado y no inicia automáticamente el siguiente ciclo.
+El coding agent no determina que su trabajo quedó aprobado y no inicia automáticamente el siguiente ciclo o tarea.
