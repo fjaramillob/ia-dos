@@ -58,7 +58,9 @@ El estado del reporte describe la ejecución; la decisión posterior pertenece a
 
 ## `Exchange Protocol v0`
 
-Perfil opcional de identificación, persistencia y transporte para conservar `TASK` y `REPORT` fuera de las conversaciones.
+Perfil opcional de identificación, persistencia y transporte **manual** para conservar `Execution Task` y `Execution Report` fuera de las conversaciones.
+
+En v0 no almacena por defecto Planning Tasks, Implementation Plans, backlog o memoria durable. Tampoco define watchers, triggers, polling, sincronización automática ni una máquina de estados.
 
 No crea un tipo nuevo de Execution Task o Execution Report y no sustituye memoria, implementación ni backlog.
 
