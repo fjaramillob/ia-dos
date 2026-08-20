@@ -108,6 +108,28 @@ status/current-state.md
 
 como núcleo inicial, con `decisions/` y `sources/` disponibles para conocimiento durable real.
 
+### Exchange, cuando corresponda
+
+Exchange no forma parte obligatoria del bootstrap de un proyecto nuevo.
+
+Créalo sólo cuando conservar `Execution Task` y `Execution Report` fuera de la conversación aporte una ventaja operacional concreta.
+
+Consulta [Crear o conectar Exchange Protocol v0](bootstrap-exchange.md).
+
+Una estructura posible es:
+
+```text
+nombre-proyecto-exch/
+├── inbox/
+├── outbox/
+├── archive/
+└── templates/
+    ├── TASK.md
+    └── REPORT.md
+```
+
+No crees `REGISTRY.md`, contador compartido, watcher, trigger ni automatización en v0.
+
 ## Git
 
 Cada recurso puede tener su propio repositorio Git, compartir un monorepo o no usar Git todavía, según la decisión del proyecto.
@@ -186,6 +208,8 @@ Registra sólo las que existan:
 | Método IA-DOS | `[VERSIÓN / COMMIT / REFERENCIA]` |
 | Dirección conversacional | `[PROJECT, GEM O EQUIVALENTE]` |
 
+Exchange no reemplaza backlog ni memoria durable. Si ambos existen, registra cada recurso por separado.
+
 ## Verificación
 
 Antes de cerrar:
@@ -195,6 +219,7 @@ Antes de cerrar:
 - [ ] Sólo se crearon recursos autorizados.
 - [ ] No se eligió stack ni arquitectura implícitamente.
 - [ ] La memoria, si se creó, usa directamente el starter vigente.
+- [ ] Exchange, si se creó, tiene una razón operacional concreta y no contiene automatización asumida.
 - [ ] No existen secretos.
 - [ ] Git, commits o remotes sólo se usaron cuando estaban autorizados.
 - [ ] Las rutas reales fueron reportadas.
@@ -213,4 +238,6 @@ Detente antes de escribir cuando:
 
 Si el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) devuelve `BOOTSTRAP REQUIRED`, continúa con [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
-Si devuelve `PASS`, continúa con la siguiente Planning Task o Execution Task sin crear documentación adicional por ceremonia.
+Si el proyecto decidió adoptar Exchange, configúralo con [Crear o conectar Exchange Protocol v0](bootstrap-exchange.md).
+
+Después continúa con la siguiente Planning Task o Execution Task sin crear componentes adicionales por ceremonia.
