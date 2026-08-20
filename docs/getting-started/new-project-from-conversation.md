@@ -91,7 +91,7 @@ Solo vuelve a `00` cuando exista una reorientación real: cambio de objetivo, co
 
 La memoria durable se construye de forma progresiva a partir de conocimiento confirmado. No copies conversaciones completas en la Wiki ni obligues al coding agent a leerla completa.
 
-El gate específico para asegurar un bootstrap mínimo de memoria antes de depender de contexto histórico se define por separado en la guía de memoria y no debe improvisarse dentro de este recorrido.
+El `Memory Bootstrap Gate` todavía no está definido en esta fase. Su contrato se cerrará en la Fase 3 junto con el Wiki Starter. Hasta entonces, no presentes un gate inexistente como regla vigente ni dependas exclusivamente de contexto histórico que sólo viva en conversaciones cuando una tarea necesite reutilizarlo de forma durable.
 
 ## Resultado esperado
 
