@@ -25,7 +25,7 @@ memory:
   sources: "[sources/ | RUTA_EQUIVALENTE | NO_APLICA]"
 
 work:
-  task_source: "[EXCHANGE | GITHUB_ISSUES | OTHER | NO_APLICA]"
+  execution_task_source: "[EXCHANGE | GITHUB_ISSUES | OTHER | NO_APLICA]"
 
 verification:
   require_evidence: true
