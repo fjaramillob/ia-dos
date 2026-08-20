@@ -90,15 +90,13 @@ Abre `90` cuando exista trabajo real de:
 
 ## Starter recomendado para una Wiki nueva
 
-El starter actual es deliberadamente pequeño:
+El contenido de `templates/wiki-starter/` es deliberadamente pequeño:
 
 ```text
 nombre-proyecto-wiki/
 ├── 00-home.md
 ├── project-brief.md
 ├── AGENTS.md
-├── .ia-dos.yaml
-│
 ├── status/
 │   └── current-state.md
 ├── decisions/
@@ -107,7 +105,7 @@ nombre-proyecto-wiki/
     └── README.md
 ```
 
-La copia física de `.ia-dos.yaml` se genera desde `templates/adoption.template.yaml`; no vive dentro de `templates/wiki-starter/`.
+Cuando el proyecto necesite una adopción reproducible, agrega `.ia-dos.yaml` desde `templates/adoption.template.yaml`. El manifiesto es opcional y no forma parte física de `templates/wiki-starter/`.
 
 No crees por defecto:
 
@@ -173,9 +171,9 @@ Conserva referencias que merecen trazabilidad propia. Una fuente no se convierte
 
 Define cómo los agentes deben mantener la memoria: Markdown portable, estado vigente, enlaces relativos, no duplicación, no secretos y detención ante contradicciones relevantes.
 
-### `.ia-dos.yaml`
+### `.ia-dos.yaml`, cuando se adopta
 
-Declara la adopción de IA-DOS cuando el proyecto necesita una configuración reproducible. Usa `templates/adoption.template.yaml`.
+Declara la adopción de IA-DOS cuando el proyecto necesita una configuración reproducible. Usa `templates/adoption.template.yaml` y registra la ruta real desde `00-home.md` sólo si el archivo existe.
 
 ## Estructura que crece por conocimiento
 
