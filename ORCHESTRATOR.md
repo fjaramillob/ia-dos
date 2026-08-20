@@ -84,8 +84,6 @@ No existe un dispatcher obligatorio. Un Conversation Space autorizado puede diri
 
 Todo bloque transferible declara suficiente información para que el receptor valide rol, salida esperada y permisos antes de actuar.
 
-El contrato clásico puede usar:
-
 ```text
 Artifact Type: [TIPO]
 Destination Role: [ROL]
@@ -106,7 +104,9 @@ Tipos válidos:
 - Execution Resume;
 - Execution Report.
 
-Exchange Protocol v0 puede usar su identificador autocontenido en lugar de exigir un contador o registro central. Consulta `docs/execution/execution-cells-and-exchange.md`.
+El mecanismo de transporte no crea tipos adicionales. Exchange Protocol v0 puede aportar un `Task ID` autocontenido, persistencia y transporte manual, pero una tarea en Exchange sigue siendo `Artifact Type: Execution Task` y conserva el mismo contrato operativo.
+
+Consulta `docs/orchestration/typed-artifact-routing.md` y `docs/execution/execution-cells-and-exchange.md`.
 
 ## Specialist Handoff
 
@@ -116,11 +116,12 @@ Transfiere gobierno o una decisión a otro Conversation Space. No autoriza inspe
 
 - preparada por el especialista;
 - ejecutada por Coding Agent — Planning;
-- puede usar una sesión `PLAN — [RESULTADO]`;
 - solo lectura;
 - una incertidumbre dominante;
 - produce Implementation Plan;
 - vuelve al mismo Cycle Owner.
+
+Puede usar un identificador lógico de sesión cuando aporte. IA-DOS no exige abrir una conversación de planificación nueva por cada tarea únicamente por convención de nombre.
 
 Usa por defecto `templates/planning-task-compact.template.md`.
 
@@ -169,17 +170,24 @@ La aprobación autoriza solo la tarea presentada.
 
 ## Execution Task
 
-- aprobada por el Cycle Owner;
-- ejecutada por Coding Agent — Execution;
-- dirigida a la `Execution Cell` adecuada cuando el proyecto use ese modelo;
-- objetivo único;
-- permisos explícitos y no acumulativos;
+Existe un único contrato semántico de `Execution Task`, independientemente de si se entrega por chat, archivo, issue o Exchange.
+
+Toda Execution Task:
+
+- es aprobada por el Cycle Owner;
+- es ejecutada por Coding Agent — Execution;
+- puede dirigirse a una `Execution Cell` cuando el proyecto usa ese modelo;
+- mantiene objetivo único;
+- declara alcance y fuera de alcance;
+- declara autoridad y acceso relevantes;
+- declara permisos y acciones externas de forma explícita y no acumulativa;
+- incluye criterios, verificaciones y condiciones de detención suficientes;
 - produce Execution Report;
 - no autoriza automáticamente commit, push, merge, despliegue, producción, datos, costes o siguiente unidad.
 
 La conversación de una Execution Cell puede reutilizarse para múltiples tareas mientras siga respondiendo bien. Reutilizar la conversación no reutiliza permisos de tareas anteriores.
 
-Para Exchange v0 usa `templates/exchange-task-v0.template.md` cuando convenga un intercambio manual y persistente fuera del chat.
+Para Exchange v0 puede utilizarse `templates/exchange-task-v0.template.md`. Esa plantilla es un perfil compacto de una Execution Task canónica, no un contrato alternativo.
 
 ## Execution Resume
 
@@ -195,16 +203,28 @@ Reanuda la misma Execution Task cuando una condición bloqueante fue resuelta si
 
 - Environment Readiness Report: autorizar ejecución, resolver dependencia, corregir preflight o escalar;
 - Implementation Plan: aprobar, corregir, rechazar o escalar;
-- Execution Report: cerrar, corregir, revertir o escalar.
+- Execution Report: cerrar, corregir, revertir, revisar memoria o escalar.
+
+En Execution Report separa siempre:
+
+```text
+Estado de ejecución
+COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+
+Decisión requerida
+APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
+```
 
 El coding agent no cambia ownership, no aprueba su resultado y no inicia otro ciclo o tarea.
 
 ## Acceso al método
 
-Usa Embedded Contract, Remote Repository o Local Reference. No clones IA-DOS silenciosamente ni dentro del producto.
+Usa Embedded Contract, Remote Repository o Local Reference cuando aporte. No clones IA-DOS silenciosamente ni dentro del producto.
 
 ## Memoria durable
 
 Registra solo decisiones y estado confirmado. Las propuestas permanecen como propuestas y el estado implementado requiere evidencia.
 
 La Wiki debe poder consumirse selectivamente y no debe copiarse completa en cada tarea. Cuando se utilice como base Markdown local, debe seguir siendo portable y navegable por humanos, Obsidian y agentes. Consulta `docs/foundations/durable-memory-and-obsidian.md`.
+
+Exchange conserva historial operacional cuando el proyecto lo adopta; no sustituye la memoria durable ni la implementación.
