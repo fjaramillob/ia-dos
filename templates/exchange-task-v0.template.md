@@ -1,94 +1,154 @@
-# IA-DOS — Execution Task v0
+# IA-DOS — Exchange Execution Task v0
 
-**ID:** `PROJECT-ORIGIN-CELL-YYYYMMDD-HHMMSS`  
-**Título:** Título breve y descriptivo de la acción  
-**Origen:** `00 | 10 | 20 | 50 | 90 | otro dominio autorizado`  
-**Execution Cell:** `CELL`  
-**Estado:** `READY`
+Exchange v0 conserva una `Execution Task` canónica usando un identificador autocontenido y un formato compacto para intercambio manual persistente.
+
+```text
+Artifact Type: Execution Task
+Destination Role: Coding Agent — Execution
+Expected Output: Execution Report
+Forbidden Output: ampliar alcance | autoaprobar | iniciar otra unidad
+Cycle ID: NO APLICA | [CYCLE-ID SI EL PROYECTO YA USA UNO]
+Task ID: PROJECT-ORIGIN-CELL-YYYYMMDD-HHMMSS
+Execution Cell: CELL
+Cycle Owner: [CONVERSATION SPACE]
+Destino del reporte: [CONVERSATION SPACE]
+Estado: READY
+Título: [TÍTULO BREVE]
+Origen: [00 | 10 | 20 | 30 | 40 | 50 | 90 | OTRO DOMINIO AUTORIZADO]
+```
 
 ## Objetivo
 
-Describir el resultado concreto que debe conseguirse con esta tarea.
+Describir el resultado concreto, terminable y verificable que debe conseguirse.
 
-Debe expresar qué debe quedar resuelto, no reconstruir la historia que originó la instrucción.
+Expresa qué debe quedar resuelto, no la historia que originó la instrucción.
 
 ## Contexto durable necesario
 
-Incluir únicamente hechos vigentes del proyecto necesarios para ejecutar correctamente esta tarea.
+Incluir únicamente hechos vigentes necesarios para ejecutar correctamente esta tarea.
 
-Este contexto debe provenir de la memoria durable cuando corresponda.
+Este bloque es el extracto seleccionado por el Orchestrator cuando no conviene exigir lectura directa de toda la memoria durable.
 
-Si no se requiere contexto durable adicional:
+Si no se requiere contexto adicional:
 
 `Ninguno.`
 
-## Instrucción
+## Referencias de autoridad
 
-Describir qué debe realizar el ejecutor.
+Declarar únicamente los recursos relevantes para esta ejecución.
 
-La instrucción debe ser suficientemente precisa para permitir la ejecución, pero no debe prescribir decisiones locales de implementación que el agente pueda resolver correctamente inspeccionando el repositorio.
+| Recurso | Rol | Autoridad para | Acceso | Referencia |
+|---|---|---|---|---|
+| `[RECURSO]` | `[MEMORIA / IMPLEMENTACIÓN / EVIDENCIA / REFERENCIA]` | `[ÁMBITO]` | `[LECTURA / ESCRITURA / ACCIÓN]` | `[RUTA, COMMIT, VERSIÓN O FECHA]` |
 
-El ejecutor puede inspeccionar el repositorio, determinar los archivos involucrados, tomar decisiones locales de implementación y ejecutar las validaciones necesarias, siempre que respete el objetivo, las restricciones y las decisiones vigentes del proyecto.
-
-## Restricciones
-
-Incluir solamente las restricciones aplicables a esta tarea.
-
-Por defecto:
-
-- no modificar elementos fuera del alcance necesario;
-- no alterar decisiones de producto o arquitectura vigentes;
-- no presentar como implementado aquello que solo esté decidido o planificado;
-- no realizar commits, push, deploys ni otras acciones externas salvo autorización explícita;
-- no modificar la Wiki como consecuencia automática de una implementación.
-
-Agregar o eliminar restricciones cuando la naturaleza de la tarea lo requiera.
-
-## Criterios de aceptación
-
-Definir resultados verificables que permitan determinar si la tarea está correctamente completada.
-
-- Criterio verificable 1.
-- Criterio verificable 2.
-- Criterio verificable 3.
-
-Evitar criterios subjetivos cuando puedan expresarse mediante comportamiento observable, tests, build, estado del repositorio u otra evidencia.
-
-## Referencias Wiki
-
-Indicar páginas de memoria durable relacionadas con la tarea.
-
-Estas referencias sirven para trazabilidad y navegación y **no implican que el coding agent deba leerlas**.
-
-Ejemplo:
-
-- `architecture/runtime.md`
-- `product/financial-model.md`
-
-Si no corresponde:
-
-`Ninguna.`
+No usar una referencia genérica como `ver Wiki` cuando una ruta concreta sea necesaria.
 
 ## Lectura requerida
 
 Indicar exclusivamente documentos que el ejecutor debe leer antes de realizar la tarea.
 
-No utilizar esta sección para proporcionar referencias opcionales.
+Las referencias de autoridad o Wiki no implican lectura automática.
 
 Si el TASK ya contiene todo el contexto necesario:
 
 `Ninguna.`
 
+## Instrucción
+
+Describir qué debe realizar el ejecutor.
+
+La instrucción debe permitir decisiones locales de implementación que puedan resolverse correctamente inspeccionando las fuentes autorizadas, sin conceder autoridad para redefinir producto, arquitectura, alcance o seguridad.
+
+## Alcance autorizado
+
+Incluido:
+
+- `[CAMBIO AUTORIZADO]`
+
+Fuera de alcance:
+
+- `[CAMBIO NO AUTORIZADO]`
+
+Zonas modificables:
+
+- `[RUTA, RECURSO O ÁMBITO]`
+
+Zonas prohibidas:
+
+- `[RUTA, RECURSO O ÁMBITO]`
+
+## Capacidades y acciones externas
+
+Declarar sólo las relevantes para esta tarea.
+
+- lectura: `[AUTORIZADA / NO AUTORIZADA]`
+- escritura: `[AUTORIZADA / NO AUTORIZADA]`
+- branch: `[AUTORIZADO / NO AUTORIZADO / NO APLICA]`
+- commit: `[AUTORIZADO / NO AUTORIZADO / NO APLICA]`
+- push: `[AUTORIZADO / NO AUTORIZADO / NO APLICA]`
+- pull request: `[AUTORIZADO / NO AUTORIZADO / NO APLICA]`
+- merge: `[AUTORIZADO / NO AUTORIZADO / NO APLICA]`
+- despliegue o producción: `[AUTORIZADO / NO AUTORIZADO / NO APLICA]`
+- datos, servicios externos o costes: `[AUTORIZACIÓN EXPLÍCITA / NO AUTORIZADO / NO APLICA]`
+
+Una autorización de una tarea anterior no se hereda.
+
+## Restricciones
+
+Agregar únicamente restricciones específicas que no estén ya expresadas por alcance o capacidades.
+
+Por defecto:
+
+- no alterar decisiones de producto o arquitectura vigentes;
+- no presentar como implementado aquello que sólo esté decidido o planificado;
+- no modificar memoria durable como consecuencia automática de una implementación salvo autorización explícita;
+- no incorporar resultados independientes descubiertos durante la ejecución.
+
+## Criterios de aceptación
+
+- [ ] `[RESULTADO OBSERVABLE]`
+- [ ] `[RESULTADO OBSERVABLE]`
+
+## Verificaciones
+
+- `[COMANDO, REVISIÓN O PROCEDIMIENTO]`
+- evidencia esperada: `[SALIDA O PRUEBA]`
+
+Si una verificación no puede ejecutarse, debe reportarse explícitamente.
+
+## Condiciones de detención
+
+Detenerse cuando:
+
+- falte información crítica;
+- una fuente autorizada contradiga el estado real;
+- exista trabajo previo que pueda perderse;
+- sea necesario tocar una zona o usar una capacidad no autorizada;
+- falle una verificación crítica;
+- aparezca un riesgo relevante de seguridad, datos o coste;
+- la tarea revele resultados independientes que deban convertirse en otra unidad.
+
+## Referencias Wiki
+
+Rutas relacionadas para trazabilidad y navegación. **Referenciar no significa leer.**
+
+- `[RUTA]`
+
+Si no corresponde:
+
+`Ninguna.`
+
 ## Resultado esperado
 
-Al finalizar, devolver un `Execution Report` utilizando exactamente el mismo ID de esta tarea.
+Devuelve un `Execution Report` con exactamente el mismo `Task ID`.
 
-El reporte debe indicar:
+El reporte debe separar:
 
-- resultado;
-- cambios realizados;
-- validaciones ejecutadas;
-- desviaciones o problemas;
-- pendientes;
+- estado de ejecución;
+- resultado y cambios;
+- validaciones y evidencia;
+- desviaciones, problemas y pendientes;
 - conocimiento potencialmente durable;
-- decisión requerida.
+- decisión requerida del Cycle Owner.
+
+No apruebes tu propio resultado ni inicies otra tarea.
