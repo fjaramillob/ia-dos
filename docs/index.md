@@ -8,7 +8,7 @@ La primera adopción sigue este orden:
 
 1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
 2. Entrega una descripción breve y las fuentes disponibles.
-3. Abre `00 — Dirección y definición` o `00 — Descubrimiento y adopción`.
+3. Abre `00 — Dirección y orquestación`; usa modo `definición inicial` para un producto nuevo o `descubrimiento y adopción` para uno existente.
 4. Clasifica la brecha con el [Registro de tópicos](orchestration/topic-routing-registry.md), única lista normativa de Conversation Spaces.
 5. Abre solo el Conversation Space que desbloquee el siguiente resultado.
 6. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
@@ -21,7 +21,7 @@ La primera adopción sigue este orden:
 13. Devuelve el artefacto al Cycle Owner declarado.
 14. Escala a `00` solo cuando exista reorientación real.
 
-Si la plataforma no puede navegar el repositorio canónico, usa únicamente [IA-DOS Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) como distribución offline vigente. Los bundles y addenda heredados se conservan por compatibilidad y no deben combinarse para un onboarding nuevo.
+Si la plataforma no puede navegar el repositorio canónico, usa `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md` como contrato offline mínimo. No combines bundles o addenda heredados para un onboarding nuevo. `bundles/ia-dos-current-offline-pack.md` sólo debe usarse cuando su encabezado declare sincronización con la versión o commit adoptado.
 
 ## Contratos operativos
 
@@ -57,15 +57,16 @@ Estas guías son opciones de implementación, no requisitos normativos del méto
 ## Orquestación
 
 - [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
-- [IA-DOS Current Offline Pack](../bundles/ia-dos-current-offline-pack.md)
+- [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Registro de tópicos](orchestration/topic-routing-registry.md)
-- [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md)
+- [Propiedad del ciclo](orchestration/cycle-ownership.md)
 - [Tipado de artefactos](orchestration/typed-artifact-routing.md)
 - [Roles y sesiones](orchestration/agent-role-and-artifact-loop.md)
 - [Compresión de contexto](orchestration/context-compression-by-authority.md)
-- [Instrucciones persistentes](../templates/project-instructions.template.md)
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
+
+El [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) se conserva como artefacto de distribución, pero no debe tratarse como vigente hasta que su encabezado confirme sincronización con la versión adoptada.
 
 ## Planificación
 
