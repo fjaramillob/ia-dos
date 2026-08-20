@@ -26,7 +26,7 @@ Agrega enlaces a nuevas páginas sólo cuando exista conocimiento real que merez
 - Implementación: `[RUTA O URL]`
 - Trabajo pendiente: `[ISSUES, BACKLOG U OTRO MECANISMO]`
 - Historial operacional / Exchange: `[RUTA O NO APLICA]`
-- IA-DOS adoptado: [`.ia-dos.yaml`](.ia-dos.yaml)
+- Manifiesto IA-DOS: `[RUTA A .ia-dos.yaml O NO APLICA]`
 
 ## Regla de uso
 
