@@ -68,12 +68,14 @@ Execution Cells
 - la política de persistencia de conversaciones de planificación permanece abierta y no debe inferirse por analogía.
 
 Exchange Protocol v0
-- Exchange es opcional;
-- sirve para conservar TASK/REPORT fuera de las conversaciones;
+- Exchange es opcional y se adopta sólo cuando conservar historial operacional aporte valor;
+- en v0 conserva `Execution Task` y `Execution Report`, no Planning Task, Implementation Plan, backlog ni memoria durable;
 - no reemplaza la Wiki, el backlog ni la implementación;
 - usa el mismo contrato semántico de Execution Task y Execution Report;
 - el Task ID puede usar `{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}`;
-- cuando no exista un ciclo separado, `Cycle ID` puede ser `NO APLICA`.
+- cuando no exista un ciclo separado, `Cycle ID` puede ser `NO APLICA`;
+- `inbox`, `outbox` y `archive` son carpetas manuales, no una máquina de estados;
+- no inventes `REGISTRY.md`, contador central, watcher, trigger, polling ni automatización en v0.
 
 Memoria durable
 - la conversación no es memoria durable;
