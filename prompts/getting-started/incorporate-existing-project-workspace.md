@@ -1,104 +1,114 @@
 # Prompt para incorporar un proyecto existente al workspace
 
-Este prompt está dirigido a Codex, Claude Code, Antigravity u otro agente con acceso al sistema de archivos y Git.
+Este prompt está dirigido a un coding agent con acceso al sistema de archivos y Git.
 
 ```text
+Artifact Type: Planning Task
+Destination Role: Coding Agent — Planning
+Expected Output: Implementation Plan
+Forbidden Output: mover archivos | crear Wiki | modificar código | alterar Git | ejecutar cambios
+Cycle ID: [CYCLE-ID O NO APLICA]
+Task ID: [TASK-ID]
+
 Objetivo
-Incorporar formalmente un proyecto existente al workspace IA-DOS sin alterar su historia, mover archivos a ciegas ni modificar código.
+Inspeccionar un proyecto existente y proponer una adopción IA-DOS que preserve su estructura real, historia y fuentes de verdad.
 
 Primera fase
-Trabaja en modo lectura.
+Trabaja únicamente en modo lectura.
 
 Antes de actuar
 1. Detecta el sistema operativo.
-2. Identifica la ruta absoluta del proyecto existente.
+2. Identifica rutas locales y repositorios relevantes.
 3. Detecta repositorios Git anidados o relacionados.
 4. Reporta remotes, rama principal y `git status`.
-5. Identifica documentación, wiki, scripts, pipelines, despliegues y archivos de configuración relevantes.
-6. Señala si existen cambios locales no identificados.
-7. No asumas que debes mover o renombrar el proyecto.
+5. Identifica documentación o memoria durable existente.
+6. Identifica scripts, pipelines, despliegues y dependencias de rutas que podrían verse afectadas por un movimiento.
+7. Señala cambios locales no identificados.
+8. No asumas que app y Wiki deben separarse.
+9. No asumas que el proyecto debe moverse al workspace recomendado.
 
 Clasificación requerida
-Determina cuál escenario aplica:
-A. app y wiki ya separadas;
-B. app sin wiki;
-C. app y documentación en el mismo repositorio;
-D. proyecto fuera del workspace recomendado;
+Determina cuál situación aplica mejor:
+A. implementación y memoria ya separadas;
+B. implementación sin memoria durable estructurada;
+C. implementación y documentación en el mismo repositorio;
+D. proyecto fuera del workspace habitual;
 E. monorepo;
 F. estructura ambigua o múltiples repositorios sin relación confirmada.
 
-Acciones permitidas en modo lectura
+Memory Bootstrap Gate
+Evalúa si la siguiente unidad conocida depende de decisiones o contexto que sólo viven en conversaciones.
+
+Resultado posible:
+PASS
+→ no es necesario crear memoria adicional antes de esa unidad
+
+BOOTSTRAP REQUIRED
+→ recomienda un checkpoint durable mínimo
+
+No reconstruyas toda la historia para evaluar el gate.
+
+Acciones permitidas
 - listar carpetas relevantes;
 - leer configuración no sensible;
 - ejecutar comandos Git de solo lectura;
-- identificar rutas y dependencias estructurales;
-- preparar una propuesta de adopción;
-- registrar riesgos y contradicciones.
+- identificar rutas y autoridad de los recursos;
+- inspeccionar la memoria existente;
+- evaluar el Memory Bootstrap Gate;
+- preparar una propuesta reversible de adopción;
+- registrar riesgos, contradicciones y desconocidos.
 
-Acciones prohibidas sin autorización adicional
+Acciones prohibidas
 - mover o renombrar carpetas;
-- ejecutar `git init` en un repositorio existente;
-- cambiar remotes;
-- cambiar rama principal;
-- crear commits;
+- ejecutar `git init`;
+- cambiar remotes o rama principal;
+- crear commits, push o pull requests;
+- crear una Wiki nueva;
 - borrar o reemplazar documentación;
 - copiar secretos;
 - crear repositorios remotos;
 - modificar código, pipelines o despliegues.
 
-Propuesta de adopción
-Entrega una propuesta con:
-- ruta actual de la app;
-- ruta recomendada de la app;
-- ruta propuesta o existente de la wiki;
-- modelo: app/wiki separadas, monorepo o excepción documentada;
+Implementation Plan esperado
+Incluye:
+- estructura detectada;
+- fuentes de verdad y autoridad observada;
+- estado Git;
+- memoria durable existente o ausencia de ella;
+- resultado del Memory Bootstrap Gate;
+- modelo de adopción recomendado: estructura actual, app/Wiki separadas, monorepo u otra configuración;
 - riesgos de mover o no mover;
-- impacto sobre rutas, scripts, pipelines y colaboradores;
-- pasos reversibles;
-- decisiones que requieren aprobación.
+- pasos mínimos y reversibles;
+- una primera Execution Task candidata únicamente si existe evidencia suficiente;
+- decisiones que requieren aprobación del Cycle Owner.
 
-Segunda fase
-Solo después de aprobación explícita, ejecuta las acciones autorizadas para:
-- clonar el repositorio en una carpeta vacía;
-- crear una wiki hermana;
-- crear un `index.md` mínimo;
-- inicializar Git en una wiki nueva;
-- registrar rutas y excepciones.
+Si el gate requiere crear una Wiki Markdown nueva, la Execution Task candidata debe:
+- usar `templates/wiki-starter/`;
+- evitar `index.md` provisional;
+- no crear `tasks/`, `context-packs/`, `log.md` ni páginas vacías;
+- copiar `.ia-dos.yaml` desde `templates/adoption.template.yaml` sólo cuando esté dentro del alcance;
+- declarar rutas y permisos explícitos.
 
 Condiciones de detención
 Detente cuando:
-- `git status` muestre cambios no identificados;
+- `git status` muestre cambios no identificados que impidan una inspección segura;
 - los remotes no coincidan con lo esperado;
-- existan repositorios anidados no comprendidos;
-- mover el proyecto pueda romper rutas, pipelines o despliegues;
-- no esté clara la ubicación de secretos;
-- la documentación contradiga la implementación;
-- falte autorización para cualquier escritura;
-- no pueda determinarse la fuente de verdad de la implementación.
+- existan repositorios relacionados cuya función no se comprenda;
+- mover recursos pueda romper rutas, pipelines o despliegues;
+- la documentación contradiga la implementación de forma que impida proponer estado vigente;
+- falte acceso de lectura necesario;
+- no pueda determinarse qué recurso demuestra la implementación.
 
-Validaciones obligatorias
+Validaciones
+- ninguna escritura realizada;
 - historia Git preservada;
 - remotes sin cambios;
-- ningún archivo movido sin autorización;
-- rutas absolutas registradas;
-- app y wiki identificadas;
-- excepción documentada cuando no se usa la estructura recomendada;
-- ausencia de secretos en los reportes;
-- siguiente paso definido.
+- rutas reales registradas;
+- fuentes de verdad identificadas;
+- Memory Bootstrap Gate justificado con evidencia;
+- ninguna topología impuesta por defecto;
+- ausencia de secretos en el reporte.
 
-Reporte final
-Entrega:
-1. sistema operativo;
-2. estructura detectada;
-3. repositorios y rutas;
-4. estado Git;
-5. documentación o wiki existente;
-6. clasificación del escenario;
-7. propuesta adoptada;
-8. acciones ejecutadas;
-9. acciones omitidas;
-10. riesgos y decisiones pendientes;
-11. siguiente paso recomendado.
-
-No inicies cambios funcionales ni refactorizaciones durante esta tarea.
+Entrega
+Devuelve un Implementation Plan al Cycle Owner. No ejecutes la propuesta ni abras otra unidad.
 ```
