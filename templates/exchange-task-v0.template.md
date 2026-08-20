@@ -2,6 +2,8 @@
 
 Exchange v0 conserva una `Execution Task` canónica usando un identificador autocontenido y un formato compacto para intercambio manual persistente.
 
+Este perfil no introduce una máquina de estados. La presencia del archivo en `inbox/` indica únicamente que forma parte del flujo activo de Exchange.
+
 ```text
 Artifact Type: Execution Task
 Destination Role: Coding Agent — Execution
@@ -12,10 +14,17 @@ Task ID: PROJECT-ORIGIN-CELL-YYYYMMDD-HHMMSS
 Execution Cell: CELL
 Cycle Owner: [CONVERSATION SPACE]
 Destino del reporte: [CONVERSATION SPACE]
-Estado: READY
 Título: [TÍTULO BREVE]
 Origen: [00 | 10 | 20 | 30 | 40 | 50 | 90 | OTRO DOMINIO AUTORIZADO]
 ```
+
+Nombre de archivo recomendado:
+
+```text
+PROJECT-ORIGIN-CELL-YYYYMMDD-HHMMSS-TASK.md
+```
+
+El título humano vive dentro del archivo y no forma parte del ID ni del nombre de archivo.
 
 ## Objetivo
 
