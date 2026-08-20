@@ -3,32 +3,37 @@
 ## Encabezado de retorno
 
 ```text
-Artifact: Execution Report
+Artifact Type: Execution Report
+Destination Role: Cycle Owner — Conversation Space
+Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memoria | Ninguna
+Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
-Cycle ID: [CYCLE-ID]
-Agent Session: [RESULTADO]
+Cycle ID: [CYCLE-ID O NO APLICA]
+Agent Session o Execution Cell: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Decisión requerida: Aprobar | Corregir | Revertir | Escalar
+Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
 ```
+
+El `Estado` describe el resultado de la ejecución. `Decisión requerida` describe la acción que corresponde al Cycle Owner después de revisar la evidencia. No uses una decisión como estado de ejecución.
 
 ## Identificación
 
 - Task ID: `[TASK-ID]`
-- Cycle ID: `[CYCLE-ID]`
+- Cycle ID: `[CYCLE-ID O NO APLICA]`
 - Título: `[TÍTULO]`
 - Tópico de origen: `[00 | 10 | 20 | 30 | 40 | 50 | 90]`
 - Cycle Owner: `[CONVERSATION SPACE]`
 - Destino del reporte: `[CONVERSATION SPACE]`
 - Espacio de escalamiento: `[NORMALMENTE 00 — DIRECCIÓN Y ORQUESTACIÓN]`
-- Agent Session: `[RESULTADO]`
+- Agent Session o Execution Cell: `[NOMBRE O NO APLICA]`
 - Rol ejecutado: `Coding Agent — Execution`
 - Tipo solicitado: `[TIPO]`
 - Tipo realizado: `[TIPO]`
 - Entorno: `[LOCAL / REMOTO / COMBINADO / OTRO]`
 - Rama, versión o equivalente: `[REFERENCIA O NO APLICA]`
 - Commit, cambio remoto o equivalente: `[REFERENCIA O NO APLICA]`
-- Estado: `Completada | Parcial | Bloqueada | Fallida | No iniciada`
+- Estado: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`
 
 ## Resumen
 
@@ -104,6 +109,14 @@ Indica si el tipo o el objetivo cambiaron durante el trabajo.
 - `Ninguna`, o
 - `[CONDICIÓN Y ACCIÓN]`
 
+## Conocimiento potencialmente durable
+
+Indica únicamente hechos nuevos descubiertos durante la ejecución que podrían ser relevantes para la memoria durable del proyecto.
+
+- `[HECHO NUEVO Y EVIDENCIA]`
+
+Usa `Ninguno` cuando no corresponda. No declares estos hechos como memoria oficial ni modifiques la Wiki automáticamente salvo autorización explícita de la tarea.
+
 ## Actualización durable recomendada
 
 - `[RECURSO O CONOCIMIENTO]`
@@ -114,16 +127,20 @@ No presentes propuestas como implementación.
 
 Selecciona una sola:
 
-- `Aprobar y cerrar la unidad`;
-- `Solicitar una corrección acotada`;
-- `Revertir`;
-- `Escalar una decisión indispensable`.
+- `APROBAR Y CERRAR`;
+- `CORREGIR`;
+- `REVERTIR`;
+- `ESCALAR`;
+- `REVISAR MEMORIA`;
+- `NINGUNA`.
+
+Usa `REVISAR MEMORIA` cuando el resultado técnico pueda cerrarse, pero el reporte haya identificado conocimiento nuevo que requiere evaluación antes de incorporarse a memoria durable.
 
 El coding agent no aprueba su propio resultado y no inicia automáticamente la siguiente unidad.
 
 ## Próxima acción recomendada
 
-Propón una sola acción verificable al Cycle Owner.
+Propón una sola acción verificable al Cycle Owner cuando corresponda.
 
 No escales a `00` salvo que exista reorientación, conflicto entre dominios, expansión importante de alcance o decisión estratégica.
 
@@ -136,5 +153,5 @@ No escales a `00` salvo que exista reorientación, conflicto entre dominios, exp
 - [ ] Respeté la autoridad y acceso de cada recurso.
 - [ ] No expuse secretos o datos sensibles.
 - [ ] No cambié el Cycle Owner ni abrí otro ciclo.
-- [ ] No reutilicé la sesión de planificación para ejecutar.
+- [ ] Respeté la frontera entre planificación y ejecución.
 - [ ] Este reporte vuelve al destino indicado.
