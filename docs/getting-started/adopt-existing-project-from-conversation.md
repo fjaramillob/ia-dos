@@ -12,9 +12,9 @@ Clasifica el producto objetivo como existente cuando el propio producto tiene ev
 
 Una migración, reconstrucción o producto sucesor es un atributo, no un tercer escenario.
 
-## 3. Abrir `00 — Descubrimiento y adopción`
+## 3. Abrir `00 — Dirección y orquestación`
 
-`00` debe comprender solo lo necesario para orientar la siguiente unidad:
+Para un producto existente, `00` trabaja en modo `descubrimiento y adopción` y debe comprender solo lo necesario para orientar la siguiente unidad:
 
 - qué producto existe;
 - qué está implementado, parcial, planificado, deprecado o desconocido;
@@ -102,6 +102,7 @@ El gate específico de bootstrap mínimo de memoria se define separadamente y no
 ## Resultado esperado
 
 - producto clasificado con evidencia;
+- `00 — Dirección y orquestación` usado en modo `descubrimiento y adopción`;
 - estado real comprendido sin inventar historia;
 - organización mínima de conversaciones;
 - registro canónico usado para enrutar tópicos;
