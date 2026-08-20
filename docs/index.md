@@ -15,11 +15,12 @@ La primera adopción sigue este orden:
 7. Decide entre `Planning Task`, `Environment Preflight`, `Execution Task` o `Execution Resume`.
 8. Tipifica el bloque y valida el rol receptor.
 9. Confirma la autoridad de fuentes, artefactos y entornos.
-10. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
-11. Cuando exista ejecución recurrente, define solo las [Execution Cells](execution/execution-cells-and-exchange.md) que aporten continuidad real.
-12. Reutiliza la conversación activa de una Execution Cell mientras siga respondiendo bien; no abras una conversación por cada tarea.
-13. Devuelve el artefacto al Cycle Owner declarado.
-14. Escala a `00` solo cuando exista reorientación real.
+10. Si la siguiente unidad depende de historia conversacional, evalúa el [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
+11. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
+12. Cuando exista ejecución recurrente, define sólo las [Execution Cells](execution/execution-cells-and-exchange.md) que aporten continuidad real.
+13. Reutiliza la conversación activa de una Execution Cell mientras siga respondiendo bien; no abras una conversación por cada tarea.
+14. Devuelve el artefacto al Cycle Owner declarado.
+15. Escala a `00` sólo cuando exista reorientación real.
 
 Si la plataforma no puede navegar el repositorio canónico, usa `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md` como contrato offline mínimo. No combines bundles o addenda heredados para un onboarding nuevo. `bundles/ia-dos-current-offline-pack.md` sólo debe usarse cuando su encabezado declare sincronización con la versión o commit adoptado.
 
@@ -32,6 +33,7 @@ Si la plataforma no puede navegar el repositorio canónico, usa `ORCHESTRATOR.md
 - [Roles, sesiones y ciclo de artefactos](orchestration/agent-role-and-artifact-loop.md): conserva identidad, permisos y retorno.
 - [Execution Cells y Exchange Protocol v0](execution/execution-cells-and-exchange.md): reduce conversaciones de ejecución y conserva `TASK/REPORT` fuera del chat cuando aporte.
 - [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md): separa referencias durables, delta y contrato operativo.
+- [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md): evita depender de conocimiento que exista sólo en conversaciones.
 - [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa una unidad aprobada.
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md): gobierna qué demuestra cada recurso y qué acceso está permitido.
 
@@ -50,7 +52,8 @@ Estos contratos no crean una secuencia obligatoria ni imponen herramientas o est
 - [Instalar IA-DOS](getting-started/install-ia-dos.md)
 - [Crear un proyecto nuevo en el workspace](getting-started/create-new-project-workspace.md)
 - [Incorporar un proyecto existente](getting-started/incorporate-existing-project-workspace.md)
-- [Crear o revisar la LLM Wiki](getting-started/bootstrap-llm-wiki.md)
+- [Crear o conectar la memoria durable](getting-started/bootstrap-llm-wiki.md)
+- [Aplicar las plantillas mínimas de adopción](getting-started/apply-starter-templates.md)
 
 Estas guías son opciones de implementación, no requisitos normativos del método.
 
@@ -91,10 +94,10 @@ La política de persistencia o renovación de conversaciones de planificación s
 - [Exchange Task v0](../templates/exchange-task-v0.template.md)
 - [Exchange Report v0](../templates/exchange-report-v0.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
-- [Actualizar la LLM Wiki](execution/updating-the-llm-wiki.md)
+- [Actualizar la memoria durable](execution/updating-the-llm-wiki.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
 
-La Execution Task compacta y la completa representan el mismo contrato semántico con distinto nivel de detalle. Exchange v0 añade identificación y persistencia manual del par `TASK/REPORT`, pero no crea una Execution Task diferente.
+La Execution Task compacta y la completa representan el mismo contrato semántico con distinto nivel de detalle. Exchange v0 añade identificación y persistencia manual del par `TASK/REPORT`, pero no crea una Execution Task diferente. `Wiki Update Task` es un perfil documental de la misma Execution Task canónica.
 
 ## Fundamentos
 
@@ -104,6 +107,7 @@ La Execution Task compacta y la completa representan el mismo contrato semántic
 - [Modelo de adopción](foundations/adoption-model.md)
 - [Fuentes de verdad](foundations/source-of-truth.md)
 - [Responsabilidades humanas y de la IA](foundations/human-ai-responsibilities.md)
+- [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md)
 - [Memoria durable portable y Obsidian](foundations/durable-memory-and-obsidian.md)
 - [Terminología](foundations/terminology.md)
 - [Criterios editoriales](foundations/editorial-guidelines.md)
@@ -129,6 +133,8 @@ La Execution Task compacta y la completa representan el mismo contrato semántic
 - [Exchange Report v0](../templates/exchange-report-v0.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
+- [Adoption Manifest](../templates/adoption.template.yaml)
+- [Wiki Starter](../templates/wiki-starter/00-home.md)
 
 ## Estado
 
