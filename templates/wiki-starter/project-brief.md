@@ -1,8 +1,10 @@
 # Project brief
 
+Última actualización: [AAAA-MM-DD]
+
 ## Propósito
 
-[QUÉ SE QUIERE CONSTRUIR Y POR QUÉ]
+[QUÉ SE QUIERE CONSEGUIR Y POR QUÉ]
 
 ## Usuario principal
 
@@ -12,7 +14,11 @@
 
 [PROBLEMA CONFIRMADO]
 
-## Alcance inicial
+## Promesa de valor
+
+[RESULTADO O VALOR ESPERADO]
+
+## Alcance vigente
 
 - [ALCANCE CONFIRMADO]
 
@@ -20,26 +26,20 @@
 
 - [ELEMENTO EXCLUIDO]
 
-## Comportamiento esperado
+## Principios o restricciones no negociables
 
-[FLUJOS Y RESULTADOS ESPERADOS]
+- [RESTRICCIÓN O PRINCIPIO CONFIRMADO]
 
-## Dirección visual
+## Decisiones durables relevantes
 
-[PREFERENCIAS CONFIRMADAS O `Por definir`]
+- [DECISIÓN Y ENLACE, O `Ninguna todavía`]
 
-## Restricciones
+## Supuestos aún no confirmados
 
-- [TIEMPO, COSTE, SEGURIDAD, TECNOLOGÍA U OTRA]
-
-## Decisiones confirmadas
-
-- [DECISIÓN O `Ninguna todavía`]
-
-## Supuestos
-
-- [SUPUESTO PENDIENTE DE VALIDACIÓN]
+- [SUPUESTO]
 
 ## Preguntas abiertas
 
 - [PREGUNTA]
+
+Este documento describe dirección durable. El estado de implementación vive en [Estado actual](status/current-state.md) y debe respaldarse con evidencia.
