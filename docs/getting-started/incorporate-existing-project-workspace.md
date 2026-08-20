@@ -27,6 +27,8 @@ Registra:
 - estado del working tree;
 - repositorios relacionados;
 - documentación o memoria existente;
+- backlog o mecanismo de seguimiento existente;
+- historial operacional o Exchange existente, si lo hay;
 - pipelines, despliegues e integraciones relevantes;
 - dependencias de rutas que podrían romperse al mover recursos.
 
@@ -81,6 +83,8 @@ ruta-existente/proyecto-app/
 otra-ruta/proyecto-wiki/
 ```
 
+Exchange puede vivir como recurso hermano, subdirectorio, repositorio independiente o no existir.
+
 La topología elegida debe preservar historia, accesos y rutas reales. No necesita coincidir con un ejemplo mientras las fuentes de verdad y la forma de acceso sean claras.
 
 ## Paso 4 — Incorporar la implementación sin alterar su historia
@@ -120,7 +124,24 @@ Si debe crearse una Wiki Markdown nueva, usa `templates/wiki-starter/` y [Crear 
 
 No crees un `index.md` provisional ni una carpeta de tareas dentro de la Wiki por defecto.
 
-## Paso 7 — Registrar la adopción
+## Paso 7 — Evaluar Exchange por separado
+
+La necesidad de Exchange no se deriva automáticamente de tener una Wiki o varias conversaciones.
+
+Adóptalo sólo cuando conservar `Execution Task` y `Execution Report` fuera del chat aporte continuidad o trazabilidad real.
+
+Si ya existe un mecanismo equivalente:
+
+- conserva su historia;
+- determina si es backlog, historial operacional o ambas cosas;
+- evita duplicar las mismas tareas completas en dos lugares;
+- no renombres ni migres artefactos sólo para coincidir con IA-DOS.
+
+Si se decide crear Exchange v0, consulta [Crear o conectar Exchange Protocol v0](bootstrap-exchange.md).
+
+No migres conversaciones históricas por defecto ni inventes automatización.
+
+## Paso 8 — Registrar la adopción
 
 Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templates/adoption.template.yaml` y registra sólo recursos reales:
 
@@ -131,9 +152,12 @@ Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templ
 | Memoria | ruta, URL o `NO APLICA` |
 | Backlog | ruta, URL o `NO APLICA` |
 | Exchange | ruta, URL o `NO APLICA` |
+| Fuente de Execution Tasks | Exchange, Issues, otro o `NO APLICA` |
 | IA-DOS | versión o commit adoptado |
 | Project Orchestrator | entorno conversacional utilizado |
 | Excepciones | motivo e impacto cuando existan |
+
+Backlog y Exchange deben declararse por separado aunque físicamente vivan en la misma plataforma.
 
 ## Verificación
 
@@ -146,6 +170,8 @@ Antes de considerar el proyecto incorporado, confirma:
 - [ ] El modelo de adopción refleja la estructura real.
 - [ ] El Memory Bootstrap Gate fue evaluado cuando la siguiente unidad depende de contexto histórico.
 - [ ] La memoria existente fue preservada o el starter vigente se utilizó para una Wiki nueva.
+- [ ] Exchange, si se adopta, está separado conceptualmente del backlog y de la memoria durable.
+- [ ] No se importaron conversaciones históricas ni se asumió automatización sin decisión explícita.
 - [ ] No se expusieron secretos.
 - [ ] Las rutas reales fueron reportadas.
 
@@ -159,10 +185,13 @@ Detente cuando:
 - mover recursos pueda romper rutas, pipelines o despliegues;
 - la documentación contradiga la implementación de forma relevante;
 - falte autorización para clonar, mover, inicializar Git o crear archivos;
-- no pueda determinarse qué recurso demuestra la implementación actual.
+- no pueda determinarse qué recurso demuestra la implementación actual;
+- no pueda distinguirse si un mecanismo existente es backlog, historial operacional o memoria durable.
 
 ## Siguiente paso
 
-Si el Memory Bootstrap Gate requiere memoria, crea o actualiza sólo el checkpoint mínimo y vuelve a la unidad que originó esa necesidad.
+Si el Memory Bootstrap Gate requiere memoria, crea o actualiza sólo el checkpoint mínimo.
 
-Si el gate pasa, continúa con la siguiente Planning Task, Environment Preflight o Execution Task sin convertir la adopción en un proyecto paralelo.
+Si se decidió adoptar Exchange, configura únicamente el flujo manual v0.
+
+Después vuelve a la Planning Task, Environment Preflight o Execution Task que originó la adopción. No conviertas la incorporación en un proyecto paralelo.
