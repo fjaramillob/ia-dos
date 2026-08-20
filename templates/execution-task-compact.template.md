@@ -9,7 +9,7 @@ Expected Output: Execution Report
 Forbidden Output: trabajo fuera de alcance, autoaprobación o siguiente unidad
 
 Método: IA-DOS
-Cycle ID: [CYCLE-ID]
+Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [EXEC-ID]
 Agent Session: [RESULTADO]
 Cycle Owner: [CONVERSATION SPACE]
@@ -77,14 +77,16 @@ Cuando una fuente durable no sea accesible, usa solo el extracto indispensable c
 CONTRATO DE RETORNO
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
+Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memoria | Ninguna
+Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [EXEC-ID]
-Cycle ID: [CYCLE-ID]
+Cycle ID: [CYCLE-ID O NO APLICA]
 Agent Session: [RESULTADO]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Decisión requerida: Aprobar | Corregir | Revertir | Escalar
+Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
 
-Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, pruebas y evidencia, límites respetados, desviaciones y una sola siguiente acción. No apruebes tu propio trabajo ni inicies otra unidad.
+Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, pruebas y evidencia, límites respetados, desviaciones, conocimiento durable potencial cuando exista y una sola siguiente acción. No apruebes tu propio trabajo ni inicies otra unidad.
 ```
 
 ## Regla de compresión
