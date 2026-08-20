@@ -8,6 +8,14 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- definido el `Memory Bootstrap Gate` para impedir que una nueva unidad dependa de conocimiento relevante que exista únicamente en conversaciones, sin imponer una Wiki completa por ceremonia;
+- modernizado el Wiki Starter hacia un checkpoint Markdown mínimo con `00-home.md`, `project-brief.md`, `status/current-state.md`, `decisions/`, `sources/` y `AGENTS.md`;
+- retirados del Wiki Starter vigente `tasks/`, `context-packs/`, `CORE`, `log.md` y la página de arquitectura vacía; los proyectos existentes pueden conservar esos patrones cuando sigan aportando valor;
+- alineada la memoria durable con Markdown estándar, enlaces relativos canónicos y consumo desde Obsidian sin dependencia de wikilinks o plugins;
+- actualizado `adoption.template.yaml` para declarar implementación, memoria, backlog y Exchange como recursos independientes y opcionales;
+- alineados los recorridos y prompts de workspace para no imponer app/wiki separadas ni crear un `index.md` transitorio antes del bootstrap;
+- alineado `Wiki Update Task` como perfil documental del contrato canónico de `Execution Task`, no como tipo independiente;
+- conectada la compresión de contexto con el Memory Bootstrap Gate para evitar repetir indefinidamente contexto chat-only en tareas sucesivas;
 - alineado el onboarding para que `topic-routing-registry.md` sea la única lista normativa de Conversation Spaces;
 - unificado `00 — Dirección y orquestación` como nombre canónico del espacio inicial, usando `definición inicial` y `descubrimiento y adopción` como modos de entrada;
 - actualizado el fallback offline para usar `ORCHESTRATOR.md` + `templates/project-instructions.template.md` hasta que `ia-dos-current-offline-pack.md` declare sincronización con la versión adoptada;
@@ -30,6 +38,7 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Added
 
+- contrato `Memory Bootstrap Gate` con resultados `PASS` y `BOOTSTRAP REQUIRED`, sin porcentajes de cobertura ni umbrales artificiales por tiempo, mensajes o cantidad de tareas;
 - `Execution Cell` como contexto durable de ejecución definido por proyecto;
 - política para mantener una sola conversación activa por Execution Cell mientras siga respondiendo bien;
 - renovación de conversaciones solo ante degradación o contaminación de contexto, sin crear una célula nueva;
@@ -117,7 +126,7 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - prompts operativos para crear o incorporar proyectos con condiciones de detención;
 - manifiesto `.ia-dos.yaml` para declarar adopción;
 - plantilla `AGENTS.md` para repositorios de aplicación;
-- wiki starter con `project-brief`, estado actual, arquitectura, registro, fuentes, decisiones, tareas y `CORE`;
+- wiki starter inicial con `project-brief`, estado actual, arquitectura, registro, fuentes, decisiones, tareas y `CORE`, posteriormente simplificado durante la consolidación de memoria durable;
 - guía para aplicar y verificar las plantillas mínimas de adopción;
 - plantilla de `Execution Task`;
 - plantilla de `Execution Report`;
