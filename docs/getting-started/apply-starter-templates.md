@@ -10,6 +10,8 @@ Las plantillas no deben copiarse sin revisión. Adáptalas al proyecto y complet
 templates/
 ├── adoption.template.yaml
 ├── AGENTS.template.md
+├── exchange-task-v0.template.md
+├── exchange-report-v0.template.md
 └── wiki-starter/
     ├── 00-home.md
     ├── project-brief.md
@@ -22,7 +24,9 @@ templates/
         └── README.md
 ```
 
-El starter ya no crea `tasks/`, `context-packs/`, `log.md` ni una página de arquitectura vacía. Esos elementos aparecen sólo cuando existe una necesidad real.
+El Wiki Starter ya no crea `tasks/`, `context-packs/`, `log.md` ni una página de arquitectura vacía. Esos elementos aparecen sólo cuando existe una necesidad real.
+
+Exchange tampoco se crea automáticamente. Se adopta únicamente cuando conservar `Execution Task` y `Execution Report` fuera de las conversaciones aporta valor operacional.
 
 ## Antes de crear la Wiki
 
@@ -32,6 +36,24 @@ Si la siguiente unidad no depende de conocimiento que sólo vive en conversacion
 
 Cuando el gate devuelve `BOOTSTRAP REQUIRED`, crea o actualiza sólo el checkpoint durable necesario.
 
+## Antes de crear Exchange
+
+Evalúa si existe una razón real para conservar TASK/REPORT fuera del chat.
+
+Cuando corresponda, consulta [Crear o conectar Exchange Protocol v0](bootstrap-exchange.md).
+
+No confundas esta decisión con el Memory Bootstrap Gate:
+
+```text
+Wiki / memoria durable
+→ conserva conocimiento vigente
+
+Exchange
+→ conserva historial operacional TASK/REPORT
+```
+
+Un proyecto puede necesitar uno, ambos o ninguno en un momento determinado.
+
 ## Destino posible
 
 Una topología válida es:
@@ -40,20 +62,27 @@ Una topología válida es:
 nombre-proyecto/
 ├── nombre-proyecto-app/
 │   └── AGENTS.md
-└── nombre-proyecto-wiki/
-    ├── .ia-dos.yaml
-    ├── 00-home.md
-    ├── project-brief.md
-    ├── AGENTS.md
-    ├── status/
-    │   └── current-state.md
-    ├── decisions/
-    │   └── README.md
-    └── sources/
-        └── README.md
+├── nombre-proyecto-wiki/
+│   ├── .ia-dos.yaml
+│   ├── 00-home.md
+│   ├── project-brief.md
+│   ├── AGENTS.md
+│   ├── status/
+│   │   └── current-state.md
+│   ├── decisions/
+│   │   └── README.md
+│   └── sources/
+│       └── README.md
+└── nombre-proyecto-exch/          # opcional
+    ├── inbox/
+    ├── outbox/
+    ├── archive/
+    └── templates/
+        ├── TASK.md
+        └── REPORT.md
 ```
 
-También son válidos monorepos, documentación dentro de la app u otras configuraciones. No reorganices un proyecto existente sólo para coincidir con este ejemplo.
+También son válidos monorepos, documentación dentro de la app, Exchange dentro de otro recurso u otras configuraciones. No reorganices un proyecto existente sólo para coincidir con este ejemplo.
 
 ## Paso 1 — Crear el manifiesto de adopción
 
@@ -72,10 +101,12 @@ Completa:
 - modelo de adopción;
 - Project Orchestrator utilizado;
 - rutas o URLs reales de implementación, memoria, backlog y Exchange cuando exista;
-- fuente de tareas;
+- fuente de Execution Tasks cuando se declare;
 - excepciones reales.
 
 No declares `main`, `latest` o `current` como versión adoptada cuando necesites reproducibilidad.
+
+Exchange y backlog son recursos distintos. Por ejemplo, GitHub Issues puede conservar trabajo pendiente mientras Exchange conserva las tareas efectivamente delegadas y sus reportes.
 
 ## Paso 2 — Incorporar `AGENTS.md` en la implementación cuando corresponda
 
@@ -97,7 +128,7 @@ Adapta sólo reglas reales:
 
 No agregues comandos, herramientas o rutas que el proyecto no tenga.
 
-## Paso 3 — Crear el checkpoint de Wiki
+## Paso 3 — Crear el checkpoint de Wiki cuando corresponda
 
 Copia `templates/wiki-starter/` hacia la ubicación elegida para la memoria Markdown.
 
@@ -113,9 +144,22 @@ Completa primero:
 
 No crees arquitectura, producto u operaciones sólo para llenar carpetas.
 
-## Paso 4 — Separar estado de intención
+## Paso 4 — Crear Exchange cuando corresponda
 
-Durante el bootstrap usa estados explícitos:
+Si el proyecto adopta Exchange v0:
+
+1. crea `inbox/`, `outbox/`, `archive/` y `templates/` o equivalentes claros;
+2. copia `templates/exchange-task-v0.template.md` como `templates/TASK.md` dentro del almacén Exchange;
+3. copia `templates/exchange-report-v0.template.md` como `templates/REPORT.md`;
+4. registra la ruta real en `.ia-dos.yaml` cuando exista manifiesto;
+5. no crees `REGISTRY.md`, contador compartido, watcher ni automatización;
+6. no migres conversaciones históricas por defecto.
+
+La copia de TASK/REPORT queda asociada a la versión de IA-DOS adoptada. No se actualiza silenciosamente cuando cambie el framework.
+
+## Paso 5 — Separar estado de intención
+
+Durante el bootstrap de memoria usa estados explícitos:
 
 ```text
 Implementado
@@ -129,17 +173,18 @@ En un proyecto nuevo declara expresamente qué todavía no existe.
 
 En un proyecto existente deriva el estado de evidencia o de fuentes autorizadas. Cuando no haya evidencia suficiente, usa `Desconocido`.
 
-## Paso 5 — Verificar navegación y autoridad
+## Paso 6 — Verificar navegación y autoridad
 
 Confirma:
 
-- `00-home.md` permite localizar el conocimiento principal;
+- `00-home.md` permite localizar el conocimiento principal cuando existe Wiki;
 - los enlaces Markdown relativos funcionan desde la estructura real;
 - `.ia-dos.yaml` utiliza rutas o referencias coherentes;
 - la implementación puede localizar la memoria cuando sea necesario;
 - la memoria identifica dónde demostrar implementación y trabajo pendiente;
 - la fuente de tareas no se duplica dentro de la Wiki;
-- Exchange, si existe, no se usa como memoria vigente;
+- Exchange, si existe, no se usa como memoria vigente ni backlog;
+- `inbox/`, `outbox/` y `archive/` no se interpretan como una máquina de estados automática;
 - los agentes no reciben acceso automático a todo el workspace.
 
 ## Obsidian
@@ -158,25 +203,28 @@ Las plantillas no:
 - crean arquitectura;
 - generan código;
 - crean repositorios remotos;
-- crean Exchange automáticamente;
+- adoptan Exchange automáticamente;
 - importan conversaciones históricas;
 - convierten TASK/REPORT en memoria;
+- crean watchers, triggers o sincronización;
 - sustituyen revisión humana;
 - convierten información desconocida en hechos.
 
 ## Verificación final
 
 - [ ] El Memory Bootstrap Gate está satisfecho para la siguiente unidad cuando aplica.
-- [ ] Existe un punto de entrada claro.
-- [ ] `project-brief.md` contiene dirección durable suficiente.
-- [ ] `status/current-state.md` refleja realidad comprobada.
+- [ ] Existe un punto de entrada claro para la memoria cuando se usa.
+- [ ] `project-brief.md` contiene dirección durable suficiente cuando existe Wiki.
+- [ ] `status/current-state.md` refleja realidad comprobada cuando existe Wiki.
 - [ ] Los enlaces relativos principales funcionan.
 - [ ] La implementación y otras fuentes de verdad están identificadas.
 - [ ] No se duplicaron tareas o historial operacional dentro de la Wiki.
+- [ ] Exchange sólo existe cuando aporta valor y no funciona como backlog accidental.
+- [ ] Las plantillas Exchange corresponden a la versión adoptada cuando se usa.
 - [ ] `.ia-dos.yaml` declara una versión concreta cuando se usa.
 - [ ] No existen secretos.
 - [ ] No quedan placeholders interpretables como hechos.
 
 ## Siguiente paso
 
-Después del bootstrap, continúa con la siguiente Planning Task o Execution Task que originó la necesidad de memoria. No conviertas la instalación de la Wiki en un proyecto paralelo.
+Después de aplicar sólo los componentes necesarios, continúa con la Planning Task o Execution Task que originó la adopción. No conviertas Wiki o Exchange en proyectos paralelos.
