@@ -10,9 +10,9 @@ Utiliza `prompts/getting-started/initialize-project-orchestrator.md` y entrega u
 
 Clasifica el producto objetivo como nuevo. Una migración, reconstrucción o sistema anterior usado como referencia no cambia por sí solo esta clasificación.
 
-## 3. Abrir `00 — Dirección y definición`
+## 3. Abrir `00 — Dirección y orquestación`
 
-`00` captura solo lo necesario para avanzar:
+Para un producto nuevo, `00` trabaja en modo `definición inicial` y captura solo lo necesario para avanzar:
 
 - propósito;
 - usuario principal;
@@ -96,6 +96,7 @@ El gate específico para asegurar un bootstrap mínimo de memoria antes de depen
 ## Resultado esperado
 
 - dirección inicial clara;
+- `00 — Dirección y orquestación` usado en modo `definición inicial`;
 - organización mínima de conversaciones;
 - registro canónico usado para enrutar tópicos;
 - ningún espacio abierto por rutina;
