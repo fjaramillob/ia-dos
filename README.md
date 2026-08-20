@@ -38,9 +38,7 @@ Cada bloque transferible declara su tipo, receptor y salida esperada:
 - `Execution Resume` → Coding Agent — Execution;
 - `Execution Report` → Cycle Owner.
 
-Esto evita que una conversación especialista ejecute por error una tarea destinada al coding agent.
-
-Consulta [Tipado de artefactos y validación del receptor](docs/orchestration/typed-artifact-routing.md).
+El mecanismo utilizado para transportar o almacenar un artefacto no crea otro tipo. Consulta [Tipado de artefactos y validación del receptor](docs/orchestration/typed-artifact-routing.md).
 
 ## Compresión de contexto por autoridad
 
@@ -67,7 +65,6 @@ Cuando falta inspección o diseño:
 
 ```text
 Planning Task
-→ sesión PLAN — [RESULTADO]
 → coding agent en solo lectura
 → Implementation Plan
 → revisión del Cycle Owner
@@ -77,13 +74,15 @@ La salida operativa por defecto usa la [Planning Task compacta](templates/planni
 
 El plan debe cerrar una sola decisión técnica dominante y proponer una primera unidad segura. No debe convertirse por defecto en auditoría completa, arquitectura final o roadmap integral.
 
+IA-DOS conserva una frontera explícita entre planificación y ejecución, pero todavía no impone una política universal de persistencia o renovación de conversaciones de planificación.
+
 ## Ejecución
 
 Cuando el trabajo ya está definido y aprobado:
 
 ```text
 Execution Task
-→ Execution Cell activa
+→ Execution Cell activa, cuando el proyecto usa ese modelo
 → coding agent ejecuta
 → Execution Report
 → revisión del Cycle Owner
@@ -102,11 +101,23 @@ La conversación puede renovarse por degradación o contaminación de contexto, 
 
 Consulta [Execution Cells y Exchange Protocol v0](docs/execution/execution-cells-and-exchange.md).
 
-La salida operativa existente puede seguir usando la [Execution Task compacta](templates/execution-task-compact.template.md) o la [Execution Task completa](templates/execution-task.template.md). Para un intercambio manual persistente fuera de la conversación puede utilizarse [Exchange Task v0](templates/exchange-task-v0.template.md) y [Exchange Report v0](templates/exchange-report-v0.template.md).
+## Un solo contrato de Execution Task
+
+IA-DOS mantiene un único contrato semántico de ejecución.
+
+```text
+Execution Task
+= objetivo + alcance + autoridad + permisos
++ criterios + verificaciones + condiciones de detención
+```
+
+Puede representarse con la [Execution Task compacta](templates/execution-task-compact.template.md), la [Execution Task completa](templates/execution-task.template.md) o el perfil [Exchange Execution Task v0](templates/exchange-task-v0.template.md).
+
+Exchange no debilita el contrato: sólo aporta identificación autocontenida, persistencia y transporte manual.
 
 ## Exchange Protocol v0
 
-Un proyecto puede mantener un almacén hermano de instrucciones y respuestas:
+Un proyecto puede mantener un almacén de instrucciones y respuestas:
 
 ```text
 Proyecto/
@@ -119,13 +130,17 @@ Proyecto/
     └── templates/
 ```
 
-Exchange no sustituye la Wiki ni el repositorio. Conserva el historial operacional de `TASK` y `REPORT` fuera de las conversaciones y permite que una conversación de coding agent sea reemplazable.
+Esta topología es opcional.
 
-En v0, el intercambio es manual y usa IDs autocontenidos:
+Exchange no sustituye la Wiki, el backlog ni el repositorio. Conserva el historial operacional de `TASK` y `REPORT` fuera de las conversaciones y permite reemplazar una conversación de coding agent sin perder el intercambio durable.
+
+En v0, el intercambio es manual y puede usar como `Task ID`:
 
 ```text
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
+
+El `REPORT` reutiliza exactamente el mismo `Task ID` del `TASK`. Cuando no existe un ciclo separado, `Cycle ID` puede declararse `NO APLICA`.
 
 ## Memoria durable portable
 
@@ -184,7 +199,7 @@ Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 4. Abre `00 — Dirección y definición` para un producto nuevo o `00 — Descubrimiento y adopción` para uno existente.
 5. Avanza mediante tareas tipadas que regresan al Cycle Owner.
 
-Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline consolidado actual](bundles/ia-dos-current-offline-pack.md). El pack histórico y sus addenda permanecen como referencia modular.
+Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline consolidado actual](bundles/ia-dos-current-offline-pack.md). La alineación integral del pack offline forma parte del siguiente bloque de consolidación del onboarding.
 
 ## Contratos principales
 
@@ -211,8 +226,8 @@ Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline con
 - [Execution Task compacta](templates/execution-task-compact.template.md)
 - [Execution Task completa](templates/execution-task.template.md)
 - [Execution Report](templates/execution-report.template.md)
-- [Exchange Task v0](templates/exchange-task-v0.template.md)
-- [Exchange Report v0](templates/exchange-report-v0.template.md)
+- [Exchange Execution Task v0](templates/exchange-task-v0.template.md)
+- [Exchange Execution Report v0](templates/exchange-report-v0.template.md)
 
 ## Acceso al método
 
