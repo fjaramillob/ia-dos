@@ -18,11 +18,11 @@ resources:
   exchange: "[RUTA_O_URL_O_NO_APLICA]"
 
 memory:
-  home: "00-home.md"
-  project_brief: "project-brief.md"
-  current_state: "status/current-state.md"
-  decisions: "decisions/"
-  sources: "sources/"
+  home: "[00-home.md | RUTA_EQUIVALENTE | NO_APLICA]"
+  project_brief: "[project-brief.md | RUTA_EQUIVALENTE | NO_APLICA]"
+  current_state: "[status/current-state.md | RUTA_EQUIVALENTE | NO_APLICA]"
+  decisions: "[decisions/ | RUTA_EQUIVALENTE | NO_APLICA]"
+  sources: "[sources/ | RUTA_EQUIVALENTE | NO_APLICA]"
 
 work:
   task_source: "[EXCHANGE | GITHUB_ISSUES | OTHER | NO_APLICA]"
