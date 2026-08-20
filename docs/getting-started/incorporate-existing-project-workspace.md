@@ -2,7 +2,7 @@
 
 Esta guía formaliza un proyecto que ya tiene código, documentación, repositorios o despliegues dentro de un workspace IA-DOS.
 
-El objetivo no es moverlo ni renombrarlo automáticamente. Primero se inspecciona su situación real, se define la estructura de adopción y se documentan las excepciones.
+El objetivo no es moverlo ni renombrarlo automáticamente. Primero se inspecciona su situación real, se define el modelo de adopción y se documentan únicamente las excepciones que afecten la forma de trabajo.
 
 ## Antes de comenzar
 
@@ -11,8 +11,8 @@ Debes contar con:
 - acceso al proyecto existente;
 - una ruta local conocida o un remote confirmado;
 - autorización para inspeccionar su estructura;
-- un workspace preparado;
-- IA-DOS instalado como `00-ia-dos/` o disponible por referencia.
+- un workspace elegido, cuando corresponda;
+- IA-DOS disponible por referencia remota o local.
 
 La primera fase debe realizarse en modo lectura.
 
@@ -21,185 +21,148 @@ La primera fase debe realizarse en modo lectura.
 Registra:
 
 - nombre del proyecto;
-- ruta absoluta local;
+- ruta local, cuando exista;
 - remote o remotes Git;
 - rama principal;
 - estado del working tree;
 - repositorios relacionados;
-- documentación existente;
-- ubicación de secretos y variables de entorno;
-- pipelines y despliegues;
-- integraciones externas;
-- personas o procesos que dependen de rutas actuales.
+- documentación o memoria existente;
+- pipelines, despliegues e integraciones relevantes;
+- dependencias de rutas que podrían romperse al mover recursos.
 
-No supongas que una carpeta equivale a un solo repositorio.
+No supongas que una carpeta equivale a un solo repositorio ni expongas secretos para describir su ubicación.
 
 ## Paso 2 — Clasificar la estructura existente
 
-Identifica uno de estos casos:
+Identifica cuál situación describe mejor el proyecto.
 
-### Caso A — App y wiki ya están separadas
+### Implementación y memoria ya separadas
 
-```text
-nombre-proyecto/
-├── nombre-proyecto-app/
-└── nombre-proyecto-wiki/
-```
+Verifica que ambas sigan siendo fuentes útiles y que la memoria represente estado vigente.
 
-Verifica que ambos sean repositorios independientes y que la wiki represente el estado actual.
+### Implementación sin memoria durable estructurada
 
-### Caso B — Existe app pero no wiki
+Mantén la implementación donde está. Antes de crear una Wiki hermana evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md).
 
-```text
-nombre-proyecto-app/
-```
+### Implementación y documentación en el mismo repositorio
 
-Mantén la app donde está y crea una wiki hermana solo después de confirmar la ruta objetivo.
+No separes automáticamente. Evalúa sólo si la estructura actual impide mantener o consumir conocimiento con claridad.
 
-### Caso C — App y documentación viven en el mismo repositorio
+### Proyecto fuera del workspace habitual
 
-No separes automáticamente. Evalúa:
+No lo muevas por estética. Conserva su ubicación y adopta por referencia cuando moverlo agregue riesgo sin beneficio operacional.
 
-- tamaño y complejidad del proyecto;
-- enlaces relativos;
-- automatizaciones;
-- permisos;
-- historial Git;
-- consumo de contexto;
-- utilidad real de separar.
+### Monorepo
 
-La documentación puede permanecer dentro de la app si separar agrega fricción innecesaria. Registra la excepción.
+Mantén el monorepo cuando sea una decisión real del proyecto. Documenta la ubicación de implementación y memoria sin forzar repositorios adicionales.
 
-### Caso D — El proyecto está fuera del workspace recomendado
+### Estructura ambigua
 
-No lo muevas de inmediato.
-
-Primero revisa:
-
-- rutas absolutas y relativas;
-- scripts;
-- configuraciones del editor;
-- pipelines;
-- despliegues;
-- workspaces de paquetes;
-- accesos de colaboradores;
-- integraciones que dependan de la ubicación actual.
-
-Cuando moverlo sea riesgoso, conserva su ubicación y registra la adopción por referencia.
-
-### Caso E — Monorepo
-
-Mantén el monorepo cuando sea una decisión real del proyecto.
-
-Documenta:
-
-- raíz del monorepo;
-- paquetes o aplicaciones;
-- ubicación de la documentación;
-- instrucciones de acceso para agentes;
-- excepciones respecto de la estructura app/wiki separada.
+Si existen varios repositorios, rutas o fuentes y no puede determinarse su relación, detente antes de escribir y devuelve la ambigüedad al Cycle Owner.
 
 ## Paso 3 — Elegir el modelo de adopción
 
-La decisión debe quedar en una de estas formas:
-
-### Modelo recomendado
+IA-DOS acepta, entre otros:
 
 ```text
-proyectos/
-└── nombre-proyecto/
-    ├── nombre-proyecto-app/
-    └── nombre-proyecto-wiki/
-```
-
-### Modelo con excepción documentada
-
-Ejemplos:
-
-```text
-ruta-existente/nombre-proyecto-app/
-proyectos/nombre-proyecto/nombre-proyecto-wiki/
+proyecto/
+├── proyecto-app/
+└── proyecto-wiki/
 ```
 
 ```text
-nombre-proyecto/
-└── repositorio-monorepo/
-    ├── apps/
-    ├── packages/
-    └── docs/
+repositorio-monorepo/
+├── app/
+└── docs/
 ```
 
-La excepción debe indicar motivo, impacto y forma de acceso.
+```text
+ruta-existente/proyecto-app/
+otra-ruta/proyecto-wiki/
+```
 
-## Paso 4 — Incorporar la app sin alterar su historia
+La topología elegida debe preservar historia, accesos y rutas reales. No necesita coincidir con un ejemplo mientras las fuentes de verdad y la forma de acceso sean claras.
 
-Cuando la app ya existe:
+## Paso 4 — Incorporar la implementación sin alterar su historia
+
+Cuando el repositorio ya existe:
 
 - no ejecutes `git init` nuevamente;
-- no reemplaces el remote;
+- no reemplaces remotes;
 - no cambies la rama principal;
 - no hagas commits automáticos;
-- no muevas archivos para “ordenar” sin una tarea específica;
-- no elimines documentación existente antes de sintetizarla.
+- no muevas archivos para normalizar estructura sin una tarea específica;
+- no elimines documentación antes de comprender su autoridad.
 
-Si debe clonarse dentro del workspace, utiliza una carpeta vacía y confirma el nombre objetivo antes de ejecutar `git clone`.
+Si debe clonarse, usa una carpeta vacía y confirma el destino antes de ejecutar `git clone`.
 
-## Paso 5 — Crear o conectar la wiki
+## Paso 5 — Evaluar el Memory Bootstrap Gate
 
-Si no existe una wiki:
+Antes de delegar una unidad que dependa de historia o decisiones previas pregunta:
 
-1. crea la carpeta hermana recomendada o una ubicación alternativa documentada;
-2. inicializa Git solo con autorización;
-3. crea un `index.md` mínimo;
-4. registra que la wiki está pendiente de bootstrap;
-5. continúa con la guía [Crear la LLM Wiki del proyecto](bootstrap-llm-wiki.md).
+> ¿La siguiente unidad puede ejecutarse correctamente sin reconstruir conocimiento relevante desde conversaciones?
 
-La wiki inicial debe construirse desde evidencia del repositorio y del responsable del proyecto.
+- `PASS`: continúa sin crear memoria adicional por ceremonia.
+- `BOOTSTRAP REQUIRED`: crea o conecta un checkpoint durable mínimo.
 
-## Paso 6 — Registrar la adopción
+No conviertas esta evaluación en una auditoría integral.
 
-Al finalizar, deben quedar identificados:
+## Paso 6 — Crear o conectar la memoria, cuando corresponda
+
+Si ya existe una Wiki o documentación durable:
+
+- conserva sus rutas cuando sean claras;
+- identifica su home o punto de entrada;
+- registra el estado vigente y las fuentes de verdad;
+- no renombres archivos sólo para coincidir con el starter actual.
+
+Si debe crearse una Wiki Markdown nueva, usa `templates/wiki-starter/` y [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
+
+No crees un `index.md` provisional ni una carpeta de tareas dentro de la Wiki por defecto.
+
+## Paso 7 — Registrar la adopción
+
+Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templates/adoption.template.yaml` y registra sólo recursos reales:
 
 | Elemento | Registro mínimo |
 |---|---|
-| Proyecto | nombre y `project-slug` |
-| App | ruta y remote |
-| Wiki | ruta y remote, cuando exista |
-| IA-DOS | versión o referencia adoptada |
-| Task source | GitHub Issues o mecanismo elegido |
-| Excepciones | motivo y efecto |
-| Project Orchestrator | espacio conversacional utilizado |
-
-La declaración formal se incorporará después mediante `.ia-dos.yaml`.
+| Proyecto | nombre y slug cuando exista |
+| Implementación | ruta o URL |
+| Memoria | ruta, URL o `NO APLICA` |
+| Backlog | ruta, URL o `NO APLICA` |
+| Exchange | ruta, URL o `NO APLICA` |
+| IA-DOS | versión o commit adoptado |
+| Project Orchestrator | entorno conversacional utilizado |
+| Excepciones | motivo e impacto cuando existan |
 
 ## Verificación
 
 Antes de considerar el proyecto incorporado, confirma:
 
-- [ ] La app conserva su historia Git.
-- [ ] Los remotes fueron verificados.
-- [ ] No se movieron archivos sin autorización.
-- [ ] La ruta de la app está documentada.
-- [ ] La wiki existe o su creación está planificada.
-- [ ] La separación app/wiki fue adoptada o existe una excepción documentada.
-- [ ] El Project Orchestrator conoce la ubicación de app y wiki.
+- [ ] La historia Git fue preservada.
+- [ ] Los remotes no fueron modificados sin autorización.
+- [ ] No se movieron archivos por normalización estética.
+- [ ] Las fuentes de verdad relevantes están identificadas.
+- [ ] El modelo de adopción refleja la estructura real.
+- [ ] El Memory Bootstrap Gate fue evaluado cuando la siguiente unidad depende de contexto histórico.
+- [ ] La memoria existente fue preservada o el starter vigente se utilizó para una Wiki nueva.
 - [ ] No se expusieron secretos.
-- [ ] Las rutas absolutas fueron reportadas.
-- [ ] El siguiente paso está identificado.
+- [ ] Las rutas reales fueron reportadas.
 
 ## Condiciones de detención
 
 Detente cuando:
 
-- el working tree tiene cambios no identificados;
-- el remote no coincide con lo esperado;
-- existen varios repositorios y no está clara su relación;
-- mover el proyecto puede romper rutas, pipelines o despliegues;
-- no está clara la ubicación de secretos;
-- la estructura actual contradice la documentación disponible;
-- falta autorización para clonar, mover, inicializar Git o crear archivos;
-- no puede determinarse cuál es la fuente de verdad de la implementación.
+- el working tree tenga cambios no identificados;
+- el remote no coincida con lo esperado;
+- existan repositorios relacionados cuya función no se comprenda;
+- mover recursos pueda romper rutas, pipelines o despliegues;
+- la documentación contradiga la implementación de forma relevante;
+- falte autorización para clonar, mover, inicializar Git o crear archivos;
+- no pueda determinarse qué recurso demuestra la implementación actual.
 
 ## Siguiente paso
 
-Continúa con la creación o revisión de la LLM Wiki y registra el estado real del proyecto antes de delegar cambios complejos.
+Si el Memory Bootstrap Gate requiere memoria, crea o actualiza sólo el checkpoint mínimo y vuelve a la unidad que originó esa necesidad.
+
+Si el gate pasa, continúa con la siguiente Planning Task, Environment Preflight o Execution Task sin convertir la adopción en un proyecto paralelo.
