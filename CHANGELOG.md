@@ -8,6 +8,17 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Added
 
+- `Execution Cell` como contexto durable de ejecución definido por proyecto;
+- política para mantener una sola conversación activa por Execution Cell mientras siga respondiendo bien;
+- renovación de conversaciones solo ante degradación o contaminación de contexto, sin crear una célula nueva;
+- regla explícita de que reutilizar una conversación no acumula permisos entre tareas;
+- `Exchange Protocol v0` como almacén manual de instrucciones y respuestas fuera de las conversaciones;
+- topología opcional `proyecto-app / proyecto-wiki / proyecto-exch`;
+- ID autocontenido de Exchange `{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}`;
+- plantillas `Exchange Task v0` y `Exchange Report v0`;
+- sección `Conocimiento potencialmente durable` en el reporte de Exchange;
+- guía de memoria durable portable para GitHub, Markdown, Obsidian y consumo selectivo por agentes;
+- distinción entre `Contexto durable necesario`, `Referencias Wiki` y `Lectura requerida`;
 - gate explícito para pasar al coding agent tan pronto como exista una `Execution Task` verificable;
 - guía de avance concreto y transición a Codex, Antigravity, Claude Code u otro coding agent;
 - instrucción visible para abrir el proyecto correcto, pegar un prompt listo y devolver el `Execution Report`;

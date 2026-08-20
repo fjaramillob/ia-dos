@@ -23,7 +23,7 @@ Cuando el proyecto ya está en desarrollo:
 
 - no reinicies onboarding;
 - no obligues a recrear Conversation Spaces;
-- conserva Cycle Owner, Cycle ID, Task ID y decisiones aceptadas;
+- conserva Cycle Owner, identificadores y decisiones aceptadas;
 - continúa desde el último artefacto válido;
 - vuelve a `00` solo si cambia objetivo, límites o dirección.
 
@@ -78,9 +78,13 @@ El Conversation Space que confirma el resultado lo gobierna mientras permanezca 
 
 El Cycle Owner mantiene objetivo y límites, prepara o valida tareas, revisa retornos y decide aprobar, corregir, cerrar, revertir o escalar. `00` no recibe retornos rutinarios.
 
+No existe un dispatcher obligatorio. Un Conversation Space autorizado puede dirigir su tarea a la Execution Cell adecuada sin pasar siempre por `50`.
+
 ## Tipado obligatorio
 
-Todo bloque transferible declara:
+Todo bloque transferible declara suficiente información para que el receptor valide rol, salida esperada y permisos antes de actuar.
+
+El contrato clásico puede usar:
 
 ```text
 Artifact Type: [TIPO]
@@ -102,7 +106,7 @@ Tipos válidos:
 - Execution Resume;
 - Execution Report.
 
-El receptor valida rol, salida esperada y permisos antes de actuar. Consulta `docs/orchestration/typed-artifact-routing.md`.
+Exchange Protocol v0 puede usar su identificador autocontenido en lugar de exigir un contador o registro central. Consulta `docs/execution/execution-cells-and-exchange.md`.
 
 ## Specialist Handoff
 
@@ -112,7 +116,7 @@ Transfiere gobierno o una decisión a otro Conversation Space. No autoriza inspe
 
 - preparada por el especialista;
 - ejecutada por Coding Agent — Planning;
-- sesión `PLAN — [RESULTADO]`;
+- puede usar una sesión `PLAN — [RESULTADO]`;
 - solo lectura;
 - una incertidumbre dominante;
 - produce Implementation Plan;
@@ -151,7 +155,7 @@ Debe contener evidencia, decisión recomendada, estrategia mínima, dependencias
 Antes de aprobar una Execution Task:
 
 ```text
-¿Puede una sola sesión implementarla, verificarla y reportarla
+¿Puede una unidad acotada implementarse, verificarse y reportarse
 sin mezclar resultados independientes ni tomar decisiones mayores nuevas?
 ```
 
@@ -167,20 +171,24 @@ La aprobación autoriza solo la tarea presentada.
 
 - aprobada por el Cycle Owner;
 - ejecutada por Coding Agent — Execution;
-- sesión independiente `[RESULTADO]`;
+- dirigida a la `Execution Cell` adecuada cuando el proyecto use ese modelo;
 - objetivo único;
-- permisos explícitos;
+- permisos explícitos y no acumulativos;
 - produce Execution Report;
 - no autoriza automáticamente commit, push, merge, despliegue, producción, datos, costes o siguiente unidad.
+
+La conversación de una Execution Cell puede reutilizarse para múltiples tareas mientras siga respondiendo bien. Reutilizar la conversación no reutiliza permisos de tareas anteriores.
+
+Para Exchange v0 usa `templates/exchange-task-v0.template.md` cuando convenga un intercambio manual y persistente fuera del chat.
 
 ## Execution Resume
 
 Reanuda la misma Execution Task cuando una condición bloqueante fue resuelta sin cambiar objetivo, alcance, seguridad ni arquitectura.
 
-- conserva Cycle ID y Task ID;
+- conserva el identificador de la tarea;
 - exige evidencia de la condición resuelta;
 - no crea nueva Planning Task;
-- no abre otro ciclo;
+- no abre otro ciclo por sí sola;
 - no amplía permisos.
 
 ## Retorno
@@ -189,7 +197,7 @@ Reanuda la misma Execution Task cuando una condición bloqueante fue resuelta si
 - Implementation Plan: aprobar, corregir, rechazar o escalar;
 - Execution Report: cerrar, corregir, revertir o escalar.
 
-El coding agent no cambia ownership, no aprueba su resultado y no inicia otro ciclo.
+El coding agent no cambia ownership, no aprueba su resultado y no inicia otro ciclo o tarea.
 
 ## Acceso al método
 
@@ -198,3 +206,5 @@ Usa Embedded Contract, Remote Repository o Local Reference. No clones IA-DOS sil
 ## Memoria durable
 
 Registra solo decisiones y estado confirmado. Las propuestas permanecen como propuestas y el estado implementado requiere evidencia.
+
+La Wiki debe poder consumirse selectivamente y no debe copiarse completa en cada tarea. Cuando se utilice como base Markdown local, debe seguir siendo portable y navegable por humanos, Obsidian y agentes. Consulta `docs/foundations/durable-memory-and-obsidian.md`.

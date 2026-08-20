@@ -83,25 +83,68 @@ Cuando el trabajo ya está definido y aprobado:
 
 ```text
 Execution Task
-→ sesión [RESULTADO]
+→ Execution Cell activa
 → coding agent ejecuta
 → Execution Report
 → revisión del Cycle Owner
 ```
 
-La salida operativa por defecto puede usar la [Execution Task compacta](templates/execution-task-compact.template.md). La [Execution Task completa](templates/execution-task.template.md) conserva la referencia exhaustiva para validación y casos excepcionales.
+Una `Execution Cell` conserva continuidad de ejecución para un flujo durable del proyecto. No representa una tarea ni una especialidad profesional. Cuando la herramienta permite conversaciones persistentes, se mantiene una sola conversación activa por célula mientras siga respondiendo bien.
 
-La sesión de ejecución es independiente de la sesión de planificación. El coding agent no aprueba su propio resultado ni inicia automáticamente otra unidad.
+Ejemplos posibles:
+
+```text
+App
+Wiki Sync
+```
+
+La conversación puede renovarse por degradación o contaminación de contexto, pero la célula continúa. Los permisos no se acumulan entre tareas: cada `Execution Task` vuelve a declarar su autoridad.
+
+Consulta [Execution Cells y Exchange Protocol v0](docs/execution/execution-cells-and-exchange.md).
+
+La salida operativa existente puede seguir usando la [Execution Task compacta](templates/execution-task-compact.template.md) o la [Execution Task completa](templates/execution-task.template.md). Para un intercambio manual persistente fuera de la conversación puede utilizarse [Exchange Task v0](templates/exchange-task-v0.template.md) y [Exchange Report v0](templates/exchange-report-v0.template.md).
+
+## Exchange Protocol v0
+
+Un proyecto puede mantener un almacén hermano de instrucciones y respuestas:
+
+```text
+Proyecto/
+├── proyecto-app/
+├── proyecto-wiki/
+└── proyecto-exch/
+    ├── inbox/
+    ├── outbox/
+    ├── archive/
+    └── templates/
+```
+
+Exchange no sustituye la Wiki ni el repositorio. Conserva el historial operacional de `TASK` y `REPORT` fuera de las conversaciones y permite que una conversación de coding agent sea reemplazable.
+
+En v0, el intercambio es manual y usa IDs autocontenidos:
+
+```text
+{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
+```
+
+## Memoria durable portable
+
+La Wiki conserva estado y decisiones vigentes; no debe convertirse en una copia de conversaciones o Execution Reports.
+
+Cuando el proyecto utiliza una base Markdown local, IA-DOS recomienda que sea portable entre GitHub, editores, Obsidian y coding agents. Obsidian puede actuar como interfaz humana de navegación sin convertirse en una fuente de verdad separada.
+
+El coding agent no lee toda la Wiki por defecto. Una tarea distingue entre contexto durable incluido, referencias para trazabilidad y lectura explícitamente requerida.
+
+Consulta [Memoria durable portable y consumo desde Obsidian](docs/foundations/durable-memory-and-obsidian.md).
 
 ## Roles y trazabilidad
 
-Cada tarea dirigida a un coding agent declara:
+Cada tarea dirigida a un coding agent conserva suficiente información para identificar:
 
 - rol activo;
-- Cycle ID;
-- Task ID;
-- Agent Session;
-- Cycle Owner;
+- tarea o intercambio;
+- Conversation Space que gobierna el resultado;
+- Execution Cell o sesión cuando corresponda;
 - artefacto de entrada;
 - artefacto de salida;
 - destino;
@@ -114,7 +157,7 @@ Consulta [Roles, sesiones y ciclo de artefactos](docs/orchestration/agent-role-a
 Antes de aprobar una Execution Task:
 
 ```text
-¿Puede una sola sesión implementarla, verificarla y reportarla
+¿Puede una sola unidad implementarse, verificarse y reportarse
 sin mezclar resultados independientes ni tomar decisiones mayores no resueltas?
 ```
 
@@ -152,7 +195,9 @@ Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline con
 - [Salida rápida](docs/orchestration/fast-planning-lane.md)
 - [Tipado de artefactos](docs/orchestration/typed-artifact-routing.md)
 - [Roles y sesiones](docs/orchestration/agent-role-and-artifact-loop.md)
+- [Execution Cells y Exchange v0](docs/execution/execution-cells-and-exchange.md)
 - [Compresión de contexto](docs/orchestration/context-compression-by-authority.md)
+- [Memoria durable portable](docs/foundations/durable-memory-and-obsidian.md)
 - [Autoridad de fuentes y artefactos](docs/execution/source-and-artifact-authority.md)
 
 ## Plantillas principales
@@ -166,6 +211,8 @@ Cuando la plataforma no pueda navegar el repositorio, carga el [pack offline con
 - [Execution Task compacta](templates/execution-task-compact.template.md)
 - [Execution Task completa](templates/execution-task.template.md)
 - [Execution Report](templates/execution-report.template.md)
+- [Exchange Task v0](templates/exchange-task-v0.template.md)
+- [Exchange Report v0](templates/exchange-report-v0.template.md)
 
 ## Acceso al método
 

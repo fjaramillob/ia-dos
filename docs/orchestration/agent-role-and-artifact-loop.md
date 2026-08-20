@@ -7,7 +7,7 @@ Este contrato define el intercambio repetible entre Conversation Spaces especial
 ```text
 Conversation Space especialista
 → tarea autosuficiente
-→ sesión acotada del coding agent
+→ Execution Cell activa del coding agent
 → artefacto verificable
 → revisión del Cycle Owner
 → siguiente decisión
@@ -37,14 +37,16 @@ No puede ampliar alcance, iniciar otra unidad, aprobar su propio resultado, inte
 
 ## Contrato de rol IA-DOS
 
-Toda Planning Task y Execution Task dirigida a un coding agent debe declarar:
+Toda Planning Task y Execution Task dirigida a un coding agent debe declarar el rol y la autoridad aplicables.
+
+Cuando se use el contrato clásico por ciclo puede incluir:
 
 ```text
 Método: IA-DOS
 Rol activo: Coding Agent — Planning | Coding Agent — Execution
 Cycle ID: [CYCLE-ID]
 Task ID: [TASK-ID]
-Agent Session: [NOMBRE]
+Agent Session o Execution Cell: [NOMBRE]
 Cycle Owner: [CONVERSATION SPACE]
 Artefacto de entrada: Planning Task | Execution Task
 Artefacto de salida: Implementation Plan | Execution Report
@@ -54,36 +56,65 @@ Autoridad: [SOLO LECTURA | ESCRITURA ACOTADA]
 
 También debe recordar que el coding agent no aprueba su resultado, no redefine ownership y no actúa como Project Orchestrator.
 
-## Sesiones del coding agent
+## Sesiones de planificación
 
-Usa una sesión independiente por resultado y por nivel de autorización.
+La planificación conserva una frontera visible de autorización.
 
-Para planificación:
+Para planificación puede utilizarse:
 
 ```text
 PLAN — [RESULTADO]
 ```
 
-Para ejecución:
+La sesión de planificación es de solo lectura y no se convierte automáticamente en ejecución.
+
+## Execution Cells
+
+Las tareas de ejecución no requieren una conversación nueva por resultado.
+
+Una `Execution Cell` es un contexto durable de ejecución definido por proyecto. Cuando la herramienta ofrece conversaciones persistentes, mantén una sola conversación activa por célula mientras siga respondiendo bien.
+
+Ejemplos:
 
 ```text
-[RESULTADO]
+App
+Wiki Sync
 ```
 
-Ejemplo:
+No crees células únicamente porque existan especialidades diferentes como frontend, backend, QA o DevOps. Una célula nueva se justifica cuando mantener ese contexto separado produce una ventaja operacional real.
+
+La conversación puede renovarse cuando exista evidencia de degradación o contaminación de contexto:
 
 ```text
-PLAN — BOOTSTRAP
-BOOTSTRAP
+App · 01 → cerrada
+App · 02 → activa
 ```
 
-Cuando la herramienta permita nombrar conversaciones o sesiones, crea el nombre indicado. Cuando no lo permita, abre una sesión independiente y declara el nombre lógico dentro del artefacto.
+La renovación no cambia la identidad de la célula ni obliga a reiniciar el proyecto.
 
-No reutilices la sesión de planificación para ejecutar. El cambio de sesión hace visible el cambio desde solo lectura hacia escritura autorizada.
+Consulta [Execution Cells y Exchange Protocol v0](../execution/execution-cells-and-exchange.md).
+
+## Autorización no acumulativa
+
+Reutilizar una conversación no reutiliza automáticamente los permisos de tareas anteriores.
+
+Cada `Execution Task` vuelve a delimitar:
+
+- objetivo;
+- alcance;
+- restricciones;
+- capacidades autorizadas;
+- acciones externas;
+- criterios de aceptación;
+- condiciones de detención.
+
+El coding agent no inicia la siguiente unidad por sí mismo.
 
 ## Identificadores estables
 
-Cada ciclo debe mantener una cadena trazable:
+IA-DOS admite dos esquemas según el modo operativo.
+
+### Ciclo clásico
 
 ```text
 Cycle ID: CYCLE-[RESULTADO]-[N]
@@ -93,7 +124,24 @@ Execution Task: EXEC-[RESULTADO]-[N]
 Execution Report: ER-[RESULTADO]-[N]
 ```
 
-Los identificadores no necesitan un sistema central. Deben ser consistentes dentro del ciclo y evitar mezclar versiones.
+### Exchange Protocol v0
+
+Cuando varias Conversation Spaces emiten tareas hacia Execution Cells persistentes sin un registro central compartido:
+
+```text
+{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
+```
+
+El `REPORT` reutiliza exactamente el mismo ID del `TASK`.
+
+Ejemplo:
+
+```text
+PROPACTO-10-APP-20260819-230215-TASK.md
+PROPACTO-10-APP-20260819-230215-REPORT.md
+```
+
+Los esquemas no deben mezclarse dentro de un mismo intercambio.
 
 ## Acceso a IA-DOS
 
@@ -114,7 +162,8 @@ Proyectos/
 ├── 00-ia-dos/
 └── [Proyecto]/
     ├── [proyecto-app]/
-    └── [proyecto-wiki]/
+    ├── [proyecto-wiki]/
+    └── [proyecto-exch]/
 ```
 
 Esta topología es una configuración permitida, no un requisito universal.
@@ -130,7 +179,7 @@ Si la referencia local no existe:
 
 ## Contrato de retorno
 
-Todo artefacto debe comenzar con un encabezado estable.
+Todo artefacto debe comenzar con un encabezado estable suficiente para vincularlo con su tarea.
 
 ### Implementation Plan
 
@@ -147,22 +196,26 @@ Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
 
 ### Execution Report
 
+En el flujo clásico:
+
 ```text
 Artifact: Execution Report
 Cycle ID: [CYCLE-ID]
 Execution Task ID: [TASK-ID]
-Agent Session: [RESULTADO]
+Execution Cell o Agent Session: [NOMBRE]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Decisión requerida: Aprobar | Corregir | Revertir | Escalar
 ```
 
+En Exchange v0 puede usarse la plantilla compacta `templates/exchange-report-v0.template.md`.
+
 ## Gate de revisión
 
 Al recibir un Implementation Plan, el Cycle Owner no reinicia el diagnóstico. Comprueba evidencia, tamaño y seguridad, y aprueba o corrige una sola Execution Task candidata.
 
-Al recibir un Execution Report, comprueba objetivo, alcance, criterios y evidencia. Luego cierra, emite una corrección acotada, revierte, inicia un ciclo nuevo o escala solo ante reorientación real.
+Al recibir un Execution Report, comprueba objetivo, alcance, criterios y evidencia. Luego cierra, emite una corrección acotada, revierte, inicia una nueva unidad o escala solo ante reorientación real.
 
 ## Regla principal
 
-Cada intercambio debe conservar rol, autorización, identificadores, sesión y destino. El coding agent produce artefactos; el Conversation Space especialista toma decisiones.
+Cada intercambio debe conservar rol, autorización, identificadores y destino. Las conversaciones de ejecución pueden persistir; la autoridad de cada tarea no. El coding agent produce artefactos y el Conversation Space especialista toma decisiones.
