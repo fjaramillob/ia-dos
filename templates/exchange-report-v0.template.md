@@ -1,6 +1,6 @@
 # IA-DOS — Exchange Execution Report v0
 
-Exchange v0 conserva un `Execution Report` canónico usando el mismo identificador autocontenido del TASK asociado.
+Exchange v0 conserva un `Execution Report` canónico usando exactamente el mismo identificador autocontenido del TASK asociado.
 
 ```text
 Artifact Type: Execution Report
@@ -16,7 +16,15 @@ Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
 ```
 
+Nombre de archivo recomendado:
+
+```text
+PROJECT-ORIGIN-CELL-YYYYMMDD-HHMMSS-REPORT.md
+```
+
 El `Estado` describe el resultado de la ejecución. La `Decisión requerida` describe qué debe decidir después el Cycle Owner. No mezclar ambos conceptos.
+
+La ubicación del archivo tampoco define aceptación: `outbox/` significa pendiente de revisión y `archive/` significa fuera del flujo activo después de revisión, aunque el resultado haya sido bloqueado, corregido o revertido.
 
 ## Resultado
 
@@ -95,7 +103,7 @@ Si no existieron desviaciones:
 
 Indicar trabajo relacionado que quedó fuera de esta tarea.
 
-Un pendiente no implica por sí mismo que la tarea esté incompleta.
+Un pendiente no implica por sí mismo que la tarea esté incompleta y no convierte Exchange en backlog. El trabajo que deba seguirse debe registrarse en el mecanismo de seguimiento adoptado por el proyecto.
 
 Si no existen pendientes:
 
