@@ -1,24 +1,24 @@
 # Fuentes
 
-Esta carpeta contiene o referencia materiales de origen utilizados por el proyecto.
+Esta carpeta contiene o referencia materiales de origen que merecen conservarse para comprender o verificar conocimiento de la Wiki.
 
 Ejemplos:
 
-- documentos;
-- enlaces;
+- documentación externa;
 - reportes;
 - investigaciones;
-- capturas;
-- notas sin sintetizar.
+- decisiones de terceros;
+- capturas o evidencias no almacenadas en la implementación;
+- referencias normativas.
 
-Una fuente no se convierte automáticamente en una decisión vigente.
+Una fuente no se convierte automáticamente en una decisión vigente ni en evidencia de implementación.
 
-Para cada fuente relevante registra:
+Para cada fuente relevante registra sólo lo necesario:
 
-- nombre;
+- nombre o descripción;
 - origen;
-- fecha;
-- nivel de confianza;
-- documentos de la wiki que dependen de ella.
+- fecha o versión cuando importe;
+- ámbito para el que sirve como autoridad;
+- páginas de la Wiki que dependen de ella, cuando aporte trazabilidad.
 
-No guardes secretos ni información sensible.
+No copies materiales completos cuando un enlace o referencia estable sea suficiente. No guardes secretos, credenciales ni datos sensibles innecesarios.
