@@ -10,9 +10,12 @@ Esta sección define la base conceptual de IA-DOS.
 - [Modelo de adopción](adoption-model.md)
 - [Responsabilidades humanas y de la IA](human-ai-responsibilities.md)
 - [Fuentes de verdad](source-of-truth.md)
+- [Memoria durable portable y Obsidian](durable-memory-and-obsidian.md)
 - [Terminología](terminology.md)
 - [Versionado](versioning.md)
 
-Los primeros recorridos conversacionales y la guía inicial de LLM Wiki están disponibles en [Primeros pasos](../index.md#primeros-pasos).
+Los recorridos conversacionales, preparación del entorno, plantillas operativas, handoffs, Execution Cells y contratos de verificación vigentes están enlazados desde [Documentación de IA-DOS](../index.md).
 
-Las guías de instalación local, Context Packs, Execution Tasks, handoffs completos y verificación se incorporarán en los siguientes incrementos de `v0.1.0-alpha.1`.
+Para onboarding nuevo, comienza por [Inicializar el Project Orchestrator](../../prompts/getting-started/initialize-project-orchestrator.md) y usa `docs/orchestration/topic-routing-registry.md` como lista normativa de Conversation Spaces.
+
+No interpretes documentos históricos o bundles heredados como contratos vigentes cuando contradigan la fuente canónica actual.
