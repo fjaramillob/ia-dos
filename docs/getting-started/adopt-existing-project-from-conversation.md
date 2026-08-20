@@ -97,7 +97,7 @@ No conviertas la adopción en una auditoría integral antes de poder avanzar.
 
 La Wiki o mecanismo de memoria adoptado debe distinguir conocimiento vigente de historia operacional. No copies conversaciones completas ni trates un Execution Report como estado oficial sin revisión.
 
-El gate específico de bootstrap mínimo de memoria se define separadamente y no debe improvisarse dentro de esta fase de onboarding.
+El `Memory Bootstrap Gate` todavía no está definido en esta fase. Su contrato se cerrará en la Fase 3 junto con el Wiki Starter. Hasta entonces, no presentes un gate inexistente como regla vigente ni dependas exclusivamente de contexto histórico que sólo viva en conversaciones cuando una tarea necesite reutilizarlo de forma durable.
 
 ## Resultado esperado
 
