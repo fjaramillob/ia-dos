@@ -8,6 +8,11 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- acotado `Exchange Protocol v0` al par `Execution Task` / `Execution Report`, dejando Planning Task, Implementation Plan, backlog y memoria durable fuera de su almacén por defecto;
+- definido `inbox/`, `outbox/` y `archive/` como ubicaciones manuales del flujo y no como una máquina de estados automática;
+- eliminado `Estado: READY` del perfil Exchange Task v0 para evitar introducir un workflow inexistente;
+- distinguida explícitamente la fuente de `Execution Tasks` del backlog en `adoption.template.yaml` mediante `work.execution_task_source`;
+- alineados onboarding, workspace, adopción e instrucciones persistentes para adoptar Exchange sólo cuando aporte continuidad o trazabilidad real;
 - definido el `Memory Bootstrap Gate` para impedir que una nueva unidad dependa de conocimiento relevante que exista únicamente en conversaciones, sin imponer una Wiki completa por ceremonia;
 - modernizado el Wiki Starter hacia un checkpoint Markdown mínimo con `00-home.md`, `project-brief.md`, `status/current-state.md`, `decisions/`, `sources/` y `AGENTS.md`;
 - retirados del Wiki Starter vigente `tasks/`, `context-packs/`, `CORE`, `log.md` y la página de arquitectura vacía; los proyectos existentes pueden conservar esos patrones cuando sigan aportando valor;
@@ -38,6 +43,7 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Added
 
+- guía `Crear o conectar Exchange Protocol v0` para adopción manual, copia de templates, semántica de carpetas, archivo y verificaciones sin automatización;
 - contrato `Memory Bootstrap Gate` con resultados `PASS` y `BOOTSTRAP REQUIRED`, sin porcentajes de cobertura ni umbrales artificiales por tiempo, mensajes o cantidad de tareas;
 - `Execution Cell` como contexto durable de ejecución definido por proyecto;
 - política para mantener una sola conversación activa por Execution Cell mientras siga respondiendo bien;
