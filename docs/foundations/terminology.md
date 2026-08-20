@@ -62,6 +62,12 @@ Perfil opcional de identificación, persistencia y transporte para conservar `TA
 
 No crea un tipo nuevo de Execution Task o Execution Report y no sustituye memoria, implementación ni backlog.
 
+## `Wiki Update Task`
+
+Perfil documental de una `Execution Task` canónica utilizado cuando el resultado principal es modificar memoria durable Markdown.
+
+No es un tipo de artefacto independiente y no debilita alcance, autoridad, permisos, verificaciones ni condiciones de detención.
+
 ## `Task ID`
 
 Identificador de una tarea o intercambio.
@@ -84,17 +90,36 @@ Base de conocimiento que conserva estado, decisiones y contexto reusable del pro
 
 Puede materializarse en Markdown, documentación versionada u otro mecanismo definido por el proyecto. No demuestra por sí sola que una implementación exista.
 
+## `Memory Bootstrap Gate`
+
+Gate que determina si una nueva Planning Task o Execution Task puede continuar sin depender de conocimiento relevante que exista únicamente en conversaciones efímeras.
+
+Produce uno de dos resultados:
+
+```text
+PASS
+BOOTSTRAP REQUIRED
+```
+
+No utiliza porcentajes de cobertura, cantidad de mensajes, número de tareas ni antigüedad como umbrales automáticos.
+
+## checkpoint durable
+
+Conjunto mínimo de conocimiento que debe persistirse cuando el Memory Bootstrap Gate devuelve `BOOTSTRAP REQUIRED`.
+
+Incluye sólo lo necesario para que la siguiente unidad no dependa de reconstruir conversaciones: propósito y límites relevantes, estado vigente, decisiones que condicionan la tarea, fuentes de verdad y desconocidos importantes.
+
 ## `Context Pack`
 
-Conjunto pequeño de documentos o rutas seleccionados para entregar a un asistente o agente solo el contexto necesario.
+Patrón opcional para agrupar un conjunto pequeño de documentos o rutas que se desea entregar conjuntamente a un asistente o agente.
 
-Es una técnica posible de compresión de contexto, no una estructura obligatoria de toda memoria durable.
+IA-DOS ya no requiere `context-packs/` como parte del Wiki Starter. La selección de contexto puede realizarse directamente mediante contexto durable necesario, referencias y lectura requerida.
 
 ## `CORE`
 
-Context Pack transversal utilizado por proyectos que adoptan ese patrón.
+Nombre heredado de un Context Pack transversal usado por algunos proyectos.
 
-Puede contener propósito, estado resumido, restricciones, decisiones vigentes y ubicación de fuentes de verdad. No es un requisito universal de IA-DOS.
+No es requisito del método ni forma parte del Wiki Starter vigente. Proyectos existentes pueden conservarlo si sigue aportando valor.
 
 ## `Referencias Wiki`
 
