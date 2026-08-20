@@ -16,8 +16,9 @@ La primera adopción sigue este orden:
 8. Tipifica el bloque y valida el rol receptor.
 9. Confirma la autoridad de fuentes, artefactos y entornos.
 10. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
-11. Devuelve el artefacto al destino declarado.
-12. Escala a `00` solo cuando exista reorientación real.
+11. Cuando exista ejecución recurrente, define las [Execution Cells](execution/execution-cells-and-exchange.md) necesarias por proyecto.
+12. Devuelve el artefacto al destino declarado.
+13. Escala a `00` solo cuando exista reorientación real.
 
 ## Contratos operativos
 
@@ -26,6 +27,7 @@ La primera adopción sigue este orden:
 - [Avance concreto y transición](orchestration/concrete-execution-flow.md): decide cuándo planificar y cuándo ejecutar.
 - [Tipado de artefactos y validación del receptor](orchestration/typed-artifact-routing.md): evita entregar un artefacto al rol equivocado.
 - [Roles, sesiones y ciclo de artefactos](orchestration/agent-role-and-artifact-loop.md): conserva identidad, permisos y retorno.
+- [Execution Cells y Exchange Protocol v0](execution/execution-cells-and-exchange.md): reduce conversaciones de coding agents y conserva `TASK/REPORT` fuera del chat.
 - [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md): separa referencias durables, delta y contrato operativo.
 - [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa una unidad aprobada.
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md): gobierna qué demuestra cada recurso y qué acceso está permitido.
@@ -76,14 +78,17 @@ La plantilla compacta es la salida operativa por defecto para pegar en el coding
 
 - [Registro de tipos de ejecución](execution/execution-task-types.md)
 - [Coding agents](execution/coding-agents.md)
+- [Execution Cells y Exchange Protocol v0](execution/execution-cells-and-exchange.md)
 - [Execution Task compacta](../templates/execution-task-compact.template.md)
 - [Execution Task completa](../templates/execution-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
+- [Exchange Task v0](../templates/exchange-task-v0.template.md)
+- [Exchange Report v0](../templates/exchange-report-v0.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Actualizar la LLM Wiki](execution/updating-the-llm-wiki.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
 
-La Execution Task compacta aplica referencias de autoridad, delta del ciclo y contrato explícito. La plantilla completa conserva el contrato exhaustivo para validación y casos excepcionales.
+La Execution Task compacta aplica referencias de autoridad, delta del ciclo y contrato explícito. La plantilla completa conserva el contrato exhaustivo para validación y casos excepcionales. Exchange v0 añade una opción manual para persistir el par `TASK/REPORT` fuera de las conversaciones.
 
 ## Fundamentos
 
@@ -93,6 +98,7 @@ La Execution Task compacta aplica referencias de autoridad, delta del ciclo y co
 - [Modelo de adopción](foundations/adoption-model.md)
 - [Fuentes de verdad](foundations/source-of-truth.md)
 - [Responsabilidades humanas y de la IA](foundations/human-ai-responsibilities.md)
+- [Memoria durable portable y Obsidian](foundations/durable-memory-and-obsidian.md)
 - [Terminología](foundations/terminology.md)
 - [Criterios editoriales](foundations/editorial-guidelines.md)
 
@@ -113,6 +119,8 @@ La Execution Task compacta aplica referencias de autoridad, delta del ciclo y co
 - [Implementation Plan](../templates/implementation-plan.template.md)
 - [Execution Task compacta](../templates/execution-task-compact.template.md)
 - [Execution Task completa](../templates/execution-task.template.md)
+- [Exchange Task v0](../templates/exchange-task-v0.template.md)
+- [Exchange Report v0](../templates/exchange-report-v0.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Execution Report](../templates/execution-report.template.md)
 
