@@ -103,7 +103,7 @@ Cuando exista tooling de validación, la tarea debe indicar los comandos exactos
 
 ## Git y pull request
 
-Branch, commit, push, pull request y merge son capacidades separadas y deben estar autorizizadas explícitamente por la tarea.
+Branch, commit, push, pull request y merge son capacidades separadas y deben estar autorizadas explícitamente por la tarea.
 
 No asumas que una actualización documental puede fusionarse automáticamente por ser de bajo riesgo.
 
