@@ -9,7 +9,8 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 ### Changed
 
 - alineado el onboarding para que `topic-routing-registry.md` sea la única lista normativa de Conversation Spaces;
-- actualizado el initializer para usar `ia-dos-current-offline-pack.md` como única distribución offline vigente y evitar combinar addenda heredados en nuevos onboardings;
+- unificado `00 — Dirección y orquestación` como nombre canónico del espacio inicial, usando `definición inicial` y `descubrimiento y adopción` como modos de entrada;
+- actualizado el fallback offline para usar `ORCHESTRATOR.md` + `templates/project-instructions.template.md` hasta que `ia-dos-current-offline-pack.md` declare sincronización con la versión adoptada;
 - alineadas las instrucciones persistentes con Execution Cells, Exchange v0, memoria durable selectiva y el contrato semántico único de Execution Task;
 - aclarado en los recorridos de proyecto nuevo y existente que una Execution Task no implica abrir una conversación nueva del coding agent;
 - alineada la capa conversacional para separar Conversation Space, Execution Cell, Execution Task y memoria durable;
