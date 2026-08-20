@@ -17,6 +17,7 @@ dirección y decisión
 
 ```text
 Conversation Space orienta y gobierna
+→ evalúa memoria durable cuando corresponde
 → tarea tipada y compacta
 → coding agent planifica o ejecuta
 → artefacto verificable
@@ -58,6 +59,26 @@ fuentes de autoridad
 - cuando una fuente no es accesible, se incluye solo el extracto indispensable.
 
 Consulta [Compresión de contexto por autoridad](docs/orchestration/context-compression-by-authority.md).
+
+## Memory Bootstrap Gate
+
+IA-DOS no exige una Wiki completa antes de construir, pero tampoco permite que una unidad dependa silenciosamente de conocimiento que sólo vive en conversaciones.
+
+Antes de una Planning Task o Execution Task que reutilice decisiones, estado o historia previa, pregunta:
+
+> ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
+
+```text
+PASS
+→ continúa sin documentación adicional
+
+BOOTSTRAP REQUIRED
+→ persiste primero el checkpoint durable mínimo
+```
+
+No uses cantidad de mensajes, tareas o antigüedad como umbral. Una tarea autosuficiente no debe bloquearse por ceremonia documental.
+
+Consulta [Memory Bootstrap Gate](docs/foundations/memory-bootstrap-gate.md).
 
 ## Planificación técnica
 
@@ -111,9 +132,9 @@ Execution Task
 + criterios + verificaciones + condiciones de detención
 ```
 
-Puede representarse con la [Execution Task compacta](templates/execution-task-compact.template.md), la [Execution Task completa](templates/execution-task.template.md) o el perfil [Exchange Execution Task v0](templates/exchange-task-v0.template.md).
+Puede representarse con la [Execution Task compacta](templates/execution-task-compact.template.md), la [Execution Task completa](templates/execution-task.template.md), el perfil [Exchange Execution Task v0](templates/exchange-task-v0.template.md) o el perfil documental [Wiki Update Task](templates/wiki-update-task.template.md).
 
-Exchange no debilita el contrato: sólo aporta identificación autocontenida, persistencia y transporte manual.
+Exchange y Wiki Update no debilitan el contrato: sólo especializan identificación, persistencia o propósito documental.
 
 ## Exchange Protocol v0
 
@@ -148,9 +169,22 @@ La Wiki conserva estado y decisiones vigentes; no debe convertirse en una copia 
 
 Cuando el proyecto utiliza una base Markdown local, IA-DOS recomienda que sea portable entre GitHub, editores, Obsidian y coding agents. Obsidian puede actuar como interfaz humana de navegación sin convertirse en una fuente de verdad separada.
 
+El starter de una Wiki nueva es deliberadamente pequeño:
+
+```text
+00-home.md
+project-brief.md
+status/current-state.md
+decisions/
+sources/
+AGENTS.md
+```
+
+No crea por defecto `tasks/`, `context-packs/`, `log.md` ni páginas vacías de arquitectura.
+
 El coding agent no lee toda la Wiki por defecto. Una tarea distingue entre contexto durable incluido, referencias para trazabilidad y lectura explícitamente requerida.
 
-Consulta [Memoria durable portable y consumo desde Obsidian](docs/foundations/durable-memory-and-obsidian.md).
+Consulta [Memoria durable portable y consumo desde Obsidian](docs/foundations/durable-memory-and-obsidian.md) y [Crear o conectar la memoria durable](docs/getting-started/bootstrap-llm-wiki.md).
 
 ## Roles y trazabilidad
 
@@ -198,6 +232,7 @@ Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 3. Entrega una descripción breve y las fuentes disponibles.
 4. Abre `00 — Dirección y orquestación`; usa modo `definición inicial` para un producto nuevo o modo `descubrimiento y adopción` para uno existente.
 5. Avanza mediante tareas tipadas que regresan al Cycle Owner.
+6. Antes de depender de contexto histórico que sólo viva en chats, evalúa el Memory Bootstrap Gate.
 
 Si la plataforma no puede navegar el repositorio canónico, usa como contrato offline mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`. No combines bundles heredados. El archivo `bundles/ia-dos-current-offline-pack.md` sólo debe utilizarse cuando su propio encabezado declare que está sincronizado con la versión o commit de IA-DOS adoptado.
 
@@ -212,6 +247,7 @@ Si la plataforma no puede navegar el repositorio canónico, usa como contrato of
 - [Roles y sesiones](docs/orchestration/agent-role-and-artifact-loop.md)
 - [Execution Cells y Exchange v0](docs/execution/execution-cells-and-exchange.md)
 - [Compresión de contexto](docs/orchestration/context-compression-by-authority.md)
+- [Memory Bootstrap Gate](docs/foundations/memory-bootstrap-gate.md)
 - [Memoria durable portable](docs/foundations/durable-memory-and-obsidian.md)
 - [Autoridad de fuentes y artefactos](docs/execution/source-and-artifact-authority.md)
 
@@ -228,6 +264,9 @@ Si la plataforma no puede navegar el repositorio canónico, usa como contrato of
 - [Execution Report](templates/execution-report.template.md)
 - [Exchange Execution Task v0](templates/exchange-task-v0.template.md)
 - [Exchange Execution Report v0](templates/exchange-report-v0.template.md)
+- [Wiki Update Task](templates/wiki-update-task.template.md)
+- [Adoption Manifest](templates/adoption.template.yaml)
+- [Wiki Starter](templates/wiki-starter/00-home.md)
 
 ## Acceso al método
 

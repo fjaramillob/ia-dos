@@ -4,7 +4,7 @@ IA-DOS separa dirección, razonamiento, materialización y verificación para pe
 
 ## Principio rector
 
-La persona responsable dirige. El Project Orchestrator organiza. Los Conversation Spaces razonan. Los coding agents materializan. GitHub traza. La LLM Wiki recuerda.
+La persona responsable dirige. El Project Orchestrator organiza. Los Conversation Spaces razonan. Los coding agents materializan. Las fuentes de evidencia trazan. La memoria durable recuerda.
 
 ## Los cinco movimientos
 
@@ -20,7 +20,7 @@ Estos movimientos no son fases rígidas. Pueden repetirse en ciclos pequeños y 
 
 ## 1. Entender
 
-Leer evidencia y capturar dirección suficiente antes de actuar.
+Lee evidencia y captura dirección suficiente antes de actuar.
 
 Esto puede incluir propósito, usuario, estado real, arquitectura, decisiones vigentes, restricciones, riesgos, código, pruebas y fuentes disponibles.
 
@@ -28,7 +28,7 @@ El objetivo no es producir una auditoría exhaustiva. Es reducir los supuestos q
 
 ## 2. Decidir
 
-Confirmar una decisión pequeña, reversible y útil.
+Confirma una decisión pequeña, reversible y útil.
 
 Toda decisión debe distinguirse de:
 
@@ -38,45 +38,50 @@ Toda decisión debe distinguirse de:
 - una propuesta;
 - una pregunta abierta.
 
-Las decisiones durables deben registrarse en la fuente de verdad correspondiente.
+Las decisiones durables deben registrarse en la fuente de verdad correspondiente cuando vayan a reutilizarse más allá de la conversación actual.
 
 ## 3. Delimitar
 
-Transformar la decisión en una unidad de trabajo acotada.
+Transforma la decisión en una unidad de trabajo acotada.
+
+Antes de emitir una unidad que dependa de decisiones o contexto que sólo viven en conversaciones, aplica el [Memory Bootstrap Gate](memory-bootstrap-gate.md).
 
 Una `Execution Task` debe declarar como mínimo:
 
 - objetivo;
-- contexto necesario;
-- alcance;
-- fuera de alcance;
-- rutas o repositorios autorizados;
+- contexto durable estrictamente necesario;
+- alcance y fuera de alcance;
+- autoridad y accesos relevantes;
+- permisos y acciones externas autorizadas;
 - criterios de aceptación;
-- pruebas esperadas;
+- verificaciones esperadas;
 - condiciones de detención;
-- reporte requerido.
+- destino del reporte.
 
 Delimitar evita que una buena intención se convierta en un cambio amplio, silencioso o difícil de verificar.
 
 ## 4. Materializar
 
-Delegar la modificación física a un coding agent con acceso adecuado al workspace, Git, terminal y repositorios necesarios.
+Delega la modificación física a un coding agent con acceso adecuado a los artefactos y entornos necesarios.
 
-El Project Orchestrator define qué debe cambiar y por qué. El coding agent inspecciona, modifica, prueba y entrega evidencia.
+El Project Orchestrator define qué debe cambiar y por qué. El coding agent inspecciona, modifica, prueba y entrega evidencia dentro de la tarea autorizada.
 
 La conversación no sustituye la ejecución sobre el artefacto real.
 
 ## 5. Verificar y aprender
 
-Revisar el resultado contra la tarea, no contra la confianza que inspire el agente.
+Revisa el resultado contra la tarea, no contra la confianza que inspire el agente.
 
 La verificación puede incluir diff, lint, typecheck, build, pruebas, revisión visual, seguridad, logs o pasos manuales reproducibles.
 
 Después de aprobar el cambio:
 
-- el código queda en el repositorio correspondiente;
-- la evidencia queda en el pull request o `Execution Report`;
-- las decisiones y el estado durable regresan a la wiki, ADR, issue o fuente canónica aplicable.
+- la implementación queda en su fuente técnica;
+- la evidencia queda en el `Execution Report`, diff, pull request u otro mecanismo autorizado;
+- el trabajo pendiente queda en el sistema de seguimiento elegido;
+- el conocimiento confirmado que deba reutilizarse regresa a la memoria durable o registro correspondiente.
+
+No copies conversaciones completas ni conviertas todo hallazgo en memoria permanente.
 
 ## Arquitectura operativa
 
@@ -87,23 +92,21 @@ Project Orchestrator
         ↓
 Conversation Spaces ligeros
         ↓
-Decisiones e hipótesis confirmadas
+Decisión o necesidad clara
         ↓
-Execution Task
+Memory Bootstrap Gate, cuando aplica
+        ↓
+Planning Task | Execution Task
         ↓
 Coding agent
         ↓
-Repositorio de aplicación / LLM Wiki
+Artefacto real + verificaciones
         ↓
-Branch + cambios + pruebas
+Implementation Plan | Execution Report
         ↓
-Pull request + Execution Report
+Cycle Owner revisa
         ↓
-Revisión humana y del Orchestrator
-        ↓
-Merge
-        ↓
-Actualización de memoria durable
+Fuentes de verdad actualizadas cuando corresponde
 ```
 
 ## Regla de frontera
@@ -123,3 +126,5 @@ El Orchestrator no debe presentar una propuesta como si ya estuviera implementad
 IA-DOS favorece ciclos simples que funcionan y evolucionan.
 
 No exige completar toda la definición, documentación o arquitectura antes de construir. Exige suficiente claridad para que el siguiente cambio sea útil, acotado, verificable y reversible cuando sea posible.
+
+La memoria durable aparece cuando hace falta para preservar conocimiento reusable, no como una ceremonia obligatoria previa a cada avance.

@@ -5,20 +5,27 @@ ia_dos:
 project:
   name: "NOMBRE_VISIBLE"
   slug: "project-slug"
-  app_path: "../project-slug-app"
-  wiki_path: "."
 
 adoption:
-  model: "separate-app-and-wiki"
-  project_orchestrator: "chatgpt-project-or-equivalent"
-  task_source: "github-issues"
-  decision_source: "wiki-decisions"
+  model: "[SEPARATE_APP_AND_WIKI | MONOREPO | DOCS_IN_APP | OTHER]"
+  project_orchestrator: "[CHATGPT_PROJECT_OR_EQUIVALENT]"
   exceptions: []
 
-context:
-  core: "context-packs/core.md"
-  architecture: "architecture.md"
-  current_state: "current-state.md"
+resources:
+  implementation: "[RUTA_O_URL_O_NO_APLICA]"
+  memory: "[RUTA_O_URL_O_NO_APLICA]"
+  backlog: "[RUTA_O_URL_O_NO_APLICA]"
+  exchange: "[RUTA_O_URL_O_NO_APLICA]"
+
+memory:
+  home: "[00-home.md | RUTA_EQUIVALENTE | NO_APLICA]"
+  project_brief: "[project-brief.md | RUTA_EQUIVALENTE | NO_APLICA]"
+  current_state: "[status/current-state.md | RUTA_EQUIVALENTE | NO_APLICA]"
+  decisions: "[decisions/ | RUTA_EQUIVALENTE | NO_APLICA]"
+  sources: "[sources/ | RUTA_EQUIVALENTE | NO_APLICA]"
+
+work:
+  task_source: "[EXCHANGE | GITHUB_ISSUES | OTHER | NO_APLICA]"
 
 verification:
   require_evidence: true

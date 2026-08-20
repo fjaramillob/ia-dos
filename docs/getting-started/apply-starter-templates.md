@@ -1,8 +1,8 @@
 # Aplicar las plantillas mínimas de adopción
 
-Este paso convierte una estructura de carpetas en un proyecto que declara formalmente cómo adopta IA-DOS.
+Este paso convierte una configuración de proyecto en una adopción reproducible de IA-DOS sin imponer una topología física única.
 
-Las plantillas no deben copiarse sin revisión. Deben adaptarse al proyecto y completarse solo con información confirmada.
+Las plantillas no deben copiarse sin revisión. Adáptalas al proyecto y completa sólo información confirmada.
 
 ## Plantillas disponibles
 
@@ -11,19 +11,30 @@ templates/
 ├── adoption.template.yaml
 ├── AGENTS.template.md
 └── wiki-starter/
-    ├── index.md
+    ├── 00-home.md
     ├── project-brief.md
-    ├── current-state.md
-    ├── architecture.md
-    ├── log.md
     ├── AGENTS.md
-    ├── context-packs/core.md
-    ├── decisions/README.md
-    ├── tasks/README.md
-    └── sources/README.md
+    ├── status/
+    │   └── current-state.md
+    ├── decisions/
+    │   └── README.md
+    └── sources/
+        └── README.md
 ```
 
-## Destino recomendado
+El starter ya no crea `tasks/`, `context-packs/`, `log.md` ni una página de arquitectura vacía. Esos elementos aparecen sólo cuando existe una necesidad real.
+
+## Antes de crear la Wiki
+
+Evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md).
+
+Si la siguiente unidad no depende de conocimiento que sólo vive en conversaciones, no es obligatorio detenerse para instalar una Wiki completa.
+
+Cuando el gate devuelve `BOOTSTRAP REQUIRED`, crea o actualiza sólo el checkpoint durable necesario.
+
+## Destino posible
+
+Una topología válida es:
 
 ```text
 nombre-proyecto/
@@ -31,17 +42,18 @@ nombre-proyecto/
 │   └── AGENTS.md
 └── nombre-proyecto-wiki/
     ├── .ia-dos.yaml
-    ├── index.md
+    ├── 00-home.md
     ├── project-brief.md
-    ├── current-state.md
-    ├── architecture.md
-    ├── log.md
     ├── AGENTS.md
-    ├── context-packs/core.md
-    ├── decisions/README.md
-    ├── tasks/README.md
-    └── sources/README.md
+    ├── status/
+    │   └── current-state.md
+    ├── decisions/
+    │   └── README.md
+    └── sources/
+        └── README.md
 ```
+
+También son válidos monorepos, documentación dentro de la app u otras configuraciones. No reorganices un proyecto existente sólo para coincidir con este ejemplo.
 
 ## Paso 1 — Crear el manifiesto de adopción
 
@@ -51,26 +63,21 @@ Copia:
 templates/adoption.template.yaml
 ```
 
-como:
-
-```text
-nombre-proyecto-wiki/.ia-dos.yaml
-```
+como `.ia-dos.yaml` en la ubicación adoptada para la memoria o configuración del proyecto.
 
 Completa:
 
-- nombre y `project-slug`;
-- rutas reales de app y wiki;
+- nombre y slug;
+- versión o commit concreto de IA-DOS;
 - modelo de adopción;
 - Project Orchestrator utilizado;
-- fuente canónica de tareas;
-- fuente canónica de decisiones;
-- excepciones;
-- rutas de contexto.
+- rutas o URLs reales de implementación, memoria, backlog y Exchange cuando exista;
+- fuente de tareas;
+- excepciones reales.
 
-No declares `main`, `latest` o `current` como versión adoptada.
+No declares `main`, `latest` o `current` como versión adoptada cuando necesites reproducibilidad.
 
-## Paso 2 — Incorporar `AGENTS.md` en la app
+## Paso 2 — Incorporar `AGENTS.md` en la implementación cuando corresponda
 
 Copia:
 
@@ -78,71 +85,70 @@ Copia:
 templates/AGENTS.template.md
 ```
 
-como:
+hacia el repositorio o directorio donde el coding agent ejecutará cambios.
 
-```text
-nombre-proyecto-app/AGENTS.md
-```
+Adapta sólo reglas reales:
 
-Adapta:
-
-- propósito del repositorio;
-- ruta o URL de la wiki;
-- ubicación de `.ia-dos.yaml`;
-- fuente canónica de tareas;
-- comandos y verificaciones reales del proyecto;
+- propósito;
+- ubicación de memoria y manifiesto;
+- comandos y verificaciones existentes;
 - zonas permitidas y prohibidas;
-- condiciones de detención específicas.
+- condiciones de detención.
 
-No agregues comandos que todavía no existan en el repositorio.
+No agregues comandos, herramientas o rutas que el proyecto no tenga.
 
-## Paso 3 — Crear la wiki mínima
+## Paso 3 — Crear el checkpoint de Wiki
 
-Copia el contenido de:
-
-```text
-templates/wiki-starter/
-```
-
-hacia la raíz del repositorio wiki.
+Copia `templates/wiki-starter/` hacia la ubicación elegida para la memoria Markdown.
 
 Completa primero:
 
-1. `index.md`;
+1. `00-home.md`;
 2. `project-brief.md`;
-3. `current-state.md`;
-4. `context-packs/core.md`;
-5. `.ia-dos.yaml`.
+3. `status/current-state.md`;
+4. `AGENTS.md`;
+5. `.ia-dos.yaml` cuando la adopción formal lo requiera.
 
-`architecture.md` puede permanecer como `Por definir` o `Desconocida` cuando todavía no existe evidencia suficiente.
+`decisions/` y `sources/` pueden permanecer sólo con su `README.md` hasta que exista contenido durable real.
 
-## Paso 4 — Separar hechos de propuestas
+No crees arquitectura, producto u operaciones sólo para llenar carpetas.
 
-Durante el bootstrap utiliza estados explícitos:
+## Paso 4 — Separar estado de intención
+
+Durante el bootstrap usa estados explícitos:
 
 ```text
 Implementado
-Parcialmente implementado
-Planificado
-Deprecado
+Decidido / aprobado pero no implementado
+Pendiente
+Fuera de alcance
 Desconocido
 ```
 
-En un proyecto nuevo, `current-state.md` debe declarar que la implementación todavía no comenzó cuando corresponda.
+En un proyecto nuevo declara expresamente qué todavía no existe.
 
-En un proyecto existente, la información debe derivarse de evidencia, documentación o inspección del repositorio.
+En un proyecto existente deriva el estado de evidencia o de fuentes autorizadas. Cuando no haya evidencia suficiente, usa `Desconocido`.
 
-## Paso 5 — Verificar rutas y fuentes canónicas
+## Paso 5 — Verificar navegación y autoridad
 
 Confirma:
 
-- la app puede localizar la wiki;
-- la wiki puede localizar la app;
-- `.ia-dos.yaml` utiliza rutas válidas;
-- existe una sola fuente canónica para tareas;
-- existe una sola fuente canónica para decisiones;
-- `CORE` enlaza documentos, no los duplica;
+- `00-home.md` permite localizar el conocimiento principal;
+- los enlaces Markdown relativos funcionan desde la estructura real;
+- `.ia-dos.yaml` utiliza rutas o referencias coherentes;
+- la implementación puede localizar la memoria cuando sea necesario;
+- la memoria identifica dónde demostrar implementación y trabajo pendiente;
+- la fuente de tareas no se duplica dentro de la Wiki;
+- Exchange, si existe, no se usa como memoria vigente;
 - los agentes no reciben acceso automático a todo el workspace.
+
+## Obsidian
+
+La carpeta de memoria puede abrirse directamente como vault de Obsidian.
+
+No necesitas convertir los enlaces Markdown en wikilinks ni instalar plugins para que IA-DOS funcione.
+
+Si el proyecto decide versionar configuración de `.obsidian/`, esa decisión es local al proyecto. La semántica crítica de la memoria no debe depender de esa configuración.
 
 ## Qué no hacen estas plantillas
 
@@ -152,23 +158,25 @@ Las plantillas no:
 - crean arquitectura;
 - generan código;
 - crean repositorios remotos;
-- sustituyen la revisión humana;
-- convierten información desconocida en hechos;
-- configuran automáticamente ChatGPT, Gemini o coding agents.
+- crean Exchange automáticamente;
+- importan conversaciones históricas;
+- convierten TASK/REPORT en memoria;
+- sustituyen revisión humana;
+- convierten información desconocida en hechos.
 
 ## Verificación final
 
-- [ ] `.ia-dos.yaml` declara una versión concreta.
-- [ ] App y wiki tienen rutas correctas.
-- [ ] La app contiene `AGENTS.md` adaptado.
-- [ ] La wiki tiene un punto de entrada claro.
-- [ ] `current-state.md` refleja realidad comprobada.
-- [ ] `CORE` es breve.
-- [ ] Las decisiones tienen una carpeta canónica.
-- [ ] Las tareas tienen una fuente canónica.
+- [ ] El Memory Bootstrap Gate está satisfecho para la siguiente unidad cuando aplica.
+- [ ] Existe un punto de entrada claro.
+- [ ] `project-brief.md` contiene dirección durable suficiente.
+- [ ] `status/current-state.md` refleja realidad comprobada.
+- [ ] Los enlaces relativos principales funcionan.
+- [ ] La implementación y otras fuentes de verdad están identificadas.
+- [ ] No se duplicaron tareas o historial operacional dentro de la Wiki.
+- [ ] `.ia-dos.yaml` declara una versión concreta cuando se usa.
 - [ ] No existen secretos.
 - [ ] No quedan placeholders interpretables como hechos.
 
 ## Siguiente paso
 
-Después de aplicar y revisar las plantillas, el proyecto está preparado para crear su primera `Execution Task` y validar el handoff hacia un coding agent.
+Después del bootstrap, continúa con la siguiente Planning Task o Execution Task que originó la necesidad de memoria. No conviertas la instalación de la Wiki en un proyecto paralelo.

@@ -14,6 +14,22 @@ referencias de autoridad
 
 La compresión correcta elimina duplicación. No elimina hechos indispensables, permisos, límites, criterios ni condiciones de detención.
 
+## Precondición: memoria suficiente
+
+La compresión por referencia sólo funciona cuando el conocimiento que se pretende omitir ya existe en una fuente durable adecuada.
+
+Si la siguiente unidad depende de decisiones, estado o contexto que sólo viven en conversaciones, aplica primero el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md).
+
+```text
+PASS
+→ comprime usando fuentes durables y delta
+
+BOOTSTRAP REQUIRED
+→ persiste el checkpoint mínimo antes de depender de referencias
+```
+
+No uses el fallback autosuficiente de una tarea como sustituto permanente de memoria durable cuando varias unidades futuras necesitan el mismo conocimiento.
+
 ## Tres capas de contexto
 
 ### 1. Contexto durable
@@ -23,13 +39,13 @@ Vive en la fuente designada como memoria durable del proyecto. Puede incluir:
 - propósito y alcance aceptados;
 - decisiones vigentes;
 - glosario;
-- arquitectura aprobada;
+- arquitectura aprobada cuando exista;
 - roles de repositorios y servicios;
 - guardrails estables;
 - convenciones durables;
-- estado conocido que tenga evidencia y fecha.
+- estado conocido que tenga evidencia y vigencia suficiente.
 
-No debe copiarse completo en cada Planning Task o Execution Task. Debe referenciarse mediante recurso, ruta o identificador estable.
+No debe copiarse completo en cada Planning Task o Execution Task. Debe seleccionarse o referenciarse mediante recurso, ruta o identificador estable.
 
 ### 2. Delta del ciclo
 
@@ -98,12 +114,30 @@ Resultado:
 - fuente durable accesible y vigente: referencia;
 - cambio actual: incluir como delta;
 - permiso, límite, criterio o detención: incluir explícitamente;
-- fuente no accesible o insuficiente: incluir un extracto autosuficiente;
+- fuente no accesible: incluir un extracto autosuficiente cuando sea seguro hacerlo;
+- conocimiento reusable que no existe de forma durable: evaluar Memory Bootstrap Gate;
 - contradicción o vigencia dudosa: detener y resolver autoridad antes de compactar.
+
+## Contexto durable necesario, referencias y lectura
+
+Cuando una tarea usa una Wiki u otra memoria documental puede distinguir:
+
+```text
+Contexto durable necesario
+→ extracto mínimo que debe viajar con la tarea
+
+Referencias Wiki
+→ procedencia y navegación; no implican lectura
+
+Lectura requerida
+→ documentos concretos que el receptor debe consumir
+```
+
+Los hechos técnicos baratos de descubrir desde la implementación no necesitan duplicarse en el contexto durable. Prioriza decisiones, restricciones y estado no obvio que condicionen la ejecución.
 
 ## Fallback autosuficiente
 
-Una tarea debe seguir siendo ejecutable cuando el coding agent no pueda leer la fuente durable.
+Una tarea debe seguir siendo ejecutable cuando el coding agent no pueda leer una fuente durable que sí existe.
 
 En ese caso:
 
@@ -113,16 +147,19 @@ En ese caso:
 4. no presenta el extracto como una nueva autoridad independiente;
 5. evita copiar repositorios, Wikis o documentos completos.
 
+Este fallback resuelve una limitación de acceso de la tarea actual. No convierte una conversación en memoria durable.
+
 ## Wiki y memoria durable
 
 IA-DOS no exige una Wiki independiente. Cuando el proyecto sí tiene una Wiki o memoria durable equivalente:
 
-- úsala como autoridad para contexto estable;
+- úsala como autoridad para contexto estable dentro de su ámbito;
 - mantén allí decisiones aceptadas y estado confirmado;
 - no registres propuestas como implementación;
 - actualízala cuando el conocimiento sea durable y tenga evidencia;
 - referencia documentos concretos, no solo la raíz de la Wiki;
-- incluye fecha, versión o commit cuando la vigencia pueda ser ambigua.
+- incluye fecha, versión o commit cuando la vigencia pueda ser ambigua;
+- no obligues al coding agent a leer la Wiki completa.
 
 La implementación sigue siendo autoridad para el estado técnico real. La memoria durable explica decisiones y contexto; no sustituye código, configuración, pruebas o despliegues.
 
@@ -146,6 +183,7 @@ No optimices tokens a costa de corrección, seguridad o trazabilidad.
 - escribir “ver Wiki” sin rutas ni ámbitos;
 - omitir permisos porque aparecen en otro documento;
 - depender de memoria conversacional no durable;
+- repetir el mismo contexto chat-only en muchas tareas en vez de persistirlo cuando ya es reusable;
 - incluir historial irrelevante por precaución;
 - convertir el delta en un resumen completo del proyecto;
 - asumir que una Wiki demuestra estado implementado;

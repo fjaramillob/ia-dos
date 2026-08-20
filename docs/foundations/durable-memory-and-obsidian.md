@@ -8,7 +8,7 @@ La memoria durable debe ser simultáneamente:
 
 - legible por personas;
 - navegable desde Obsidian u otro visor Markdown;
-- versionable con Git;
+- versionable con Git cuando corresponda;
 - consumible selectivamente por agentes;
 - portable entre herramientas.
 
@@ -17,6 +17,14 @@ Markdown estándar primero
 Obsidian como interfaz de consumo
 IA-DOS como gobierno de la memoria
 ```
+
+## Cuándo debe existir
+
+La memoria no se crea por cantidad de mensajes ni por ceremonia.
+
+Evalúa el [Memory Bootstrap Gate](memory-bootstrap-gate.md): si la siguiente unidad depende de conocimiento relevante que sólo vive en conversaciones, primero debe existir un checkpoint durable mínimo.
+
+Si la tarea es autosuficiente y puede apoyarse en implementación o fuentes durables, el gate no bloquea el avance.
 
 ## Una sola base de conocimiento
 
@@ -28,47 +36,58 @@ Una topología válida es:
 proyecto-wiki/
     Markdown canónico
         ↓
-    GitHub versiona
+    GitHub versiona, cuando aplica
     Obsidian navega
     Project Orchestrator sintetiza
-    coding agents leen solo cuando corresponde
+    coding agents leen sólo cuando corresponde
 ```
 
 Obsidian es una interfaz sobre la memoria durable, no una fuente de verdad adicional.
 
-## Estructura por conocimiento
+## Starter mínimo para Wikis nuevas
 
-La Wiki no necesita replicar los Conversation Spaces `00`, `10`, `20`, `50` o `90`.
-
-Esos espacios representan gobierno y autoridad. La Wiki debe organizar conocimiento reusable.
-
-Ejemplo mínimo:
+El contenido real de `templates/wiki-starter/` es:
 
 ```text
 proyecto-wiki/
 ├── 00-home.md
-├── product/
-├── architecture/
-├── operations/
+├── project-brief.md
+├── AGENTS.md
+├── status/
+│   └── current-state.md
 ├── decisions/
-└── status/
+│   └── README.md
+└── sources/
+    └── README.md
 ```
 
-Crea páginas cuando exista conocimiento real. No generes árboles de páginas vacías por anticipación.
+Cuando el proyecto necesita declarar formalmente su adopción, agrega `.ia-dos.yaml` desde `templates/adoption.template.yaml`. El manifiesto es opcional y no forma parte del starter físico.
+
+La estructura es un punto de partida, no un esquema obligatorio para Wikis existentes. No renombres una memoria ya clara y navegable sólo para coincidir con estos nombres.
+
+## Estructura por conocimiento
+
+La Wiki no replica los Conversation Spaces `00–90`.
+
+Los Conversation Spaces representan gobierno y autoridad. La Wiki organiza conocimiento reusable.
+
+A medida que aparece contenido real, pueden surgir páginas como:
+
+```text
+product/financial-model.md
+architecture/runtime.md
+architecture/data-model.md
+operations/deployment.md
+decisions/single-writer.md
+```
+
+No crees carpetas vacías por anticipación.
 
 ## Páginas modulares
 
-Prefiere páginas acotadas por tema en lugar de documentos monolíticos.
+Prefiere páginas acotadas por tema en lugar de documentos monolíticos cuando el contenido pueda mantenerse y consumirse de forma independiente.
 
-```text
-architecture/runtime.md
-architecture/data-model.md
-architecture/deployment.md
-```
-
-permite que una tarea consulte únicamente el contexto relevante sin cargar toda la arquitectura.
-
-El objetivo no es maximizar fragmentación. Divide cuando una página pueda mantenerse y consumirse de forma independiente.
+El objetivo no es maximizar fragmentación. Divide sólo cuando mejora mantenimiento o recuperación selectiva.
 
 ## Estado vigente primero
 
@@ -78,7 +97,7 @@ La Wiki responde principalmente:
 
 No debe narrar por defecto la historia completa de cómo se llegó a cada decisión.
 
-La cronología detallada puede vivir en Git, Exchange, issues, ADRs o artefactos históricos.
+La cronología detallada puede vivir en Git, Exchange, issues, ADRs u otros artefactos históricos.
 
 Mantén explícita la diferencia entre:
 
@@ -88,7 +107,7 @@ Mantén explícita la diferencia entre:
 - fuera de alcance;
 - desconocido cuando corresponda.
 
-La implementación sigue siendo autoridad para demostrar estado técnico real.
+Una decisión aceptada no demuestra implementación. La implementación sigue siendo autoridad para demostrar estado técnico real.
 
 ## Markdown portable
 
@@ -96,50 +115,42 @@ Usa características ampliamente compatibles:
 
 - Markdown estándar;
 - enlaces Markdown relativos;
-- YAML frontmatter mínimo cuando aporte;
 - nombres de archivo descriptivos;
-- rutas estables.
+- rutas estables;
+- YAML frontmatter mínimo sólo cuando aporte una función real.
 
-Ejemplo de frontmatter opcional:
-
-```yaml
----
-project: Proyecto
-type: architecture
-status: current
-updated: YYYY-MM-DD
----
-```
-
-Prefiere enlaces como:
+Ejemplo de enlace canónico:
 
 ```md
-[Runtime](../architecture/runtime.md)
+[Estado actual](status/current-state.md)
 ```
 
-Los wikilinks de Obsidian pueden ser útiles localmente, pero no deben ser necesarios para comprender o navegar la fuente canónica.
+Los wikilinks de Obsidian pueden ser útiles como conveniencia local, pero no deben ser necesarios para comprender o navegar la fuente canónica.
+
+Los plugins de Obsidian tampoco deben contener semántica indispensable para agentes o lectores fuera de la aplicación.
 
 ## Mapa de memoria
 
-`00-home.md` puede actuar como punto de entrada humano y agéntico.
+En el starter, `00-home.md` actúa como punto de entrada humano y agéntico.
 
 Su función es orientar hacia páginas concretas, no duplicar su contenido.
 
-Ejemplo:
+Una Wiki existente puede conservar otro nombre para su home si cumple la misma función.
 
-```text
-Producto
-→ definición
-→ modelo de dominio
+## Lo que no vive por defecto en la Wiki
 
-Arquitectura
-→ runtime
-→ datos
-→ deployment
+No guardes como memoria durable sólo porque exista:
 
-Estado
-→ current-state
-```
+- TASK completo;
+- REPORT completo;
+- logs;
+- diffs;
+- transcripciones;
+- prompts;
+- outputs de tests;
+- backlog operativo.
+
+Cuando un hecho descubierto en esos artefactos resulta durable, se sintetiza y se incorpora después de revisión.
 
 ## Consumo por coding agents
 
@@ -159,7 +170,9 @@ Rutas relacionadas para trazabilidad y navegación. Referenciar no significa lee
 
 Documentos concretos que el coding agent sí debe consumir antes de ejecutar.
 
-El modo habitual debería ser que el Task sea ejecutable con contexto mínimo seleccionado. La lectura directa de Wiki se reserva para cuando aporte precisión real.
+El modo habitual es que la tarea sea ejecutable con contexto mínimo seleccionado. La lectura directa de Wiki se reserva para cuando aporte precisión real.
+
+Los hechos del repositorio que sean baratos de descubrir no necesitan duplicarse en `Contexto durable necesario`; ese bloque prioriza decisiones, restricciones y estado no obvio que condicionen la ejecución.
 
 ## Fallback cuando la Wiki no es accesible
 
@@ -167,10 +180,26 @@ Si el coding agent no puede acceder físicamente a la Wiki:
 
 1. el Orchestrator selecciona los hechos vigentes necesarios;
 2. los incluye en `Contexto durable necesario`;
-3. conserva la referencia a la fuente original cuando aporte trazabilidad;
+3. conserva la referencia original cuando aporte trazabilidad;
 4. no copia la Wiki completa.
 
-Esto permite que IA-DOS funcione con Codex, Antigravity, Claude Code u otros agentes con capacidades de archivos diferentes.
+Esto permite que IA-DOS funcione con coding agents que tengan capacidades de archivos diferentes.
+
+## Rehidratación de conversaciones
+
+Una nueva conversación de una Execution Cell debe poder recuperar contexto suficiente desde:
+
+```text
+memoria durable vigente
++
+TASK actual
++
+Exchange específico cuando aporte
+```
+
+No debería necesitar leer la conversación anterior completa.
+
+Si el conocimiento indispensable sólo existe en ese chat anterior, el Memory Bootstrap Gate no está satisfecho.
 
 ## Gobierno de la memoria
 
@@ -181,12 +210,12 @@ Execution Report
     ↓ conocimiento potencialmente durable
 Conversation Space revisa
     ↓
-90 — Wiki y memoria, cuando existe
+90 — Wiki y memoria, cuando aporta
     ↓
 Wiki
 ```
 
-Una célula `Wiki Sync` puede encargarse de la modificación física o sincronización Git cuando sea necesario, mientras la síntesis de contenido permanece en el plano conversacional.
+Una Execution Cell como `Wiki Sync` puede encargarse de la modificación física o sincronización Git cuando sea necesario, mientras la síntesis de contenido permanece en el plano conversacional.
 
 ## Regla principal
 
@@ -197,4 +226,4 @@ Repositorio = implementación
 Conversaciones = razonamiento y trabajo activo
 ```
 
-Diseña la Wiki para que estas fronteras sigan siendo visibles tanto para humanos como para agentes.
+Diseña la memoria para que estas fronteras sigan siendo visibles tanto para personas como para agentes.

@@ -47,8 +47,9 @@ Cuando el usuario indique que quiere avanzar:
 2. identifica el siguiente resultado verificable;
 3. evalúa primero si puede ejecutarse directamente;
 4. si falta inspección o diseño técnico, prepara una `Planning Task` de solo lectura;
-5. abre otro Conversation Space solo cuando una decisión de dominio indispensable requiera contexto persistente propio;
-6. prepara una `Execution Task` tan pronto como la unidad esté definida y sea segura.
+5. abre otro Conversation Space sólo cuando una decisión de dominio indispensable requiera contexto persistente propio;
+6. antes de emitir una tarea que dependa de decisiones o contexto histórico, evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md);
+7. prepara una `Execution Task` tan pronto como la unidad esté definida, sea segura y el gate no detecte una dependencia de memoria no durable.
 
 La Planning Task vuelve al mismo Cycle Owner como `Implementation Plan`. No abre por sí sola otro ciclo ni autoriza ejecución.
 
@@ -61,7 +62,7 @@ En ese momento, el Orchestrator puede enlazar las instrucciones aplicables:
 - [Preparar el workspace local](workspace-setup.md)
 - [Instalar IA-DOS](install-ia-dos.md)
 - [Crear el proyecto en el workspace](create-new-project-workspace.md)
-- [Crear o conectar la LLM Wiki](bootstrap-llm-wiki.md)
+- [Crear o conectar la memoria durable](bootstrap-llm-wiki.md)
 - [Preparar el handoff de ejecución](execution-handoff.md)
 
 Estas guías son opciones de implementación. No impongas una topología física cuando el proyecto no la necesita.
@@ -89,9 +90,19 @@ Solo vuelve a `00` cuando exista una reorientación real: cambio de objetivo, co
 
 ## Memoria durable
 
-La memoria durable se construye de forma progresiva a partir de conocimiento confirmado. No copies conversaciones completas en la Wiki ni obligues al coding agent a leerla completa.
+La memoria durable se construye progresivamente a partir de conocimiento confirmado. No copies conversaciones completas en la Wiki ni obligues al coding agent a leerla completa.
 
-El `Memory Bootstrap Gate` todavía no está definido en esta fase. Su contrato se cerrará en la Fase 3 junto con el Wiki Starter. Hasta entonces, no presentes un gate inexistente como regla vigente ni dependas exclusivamente de contexto histórico que sólo viva en conversaciones cuando una tarea necesite reutilizarlo de forma durable.
+El Memory Bootstrap Gate devuelve:
+
+```text
+PASS
+→ la siguiente unidad no depende de conocimiento que sólo vive en chats
+
+BOOTSTRAP REQUIRED
+→ persiste primero el checkpoint durable mínimo
+```
+
+Un bootstrap mínimo no exige documentar toda la arquitectura ni abrir `90`. Cuando se use Markdown, consulta [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
 ## Resultado esperado
 
@@ -100,8 +111,9 @@ El `Memory Bootstrap Gate` todavía no está definido en esta fase. Su contrato 
 - organización mínima de conversaciones;
 - registro canónico usado para enrutar tópicos;
 - ningún espacio abierto por rutina;
+- Memory Bootstrap Gate evaluado cuando la siguiente unidad dependa de historia conversacional;
 - primera Planning Task o Execution Task verificable preparada;
-- entorno preparado solo cuando la ejecución lo requiere;
+- entorno preparado sólo cuando la ejecución lo requiere;
 - Execution Cell reutilizada cuando corresponda;
 - Execution Report devuelto al Cycle Owner;
 - memoria durable actualizada progresivamente con conocimiento confirmado.

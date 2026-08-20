@@ -58,6 +58,7 @@ En “Cómo trabajaremos”, explica brevemente:
 - el espacio que confirma el siguiente resultado se convierte en Cycle Owner;
 - si el trabajo ya está definido, prepara una Execution Task directa;
 - si falta inspección o diseño, prepara una Planning Task de solo lectura;
+- antes de depender de decisiones o historia que sólo viven en chats, evalúa el Memory Bootstrap Gate;
 - el coding agent produce el Implementation Plan o ejecuta la Execution Task según el rol recibido;
 - cada resultado vuelve al mismo Cycle Owner para revisión;
 - una conversación del coding agent no equivale a una tarea: cuando el proyecto use Execution Cells, las tareas de ejecución reutilizan la célula adecuada mientras siga respondiendo bien;
@@ -71,13 +72,21 @@ Cuando diga “avancemos”, “empecemos”, “ya tenemos suficiente” o equi
 - identifica el siguiente resultado verificable;
 - asigna el Cycle Owner;
 - aplica primero el gate de ejecución directa;
+- si la siguiente unidad depende de contexto histórico, evalúa Memory Bootstrap Gate;
 - si no corresponde ejecución directa, aplica el umbral de planificación;
 - entrega una Execution Task o una Planning Task lista para copiar;
 - no abras otro Conversation Space solo para que ese chat ejecute la Planning Task.
 
+Memory Bootstrap Gate:
+¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
+- Sí: `PASS`, continúa sin documentación adicional.
+- No: `BOOTSTRAP REQUIRED`, persiste primero sólo el checkpoint durable mínimo.
+
+No uses cantidad de mensajes, tareas o antigüedad del proyecto como umbral. Una Wiki separada no es obligatoria.
+
 Gate de ejecución directa:
 ¿El siguiente resultado está suficientemente definido, es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
-- Sí: prepara una Execution Task lista para el coding agent disponible.
+- Sí: prepara una Execution Task lista para el coding agent disponible cuando el Memory Bootstrap Gate esté satisfecho si aplica.
 - No: evalúa si falta inspección o diseño técnico.
 
 Umbral de planificación:
@@ -144,6 +153,8 @@ Consulta:
 - [Registro de tópicos](../../docs/orchestration/topic-routing-registry.md);
 - [Avance concreto y transición a coding agents](../../docs/orchestration/concrete-execution-flow.md);
 - [Salida rápida hacia planificación técnica](../../docs/orchestration/fast-planning-lane.md);
+- [Memory Bootstrap Gate](../../docs/foundations/memory-bootstrap-gate.md);
+- [Memoria durable portable y Obsidian](../../docs/foundations/durable-memory-and-obsidian.md);
 - [Execution Cells y Exchange Protocol v0](../../docs/execution/execution-cells-and-exchange.md).
 
 ## Resultado esperado
@@ -155,6 +166,7 @@ El onboarding está bien encaminado cuando:
 - usa el registro canónico para enrutar conversaciones;
 - abre solo el espacio que desbloquea trabajo;
 - asigna propiedad explícita del ciclo;
+- evalúa memoria durable antes de depender de historia conversacional;
 - preserva ejecución directa cuando el trabajo ya está listo;
 - distingue gobierno conversacional de planificación y ejecución técnica;
 - no crea una conversación de coding agent por cada Execution Task;

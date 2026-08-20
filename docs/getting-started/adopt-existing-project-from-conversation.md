@@ -45,7 +45,21 @@ Cuando el asistente conversacional no tenga acceso suficiente al estado real, pr
 
 El resultado vuelve al mismo Cycle Owner. No abras otro Conversation Space solo para ejecutar la inspección técnica.
 
-## 6. Preparar el entorno cuando corresponda
+## 6. Evaluar memoria durable antes de depender de historia
+
+Antes de emitir una tarea que dependa de decisiones, estado o contexto previo, evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md).
+
+```text
+PASS
+→ la siguiente unidad puede ejecutarse sin reconstruir conversaciones
+
+BOOTSTRAP REQUIRED
+→ persiste primero el checkpoint durable mínimo
+```
+
+No reconstruyas toda la historia para pasar el gate. Captura sólo el estado vigente, las decisiones que condicionan la siguiente unidad, las fuentes de verdad y los desconocidos relevantes.
+
+## 7. Preparar el entorno cuando corresponda
 
 La instalación local no es requisito previo del onboarding. Se recomienda cuando la siguiente tarea necesita acceso real a repositorios, archivos, Git o herramientas locales.
 
@@ -54,12 +68,12 @@ En ese momento, usa según corresponda:
 - [Preparar el workspace local](workspace-setup.md)
 - [Instalar IA-DOS](install-ia-dos.md)
 - [Incorporar el proyecto existente](incorporate-existing-project-workspace.md)
-- [Crear o revisar la LLM Wiki](bootstrap-llm-wiki.md)
+- [Crear o revisar la memoria durable](bootstrap-llm-wiki.md)
 - [Preparar el handoff de ejecución](execution-handoff.md)
 
 No muevas, renombres ni reorganices un proyecto existente solo para cumplir una estructura recomendada.
 
-## 7. Ejecutar y retornar
+## 8. Ejecutar y retornar
 
 ```text
 Conversation Space Cycle Owner
@@ -97,7 +111,7 @@ No conviertas la adopción en una auditoría integral antes de poder avanzar.
 
 La Wiki o mecanismo de memoria adoptado debe distinguir conocimiento vigente de historia operacional. No copies conversaciones completas ni trates un Execution Report como estado oficial sin revisión.
 
-El `Memory Bootstrap Gate` todavía no está definido en esta fase. Su contrato se cerrará en la Fase 3 junto con el Wiki Starter. Hasta entonces, no presentes un gate inexistente como regla vigente ni dependas exclusivamente de contexto histórico que sólo viva en conversaciones cuando una tarea necesite reutilizarlo de forma durable.
+En una Wiki Markdown nueva, el checkpoint puede comenzar con `00-home.md`, `project-brief.md` y `status/current-state.md`; agrega decisiones y fuentes sólo cuando exista contenido durable real.
 
 ## Resultado esperado
 
@@ -106,7 +120,8 @@ El `Memory Bootstrap Gate` todavía no está definido en esta fase. Su contrato 
 - estado real comprendido sin inventar historia;
 - organización mínima de conversaciones;
 - registro canónico usado para enrutar tópicos;
-- entorno preparado solo cuando hace falta;
+- Memory Bootstrap Gate satisfecho cuando la siguiente unidad dependa de contexto histórico;
+- entorno preparado sólo cuando hace falta;
 - primera Planning Task, Preflight o Execution Task acotada;
 - Execution Cell reutilizada cuando corresponda;
 - evidencia devuelta al Cycle Owner;

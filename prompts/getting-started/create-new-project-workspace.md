@@ -1,98 +1,109 @@
 # Prompt para crear un proyecto nuevo dentro del workspace
 
-Este prompt está dirigido a Codex, Claude Code, Antigravity u otro agente con acceso al sistema de archivos y Git.
+Este prompt está dirigido a un coding agent con acceso al sistema de archivos y Git.
 
 ```text
-Objetivo
-Crear la estructura inicial de un proyecto nuevo dentro del workspace IA-DOS, sin elegir stack, generar funcionalidades ni inventar arquitectura.
+Artifact Type: Execution Task
+Destination Role: Coding Agent — Execution
+Expected Output: Execution Report
+Forbidden Output: elegir stack | generar funcionalidades | crear recursos no autorizados | ampliar topología
+Cycle ID: [CYCLE-ID O NO APLICA]
+Task ID: [TASK-ID]
 
-Información entregada por el usuario
-- ruta del workspace;
+Objetivo
+Crear únicamente la estructura local autorizada para un proyecto nuevo, sin elegir stack, generar funcionalidades ni inventar arquitectura.
+
+Información entregada
+- ruta del workspace, cuando aplique;
 - nombre del proyecto;
-- project-slug;
+- project-slug, cuando aplique;
 - resumen confirmado del propósito;
-- decisión sobre si app y wiki serán repositorios Git independientes;
+- recursos que deben crearse: implementación, memoria u otros;
+- modelo de adopción elegido;
 - autorización explícita para crear carpetas y, cuando corresponda, inicializar Git.
 
-Estructura recomendada
+Antes de actuar
+1. Detecta el sistema operativo.
+2. Resuelve y muestra las rutas absolutas afectadas.
+3. Verifica que las rutas padre existan.
+4. Si se usa project-slug, verifica `^[a-z0-9]+(?:-[a-z0-9]+)*$`.
+5. Verifica que no existan carpetas o repositorios en conflicto.
+6. Confirma exactamente qué recursos están autorizados.
+7. No crees una Wiki sólo porque aparezca en un ejemplo de IA-DOS.
+
+Topología
+Usa exclusivamente la topología aprobada en la tarea.
+
+Ejemplo posible, no obligatorio:
 proyectos/
 ├── 00-ia-dos/
 └── <project-slug>/
     ├── <project-slug>-app/
     └── <project-slug>-wiki/
 
-Antes de actuar
-1. Detecta el sistema operativo.
-2. Resuelve y muestra todas las rutas absolutas.
-3. Verifica que el workspace exista.
-4. Verifica que el project-slug cumpla `^[a-z0-9]+(?:-[a-z0-9]+)*$`.
-5. Verifica que no exista ya la carpeta exterior ni carpetas en conflicto.
-6. Confirma el alcance autorizado.
-
 Acciones permitidas
-- crear la carpeta exterior del proyecto;
-- crear las carpetas app y wiki;
-- crear un README.md mínimo en la app;
-- crear un index.md mínimo en la wiki;
-- inicializar Git por separado en app y wiki solo cuando esté autorizado;
+- crear las carpetas explícitamente autorizadas;
+- crear un README.md mínimo en una implementación nueva cuando corresponda;
+- copiar `templates/wiki-starter/` sólo cuando la tarea autorice crear memoria Markdown;
+- crear `.ia-dos.yaml` desde `templates/adoption.template.yaml` cuando esté incluido;
+- inicializar Git únicamente en los recursos y condiciones autorizados;
 - ejecutar verificaciones de solo lectura;
 - reportar rutas y estado.
 
-Contenido mínimo de la app
+Contenido mínimo de la implementación nueva
 - nombre del proyecto;
-- propósito resumido confirmado;
-- estado: implementación no iniciada;
-- ruta hacia la wiki;
-- advertencia de que stack y arquitectura aún no están definidos.
+- propósito confirmado;
+- estado real, por ejemplo implementación no iniciada;
+- referencia a memoria durable cuando ya exista;
+- no asumir stack o arquitectura.
 
-Contenido mínimo de la wiki
-- nombre del proyecto;
-- estado: wiki pendiente de bootstrap;
-- fuente inicial: conversación `00 — Dirección y definición`;
-- ruta hacia la app;
-- siguiente paso: crear la LLM Wiki.
+Memoria durable
+Cuando esté autorizada una Wiki nueva:
+- usa directamente el starter vigente;
+- no crees `index.md` provisional;
+- no crees `tasks/`, `context-packs/`, `log.md` ni arquitectura vacía;
+- conserva `00-home.md`, `project-brief.md`, `status/current-state.md`, `AGENTS.md`, `decisions/` y `sources/` según el starter;
+- completa sólo información confirmada.
 
 Acciones prohibidas
 - elegir framework, base de datos o proveedor cloud;
-- generar código, dependencias o configuración;
+- generar código, dependencias o configuración funcional;
 - crear `.env`;
 - crear pipelines o despliegues;
-- crear repositorios remotos públicos;
-- crear commits sin autorización;
-- convertir la carpeta exterior en repositorio Git;
+- crear Exchange salvo autorización explícita;
+- crear repositorios remotos o definir visibilidad sin autorización;
+- crear commits, push o pull requests no autorizados;
+- convertir la carpeta exterior en repositorio Git por defecto;
 - sobrescribir carpetas o archivos existentes;
-- inventar contenido para completar la wiki.
+- inventar contenido para completar la memoria.
 
 Condiciones de detención
 Detente antes de escribir cuando:
 - la ruta sea ambigua;
-- el project-slug sea inválido;
-- exista una carpeta en conflicto;
+- exista una carpeta o repositorio en conflicto;
 - falte autorización;
-- no esté clara la visibilidad de los futuros repositorios;
+- la topología física no esté decidida y el cambio sea difícil de revertir;
 - la solicitud implique tomar decisiones técnicas aún no confirmadas.
 
 Validaciones obligatorias
 - rutas absolutas correctas;
-- carpeta exterior creada una sola vez;
-- app y wiki presentes;
-- carpeta exterior sin `.git` salvo excepción documentada;
+- sólo existen los recursos autorizados;
 - ausencia de secretos;
 - ausencia de código o dependencias no solicitadas;
-- contenido mínimo revisable;
-- siguiente paso claramente indicado.
+- si se creó memoria, el starter vigente fue aplicado sin estructura legada;
+- Git y operaciones remotas coinciden con las autorizaciones;
+- diff o listado final revisable.
 
 Reporte final
-Entrega:
-1. sistema operativo;
-2. workspace utilizado;
-3. project-slug;
-4. carpetas y archivos creados;
-5. repositorios Git inicializados, si aplica;
-6. comandos ejecutados;
-7. validaciones;
-8. advertencias o decisiones pendientes;
-9. siguiente paso recomendado.
+Devuelve un Execution Report con:
+- sistema operativo y workspace utilizado;
+- recursos y archivos creados;
+- repositorios Git inicializados, si aplica;
+- comandos ejecutados;
+- validaciones;
+- acciones omitidas por fuera de alcance;
+- riesgos o decisiones pendientes;
+- siguiente decisión requerida del Cycle Owner.
 
-No continúes con desarrollo de producto sin una instrucción separada.
+No continúes con desarrollo de producto sin otra Execution Task.
 ```

@@ -21,10 +21,11 @@ La persona responsable define propósito, prioridades, restricciones y autoridad
 
 Esta capa debe:
 
-- capturar el alma y la dirección del proyecto;
+- capturar propósito y dirección suficientes;
 - separar conversaciones por dominio cuando desbloquea trabajo;
 - identificar prioridades, decisiones e hipótesis;
 - seleccionar las fuentes y el contexto necesarios;
+- preservar memoria durable antes de depender de historia conversacional;
 - transformar necesidades en unidades de trabajo acotadas;
 - revisar resultados y señalar qué conocimiento debe conservarse.
 
@@ -39,7 +40,7 @@ Esto puede incluir:
 - propósito y usuario;
 - comportamiento existente;
 - estructura del repositorio;
-- arquitectura vigente;
+- arquitectura vigente cuando exista;
 - decisiones confirmadas;
 - riesgos y restricciones;
 - pruebas disponibles;
@@ -66,26 +67,27 @@ Debe distinguirse explícitamente entre:
 
 Una conversación puede explorar alternativas, pero una propuesta no se transforma en decisión ni en implementación sin la autoridad correspondiente.
 
-Las decisiones durables regresan a la wiki, ADR, issue u otra fuente canónica aplicable.
+Las decisiones que deban reutilizarse regresan a la memoria durable, ADR, registro de decisiones u otra fuente canónica aplicable.
 
 ## 4. Delimitar
 
-Antes de solicitar una modificación física se define una unidad de trabajo acotada.
+Antes de solicitar planificación o modificación física se define una unidad de trabajo acotada.
 
-La `Execution Task` debe indicar:
+Si la unidad depende de conocimiento relevante que sólo vive en conversaciones, primero se aplica el [Memory Bootstrap Gate](memory-bootstrap-gate.md).
+
+Una `Execution Task` debe indicar:
 
 - objetivo;
-- problema o evidencia inicial;
-- contexto mínimo y rutas que deben leerse;
-- alcance;
-- fuera de alcance;
-- archivos o repositorios autorizados;
-- guardrails;
+- contexto durable estrictamente necesario;
+- referencias y lectura requerida cuando corresponda;
+- alcance y fuera de alcance;
+- autoridad de fuentes y recursos;
+- zonas autorizadas;
+- permisos y acciones externas;
 - criterios de aceptación;
-- pruebas esperadas;
+- verificaciones esperadas;
 - condiciones de detención;
-- documentación o memoria que puede requerir actualización;
-- formato del reporte final.
+- destino del reporte.
 
 El Project Orchestrator prepara o coordina esta delimitación. La tarea debe ser suficientemente clara para que otra herramienta pueda ejecutarla sin depender del historial completo del chat.
 
@@ -97,24 +99,24 @@ Puede trabajar sobre:
 
 - implementación;
 - documentación;
-- LLM Wiki;
+- memoria durable;
 - configuración;
 - pruebas;
-- branches, commits y pull requests.
+- branches, commits y pull requests cuando estén autorizados.
 
 Durante esta etapa debe:
 
 - inspeccionar antes de modificar;
-- confirmar repositorio y branch;
-- leer solo el contexto necesario;
+- confirmar recurso y branch o modo de trabajo cuando corresponda;
+- leer sólo el contexto requerido;
 - evitar cambios no solicitados;
-- no introducir dependencias o refactors sin justificación;
+- no introducir dependencias o refactors sin justificación y autorización;
 - detenerse si falta una decisión importante;
 - ejecutar verificaciones aplicables;
 - revisar el diff;
 - devolver un `Execution Report` con evidencia.
 
-El coding agent no debe recibir automáticamente todo IA-DOS, toda la wiki o todos los proyectos del workspace.
+El coding agent no debe recibir automáticamente todo IA-DOS, toda la memoria durable o todos los proyectos del workspace.
 
 ## 6. Verificar y aprender
 
@@ -134,10 +136,10 @@ La verificación puede incluir:
 
 Después de aprobar el cambio se actualiza la fuente de verdad correspondiente:
 
-- implementación en el repositorio de aplicación;
-- evidencia en el pull request o `Execution Report`;
-- decisión o estado durable en la wiki o ADR;
-- trabajo pendiente en el issue o mecanismo elegido;
+- implementación en el artefacto técnico real;
+- evidencia en el `Execution Report`, diff, pull request u otro mecanismo;
+- decisión o estado durable en la memoria o ADR cuando deba reutilizarse;
+- trabajo pendiente en el sistema elegido;
 - documentación cuando cambió el comportamiento.
 
 Aprender significa conservar únicamente conocimiento confirmado y útil, no copiar conversaciones completas a la memoria durable.
@@ -151,23 +153,19 @@ Project Orchestrator
         ↓
 Conversation Spaces ligeros
         ↓
-Decisiones e hipótesis confirmadas
+Decisión o necesidad clara
         ↓
-Execution Task
+Memory Bootstrap Gate, cuando aplica
+        ↓
+Planning Task | Environment Preflight | Execution Task
         ↓
 Coding agent
         ↓
-Repositorio de aplicación / LLM Wiki
+Implementation Plan | cambios + verificaciones + Execution Report
         ↓
-Branch + cambios + pruebas
+Cycle Owner revisa
         ↓
-Pull request + Execution Report
-        ↓
-Revisión humana y del Orchestrator
-        ↓
-Merge
-        ↓
-Actualización de memoria durable
+Fuentes de verdad actualizadas cuando corresponde
 ```
 
 ## Frontera de responsabilidad
@@ -188,13 +186,15 @@ El Orchestrator no debe presentar una propuesta como si ya estuviera implementad
 IA-DOS
     ↓ contrato operativo
 Project Orchestrator
-    ↓ Context Pack + Execution Task
-Coding agent
-    ↓ cambios + pruebas + Execution Report
-Project Orchestrator y persona responsable
+    ↓ contexto durable necesario + referencias/lecturas + delta + tarea
+coding agent
+    ↓ plan o cambios + verificaciones + reporte
+Cycle Owner y persona responsable
     ↓ revisión y decisión
-Wiki / issue / ADR / PR
+fuentes de verdad correspondientes
 ```
+
+Los `Context Packs` pueden seguir utilizándose como patrón opcional cuando un proyecto obtiene valor de agrupar rutas o documentos, pero no forman parte del contrato mínimo ni del Wiki Starter vigente.
 
 ## Fuentes de verdad
 
@@ -202,16 +202,19 @@ IA-DOS busca evitar que la misma información se mantenga manualmente en varios 
 
 | Tipo de información | Destino recomendado |
 |---|---|
-| Propósito y estado del proyecto | Wiki |
-| Arquitectura vigente | Wiki |
-| Decisión durable | Registro de decisión en la wiki o ADR |
-| Instrucciones del Orchestrator | Configuración del Project, Gem o archivo de orquestación |
-| Instrucciones para coding agents | `AGENTS.md` |
-| Trabajo pendiente | GitHub Issue o mecanismo elegido por el proyecto |
-| Alcance del cambio | `Execution Task` |
-| Implementación | Repositorio de aplicación |
-| Revisión y evidencia | Pull request o `Execution Report` |
-| Estándar común reutilizable | Repositorio IA-DOS |
+| Propósito y estado reusable | memoria durable del proyecto |
+| Arquitectura vigente | registro arquitectónico o memoria durable cuando exista |
+| Decisión durable | registro de decisiones adoptado por el proyecto |
+| Instrucciones del Orchestrator | configuración o artefacto de orquestación adoptado |
+| Instrucciones para coding agents | `AGENTS.md` o política equivalente |
+| Trabajo pendiente | sistema de seguimiento elegido por el proyecto |
+| Alcance de un plan | `Planning Task` |
+| Propuesta de implementación | `Implementation Plan` |
+| Alcance de una ejecución | `Execution Task` |
+| Implementación | artefactos reales del producto |
+| Revisión y evidencia | `Execution Report`, diff, pull request o mecanismo equivalente |
+| Historial TASK/REPORT | Exchange cuando el proyecto lo adopta |
+| Estándar común reutilizable | repositorio IA-DOS |
 
 La tarea puede enlazar estos artefactos, pero no debe duplicarlos sin necesidad.
 

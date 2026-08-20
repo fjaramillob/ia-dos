@@ -1,273 +1,307 @@
-# Crear la LLM Wiki del proyecto
+# Crear o conectar la memoria durable del proyecto
 
-La LLM Wiki es la memoria durable del proyecto. Permite que personas y asistentes comprendan qué se está construyendo, cuál es su estado real, qué decisiones están vigentes y dónde encontrar las fuentes.
+IA-DOS utiliza memoria durable para conservar conocimiento vigente y reusable sin depender del historial de conversaciones.
 
-No reemplaza el código, los issues ni los pull requests. Tampoco debe convertirse en una copia completa del repositorio, una auditoría permanente ni un duplicado del historial de chats.
+Una Wiki Markdown es la implementación recomendada cuando el proyecto necesita una base local, versionable y portable. No es la única implementación posible ni obliga a usar un repositorio separado.
 
-## Principios LLM Wiki
+La memoria durable no reemplaza:
 
-La implementación de IA-DOS está inspirada en la propuesta **LLM Wiki** de Andrej Karpathy: memoria durable en Markdown, navegable, versionada con Git y separada de las conversaciones.
+- la implementación;
+- el backlog;
+- los pull requests;
+- Exchange;
+- la conversación activa.
 
-La wiki debe:
+Cada uno responde una pregunta distinta.
 
-- compilar conocimiento de alta señal, no acumular documentos sin procesar;
+```text
+Memoria durable
+→ ¿qué sabemos que es verdad ahora?
+
+Implementación
+→ ¿qué está materializado?
+
+Exchange
+→ ¿qué se pidió y qué se respondió?
+
+Conversaciones
+→ ¿qué estamos razonando ahora?
+```
+
+## Memory Bootstrap Gate
+
+Antes de depender de contexto histórico evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md).
+
+La regla es:
+
+```text
+si la siguiente unidad depende de conocimiento
+que sólo vive en conversación
+→ persiste primero el checkpoint durable mínimo
+```
+
+Si la siguiente tarea es autosuficiente y puede apoyarse en fuentes durables o implementación verificable, no bloquees el avance para crear documentación por ceremonia.
+
+## Principios de la Wiki
+
+Cuando se usa Markdown, la Wiki debe:
+
+- compilar conocimiento de alta señal;
+- priorizar estado vigente sobre cronología;
 - tener un punto de entrada claro;
-- dividir el conocimiento en páginas pequeñas y enlazables;
-- separar fuentes, hechos, propuestas, decisiones y estado;
-- enlazar páginas relacionadas;
-- mantenerse versionada con Git;
-- actualizarse progresivamente cuando cambia el proyecto;
-- permitir cargar `CORE` y solo las páginas relevantes para cada tarea;
-- permitir retomar el proyecto sin depender del historial de chats.
+- usar páginas pequeñas cuando los temas puedan mantenerse de forma independiente;
+- distinguir hechos, decisiones, propuestas, pendientes y desconocidos;
+- enlazar fuentes y evidencia relevantes;
+- poder retomarse sin leer chats anteriores;
+- permitir consumo selectivo por agentes;
+- seguir siendo legible fuera de Obsidian.
 
-IA-DOS agrega encima de estos principios:
-
-- estado explícito de implementación;
-- ADRs o decisiones durables;
-- `Execution Tasks`;
-- Context Packs;
-- fuentes de verdad;
-- verificación con evidencia.
-
-Esto es una implementación inspirada y compatible con esos principios, no una distribución oficial del sistema de Karpathy.
-
-## Principio operativo
-
-La wiki se **instala temprano y se puebla progresivamente**.
-
-Su propósito inicial no es documentar todo el proyecto. Es ofrecer una estructura mínima y estable para que el Project Orchestrator, Codex, Antigravity, Claude Code u otro coding agent sepan:
-
-- qué proyecto están leyendo;
-- qué está confirmado;
-- qué existe realmente;
-- qué falta decidir;
-- dónde están las fuentes;
-- qué contexto deben cargar para la siguiente tarea.
-
-No detengas el primer vertical slice para completar documentación sin evidencia.
+La implementación de IA-DOS está inspirada en el concepto de **LLM Wiki**: memoria durable en Markdown, navegable, versionable y separada de conversaciones. IA-DOS agrega reglas explícitas de autoridad, estado y ejecución verificable.
 
 ## Cuándo crearla o conectarla
 
-Créala o conéctala:
+Créala, conéctala o actualízala cuando el Memory Bootstrap Gate indique que falta memoria durable suficiente para la siguiente unidad.
 
-- después de la primera definición de un proyecto nuevo;
-- al adoptar un proyecto existente sin memoria estructurada;
-- antes de delegar tareas que dependan de historia o decisiones previas;
-- antes de aumentar significativamente el número de agentes o conversaciones;
-- cuando la documentación existente no permite saber con claridad dónde está parado el proyecto.
+También suele aportar cuando:
+
+- varias Conversation Spaces o agentes comparten contexto;
+- una conversación de Execution Cell debe poder reemplazarse sin perder conocimiento;
+- un proyecto existente carece de una vista fiable de su estado actual;
+- existen decisiones vigentes dispersas en conversaciones o documentos;
+- el proyecto se retoma después de una pausa y el estado no puede reconstruirse fácilmente.
+
+No uses cantidad de tareas, número de mensajes o antigüedad del proyecto como gatillos automáticos.
 
 ## `90 — Wiki y memoria` es opcional
 
-No es obligatorio abrir `90 — Wiki y memoria` para instalar la wiki inicial.
+No es obligatorio abrir `90 — Wiki y memoria` para crear el checkpoint inicial.
 
-La estructura mínima puede crearse mediante una tarea documental acotada usando decisiones ya confirmadas en `00`.
+Cuando el conocimiento ya está confirmado, `00` u otro Conversation Space autorizado puede preparar directamente una actualización documental acotada.
 
-Abre una conversación separada cuando exista trabajo real de:
+Abre `90` cuando exista trabajo real de:
 
 - síntesis;
 - contradicciones;
 - consolidación de decisiones durables;
-- mantenimiento documental;
-- recuperación de una wiki desordenada;
-- preparación de contexto para varios agentes.
+- recuperación de memoria desordenada;
+- diseño de una estructura de conocimiento que ya no pueda resolverse con una actualización pequeña.
 
-```text
-90 — Wiki y memoria
-```
+`90` gobierna conocimiento; no es el proceso físico que necesariamente escribe archivos.
 
-`90` ordena y mantiene conocimiento confirmado. No debe transformarse en una auditoría exhaustiva previa al desarrollo ni tomar por sí sola decisiones de producto o arquitectura.
+## Starter recomendado para una Wiki nueva
 
-## Estructura mínima recomendada
+El contenido de `templates/wiki-starter/` es deliberadamente pequeño:
 
 ```text
 nombre-proyecto-wiki/
-├── index.md
+├── 00-home.md
 ├── project-brief.md
-├── current-state.md
-├── architecture.md
-├── log.md
 ├── AGENTS.md
-├── .ia-dos.yaml
-│
+├── status/
+│   └── current-state.md
 ├── decisions/
 │   └── README.md
-├── tasks/
-│   └── README.md
-├── sources/
-│   └── README.md
-└── context-packs/
-    └── core.md
+└── sources/
+    └── README.md
 ```
 
-Esta es una estructura base, no una obligación de llenar todos los archivos de inmediato.
+Cuando el proyecto necesite una adopción reproducible, agrega `.ia-dos.yaml` desde `templates/adoption.template.yaml`. El manifiesto es opcional y no forma parte física de `templates/wiki-starter/`.
 
-Agrega nuevas carpetas solo cuando exista contenido y una necesidad real. No crees páginas receptoras, plantillas o secciones vacías solo para anticipar conversaciones futuras.
+No crees por defecto:
 
-## Poblamiento inicial mínimo
+- `tasks/`;
+- `context-packs/`;
+- `log.md`;
+- una página de arquitectura vacía;
+- carpetas de producto, operaciones o seguridad sin contenido real.
 
-Al comenzar, basta con poblar:
+Créelas después sólo cuando el conocimiento existente lo justifique.
 
-- `index.md`;
-- `project-brief.md`;
-- `current-state.md`;
-- `AGENTS.md`;
-- `.ia-dos.yaml`;
-- `context-packs/core.md`.
+## Función de cada archivo inicial
 
-`architecture.md`, ADRs, tareas, fuentes y otras páginas se completan cuando exista evidencia o una decisión real que registrar.
+### `00-home.md`
 
-## Función de cada archivo
+Es el mapa de memoria. Orienta hacia conocimiento vigente y fuentes de verdad sin duplicarlas.
 
-### `index.md`
-
-Punto de entrada y mapa de navegación. Debe indicar qué contiene la wiki, cuáles son los archivos fundamentales, estado general y ubicación del repositorio de aplicación.
+Su nombre ayuda a que aparezca primero en visores como Obsidian, pero Wikis existentes no necesitan renombrar su home si ya tienen un punto de entrada claro.
 
 ### `project-brief.md`
 
-Resume propósito, usuario, problema, propuesta de valor, alcance, fuera de alcance, comportamiento esperado y restricciones conocidas.
+Conserva dirección durable:
 
-Puede construirse desde `templates/project-intake-brief.template.md`, un documento adjunto o una síntesis de la conversación `00`.
+- propósito;
+- usuario;
+- problema;
+- promesa de valor;
+- alcance;
+- fuera de alcance;
+- principios o restricciones no negociables;
+- decisiones relevantes;
+- supuestos y preguntas abiertas.
 
-### `current-state.md`
+No debe describir implementación como si fuera autoridad técnica.
 
-Describe qué existe hoy y distingue:
+### `status/current-state.md`
+
+Describe qué sabemos del estado actual y distingue explícitamente:
 
 ```text
 Implementado
-Parcialmente implementado
-Planificado
-Deprecado
+Decidido / aprobado pero no implementado
+Pendiente
+Fuera de alcance
 Desconocido
 ```
 
-En un proyecto nuevo debe indicar claramente que todavía no existe implementación cuando esa sea la evidencia.
+Puede agregar riesgos, limitaciones y evidencia principal.
 
-### `architecture.md`
-
-Describe arquitectura vigente o una propuesta confirmada. No presenta componentes hipotéticos como implementados. Puede permanecer mínimo hasta que `20 — Arquitectura y stack` produzca una decisión suficiente.
+La implementación sigue siendo autoridad para demostrar qué está materializado.
 
 ### `decisions/`
 
-Contiene decisiones durables con contexto, decisión, alternativas, consecuencias, fecha y estado.
+Contiene decisiones durables que necesitan contexto propio.
 
-### `tasks/`
-
-Se utiliza cuando la fuente canónica de `Execution Tasks` está en la wiki. Si GitHub Issues es la fuente canónica, conserva solo índices o referencias.
+No toda decisión requiere una página. Una decisión aceptada tampoco equivale a una implementación terminada.
 
 ### `sources/`
 
-Contiene o referencia documentos, enlaces, reportes, investigaciones, capturas y notas sin sintetizar. Una fuente no se considera automáticamente una decisión vigente.
-
-### `context-packs/core.md`
-
-Conserva el contexto transversal mínimo:
-
-- propósito;
-- usuario principal;
-- estado actual resumido;
-- restricciones;
-- decisiones vigentes relevantes;
-- ubicación de fuentes de verdad.
-
-Debe mantenerse pequeño.
+Conserva referencias que merecen trazabilidad propia. Una fuente no se convierte automáticamente en decisión ni en estado vigente.
 
 ### `AGENTS.md`
 
-Define cómo trabajan los agentes en la wiki: no inventar información, enlazar fuentes, distinguir hechos y propuestas, evitar duplicación, actualizar `log.md` cuando corresponda y no guardar secretos.
+Define cómo los agentes deben mantener la memoria: Markdown portable, estado vigente, enlaces relativos, no duplicación, no secretos y detención ante contradicciones relevantes.
 
-### `.ia-dos.yaml`
+### `.ia-dos.yaml`, cuando se adopta
 
-Declara la adopción de IA-DOS, versión o commit utilizado, rutas, modelo de adopción y fuente canónica de tareas. Usa `templates/adoption.template.yaml`.
+Declara la adopción de IA-DOS cuando el proyecto necesita una configuración reproducible. Usa `templates/adoption.template.yaml` y registra la ruta real desde `00-home.md` sólo si el archivo existe.
+
+## Estructura que crece por conocimiento
+
+A medida que aparezca conocimiento real, pueden surgir páginas como:
+
+```text
+product/financial-model.md
+architecture/runtime.md
+architecture/data-model.md
+operations/deployment.md
+decisions/single-writer.md
+```
+
+La Wiki no replica los Conversation Spaces `00–90`. Los Conversation Spaces representan gobierno; las carpetas de la Wiki representan conocimiento reusable.
+
+No dividas por especialidad sólo para seguir una taxonomía. Divide cuando una página pueda mantenerse y consumirse de forma independiente.
 
 ## Proyecto nuevo
 
-Instala primero la estructura mínima y construye la wiki desde decisiones confirmadas en `00 — Dirección y definición`.
+Para un proyecto nuevo:
 
-Registra:
+1. captura dirección suficiente en `project-brief.md`;
+2. registra en `status/current-state.md` qué todavía no existe;
+3. conserva únicamente decisiones que ya condicionen el siguiente trabajo;
+4. enlaza las fuentes de verdad disponibles;
+5. vuelve a evaluar el Memory Bootstrap Gate antes de tareas que dependan de contexto histórico.
 
-- qué se quiere construir;
-- qué todavía no está decidido;
-- qué no existe;
-- cuál será el primer incremento;
-- qué supuestos necesitan validación.
-
-No inventes arquitectura para completar archivos ni detengas el primer vertical slice para llenar la wiki.
+No inventes arquitectura para completar el starter ni detengas un vertical slice autosuficiente sólo para llenar documentación.
 
 ## Proyecto existente
 
-Construye la wiki desde evidencia:
+Para un proyecto existente, construye el checkpoint desde evidencia:
 
-- inspección del repositorio en modo lectura;
-- README, configuración, dependencias y estructura;
-- documentación existente;
-- issues y pull requests relevantes;
-- conversación con la persona responsable;
-- registro de contradicciones y desconocidos.
+- repositorio y configuración;
+- documentación vigente;
+- PRs o issues relevantes;
+- despliegue o servicios observables cuando estén autorizados;
+- conversaciones con la persona responsable;
+- reportes de inspección revisados.
 
-Un coding agent puede inspeccionar y reportar, pero el reporte debe revisarse antes de considerarlo definitivo.
+No reconstruyas toda la historia. Captura primero el estado vigente y los desconocidos que puedan afectar el siguiente resultado.
 
-No conviertas la adopción inicial en una reorganización total. Primero instala el punto de entrada, el estado y las fuentes de verdad; luego normaliza solo lo que realmente obstaculiza el trabajo.
+Un `Execution Report` o una inspección del coding agent aporta evidencia, pero no se convierte automáticamente en memoria oficial sin revisión.
 
-## Repositorio separado o documentación interna
+## Repositorio separado o memoria interna
 
-IA-DOS recomienda con fuerza:
-
-```text
-nombre-proyecto/
-├── nombre-proyecto-app/
-└── nombre-proyecto-wiki/
-```
-
-La wiki puede permanecer dentro del repositorio de aplicación cuando el proyecto es pequeño, ya utiliza monorepo o la separación agrega fricción injustificada. Documenta la excepción.
-
-## Uso desde ChatGPT, Gemini o Claude
-
-El Project Orchestrator debe recibir acceso a la wiki o a los archivos necesarios.
-
-No cargues toda la wiki en cada conversación. Usa:
+Una topología válida es:
 
 ```text
-CORE
-+
-un Context Pack principal
-+
-opcionalmente uno secundario
+proyecto/
+├── proyecto-app/
+└── proyecto-wiki/
 ```
 
-Las decisiones durables tomadas en chats deben volver a la wiki.
+También son válidos:
 
-## Poblamiento progresivo y mantenimiento
+- documentación dentro del repositorio de aplicación;
+- monorepo;
+- Wiki privada o exclusivamente local;
+- otro mecanismo durable equivalente.
 
-Producto, Arquitectura, Ejecución y Verificación deben devolver a la wiki únicamente decisiones, estado, evidencia y aprendizaje durable.
+No reorganices un proyecto existente sólo para cumplir una topología recomendada.
 
-Actualiza la wiki cuando:
+## Obsidian
 
-- cambia el comportamiento del producto;
-- cambia la arquitectura;
-- se toma una decisión durable;
-- se identifica un riesgo relevante;
-- una tarea invalida información anterior;
-- aparece una contradicción;
-- una propuesta pasa a implementarse.
+Obsidian puede abrir directamente la misma base Markdown.
 
-No necesita actualizarse por cada conversación o commit menor.
+Reglas de portabilidad:
 
-## Verificación
+- usa Markdown estándar;
+- usa rutas relativas como referencias canónicas;
+- no dependas de wikilinks para que un documento tenga sentido;
+- no dependas de plugins para semántica crítica;
+- usa YAML frontmatter sólo cuando tenga una función real;
+- evita duplicar una segunda Wiki específica para Obsidian.
 
-Antes de considerar la wiki inicial utilizable, verifica:
+Consulta [Memoria durable portable y consumo desde Obsidian](../foundations/durable-memory-and-obsidian.md).
 
-- [ ] Existe un punto de entrada claro.
-- [ ] El propósito se entiende.
-- [ ] El estado no confunde planes con implementación.
-- [ ] Las decisiones importantes tienen destino.
-- [ ] Las fuentes están identificadas.
-- [ ] Existe un `CORE` pequeño.
-- [ ] Los agentes tienen instrucciones.
-- [ ] No contiene secretos.
-- [ ] Puede retomarse sin leer chats anteriores.
+## Consumo por agentes
 
-No es necesario que todas las páginas estén completas.
+El coding agent no debe leer toda la Wiki por defecto.
+
+Una tarea puede transportar:
+
+```text
+Contexto durable necesario
+→ hechos mínimos que viajan con la tarea
+
+Referencias Wiki
+→ trazabilidad; no implican lectura
+
+Lectura requerida
+→ páginas que sí deben consumirse antes de ejecutar
+```
+
+Si el agente no puede acceder físicamente a la Wiki, el Orchestrator selecciona el extracto indispensable y conserva las referencias cuando aporten trazabilidad.
+
+## TASK y REPORT no son memoria
+
+No guardes TASK/REPORT completos en la Wiki por defecto.
+
+Cuando el proyecto adopta Exchange:
+
+```text
+Wiki
+→ estado vigente
+
+Exchange
+→ historial de TASK/REPORT
+```
+
+Cuando no usa Exchange, la fuente de tareas puede ser Issues u otro mecanismo. En ambos casos evita duplicar el mismo artefacto completo dentro de la Wiki.
+
+## Verificación del bootstrap
+
+El checkpoint durable inicial es utilizable cuando:
+
+- [ ] existe un punto de entrada claro;
+- [ ] propósito y límites relevantes están registrados;
+- [ ] el estado distingue implementación de decisiones y pendientes;
+- [ ] las fuentes de verdad necesarias para el siguiente trabajo están identificadas;
+- [ ] las contradicciones o desconocidos relevantes están explícitos;
+- [ ] los agentes pueden navegar por enlaces Markdown relativos;
+- [ ] no contiene secretos;
+- [ ] la siguiente unidad no necesita reconstruir conversaciones para ejecutarse correctamente.
+
+No es necesario que toda la Wiki esté completa.
 
 ## Resultado esperado
 
-La LLM Wiki debe permitir que el Project Orchestrator y los coding agents sepan dónde están parados, qué información pueden confiar, qué falta decidir y qué contexto necesitan para la siguiente tarea.
+La memoria durable debe permitir continuar el proyecto con contexto suficiente y selectivo, sin convertir la Wiki en una segunda implementación, un backlog, un historial de chats o un archivo de Exchange.
