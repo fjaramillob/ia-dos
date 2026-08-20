@@ -46,14 +46,13 @@ Obsidian es una interfaz sobre la memoria durable, no una fuente de verdad adici
 
 ## Starter mínimo para Wikis nuevas
 
-IA-DOS propone como punto de partida:
+El contenido real de `templates/wiki-starter/` es:
 
 ```text
 proyecto-wiki/
 ├── 00-home.md
 ├── project-brief.md
 ├── AGENTS.md
-├── .ia-dos.yaml
 ├── status/
 │   └── current-state.md
 ├── decisions/
@@ -62,9 +61,9 @@ proyecto-wiki/
     └── README.md
 ```
 
-`.ia-dos.yaml` se crea desde `templates/adoption.template.yaml` cuando el proyecto necesita declarar formalmente su adopción.
+Cuando el proyecto necesita declarar formalmente su adopción, agrega `.ia-dos.yaml` desde `templates/adoption.template.yaml`. El manifiesto es opcional y no forma parte del starter físico.
 
-La estructura es un starter, no un esquema obligatorio para Wikis existentes. No renombres una memoria ya clara y navegable sólo para coincidir con estos nombres.
+La estructura es un punto de partida, no un esquema obligatorio para Wikis existentes. No renombres una memoria ya clara y navegable sólo para coincidir con estos nombres.
 
 ## Estructura por conocimiento
 
