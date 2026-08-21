@@ -136,7 +136,7 @@ Execution Report
 
 Toda Execution Task sigue un único contrato semántico definido en `docs/orchestration/typed-artifact-routing.md`.
 
-Exchange Protocol v0 puede aportar identificación y persistencia del par `TASK/REPORT`, pero no crea un contrato distinto.
+Exchange, cuando se utiliza, sólo transporta o conserva el archivo `.md` ya construido. La identidad de la tarea pertenece al Conversation Agent y al contrato del artefacto; Exchange no genera, modifica ni valida IDs.
 
 ## Optimización de contexto
 
@@ -171,18 +171,21 @@ Al revisar un `Execution Report`, el Orchestrator debe:
 1. comparar objetivo versus resultado;
 2. revisar evidencia y verificaciones;
 3. comprobar alcance y autorizaciones;
-4. identificar riesgos, pendientes y conocimiento potencialmente durable;
-5. decidir cierre, corrección, reversión, revisión de memoria o escalamiento cuando corresponda.
+4. identificar riesgos, desviaciones, pendientes del alcance original y cualquier atención requerida;
+5. decidir cierre, corrección, reversión, escalamiento o siguiente unidad;
+6. evaluar después si algún hecho nuevo merece consolidación en memoria durable.
+
+El Execution Report aporta evidencia; no selecciona la decisión de gobierno posterior y no es memoria durable.
 
 La afirmación del agente no reemplaza la evidencia.
 
 ## Regla de autoridad
 
-- La conversación dirige y coordina.
+- La conversación dirige, revisa y decide.
 - La memoria durable conserva conocimiento vigente y confirmado.
 - La implementación demuestra qué está materializado.
 - La `Execution Task` conserva el alcance autorizado de una ejecución.
 - El `Execution Report`, diff, revisión o PR conserva evidencia.
-- Exchange, cuando existe, conserva historial operacional de `TASK/REPORT` y no sustituye ninguna de las fuentes anteriores.
+- Exchange, cuando existe, sólo transporta o conserva archivos intercambiados y no sustituye ninguna de las fuentes anteriores.
 
 IA-DOS conecta estas capas para que una conversación se convierta en trabajo útil, acotado, trazable y reemplazable sin depender del historial de chats.
