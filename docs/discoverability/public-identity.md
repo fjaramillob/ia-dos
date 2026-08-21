@@ -1,6 +1,6 @@
 # Identidad pública canónica de IA-DOS
 
-Este documento concentra las definiciones públicas que deben mantenerse consistentes en README, documentación, packs, perfiles y futuras superficies oficiales.
+Este documento concentra las definiciones públicas que deben mantenerse consistentes en README, documentación, bundles y futuras superficies oficiales.
 
 ## Nombre
 
@@ -20,54 +20,68 @@ Open framework for structured AI-assisted software development through conversat
 
 ## Resumen canónico
 
-IA-DOS coordina a la persona que dirige el proyecto, los asistentes conversacionales, los coding agents, la LLM Wiki, los repositorios, las decisiones, las tareas y la verificación. Primero captura el alma y la dirección del proyecto; después propone una estrategia, organiza Conversation Spaces, convierte decisiones en Execution Tasks acotadas y devuelve los resultados verificados a la memoria durable. No exige una especificación perfecta antes de construir: producto, arquitectura, implementación y aprendizaje evolucionan juntos bajo límites claros.
+IA-DOS coordina a la persona responsable, los asistentes conversacionales, los coding agents, la memoria durable y la implementación real. Mantiene separadas dirección, planificación, ejecución y verificación; conserva conocimiento reusable mediante una LLM Wiki cuando el proyecto adopta esa materialización; y convierte resultados definidos en unidades pequeñas con autoridad explícita y evidencia verificable.
+
+No exige una especificación perfecta, una Wiki completa, una topología fija ni una conversación nueva por cada tarea. El siguiente paso se decide según la necesidad real de memoria, readiness, planificación o ejecución.
 
 ## Problema que resuelve
 
-Cuando un proyecto se desarrolla con múltiples chats, agentes y herramientas, el contexto se fragmenta, las decisiones se pierden, aparecen cambios fuera de alcance, documentación desactualizada y dificultad para determinar qué está realmente terminado.
+Cuando un proyecto se desarrolla con múltiples chats, agentes y herramientas, el contexto se fragmenta, las decisiones se pierden, aparecen cambios fuera de alcance y resulta difícil distinguir qué está decidido, qué está implementado y qué fue realmente verificado.
 
-IA-DOS crea una estructura compartida para mantener dirección, memoria, ejecución y evidencia alineadas.
+IA-DOS crea fronteras claras entre conversación, memoria, implementación, ejecución y evidencia.
 
 ## Para quién está pensado
 
-Personas y equipos pequeños que construyen software con asistentes conversacionales y coding agents, necesitan control sobre producto, arquitectura, datos, repositorios y tareas, y pueden no ser programadores expertos.
+Personas y equipos pequeños que construyen software con asistentes conversacionales y coding agents, necesitan control sobre producto, arquitectura, repositorios, datos y tareas, y pueden no ser programadores expertos.
 
 ## Cómo funciona
 
 ```text
-Capturar el alma del proyecto
-→ establecer una dirección
-→ proponer una estrategia de avance
-→ organizar Conversation Spaces y LLM Wiki
-→ convertir decisiones en Execution Tasks
-→ ejecutar con coding agents
-→ verificar evidencia
-→ registrar aprendizaje
+dirección suficiente
+→ siguiente resultado verificable
+→ memoria durable cuando haga falta
+→ readiness cuando sea indispensable
+→ Planning cuando reduzca incertidumbre real
+→ Execution Task cuando la unidad esté lista
+→ coding agent
+→ Execution Report con evidencia
+→ revisión del Cycle Owner y responsabilidad humana aplicable
+→ aprendizaje durable cuando corresponda
 ```
+
+No es una pipeline rígida. Los Conversation Spaces se abren bajo demanda y las Execution Cells, cuando se usan, preservan continuidad de ejecución sin acumular permisos.
 
 ## Componentes canónicos
 
-- **Project Orchestrator:** asistente conversacional que dirige, conecta decisiones y propone el siguiente avance.
-- **Conversation Space:** conversación persistente dedicada a un dominio o función del proyecto.
-- **LLM Wiki:** memoria durable, navegable y versionada del proyecto.
-- **Execution Task:** unidad acotada de trabajo entregada a un coding agent.
-- **Execution Report:** evidencia y resultado devueltos por una ejecución.
-- **Launch Mode:** comportamiento del orquestador cuando existe dirección suficiente y el usuario quiere avanzar.
-- **Conversation Space Handoff:** contexto autosuficiente para transferir trabajo entre conversaciones que no comparten historial.
+- **Persona responsable:** conserva dirección, autoridad y aprobación final en decisiones relevantes.
+- **Project Orchestrator:** asistente conversacional que orienta el proyecto, selecciona contexto y prepara el siguiente avance.
+- **Conversation Space:** contexto persistente de gobierno para un dominio cuando separarlo aporta valor.
+- **Cycle Owner:** Conversation Space que gobierna un resultado dentro de la autoridad delegada.
+- **Memoria durable:** responsabilidad de conservar conocimiento vigente y reutilizable fuera de conversaciones efímeras.
+- **LLM Wiki:** materialización durable, portable y navegable de esa memoria para humanos y agentes.
+- **Memory Bootstrap Gate:** comprueba si una siguiente unidad depende de conocimiento que sólo vive en conversaciones.
+- **Planning Task / Implementation Plan:** contrato de inspección técnica en solo lectura y su propuesta resultante.
+- **Environment Preflight:** comprobación no destructiva de readiness indispensable.
+- **Execution Task:** contrato acotado y autorizado de una unidad ejecutable.
+- **Execution Cell:** continuidad de ejecución reutilizable entre tareas cuando el proyecto adopta ese modelo.
+- **Execution Report:** evidencia de ejecución; no es aprobación ni memoria durable.
+- **Exchange:** pasarela pasiva y opcional de archivos Markdown; no define artefactos ni workflow.
+- **Specialist Handoff:** transferencia acotada de gobierno entre Conversation Spaces.
 
 ## Qué no es
 
 IA-DOS no es:
 
 - un sistema operativo DOS;
-- un curso o módulo educativo de Python;
+- un curso o módulo educativo;
 - una librería Python;
 - un tutorial para construir agentes autónomos;
-- un framework basado necesariamente en LangChain o LangGraph;
+- un framework que dependa de LangChain o LangGraph;
 - una aplicación SaaS;
 - un coding agent;
 - una herramienta que programa sola;
-- un reemplazo de GitHub, Obsidian, Spec Kit, OpenSpec o coding agents.
+- un reemplazo de GitHub, Obsidian, Spec Kit, OpenSpec o coding agents;
+- una obligación de usar Wiki, Exchange, repositorios separados o una secuencia fija de chats.
 
 ## Preguntas frecuentes
 
@@ -77,32 +91,32 @@ Intelligence-Assisted Development Operating System.
 
 ### ¿Es un sistema operativo?
 
-No. “Operating System” describe un marco de trabajo para coordinar el desarrollo, no software de sistema.
+No. “Operating System” describe un marco operativo para coordinar desarrollo asistido por IA, no software de sistema.
 
 ### ¿Sirve para crear agentes autónomos?
 
-No es una librería para construir agentes. Puede coordinar asistentes y coding agents dentro de un proyecto.
+No es una librería para construir agentes. Coordina asistentes y coding agents bajo autoridad explícita.
 
-### ¿Depende de ChatGPT?
+### ¿Depende de ChatGPT, Codex o Antigravity?
 
-No. Es tool-agnostic y puede utilizarse con ChatGPT, Gemini, Claude y entornos equivalentes.
+No. IA-DOS es tool-agnostic y puede utilizarse con herramientas equivalentes.
 
-### ¿Depende de Codex o Antigravity?
+### ¿Qué es una LLM Wiki?
 
-No. Puede preparar trabajo para distintos coding agents.
+Es el término de IA-DOS para una materialización portable y navegable de memoria durable. No es obligatoria para toda tarea ni requiere un repositorio separado.
 
-### ¿Utiliza LangChain o LangGraph?
+### ¿Exchange automatiza tareas?
 
-IA-DOS no exige esas tecnologías y el repositorio no debe describirse como un tutorial de ellas.
+No. Exchange sólo almacena o pone a disposición archivos `.md`; no define IDs, estados, permisos, backlog o ejecución automática.
 
 ### ¿Dónde está la fuente oficial?
 
-En el repositorio `https://github.com/fjaramillob/ia-dos`.
+En `https://github.com/fjaramillob/ia-dos`.
 
 ### ¿Cómo comienzo?
 
-Configurando un Project Orchestrator y entregándole el repositorio oficial o el pack portable de IA-DOS junto con el contexto inicial del proyecto.
+Inicializa el Project Orchestrator con el repositorio canónico o el Current Offline Pack, entrega el contexto disponible y comienza en `00 — Dirección y orquestación`.
 
 ## Regla editorial
 
-Se puede adaptar la longitud del mensaje, pero no cambiar su categoría, propósito ni relación con asistentes, memoria y ejecución verificable.
+Se puede adaptar la longitud del mensaje, pero no cambiar la categoría, las fronteras de autoridad ni la relación entre conversación, LLM Wiki, ejecución y evidencia verificable.

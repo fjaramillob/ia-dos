@@ -18,67 +18,82 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [TASK-ID]
 ```
 
-El mecanismo de transporte o almacenamiento no cambia este contrato. Si el proyecto usa Exchange, Exchange sólo almacena o pone a disposición el `.md` ya construido; no genera ni modifica `Task ID`, `Cycle ID`, estados o permisos.
+El mecanismo de transporte o almacenamiento no cambia este contrato. Si el proyecto usa Exchange, Exchange sólo almacena o pone a disposición el `.md` ya construido y no genera ni modifica IDs, estados o permisos.
+
+## Precondiciones de emisión
+
+Antes de emitir la tarea confirma:
+
+- [ ] el resultado está definido, es pequeño y verificable;
+- [ ] Memory Bootstrap Gate = `PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT | NO APLICA`;
+- [ ] readiness indispensable = `LISTO PARA EJECUCIÓN | NO APLICA`;
+- [ ] Planning previo = `[REFERENCIA REVISADA | NO APLICA]`;
+- [ ] las decisiones humanas indispensables para esta unidad están resueltas;
+- [ ] la tarea puede completarse, verificarse y reportarse como una sola unidad.
+
+Para una unidad ordinaria que dependa de memoria previa, `BOOTSTRAP REQUIRED` bloquea la emisión. La única excepción es una Execution Task cuyo resultado principal sea persistir el checkpoint mínimo requerido por el gate.
+
+Cuando se use esa excepción:
+
+- declara literalmente `BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`;
+- limita el alcance al checkpoint durable;
+- no incluyas la unidad original que quedó bloqueada;
+- después del Execution Report y su revisión, reevalúa el Memory Bootstrap Gate de la unidad original.
+
+Si cualquier otra precondición necesaria no se cumple, no autorices escritura.
 
 ## Identificación
 
 - Cycle ID: `[CYCLE-ID O NO APLICA]`
 - ID: `[TASK-ID]`
 - Título: `[TÍTULO BREVE]`
-- Estado: `Propuesta | Aprobada | En ejecución | Bloqueada | Completada | Cancelada`
+- Estado: `Propuesta | Autorizada | En ejecución | Bloqueada | Completada | Cancelada`
 - Tópico de origen: `[00 | 10 | 20 | 30 | 40 | 50 | 90]`
 - Cycle Owner: `[CONVERSATION SPACE]`
 - Destino del Execution Report: `[CONVERSATION SPACE]`
 - Espacio de escalamiento: `[NORMALMENTE 00 — DIRECCIÓN Y ORQUESTACIÓN]`
-- Tipo de ejecución principal: `[INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE | TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE]`
-- Tipo secundario, solo si es inseparable: `[TIPO O NINGUNO]`
+- Tipo principal: `[INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE | TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE]`
+- Tipo secundario inseparable: `[TIPO O NINGUNO]`
 - Responsable humano: `[ROL O PERSONA]`
 - Coding agent o entorno: `[ROL O HERRAMIENTA DISPONIBLE]`
 - Execution Cell o sesión: `[NOMBRE O NO APLICA]`
 - Rol activo: `Coding Agent — Execution`
-- Implementation Plan aprobado: `[REFERENCIA O NO APLICA]`
+- Implementation Plan revisado: `[REFERENCIA O NO APLICA]`
+- Environment Readiness Report: `[REFERENCIA LISTO PARA EJECUCIÓN O NO APLICA]`
 - Acceso a IA-DOS: `Embedded Contract | Remote Repository | Local Reference`
 - Referencia local de IA-DOS: `[RUTA O NO DISPONIBLE]`
 
-Incluye `templates/agent-role-contract.template.md` como contrato embebido cuando corresponda.
-
-El tipo clasifica el trabajo, pero no concede permisos. Una Execution Cell conserva continuidad operacional, pero no sustituye el rol receptor, el Cycle Owner ni las autorizaciones de esta tarea.
+Una Execution Cell conserva continuidad, pero no sustituye el rol receptor, el Cycle Owner ni las autorizaciones de esta tarea.
 
 ## Contrato de sesión o célula
 
-La frontera de autorización entre planificación y ejecución debe ser explícita.
+Cuando el proyecto use una Execution Cell persistente, reutiliza la conversación activa mientras siga respondiendo bien.
 
-Cuando el proyecto use una `Execution Cell` persistente, puede reutilizar la conversación activa de esa célula para múltiples Execution Tasks mientras siga respondiendo bien. Reutilizar la conversación no reutiliza permisos de tareas anteriores.
+No renueves por edad, tiempo, mensajes o cantidad de tareas. Reutilizar la conversación no reutiliza permisos.
 
-Cuando el proyecto use sesiones independientes, no reutilices una sesión de planificación como si ya tuviera autorización de ejecución.
-
-La política de persistencia de conversaciones de planificación permanece separada de este contrato y no se resuelve por esta plantilla.
+Planning y Execution conservan autorizaciones separadas, pero esa separación no exige una conversación de ejecución nueva.
 
 ## Objetivo
 
 Describe un único resultado concreto, terminable y verificable.
 
-## Gate de tamaño
+## Contexto durable necesario
 
-Confirma:
-
-- [ ] la tarea no mezcla resultados independientes;
-- [ ] puede completarse, verificarse y reportarse como una sola unidad;
-- [ ] las dependencias previas están resueltas;
-- [ ] no contiene fases que deban aprobarse por separado.
-
-Cuando alguna respuesta sea negativa, divide la tarea antes de ejecutarla.
-
-## Contexto mínimo
-
-- decisiones aceptadas;
-- evidencia inicial;
-- fuentes obligatorias;
-- restricciones no negociables;
-- trabajo previo que debe preservarse;
-- desconocidos que no bloquean la ejecución.
+Incluye únicamente decisiones, restricciones y estado no obvio que el coding agent necesita directamente.
 
 No copies toda la historia del proyecto.
+
+En una tarea que materializa el checkpoint de `BOOTSTRAP REQUIRED`, este bloque puede contener el conocimiento confirmado que debe persistirse porque todavía no existe de forma durable. Declara su procedencia y no lo presentes como una fuente durable previa.
+
+## Referencias Wiki
+
+- `[RUTA O REFERENCIA PARA TRAZABILIDAD]`
+
+No implican lectura automática.
+
+## Lectura requerida
+
+- `[DOCUMENTO CONCRETO O NINGUNA]`
 
 ## Autoridad de fuentes, artefactos y entornos
 
@@ -86,39 +101,38 @@ No copies toda la historia del proyecto.
 |---|---|---|---|---|
 | `[RECURSO]` | `[ROL]` | `[ÁMBITO]` | `[LECTURA / ESCRITURA / ACCIÓN]` | `[LÍMITES]` |
 
-Incluye las instrucciones locales aplicables del repositorio o entorno, por ejemplo `AGENTS.md`, archivos equivalentes, convenciones de contribución o políticas técnicas. Si no existen, decláralo.
+Incluye instrucciones locales aplicables, por ejemplo `AGENTS.md` o equivalente.
 
 ## Acceso al método
 
 La tarea debe ser autosuficiente.
 
-- usa el contrato embebido cuando corresponda;
-- consulta la fuente remota cuando esté disponible;
-- usa una referencia local compartida cuando haya sido declarada;
-- no clones IA-DOS dentro del repositorio del producto;
-- no realices un clon silencioso;
-- solicita autorización antes de crear una referencia local.
+- usa contrato embebido cuando aporte;
+- consulta fuente remota cuando esté disponible;
+- usa referencia local compartida cuando haya sido declarada;
+- no clones IA-DOS dentro del producto;
+- no crees una referencia local sin autorización.
 
-Una configuración local válida, no obligatoria, es:
+Una topología local posible, no obligatoria, es:
 
 ```text
 Proyectos/
 ├── 00-ia-dos/
 └── [Proyecto]/
-    ├── [proyecto-app]/
-    ├── [proyecto-wiki]/
-    └── [proyecto-exch]/
+    ├── [implementación]/
+    ├── [memoria, si existe]/
+    └── [exchange, si existe]/
 ```
 
 ## Readiness del entorno
 
 - Entorno: `[LOCAL / REMOTO / COMBINADO / OTRO]`
-- Recursos disponibles: `[LISTA]`
-- Recursos faltantes: `[LISTA O NINGUNO]`
+- Estado: `LISTO PARA EJECUCIÓN | NO APLICA`
+- Evidencia o reporte: `[REFERENCIA]`
 - Estado que debe preservarse: `[DETALLE]`
-- Accesos o secretos no disponibles: `[DETALLE]`
+- Accesos o secretos no disponibles: `[NINGUNO O DETALLE NO SENSIBLE]`
 
-No inventes rutas, credenciales, herramientas ni permisos.
+No inventes rutas, credenciales, herramientas o permisos.
 
 ## Problema o evidencia inicial
 
@@ -134,6 +148,8 @@ Describe qué ocurre hoy y qué evidencia lo confirma.
 
 - `[CAMBIO NO AUTORIZADO]`
 
+Si esta tarea responde a `BOOTSTRAP REQUIRED`, incluye explícitamente la unidad original entre el fuera de alcance.
+
 ## Zonas autorizadas
 
 - recursos o artefactos modificables: `[LISTA]`
@@ -147,33 +163,35 @@ Describe qué ocurre hoy y qué evidencia lo confirma.
 
 - Lectura: `Autorizada | No autorizada`
 - Escritura: `Autorizada | No autorizada`
-- Crear branch o equivalente: `Autorizado | No autorizado | No aplica`
-- Commit o versión: `Autorizado | No autorizado | No aplica`
-- Push o cambio remoto: `Autorizado | No autorizado | No aplica`
-- Pull request o revisión remota: `Autorizado | No autorizado | No aplica`
-- Merge o integración final: `Autorizado | No autorizado | No aplica`
+- Crear branch: `Autorizado | No autorizado | No aplica`
+- Commit: `Autorizado | No autorizado | No aplica`
+- Push: `Autorizado | No autorizado | No aplica`
+- Pull request: `Autorizado | No autorizado | No aplica`
+- Merge: `Autorizado | No autorizado | No aplica`
 - Despliegue o producción: `Autorizado | No autorizado | No aplica`
 - Datos, recursos externos o costes: `[AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]`
 
 ## Guardrails de rol
 
-- no actuar como `00` ni como Project Orchestrator;
+- no actuar como `00` ni Project Orchestrator;
 - no cambiar Cycle Owner, objetivo o destino;
 - no aprobar el propio resultado;
 - no iniciar otra unidad;
-- no ampliar alcance sin aprobación;
-- respetar la autoridad de cada recurso;
-- cumplir las instrucciones locales aplicables;
-- no modificar secretos ni datos sensibles;
+- no ampliar alcance;
+- respetar autoridad de cada recurso;
+- cumplir instrucciones locales;
+- no modificar secretos o datos sensibles;
 - no cambiar arquitectura, dependencias o seguridad salvo alcance explícito;
 - preservar comportamiento y trabajo no relacionados;
-- detenerse ante contradicciones con fuentes o estado real;
+- detenerse ante contradicciones relevantes;
 - no afirmar verificación sin evidencia;
-- no continuar cuando la tarea revele objetivos independientes adicionales.
+- no continuar cuando aparezcan objetivos independientes.
 
 ## Criterios de aceptación
 
 - [ ] `[RESULTADO OBSERVABLE]`
+
+En una tarea de memory bootstrap, un criterio obligatorio es que el checkpoint pueda ser revisado como fuente durable sin afirmar más conocimiento del que fue autorizado a registrar.
 
 ## Pruebas y verificaciones
 
@@ -188,28 +206,30 @@ Detente y reporta cuando:
 - falte información crítica;
 - exista trabajo previo no identificado que pueda perderse;
 - aparezca una instrucción local aplicable no declarada;
-- sea necesario tocar recursos no autorizados;
+- sea necesario tocar recursos o usar capacidades no autorizadas;
 - falle una verificación crítica;
-- aparezca un riesgo de seguridad, pérdida de datos o coste;
+- aparezca riesgo de seguridad, pérdida de datos o coste;
 - sea necesaria una decisión no confirmada;
 - el tipo declarado ya no represente el trabajo;
-- la tarea revele varios resultados independientes;
-- se requiera crear o clonar una referencia local no autorizada.
+- aparezcan varios resultados independientes;
+- una precondición de memoria o readiness deje de cumplirse;
+- en una tarea de memory bootstrap sea necesario inventar, resolver o ampliar conocimiento no confirmado;
+- una tarea de bootstrap intente continuar con la unidad original antes de revisar el checkpoint.
 
 ## Documentación y memoria
 
 - artefactos técnicos a actualizar: `[LISTA O NINGUNO]`
-- conocimiento durable que la propia tarea autoriza registrar: `[DECISIONES O NINGUNO]`
+- conocimiento durable que la propia tarea autoriza registrar: `[HECHOS/DECISIONES CONFIRMADOS O NINGUNO]`
 - ADR o equivalente requerido: `Sí | No`
 
-No registres propuestas como estado implementado. Si la tarea no autoriza una actualización durable concreta, el coding agent sólo reporta hechos y evidencia; el Cycle Owner evaluará después qué merece consolidarse.
+Si la tarea no autoriza una actualización durable concreta, el coding agent sólo reporta hechos y evidencia; la evaluación de memoria ocurre después de revisar el reporte.
 
 ## Encabezado de retorno obligatorio
 
 ```text
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: revisión y decisión del Cycle Owner
+Expected Output: revisión de evidencia bajo la autoridad aplicable
 Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
@@ -221,17 +241,23 @@ Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 ## Entrega requerida
 
-El coding agent debe devolver un `Execution Report` al destino declarado, incluyendo:
+Devuelve:
 
 - resultado observable;
 - recursos revisados y modificados;
-- instrucciones locales consultadas;
+- instrucciones y fuentes consultadas;
 - pruebas, verificaciones y evidencia;
 - autorizaciones utilizadas;
 - fuera de alcance preservado;
 - desviaciones o problemas;
 - pendientes del alcance original;
 - condiciones de detención activadas;
-- cualquier atención concreta que requiera revisión del Cycle Owner.
+- atención concreta requerida o `Ninguna`.
 
-El coding agent no determina la decisión de gobierno posterior, no consolida memoria durable salvo autorización explícita de la propia tarea y no inicia automáticamente el siguiente ciclo o tarea.
+El coding agent no determina la decisión de gobierno posterior, no consolida memoria durable fuera de lo autorizado por la propia tarea y no inicia otra unidad.
+
+## Autoridad posterior
+
+El Cycle Owner revisa dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+
+Si esta tarea materializó un checkpoint requerido por Memory Bootstrap, la revisión del reporte no autoriza por sí sola la unidad original: primero reevalúa su gate con la nueva fuente durable.

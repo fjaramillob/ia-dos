@@ -9,6 +9,7 @@ Expected Output: Execution Report
 Forbidden Output: elegir stack | generar funcionalidades | crear recursos no autorizados | ampliar topología
 Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [TASK-ID]
+Execution Cell o sesión: [NOMBRE O NO APLICA]
 
 Objetivo
 Crear únicamente la estructura local autorizada para un proyecto nuevo, sin elegir stack, generar funcionalidades ni inventar arquitectura.
@@ -44,21 +45,21 @@ proyectos/
 Acciones permitidas
 - crear las carpetas explícitamente autorizadas;
 - crear un README.md mínimo en una implementación nueva cuando corresponda;
-- copiar `templates/wiki-starter/` sólo cuando la tarea autorice crear memoria Markdown;
+- copiar `templates/wiki-starter/` sólo cuando la tarea autorice crear una LLM Wiki Markdown;
 - crear `.ia-dos.yaml` desde `templates/adoption.template.yaml` cuando esté incluido;
 - inicializar Git únicamente en los recursos y condiciones autorizados;
 - ejecutar verificaciones de solo lectura;
 - reportar rutas y estado.
 
-Contenido mínimo de la implementación nueva
+Contenido mínimo de implementación nueva
 - nombre del proyecto;
 - propósito confirmado;
 - estado real, por ejemplo implementación no iniciada;
-- referencia a memoria durable cuando ya exista;
+- referencia a memoria durable cuando exista;
 - no asumir stack o arquitectura.
 
 Memoria durable
-Cuando esté autorizada una Wiki nueva:
+Cuando esté autorizada una LLM Wiki nueva:
 - usa directamente el starter vigente;
 - no crees `index.md` provisional;
 - no crees `tasks/`, `context-packs/`, `log.md` ni arquitectura vacía;
@@ -83,7 +84,7 @@ Detente antes de escribir cuando:
 - exista una carpeta o repositorio en conflicto;
 - falte autorización;
 - la topología física no esté decidida y el cambio sea difícil de revertir;
-- la solicitud implique tomar decisiones técnicas aún no confirmadas.
+- la solicitud implique decisiones técnicas aún no confirmadas.
 
 Validaciones obligatorias
 - rutas absolutas correctas;
@@ -95,15 +96,16 @@ Validaciones obligatorias
 - diff o listado final revisable.
 
 Reporte final
-Devuelve un Execution Report con:
+Devuelve un Execution Report canónico con:
+- Estado: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`;
+- Atención requerida: `[DESCRIPCIÓN CONCRETA O NINGUNA]`;
 - sistema operativo y workspace utilizado;
 - recursos y archivos creados;
 - repositorios Git inicializados, si aplica;
 - comandos ejecutados;
-- validaciones;
-- acciones omitidas por fuera de alcance;
-- riesgos o decisiones pendientes;
-- siguiente decisión requerida del Cycle Owner.
+- validaciones y evidencia;
+- fuera de alcance preservado;
+- desviaciones o pendientes del alcance original.
 
-No continúes con desarrollo de producto sin otra Execution Task.
+No elijas la siguiente decisión del Cycle Owner, no recomiendes memoria adicional por rutina y no continúes con desarrollo de producto sin otra Execution Task.
 ```

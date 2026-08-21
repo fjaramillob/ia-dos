@@ -3,26 +3,25 @@
 ## Encabezado de retorno
 
 ```text
-Artifact: Implementation Plan
+Artifact Type: Implementation Plan
 Planning Task ID: [PLAN-ID]
-Cycle ID: [CYCLE-ID]
-Agent Session: PLAN — [RESULTADO]
+Cycle ID: [CYCLE-ID O NO APLICA]
+Sesión de planificación: [PLAN — RESULTADO | NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA REVISIÓN | BLOQUEADO
 Cambios realizados: Ninguno
-Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
 ```
 
 ## Identificación
 
 - Planning Task: `[PLAN-ID]`
-- Cycle ID: `[CYCLE-ID]`
+- Cycle ID: `[CYCLE-ID O NO APLICA]`
 - Proyecto: `[NOMBRE]`
 - Cycle Owner: `[CONVERSATION SPACE]`
 - Destino de revisión: `[NORMALMENTE EL CYCLE OWNER]`
-- Agent Session: `PLAN — [RESULTADO]`
+- Sesión de planificación, cuando aporte: `[PLAN — RESULTADO | NO APLICA]`
 - Rol ejecutado: `Coding Agent — Planning`
-- Estado: `Propuesto | Requiere decisión | Bloqueado | Listo para revisión`
+- Estado: `Listo para revisión | Bloqueado`
 - Decisión técnica dominante: `[UNA SOLA DECISIÓN]`
 
 ## Fuentes y accesos utilizados
@@ -39,11 +38,11 @@ Cada hallazgo que condicione la decisión debe registrar:
 |---|---|---|---|---|
 | `[RECURSO]` | `[RUTA O ID]` | `[HECHO]` | `[SIGNIFICADO]` | `[LO QUE NO DEMUESTRA]` |
 
-Una afirmación sin evidencia identificable debe marcarse como inferencia o propuesta.
+Una afirmación sin evidencia identificable se marca como inferencia o propuesta.
 
 ## Estado actual comprobado
 
-Describe únicamente lo relevante para la decisión dominante:
+Describe sólo lo relevante:
 
 - qué existe;
 - qué no existe o no pudo verificarse;
@@ -55,13 +54,13 @@ Separa hechos, inferencias y propuestas.
 
 ## Decisión recomendada
 
-Expresa la recomendación que el Cycle Owner debe aceptar, corregir o rechazar.
+Expresa la recomendación que el Cycle Owner debe revisar.
 
 No la presentes como arquitectura aprobada ni implementación realizada.
 
 ## Estrategia mínima
 
-Explica solo lo necesario para materializar la decisión:
+Explica sólo lo necesario para materializar la decisión:
 
 - dependencias indispensables;
 - artefactos o áreas afectadas;
@@ -71,17 +70,17 @@ Explica solo lo necesario para materializar la decisión:
 
 No conviertas el plan en un roadmap completo por defecto.
 
-## Clasificación de decisiones pendientes
+## Decisiones pendientes
 
 | Decisión | Clasificación | Tratamiento |
 |---|---|---|
-| `[DECISIÓN]` | `Bloqueante antes de ejecutar | Supuesto explícito | Alternativa del plan | Decisión posterior` | `[ACCIÓN]` |
+| `[DECISIÓN]` | `Bloqueante antes de ejecutar | Supuesto explícito | Alternativa | Decisión posterior` | `[ACCIÓN]` |
 
-Solo una decisión bloqueante antes de ejecutar impide preparar la primera Execution Task candidata. Las demás deben mantenerse visibles sin detener el avance.
+Una decisión bloqueante impide preparar una unidad segura. Las demás permanecen visibles sin detener el avance.
 
 ## Primera unidad recomendada
 
-- ID propuesto:
+- Task ID: `PENDIENTE — lo asigna el Conversation Agent/Cycle Owner al adoptar la candidata`
 - tipo principal:
 - resultado único:
 - alcance:
@@ -92,75 +91,82 @@ Solo una decisión bloqueante antes de ejecutar impide preparar la primera Execu
 - verificaciones mínimas:
 - condiciones de detención:
 - destino del Execution Report:
-- Agent Session de ejecución: `[RESULTADO]`
+- Execution Cell o sesión: `[NOMBRE O NO APLICA]`
 
-Incluye esta sección siempre que exista evidencia suficiente para definir una primera unidad segura.
+El coding agent de Planning no asigna el Task ID de la futura Execution Task. Puede identificar la unidad con un título descriptivo dentro del plan, pero la identidad operativa se asigna únicamente cuando el Conversation Agent/Cycle Owner adopta y construye la Execution Task real.
+
+Si el proyecto ya utiliza una Execution Cell adecuada y su conversación activa sigue respondiendo bien, reutilízala. No propongas una nueva sesión sólo porque el resultado tiene otro nombre.
 
 ## Execution Task candidata
 
-Entrega un bloque autosuficiente listo para copiar al coding agent utilizando `execution-task.template.md` cuando la primera unidad pueda definirse con seguridad.
+Entrega un bloque autosuficiente listo para revisión cuando la primera unidad pueda definirse con seguridad.
+
+La candidata puede estar estructuralmente lista para copiar, pero **no es todavía una Execution Task autorizada** y mantiene el `Task ID` pendiente.
 
 La tarea candidata:
 
-- no autoriza ejecución hasta que el Cycle Owner la apruebe;
-- debe contener un único resultado verificable;
-- debe conservar el mismo Cycle ID;
-- debe usar un Task ID distinto;
-- debe declarar una sesión de ejecución independiente;
-- debe declarar `Coding Agent — Execution` como rol activo;
-- debe contener supuestos, autorizaciones y condiciones de detención;
-- no debe exigir al usuario reconstruirla desde el resto del plan.
+- no autoriza ejecución hasta recibir la aprobación aplicable;
+- contiene un único resultado verificable;
+- conserva el Cycle ID cuando exista;
+- declara `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`;
+- no inventa ni reserva un Task ID por cuenta del coding agent;
+- declara `Execution Cell o sesión` sin forzar una conversación nueva;
+- declara `Coding Agent — Execution` como rol futuro;
+- vuelve a declarar permisos, alcance y condiciones de detención;
+- no exige reconstruirla desde el resto del plan.
 
-Ejemplo de separación de sesiones:
+Cuando el Cycle Owner adopta la candidata, el Conversation Agent:
+
+1. revisa la evidencia y el alcance propuesto;
+2. resuelve la autorización humana aplicable;
+3. asigna el Task ID;
+4. valida o completa el contrato de Execution Task;
+5. sólo entonces la entrega a `Coding Agent — Execution`.
+
+La separación correcta es de **autoridad**, no necesariamente de conversación:
 
 ```text
-PLAN — BOOTSTRAP
+Planning Task
 → Implementation Plan
-→ aprobación del Cycle Owner
-→ BOOTSTRAP
+→ revisión / aprobación aplicable
+→ Conversation Agent asigna Task ID y construye Execution Task
+→ Execution Cell existente o sesión autorizada
 → Execution Report
 ```
 
-Cuando no pueda prepararse, identifica una sola decisión bloqueante y explica por qué impide incluso definir una unidad segura.
+La ejecución nunca hereda permisos del Planning, incluso cuando la herramienta reutiliza contexto.
 
-## Unidades posteriores, solo si son necesarias
+Cuando no pueda prepararse una Execution Task candidata, identifica una sola razón bloqueante verificable.
 
-Enumera únicamente dependencias inmediatas que ayuden a entender la primera unidad. No diseñes toda la iniciativa salvo que ese sea el objetivo explícito de la Planning Task.
+## Unidades posteriores
 
-| Orden | Resultado único | Dependencia | Evidencia de cierre |
-|---:|---|---|---|
-| 2 | `[RESULTADO]` | `[DEPENDENCIA]` | `[EVIDENCIA]` |
+Enumera únicamente dependencias inmediatas necesarias para comprender la primera unidad. No diseñes toda la iniciativa salvo objetivo explícito.
 
 ## Brechas de otro dominio
 
-- `[BRECHA Y TÓPICO AL QUE PERTENECE]`, o `Ninguna`.
+- `[BRECHA Y TÓPICO]`, o `Ninguna`.
 
 No resuelvas silenciosamente decisiones funcionales, estratégicas, operativas o de cumplimiento desde un plan técnico.
 
-Cuando la siguiente brecha pertenezca claramente a otro especialista y no requiera reorientación, recomienda un handoff directo a ese espacio, no un retorno intermedio a `00`.
-
-No abras ese handoff antes de entregar la primera Execution Task candidata salvo que la brecha sea realmente bloqueante.
+Cuando la siguiente brecha pertenezca claramente a otro especialista y no requiera reorientación, recomienda un handoff directo.
 
 ## Decisiones humanas pendientes
 
 - `[DECISIÓN Y CLASIFICACIÓN]`, o `Ninguna`.
 
-No propongas ejecutar mientras exista una decisión indispensable sin resolver. No trates como indispensable una decisión que pueda modelarse de forma segura mediante un supuesto reversible o una condición de detención.
+No propongas ejecutar mientras exista una decisión humana indispensable sin resolver. No trates como indispensable una decisión que pueda mantenerse de forma segura mediante un supuesto reversible.
 
 ## Memoria y documentación
 
-Indica qué conocimiento deberá registrarse después de ser aceptado, implementado o verificado. Las propuestas no se registran como estado real.
+Indica únicamente documentación o conocimiento que la futura Execution Task deba actualizar explícitamente como parte de su alcance.
 
-## Decisión requerida del Cycle Owner
+No agregues una sección de conocimiento potencialmente durable derivada automáticamente del plan. Las propuestas no se registran como estado real.
 
-Selecciona exactamente una:
+## Revisión requerida
 
-- `Aprobar la Execution Task candidata`;
-- `Corregir un aspecto acotado del plan`;
-- `Rechazar la recomendación`;
-- `Escalar una decisión indispensable`.
+El Cycle Owner revisa el plan dentro de su autoridad delegada y obtiene aprobación humana cuando corresponda.
 
-El coding agent no toma esta decisión por sí mismo.
+El coding agent no selecciona por sí mismo la decisión de aprobar, corregir, rechazar o escalar y no asigna el Task ID de la candidata.
 
 ## Declaración de solo lectura
 
@@ -169,8 +175,9 @@ El coding agent no toma esta decisión por sí mismo.
 - [ ] El plan no se trató como autorización de ejecución.
 - [ ] Las limitaciones de acceso fueron declaradas.
 - [ ] El alcance se mantuvo proporcional a la decisión dominante.
-- [ ] Las decisiones pendientes fueron clasificadas como bloqueantes o no bloqueantes.
-- [ ] Se incluyó una Execution Task candidata o una única razón bloqueante verificable.
-- [ ] El plan vuelve al destino de revisión indicado.
+- [ ] Las decisiones pendientes fueron clasificadas.
+- [ ] Se incluyó una Execution Task candidata o una razón bloqueante verificable.
+- [ ] El Task ID de la candidata quedó pendiente para el Conversation Agent/Cycle Owner.
+- [ ] El plan vuelve al destino indicado.
 - [ ] No se cambió el Cycle Owner ni se abrió otro ciclo.
-- [ ] La sesión de ejecución propuesta es independiente de la sesión de planificación.
+- [ ] La futura ejecución mantiene autorización separada sin imponer una conversación nueva.

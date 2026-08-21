@@ -8,7 +8,7 @@ Destination Role: Coding Agent — Planning
 Expected Output: Implementation Plan
 Forbidden Output: mover archivos | crear Wiki | modificar código | alterar Git | ejecutar cambios
 Cycle ID: [CYCLE-ID O NO APLICA]
-Task ID: [TASK-ID]
+Task ID: [PLAN-ID]
 
 Objetivo
 Inspeccionar un proyecto existente y proponer una adopción IA-DOS que preserve su estructura real, historia y fuentes de verdad.
@@ -44,9 +44,14 @@ PASS
 → no es necesario crear memoria adicional antes de esa unidad
 
 BOOTSTRAP REQUIRED
-→ recomienda un checkpoint durable mínimo
+→ la unidad dependiente original queda bloqueada
+→ propone primero una Execution Task separada cuyo único resultado sea persistir el checkpoint durable mínimo
+→ mantiene la unidad original fuera de alcance de esa candidata
+→ después de ejecutar el bootstrap, su Execution Report debe revisarse antes de reevaluar el gate de la unidad original
 
 No reconstruyas toda la historia para evaluar el gate.
+
+`BOOTSTRAP REQUIRED` no autoriza mezclar adopción, reorganización o implementación con el checkpoint. Si el Implementation Plan propone una candidata de bootstrap, esa candidata sólo materializa la memoria mínima necesaria para desbloquear la unidad original.
 
 Acciones permitidas
 - listar carpetas relevantes;
@@ -82,12 +87,23 @@ Incluye:
 - una primera Execution Task candidata únicamente si existe evidencia suficiente;
 - decisiones que requieren aprobación del Cycle Owner.
 
-Si el gate requiere crear una Wiki Markdown nueva, la Execution Task candidata debe:
+Toda Execution Task candidata producida desde este Planning declara:
+
+Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
+Execution Cell o sesión: [NOMBRE O NO APLICA]
+
+El Coding Agent — Planning no asigna ni reserva el Task ID de la candidata. El Conversation Agent / Cycle Owner lo asigna sólo después de revisar y adoptar la candidata como Execution Task real.
+
+Si `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, la primera candidata debe ser la tarea separada de bootstrap descrita arriba; no propongas como candidata ejecutable la unidad original hasta que el reporte del bootstrap haya sido revisado y el gate original sea reevaluado.
+
+Si el gate requiere crear una Wiki Markdown nueva, la Execution Task candidata de bootstrap debe:
+- declarar `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`;
 - usar `templates/wiki-starter/`;
 - evitar `index.md` provisional;
 - no crear `tasks/`, `context-packs/`, `log.md` ni páginas vacías;
 - copiar `.ia-dos.yaml` desde `templates/adoption.template.yaml` sólo cuando esté dentro del alcance;
-- declarar rutas y permisos explícitos.
+- declarar rutas y permisos explícitos;
+- mantener fuera de alcance cualquier movimiento, reorganización o implementación de la unidad original.
 
 Condiciones de detención
 Detente cuando:
@@ -106,6 +122,8 @@ Validaciones
 - rutas reales registradas;
 - fuentes de verdad identificadas;
 - Memory Bootstrap Gate justificado con evidencia;
+- ante `BOOTSTRAP REQUIRED`, la candidata de checkpoint está separada de la unidad original;
+- las candidatas dejan `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`;
 - ninguna topología impuesta por defecto;
 - ausencia de secretos en el reporte.
 

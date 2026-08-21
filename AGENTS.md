@@ -30,7 +30,7 @@ No leas toda la documentación por defecto. Amplía la lectura sólo cuando el c
 
 Si modificas alguno de estos conceptos, comprueba sus representaciones relacionadas antes de cerrar:
 
-- `Conversation Space` y `Cycle Owner`;
+- responsabilidad humana, `Conversation Space` y `Cycle Owner`;
 - `Planning Task` e `Implementation Plan`;
 - `Environment Preflight` y `Execution Resume`;
 - `Execution Task`;
@@ -49,13 +49,15 @@ Una modificación de un contrato canónico no debe dejar una variante incompatib
 Mantén estas fronteras salvo decisión explícita que las cambie:
 
 ```text
-Conversation Space = gobierno y decisión
-Execution Cell     = continuidad de ejecución
-Execution Task     = contrato de una unidad
-Execution Report   = evidencia de ejecución
-LLM Wiki           = memoria durable materializada
-Repository         = implementación
-Exchange           = pasarela pasiva de archivos
+Persona responsable = dirección y aprobación final aplicable
+Conversation Space   = gobierno dentro de autoridad delegada
+Execution Cell       = continuidad de ejecución
+Execution Task       = contrato de una unidad
+Execution Report     = evidencia de ejecución
+Memoria durable      = responsabilidad funcional
+LLM Wiki              = materialización durable, portable y navegable
+Repository            = implementación
+Exchange              = pasarela pasiva de archivos
 ```
 
 Además:
@@ -69,8 +71,9 @@ Además:
 - el `Task ID` lo asigna el Conversation Agent que construye la tarea;
 - Exchange no define IDs, artefactos, filenames, templates, estados, permisos, backlog, memoria, decisiones o workflow;
 - `Execution Report` no aprueba su propio resultado ni elige la decisión de gobierno posterior;
+- el Cycle Owner revisa y gobierna dentro de la autoridad delegada; no sustituye la aprobación humana cuando una decisión cambia dirección, autoridad, riesgo o impacto reservado a la persona responsable;
 - antes de emitir una Planning Task o Execution Task que dependa de historia previa, `Memory Bootstrap Gate` evalúa si existe conocimiento relevante únicamente en conversaciones efímeras y exige persistir el checkpoint mínimo cuando corresponda;
-- después de revisar un Execution Report, el Cycle Owner evalúa qué hechos nuevos de esa ejecución merecen consolidarse en memoria durable, salvo que la propia tarea ya autorice una actualización documental concreta;
+- después de revisar un Execution Report, el gobierno conversacional evalúa qué hechos nuevos merecen consolidarse en memoria durable; el coding agent no incorpora ni recomienda memoria adicional por defecto salvo que la propia tarea autorice una actualización documental concreta;
 - el coding agent no lee una LLM Wiki completa por defecto;
 - la política universal de persistencia o renovación de conversaciones de Planning permanece abierta.
 
@@ -139,7 +142,7 @@ Antes de cerrar una tarea:
 - verifica enlaces relativos afectados;
 - busca contradicciones con contratos relacionados;
 - comprueba que no se reintroduzcan términos o modelos reemplazados;
-- distingue claramente evidencia de ejecución y decisión de gobierno;
+- distingue claramente evidencia de ejecución, decisión de gobierno y aprobación humana aplicable;
 - reporta supuestos, limitaciones y pendientes reales.
 
 Si una revisión automática detecta una contradicción válida, corrígela antes de considerar el trabajo listo.

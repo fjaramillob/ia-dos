@@ -4,43 +4,44 @@ Esta documentación explica cómo utilizar IA-DOS para dirigir proyectos de soft
 
 ## Empieza aquí
 
-La primera adopción sigue este orden:
+La adopción sigue este orden conceptual, sin convertirse en una pipeline rígida:
 
 1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
 2. Entrega una descripción breve y las fuentes disponibles.
-3. Abre `00 — Dirección y orquestación`; usa modo `definición inicial` para un producto nuevo o `descubrimiento y adopción` para uno existente.
-4. Clasifica la brecha con el [Registro de tópicos](orchestration/topic-routing-registry.md), única lista normativa de Conversation Spaces.
-5. Abre solo el Conversation Space que desbloquee el siguiente resultado.
-6. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
-7. Decide entre `Planning Task`, `Environment Preflight`, `Execution Task` o `Execution Resume`.
-8. Tipifica el bloque y valida el rol receptor.
-9. Confirma la autoridad de fuentes, artefactos y entornos.
-10. Si la siguiente unidad depende de historia conversacional, evalúa el [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
+3. Comienza en `00 — Dirección y orquestación`; usa `definición inicial` para producto nuevo o `descubrimiento y adopción` para existente.
+4. Abre sólo el Conversation Space que desbloquee el siguiente resultado, usando el [Registro de tópicos](orchestration/topic-routing-registry.md).
+5. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
+6. Si la siguiente unidad depende de historia conversacional, evalúa primero el [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
+7. Si una futura ejecución depende de readiness indispensable no comprobado, usa [Environment Preflight](execution/environment-readiness-and-resume.md).
+8. Si falta inspección o diseño técnico, usa `Planning Task`; si la unidad ya está lista, usa `Execution Task`.
+9. Tipifica el bloque y valida el receptor con [Tipado de artefactos](orchestration/typed-artifact-routing.md).
+10. Confirma [autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md).
 11. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
 12. Cuando exista ejecución recurrente, define sólo las [Execution Cells](execution/execution-cells-and-exchange.md) que aporten continuidad real.
-13. Reutiliza la conversación activa de una Execution Cell mientras siga respondiendo bien; no abras una conversación por cada tarea.
-14. Usa [Exchange](getting-started/bootstrap-exchange.md) sólo cuando una pasarela de archivos Markdown entre agentes aporte valor.
-15. Devuelve el artefacto al Cycle Owner declarado.
-16. Escala a `00` sólo cuando exista reorientación real.
+13. Reutiliza una Execution Cell mientras siga respondiendo bien; no abras una conversación por tarea.
+14. Usa [Exchange](getting-started/bootstrap-exchange.md) sólo cuando una pasarela pasiva de Markdown aporte valor.
+15. Devuelve planes, readiness reports y Execution Reports al Cycle Owner declarado.
+16. La persona responsable conserva la aprobación final cuando la decisión excede la autoridad delegada.
+17. Escala a `00` sólo ante reorientación real.
 
-Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md), cuyo encabezado debe declarar `Estado: VIGENTE` y un baseline canónico. Es el único bundle actual para nuevos onboardings offline. No combines los bundles o addenda históricos; consulta la [política de bundles](../bundles/README.md).
-
-Si el Current Offline Pack no está disponible, usa como fallback mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`.
+Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) cuando declare `Estado: VIGENTE` y baseline canónico. Es el único bundle actual para nuevos onboardings offline. No combines bundles históricos; consulta [Bundles](../bundles/README.md).
 
 ## Contratos operativos
 
-- [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md): gobierna dónde se resuelve cada decisión.
-- [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md): gobierna quién mantiene objetivo, límites y revisión.
-- [Avance concreto y transición](orchestration/concrete-execution-flow.md): decide cuándo planificar y cuándo ejecutar.
-- [Tipado de artefactos y validación del receptor](orchestration/typed-artifact-routing.md): define el contrato semántico de los artefactos independientemente de su transporte.
-- [Roles, sesiones y ciclo de artefactos](orchestration/agent-role-and-artifact-loop.md): conserva identidad, permisos y retorno.
-- [Execution Cells y Exchange](execution/execution-cells-and-exchange.md): define continuidad de ejecución y una pasarela pasiva de `.md` cuando aporte.
-- [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md): separa referencias durables, delta y contrato operativo.
-- [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md): evita depender de conocimiento que exista sólo en conversaciones.
-- [Registro de tipos de ejecución](execution/execution-task-types.md): gobierna cómo se materializa una unidad aprobada.
-- [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md): gobierna qué demuestra cada recurso y qué acceso está permitido.
+- [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
+- [Registro de tópicos conversacionales](orchestration/topic-routing-registry.md)
+- [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md)
+- [Avance concreto y transición](orchestration/concrete-execution-flow.md)
+- [Tipado de artefactos](orchestration/typed-artifact-routing.md)
+- [Roles, sesiones y ciclo de artefactos](orchestration/agent-role-and-artifact-loop.md)
+- [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md)
+- [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md)
+- [Execution Cells y Exchange](execution/execution-cells-and-exchange.md)
+- [Readiness y Execution Resume](execution/environment-readiness-and-resume.md)
+- [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md)
+- [Coding agents](execution/coding-agents.md)
 
-Estos contratos no crean una secuencia obligatoria ni imponen herramientas o estructuras físicas.
+Estos contratos no imponen herramientas, topología física o secuencia fija.
 
 ## Recorridos principales
 
@@ -48,7 +49,9 @@ Estos contratos no crean una secuencia obligatoria ni imponen herramientas o est
 - [Adoptar un producto existente desde conversación](getting-started/adopt-existing-project-from-conversation.md)
 - [Avance concreto y transición a coding agents](orchestration/concrete-execution-flow.md)
 - [Preparar y revisar un handoff técnico](getting-started/execution-handoff.md)
-- [Validación end-to-end de onboarding](validation/end-to-end-onboarding-validation.md)
+- [Validación end-to-end histórica de Fase 6](validation/end-to-end-onboarding-validation.md)
+- [Revisión integral histórica de Fase 6](validation/final-integral-review.md)
+- [Auditoría integral vigente del repositorio](validation/repository-integral-audit-2026-08-21.md)
 
 ## Preparación del entorno, cuando corresponda
 
@@ -58,64 +61,55 @@ Estos contratos no crean una secuencia obligatoria ni imponen herramientas o est
 - [Incorporar un proyecto existente](getting-started/incorporate-existing-project-workspace.md)
 - [Crear o conectar la memoria durable](getting-started/bootstrap-llm-wiki.md)
 - [Crear o conectar Exchange](getting-started/bootstrap-exchange.md)
-- [Aplicar las plantillas mínimas de adopción](getting-started/apply-starter-templates.md)
+- [Aplicar plantillas de adopción](getting-started/apply-starter-templates.md)
 
-Estas guías son opciones de implementación, no requisitos normativos del método.
+Estas guías son opciones de implementación, no requisitos normativos.
 
-## Orquestación
-
-- [IA-DOS Project Orchestrator](../ORCHESTRATOR.md)
-- [Instrucciones persistentes](../templates/project-instructions.template.md)
-- [Registro de tópicos](orchestration/topic-routing-registry.md)
-- [Propiedad del ciclo](orchestration/cycle-ownership.md)
-- [Tipado de artefactos](orchestration/typed-artifact-routing.md)
-- [Roles y sesiones](orchestration/agent-role-and-artifact-loop.md)
-- [Compresión de contexto](orchestration/context-compression-by-authority.md)
-- [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
-- [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
-
-Para plataformas sin navegación del repositorio, el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) es el artefacto de distribución vigente. [Bundles](../bundles/README.md) documenta qué archivos son actuales y cuáles se conservan sólo como históricos.
-
-## Planificación
+## Planificación y readiness
 
 - [Planning Task compacta](../templates/planning-task-compact.template.md)
 - [Planning Task completa](../templates/planning-task.template.md)
 - [Project Start Planning Brief](../templates/project-start-planning-brief.template.md)
 - [Implementation Plan](../templates/implementation-plan.template.md)
-- [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md)
+- [Environment Preflight](../templates/environment-preflight.template.md)
+- [Environment Readiness Report](../templates/environment-readiness-report.template.md)
 
-La plantilla compacta es la salida operativa por defecto para pegar en el coding agent. La plantilla completa funciona como referencia de diseño, validación y casos excepcionales.
-
-La política de persistencia o renovación de conversaciones de planificación se mantiene separada de la política de Execution Cells hasta que exista una decisión explícita.
-
-Exchange no modifica esa política: sólo puede transportar archivos ya construidos si el proyecto decide utilizarlo también para ellos en el futuro.
+La política de conversaciones de Planning permanece abierta. Un identificador `PLAN — ...` no obliga a abrir una conversación por tarea.
 
 ## Ejecución
 
-- [Registro de tipos de ejecución](execution/execution-task-types.md)
-- [Coding agents](execution/coding-agents.md)
-- [Execution Cells y Exchange](execution/execution-cells-and-exchange.md)
 - [Execution Task compacta](../templates/execution-task-compact.template.md)
 - [Execution Task completa](../templates/execution-task.template.md)
+- [Execution Resume](../templates/execution-resume.template.md)
 - [Execution Report](../templates/execution-report.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Actualizar la memoria durable](execution/updating-the-llm-wiki.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
 
-La Execution Task compacta y la completa representan el mismo contrato semántico con distinto nivel de detalle. Exchange no crea perfiles alternativos: si una tarea o reporte se guarda allí, es exactamente el mismo artefacto canónico materializado como `.md`. `Wiki Update Task` es un perfil documental de la misma Execution Task canónica.
+Una Execution Cell conserva continuidad, no permisos. Cada Execution Task vuelve a declarar autoridad completa.
+
+El Execution Report es evidencia y no selecciona la decisión de gobierno posterior ni la memoria a consolidar.
+
+## Memoria durable
+
+- [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md)
+- [Memoria durable portable y LLM Wiki](foundations/durable-memory-and-obsidian.md)
+- [Crear o conectar la memoria durable](getting-started/bootstrap-llm-wiki.md)
+- [Wiki Starter](../templates/wiki-starter/00-home.md)
+
+`memoria durable` describe la función; `LLM Wiki` es una posible materialización portable y navegable.
 
 ## Fundamentos
 
 - [Propósito y alcance](foundations/purpose-and-scope.md)
-- [Método de trabajo](foundations/working-method.md)
+- [Principios](foundations/principles.md)
 - [Modelo operativo](foundations/operating-model.md)
 - [Modelo de adopción](foundations/adoption-model.md)
 - [Fuentes de verdad](foundations/source-of-truth.md)
 - [Responsabilidades humanas y de la IA](foundations/human-ai-responsibilities.md)
-- [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md)
-- [Memoria durable portable y Obsidian](foundations/durable-memory-and-obsidian.md)
 - [Terminología](foundations/terminology.md)
-- [Criterios editoriales](foundations/editorial-guidelines.md)
+- [Checklist de revisión](foundations/review-checklist.md)
+- [Preguntas de validación](foundations/validation-questions.md)
 
 ## Integraciones y capacidades
 
@@ -124,21 +118,6 @@ La Execution Task compacta y la completa representan el mismo contrato semántic
 - [Modelo de capacidades](integrations/capability-model.md)
 - [Capability Manifest](../templates/capability-manifest.template.yaml)
 
-## Plantillas
-
-- [Project Intake Brief](../templates/project-intake-brief.template.md)
-- [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
-- [Instrucciones persistentes](../templates/project-instructions.template.md)
-- [Planning Task compacta](../templates/planning-task-compact.template.md)
-- [Planning Task completa](../templates/planning-task.template.md)
-- [Implementation Plan](../templates/implementation-plan.template.md)
-- [Execution Task compacta](../templates/execution-task-compact.template.md)
-- [Execution Task completa](../templates/execution-task.template.md)
-- [Wiki Update Task](../templates/wiki-update-task.template.md)
-- [Execution Report](../templates/execution-report.template.md)
-- [Adoption Manifest](../templates/adoption.template.yaml)
-- [Wiki Starter](../templates/wiki-starter/00-home.md)
-
 ## Estado
 
-IA-DOS está en fase alpha. Su método se valida y consolida mediante proyectos reales antes de publicarse como release estable.
+IA-DOS está en etapa **alpha de adopción en proyectos reales**. Consulta [ROADMAP.md](../ROADMAP.md).

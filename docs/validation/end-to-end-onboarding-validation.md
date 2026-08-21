@@ -1,3 +1,6 @@
+> [!WARNING]
+> **EVIDENCIA HISTÓRICA — FASE 6.** Esta validación documenta el estado observado durante la consolidación de Fase 6. No debe interpretarse como validación vigente del repositorio actual. La revisión más reciente es [Auditoría integral del repositorio — 2026-08-21](repository-integral-audit-2026-08-21.md).
+
 # Validación end-to-end de onboarding
 
 Esta validación comprueba que los principales recorridos de adopción y continuidad de IA-DOS converjan al mismo modelo operativo después de la consolidación de contratos, memoria, Exchange y distribución offline.

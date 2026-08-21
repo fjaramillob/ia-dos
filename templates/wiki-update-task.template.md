@@ -19,6 +19,10 @@ Task ID: [TASK-ID]
 - Cycle Owner: `[CONVERSATION SPACE]`
 - Execution Cell: `[WIKI SYNC O NO APLICA]`
 - Destino del Execution Report: `[CONVERSATION SPACE]`
+- Memory Bootstrap Gate: `[PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT | NO APLICA]`
+- Readiness indispensable: `[LISTO PARA EJECUCIÓN | NO APLICA]`
+
+Si esta tarea responde a `BOOTSTRAP REQUIRED`, su único resultado es persistir el checkpoint durable mínimo necesario para desbloquear otra unidad. Esa unidad original queda fuera de alcance y su gate se reevalúa después de revisar el Execution Report del bootstrap.
 
 ## Objetivo documental
 
@@ -48,6 +52,8 @@ Describe el conocimiento durable que debe quedar creado, actualizado, corregido 
 
 Una contradicción que cambie el contenido final activa condición de detención; el coding agent no la resuelve por cuenta propia.
 
+En un bootstrap de memoria, el conocimiento confirmado puede venir del contexto conversacional autorizado precisamente porque todavía no existe como fuente durable. Conserva la procedencia y no inventes autoridad adicional.
+
 ## Fuentes y autoridad
 
 | Recurso | Autoridad para | Acceso permitido | Referencia |
@@ -58,10 +64,10 @@ Una conversación o Execution Report puede aportar evidencia, pero no se convier
 
 ## Lectura requerida
 
-- `AGENTS.md` de la Wiki;
-- `.ia-dos.yaml`, cuando exista;
-- `[00-home.md O HOME REAL]`;
-- `[PÁGINAS CONCRETAS NECESARIAS]`.
+- `AGENTS.md` de la Wiki, cuando exista;
+- `.ia-dos.yaml`, cuando exista y corresponda;
+- `[00-home.md O HOME REAL O NINGUNO SI EL BOOTSTRAP LO CREA]`;
+- `[PÁGINAS CONCRETAS NECESARIAS O NINGUNA]`.
 
 No leas toda la Wiki por defecto.
 
@@ -89,6 +95,7 @@ No leas toda la Wiki por defecto.
 - mover TASK/REPORT a la Wiki por defecto;
 - reorganizar páginas no necesarias para el objetivo;
 - introducir dependencias de plugins o formatos propietarios;
+- si responde a `BOOTSTRAP REQUIRED`, ejecutar la unidad original que busca desbloquear;
 - `[OTRA EXCLUSIÓN]`.
 
 ## Capacidades y autorizaciones
@@ -112,7 +119,8 @@ No leas toda la Wiki por defecto.
 - no depender de Obsidian, wikilinks o plugins para semántica crítica;
 - no duplicar fuentes de verdad sin necesidad;
 - no eliminar contenido vigente sin justificación y alcance explícito;
-- no guardar secretos ni datos no permitidos.
+- no guardar secretos ni datos no permitidos;
+- no ampliar un bootstrap hacia la unidad que depende de él.
 
 ## Criterios de aceptación
 
@@ -122,6 +130,7 @@ No leas toda la Wiki por defecto.
 - [ ] Los enlaces relativos modificados son coherentes.
 - [ ] No se modificaron rutas fuera del alcance.
 - [ ] El diff es revisable y no contiene secretos.
+- [ ] Si es bootstrap, el checkpoint permite reevaluar la unidad original sin depender del chat para el conocimiento persistido.
 - [ ] `[CRITERIO ESPECÍFICO]`.
 
 ## Validaciones requeridas
@@ -144,7 +153,8 @@ Detente y reporta cuando:
 - aparezca trabajo previo que pueda perderse;
 - una validación crítica falle;
 - se detecten secretos o información sensible;
-- la tarea requiera una reorganización mayor no aprobada.
+- la tarea requiera una reorganización mayor no aprobada;
+- un bootstrap requiera inventar conocimiento o continuar con la unidad original.
 
 ## Entrega requerida
 
@@ -158,6 +168,8 @@ Devuelve un `Execution Report` canónico con:
 - desviaciones o contradicciones;
 - fuera de alcance preservado;
 - pendientes del alcance original, si existen;
-- atención concreta requerida del Cycle Owner o `Ninguna`.
+- atención concreta requerida o `Ninguna`.
 
 El reporte describe la ejecución documental. No propone por defecto nuevo conocimiento durable adicional ni elige la decisión de gobierno posterior. No apruebes tu propio trabajo ni inicies otra unidad.
+
+Si esta tarea materializó un checkpoint requerido por Memory Bootstrap, el Cycle Owner debe revisar el reporte y reevaluar el gate de la unidad original antes de emitirla.

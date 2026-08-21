@@ -21,7 +21,7 @@ Cada tipo de información debe tener una ubicación principal definida por el pr
 | Alcance de una ejecución | `Execution Task` |
 | Implementación | artefactos reales del producto |
 | Evidencia de ejecución | `Execution Report`, diff, revisión o mecanismo equivalente |
-| Historial operacional TASK/REPORT | Exchange, cuando el proyecto lo adopta |
+| Historial operacional de archivos intercambiados | Exchange, cuando el proyecto lo adopta |
 | Estándar común | fuente canónica de IA-DOS |
 
 Los nombres de herramientas concretas pueden usarse como parámetros del proyecto, pero no son requisitos del método.
@@ -32,10 +32,10 @@ Una fuente no es canónica para todo.
 
 Ejemplos:
 
-- la memoria puede gobernar decisiones aceptadas, pero no demostrar que el código existe;
+- la memoria durable puede gobernar decisiones aceptadas, pero no demostrar que el código existe;
 - la implementación demuestra estado real, pero no necesariamente explica por qué se tomó una decisión;
-- un reporte demuestra acciones y verificaciones, pero no reemplaza el artefacto modificado;
-- Exchange conserva qué se pidió y qué respondió el ejecutor, pero no reemplaza el estado vigente ya consolidado en memoria o demostrado por la implementación;
+- un reporte aporta evidencia de acciones y verificaciones, pero no reemplaza el artefacto modificado;
+- Exchange conserva qué archivos fueron enviados y recibidos, pero no reemplaza estado vigente, backlog, implementación o decisiones;
 - una referencia histórica aporta aprendizaje, pero no gobierna automáticamente el proyecto actual.
 
 Consulta `docs/execution/source-and-artifact-authority.md`.
@@ -46,19 +46,19 @@ Las conversaciones sirven para explorar, coordinar, decidir y preparar trabajo.
 
 No son una fuente de verdad durable.
 
-Cuando una conversación produce una decisión, restricción, cambio de alcance o información que debe conservarse, el resultado debe registrarse en la fuente canónica correspondiente.
+Cuando una conversación produce una decisión, restricción, cambio de alcance o información que debe reutilizarse, el resultado se registra en la fuente durable correspondiente cuando sea necesario.
 
 ## Exchange
 
-`Exchange Protocol v0` es una capa opcional de evidencia e historial operacional.
+Exchange es una pasarela pasiva y opcional de archivos Markdown.
 
-Puede conservar pares `TASK/REPORT` para responder preguntas como:
+Puede conservar los archivos que se intercambiaron para responder preguntas como:
 
-> ¿Qué se pidió, a qué célula se envió y qué devolvió el ejecutor?
+> ¿Qué archivo se envió y qué archivo volvió?
 
-No debe utilizarse como una segunda memoria del estado actual ni como un backlog implícito.
+Exchange no define el significado de esos archivos, no crea artefactos, no genera IDs, no mantiene backlog y no consolida memoria durable.
 
-Cuando un hecho descubierto en un `Execution Report` se vuelve durable, debe revisarse y consolidarse en la memoria correspondiente. Cuando una tarea cambia la implementación, el artefacto real sigue siendo la autoridad para demostrar ese estado.
+Cuando un hecho observado en un `Execution Report` merece persistirse, esa evaluación ocurre después de revisar la evidencia. Si corresponde actualizar memoria durable, se hace mediante una acción o tarea documental explícitamente autorizada.
 
 ## Planificación
 
@@ -77,6 +77,8 @@ Una `Execution Task` conserva el alcance autorizado aunque se transporte por con
 
 El mecanismo de almacenamiento no cambia la autoridad del artefacto ni permite omitir permisos, límites o criterios necesarios para ejecutar de forma segura.
 
+El `Execution Report` conserva evidencia de ejecución. No aprueba su propio resultado, no selecciona la decisión de gobierno posterior y no funciona como mecanismo de consolidación de memoria.
+
 ## Contradicciones
 
 Cuando dos fuentes se contradicen:
@@ -85,12 +87,12 @@ Cuando dos fuentes se contradicen:
 2. determina qué fuente tiene autoridad para ese ámbito;
 3. distingue estado real, decisión, propuesta, evidencia e historial;
 4. corrige o marca como obsoleta la fuente secundaria;
-5. registra la resolución en la memoria durable cuando corresponda.
+5. registra la resolución en memoria durable cuando deba reutilizarse.
 
-El Cycle Owner resuelve contradicciones dentro de su dominio. `00` interviene cuando el conflicto es transversal o estratégico.
+El Cycle Owner puede resolver contradicciones dentro de la autoridad delegada de su dominio. La persona responsable conserva la aprobación final cuando la resolución cambia dirección, autoridad, riesgo o impacto relevante. `00` interviene cuando el conflicto requiere reorientación transversal.
 
 ## Regla
 
 Los documentos pueden enlazarse entre sí, pero no deben copiarse completos sin una razón clara.
 
-La autoridad debe declararse explícitamente; no se infiere solo por el nombre, formato, ubicación o herramienta que contiene la información.
+La autoridad debe declararse explícitamente; no se infiere sólo por el nombre, formato, ubicación o herramienta que contiene la información.

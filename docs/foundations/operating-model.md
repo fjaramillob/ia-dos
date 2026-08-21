@@ -1,6 +1,6 @@
 # Modelo operativo
 
-IA-DOS organiza el desarrollo asistido por inteligencia artificial mediante ciclos pequeños de dirección, razonamiento, materialización y verificación.
+IA-DOS organiza el desarrollo asistido por IA mediante ciclos pequeños de dirección, razonamiento, materialización y verificación.
 
 Su secuencia maestra es:
 
@@ -13,49 +13,51 @@ Dirigir
 → verificar y aprender
 ```
 
-`Dirigir` expresa la responsabilidad transversal de la persona y del Project Orchestrator. Los cinco movimientos siguientes se repiten según las necesidades del proyecto y no constituyen fases rígidas.
+`Dirigir` expresa la responsabilidad transversal de la persona y del Project Orchestrator. Los movimientos siguientes se repiten según las necesidades del proyecto y no constituyen fases rígidas.
 
 ## 1. Dirigir
 
-La persona responsable define propósito, prioridades, restricciones y autoridad. El Project Orchestrator mantiene la visión transversal y convierte esa dirección en trabajo coordinado.
+La persona responsable define propósito, prioridades, restricciones y autoridad. El Project Orchestrator mantiene visión transversal y convierte esa dirección en trabajo coordinado.
 
 Esta capa debe:
 
 - capturar propósito y dirección suficientes;
-- separar conversaciones por dominio cuando desbloquea trabajo;
+- abrir Conversation Spaces sólo cuando separar un dominio desbloquea trabajo;
 - identificar prioridades, decisiones e hipótesis;
-- seleccionar las fuentes y el contexto necesarios;
-- preservar memoria durable antes de depender de historia conversacional;
+- seleccionar fuentes y contexto necesarios;
+- aplicar Memory Bootstrap Gate antes de depender de historia conversacional;
+- identificar readiness indispensable antes de autorizar escritura;
 - transformar necesidades en unidades de trabajo acotadas;
-- revisar resultados y señalar qué conocimiento debe conservarse.
+- revisar resultados y evaluar después qué conocimiento merece persistirse.
 
-Dirigir no significa ejecutar cada modificación. Significa decidir qué debe ocurrir, por qué y bajo qué límites.
+Dirigir no significa ejecutar cada modificación.
 
 ## 2. Entender
 
 Antes de actuar se revisa evidencia suficiente sobre el estado real.
 
-Esto puede incluir:
+Puede incluir:
 
 - propósito y usuario;
 - comportamiento existente;
 - estructura del repositorio;
-- arquitectura vigente cuando exista;
+- arquitectura vigente;
 - decisiones confirmadas;
 - riesgos y restricciones;
 - pruebas disponibles;
 - cambios locales pendientes;
-- límites de acceso, coste o seguridad.
+- límites de acceso, coste o seguridad;
+- readiness del entorno cuando sea indispensable.
 
-El objetivo no es completar una auditoría exhaustiva. Es reducir los supuestos que podrían afectar la siguiente decisión.
+El objetivo no es una auditoría exhaustiva, sino reducir los supuestos que podrían afectar la siguiente decisión.
 
-Cuando una fuente no está disponible, el Orchestrator o el coding agent debe declararlo y evitar inventar información.
+Cuando una fuente no está disponible, decláralo y evita inventar información.
 
 ## 3. Decidir
 
 Se confirma una decisión pequeña, reversible y útil para avanzar.
 
-Debe distinguirse explícitamente entre:
+Distingue:
 
 - hecho verificado;
 - preferencia;
@@ -65,23 +67,28 @@ Debe distinguirse explícitamente entre:
 - decisión durable;
 - pregunta abierta.
 
-Una conversación puede explorar alternativas, pero una propuesta no se transforma en decisión ni en implementación sin la autoridad correspondiente.
+Una propuesta no se transforma en decisión ni implementación sin autoridad suficiente.
 
-Las decisiones que deban reutilizarse regresan a la memoria durable, ADR, registro de decisiones u otra fuente canónica aplicable.
+El Cycle Owner actúa dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 ## 4. Delimitar
 
-Antes de solicitar planificación o modificación física se define una unidad de trabajo acotada.
+Antes de solicitar planificación o modificación física se define una unidad acotada.
 
-Si la unidad depende de conocimiento relevante que sólo vive en conversaciones, primero se aplica el [Memory Bootstrap Gate](memory-bootstrap-gate.md).
+Si depende de conocimiento relevante que sólo vive en conversaciones, aplica primero [Memory Bootstrap Gate](memory-bootstrap-gate.md).
 
-Una `Execution Task` debe indicar:
+Si una futura Execution Task depende de una precondición indispensable del entorno no comprobada, usa `Environment Preflight` antes de autorizar escritura.
+
+Cuando falta inspección o diseño, usa `Planning Task` en solo lectura.
+
+Una `Execution Task` debe indicar proporcionalmente:
 
 - objetivo;
 - contexto durable estrictamente necesario;
 - referencias y lectura requerida cuando corresponda;
 - alcance y fuera de alcance;
 - autoridad de fuentes y recursos;
+- Execution Cell o sesión cuando aplique;
 - zonas autorizadas;
 - permisos y acciones externas;
 - criterios de aceptación;
@@ -89,60 +96,51 @@ Una `Execution Task` debe indicar:
 - condiciones de detención;
 - destino del reporte.
 
-El Project Orchestrator prepara o coordina esta delimitación. La tarea debe ser suficientemente clara para que otra herramienta pueda ejecutarla sin depender del historial completo del chat.
+La tarea debe poder ejecutarse sin depender del historial completo del chat.
 
 ## 5. Materializar
 
 El coding agent modifica los artefactos reales dentro de los límites declarados.
 
-Puede trabajar sobre:
-
-- implementación;
-- documentación;
-- memoria durable;
-- configuración;
-- pruebas;
-- branches, commits y pull requests cuando estén autorizados.
+Puede trabajar sobre implementación, documentación, configuración, pruebas o memoria durable **sólo cuando la tarea lo autoriza**.
 
 Durante esta etapa debe:
 
 - inspeccionar antes de modificar;
-- confirmar recurso y branch o modo de trabajo cuando corresponda;
+- confirmar recurso y branch o modo de trabajo;
 - leer sólo el contexto requerido;
 - evitar cambios no solicitados;
-- no introducir dependencias o refactors sin justificación y autorización;
+- no introducir dependencias o refactors fuera de alcance;
 - detenerse si falta una decisión importante;
 - ejecutar verificaciones aplicables;
 - revisar el diff;
 - devolver un `Execution Report` con evidencia.
 
-El coding agent no debe recibir automáticamente todo IA-DOS, toda la memoria durable o todos los proyectos del workspace.
+El coding agent no debe recibir automáticamente todo IA-DOS, toda la LLM Wiki o todos los proyectos del workspace.
 
 ## 6. Verificar y aprender
 
 El resultado se compara con la `Execution Task`, no con la confianza que inspire la respuesta del agente.
 
-La verificación puede incluir:
+La verificación puede incluir diff, lint, typecheck, build, pruebas, revisión visual, seguridad, pasos manuales reproducibles, capturas, logs u otra evidencia relevante.
 
-- revisión del diff;
-- lint;
-- typecheck;
-- build;
-- pruebas unitarias o de integración;
-- revisión visual;
-- revisión de seguridad;
-- pasos manuales reproducibles;
-- capturas, logs o evidencia relevante.
+El `Execution Report` utiliza:
 
-Después de aprobar el cambio se actualiza la fuente de verdad correspondiente:
+```text
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+```
 
-- implementación en el artefacto técnico real;
-- evidencia en el `Execution Report`, diff, pull request u otro mecanismo;
-- decisión o estado durable en la memoria o ADR cuando deba reutilizarse;
-- trabajo pendiente en el sistema elegido;
-- documentación cuando cambió el comportamiento.
+El reporte es evidencia. No aprueba el cambio, no elige la siguiente acción de gobierno y no consolida memoria durable.
 
-Aprender significa conservar únicamente conocimiento confirmado y útil, no copiar conversaciones completas a la memoria durable.
+Después de revisar la evidencia:
+
+- la implementación permanece en el artefacto técnico real;
+- la evidencia permanece en Report, diff, PR u otro mecanismo;
+- el trabajo pendiente permanece en el sistema elegido;
+- la memoria durable se actualiza únicamente con conocimiento confirmado que deba reutilizarse y mediante una acción autorizada.
+
+Aprender significa conservar conocimiento útil y confirmado, no copiar conversaciones completas o REPORT enteros a la memoria.
 
 ## Arquitectura de trabajo
 
@@ -151,19 +149,27 @@ Persona responsable
         ↓
 Project Orchestrator
         ↓
-Conversation Spaces ligeros
+Conversation Space / Cycle Owner
         ↓
-Decisión o necesidad clara
+resultado claro
         ↓
 Memory Bootstrap Gate, cuando aplica
         ↓
-Planning Task | Environment Preflight | Execution Task
+Environment Preflight, cuando readiness es desconocido
         ↓
-Coding agent
+Planning Task, cuando falta inspección/diseño
         ↓
-Implementation Plan | cambios + verificaciones + Execution Report
+Execution Task, cuando la unidad está lista
         ↓
-Cycle Owner revisa
+Execution Cell o entorno autorizado
+        ↓
+Coding Agent
+        ↓
+Execution Report
+        ↓
+Cycle Owner revisa dentro de autoridad delegada
+        ↓
+Persona responsable aprueba cuando corresponde
         ↓
 Fuentes de verdad actualizadas cuando corresponde
 ```
@@ -171,14 +177,20 @@ Fuentes de verdad actualizadas cuando corresponde
 ## Frontera de responsabilidad
 
 ```text
-Project Orchestrator
-    define qué debe cambiar y por qué
+Persona responsable
+    define dirección y conserva aprobación final aplicable
 
-Coding agent
-    realiza el cambio físico y entrega evidencia
+Project Orchestrator / Cycle Owner
+    gobierna y delimita dentro de autoridad delegada
+
+Coding Agent — Planning
+    inspecciona y propone
+
+Coding Agent — Execution
+    realiza el cambio autorizado y entrega evidencia
 ```
 
-El Orchestrator no debe presentar una propuesta como si ya estuviera implementada. El coding agent no debe ampliar silenciosamente la decisión, el alcance o la autoridad recibida.
+El Orchestrator no presenta una propuesta como implementada. El coding agent no amplía silenciosamente objetivo, alcance o autoridad.
 
 ## Flujo de contexto
 
@@ -188,17 +200,15 @@ IA-DOS
 Project Orchestrator
     ↓ contexto durable necesario + referencias/lecturas + delta + tarea
 coding agent
-    ↓ plan o cambios + verificaciones + reporte
+    ↓ plan o cambios + verificaciones + evidencia
 Cycle Owner y persona responsable
-    ↓ revisión y decisión
+    ↓ revisión y decisión según autoridad
 fuentes de verdad correspondientes
 ```
 
-Los `Context Packs` pueden seguir utilizándose como patrón opcional cuando un proyecto obtiene valor de agrupar rutas o documentos, pero no forman parte del contrato mínimo ni del Wiki Starter vigente.
+`Context Pack` es un término histórico/compatible, no parte del contrato mínimo vigente. La selección actual de contexto se expresa mediante contexto durable necesario, referencias y lectura requerida.
 
 ## Fuentes de verdad
-
-IA-DOS busca evitar que la misma información se mantenga manualmente en varios lugares.
 
 | Tipo de información | Destino recomendado |
 |---|---|
@@ -210,12 +220,13 @@ IA-DOS busca evitar que la misma información se mantenga manualmente en varios 
 | Trabajo pendiente | sistema de seguimiento elegido por el proyecto |
 | Alcance de un plan | `Planning Task` |
 | Propuesta de implementación | `Implementation Plan` |
+| Readiness del entorno | `Environment Readiness Report` |
 | Alcance de una ejecución | `Execution Task` |
 | Implementación | artefactos reales del producto |
-| Revisión y evidencia | `Execution Report`, diff, pull request o mecanismo equivalente |
-| Historial TASK/REPORT | Exchange cuando el proyecto lo adopta |
+| Evidencia | `Execution Report`, diff, PR o mecanismo equivalente |
+| Historial de archivos intercambiados | Exchange cuando el proyecto lo adopta |
 | Estándar común reutilizable | repositorio IA-DOS |
 
 La tarea puede enlazar estos artefactos, pero no debe duplicarlos sin necesidad.
 
-Consulta [Método de trabajo](working-method.md) para la explicación conceptual de los cinco movimientos.
+Consulta [Método de trabajo](working-method.md).

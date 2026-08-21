@@ -106,12 +106,25 @@ Antes de delegar una unidad que dependa de historia o decisiones previas pregunt
 
 > ¿La siguiente unidad puede ejecutarse correctamente sin reconstruir conocimiento relevante desde conversaciones?
 
-- `PASS`: continúa sin crear memoria adicional por ceremonia.
-- `BOOTSTRAP REQUIRED`: crea o conecta un checkpoint durable mínimo.
+```text
+PASS
+→ continúa sin crear memoria adicional por ceremonia
+
+BOOTSTRAP REQUIRED
+→ la unidad dependiente original queda bloqueada
+→ prepara una Execution Task separada cuyo único resultado sea crear o conectar el checkpoint durable mínimo
+→ mantén la unidad original fuera de alcance
+→ revisa el Execution Report de esa tarea
+→ reevalúa el gate de la unidad original
+```
+
+`BOOTSTRAP REQUIRED` no autoriza mezclar el checkpoint con la adopción, reorganización, Planning, Preflight o Execution que lo originó.
 
 No conviertas esta evaluación en una auditoría integral.
 
 ## Paso 6 — Crear o conectar la memoria, cuando corresponda
+
+Si el gate devuelve `BOOTSTRAP REQUIRED`, la creación o actualización del checkpoint se materializa mediante la Execution Task separada indicada en el paso anterior. Esa tarea sólo persiste la memoria mínima necesaria para desbloquear la unidad original.
 
 Si ya existe una Wiki o documentación durable:
 
@@ -123,6 +136,8 @@ Si ya existe una Wiki o documentación durable:
 Si debe crearse una Wiki Markdown nueva, usa `templates/wiki-starter/` y [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
 No crees un `index.md` provisional ni una carpeta de tareas dentro de la Wiki por defecto.
+
+Después de ejecutar el bootstrap, revisa su `Execution Report`. Esa revisión no desbloquea automáticamente la unidad original: primero vuelve a evaluar su Memory Bootstrap Gate.
 
 ## Paso 7 — Evaluar Exchange por separado
 
@@ -166,6 +181,8 @@ Antes de considerar el proyecto incorporado, confirma:
 - [ ] Las fuentes de verdad relevantes están identificadas.
 - [ ] El modelo de adopción refleja la estructura real.
 - [ ] El Memory Bootstrap Gate fue evaluado cuando la siguiente unidad depende de contexto histórico.
+- [ ] Ante `BOOTSTRAP REQUIRED`, el checkpoint se materializa mediante una Execution Task separada y la unidad original queda fuera de alcance.
+- [ ] El Execution Report del bootstrap se revisa antes de reevaluar la unidad original.
 - [ ] La memoria existente fue preservada o el starter vigente se utilizó para una Wiki nueva.
 - [ ] Exchange, si existe, se mantiene como pasarela pasiva y no como backlog, memoria o generador de identidad.
 - [ ] No se asumió automatización inexistente.
@@ -186,8 +203,8 @@ Detente cuando:
 
 ## Siguiente paso
 
-Si el Memory Bootstrap Gate requiere memoria, crea o actualiza sólo el checkpoint mínimo.
+Si `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, ejecuta únicamente la tarea separada de checkpoint, revisa su `Execution Report` y reevalúa el gate. Sólo después de obtener `PASS` vuelve a la Planning Task, Environment Preflight o Execution Task original.
 
-Si se decidió utilizar Exchange, crea o conecta únicamente la pasarela.
+Si se decidió utilizar Exchange, crea o conecta únicamente la pasarela mediante una acción separada y autorizada cuando corresponda.
 
-Después vuelve a la Planning Task, Environment Preflight o Execution Task que originó la adopción. No conviertas la incorporación en un proyecto paralelo.
+No conviertas la incorporación en un proyecto paralelo ni mezcles en una sola unidad bootstrap de memoria y trabajo original.

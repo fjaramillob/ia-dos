@@ -1,3 +1,6 @@
+> [!WARNING]
+> **EVIDENCIA HISTÓRICA — CIERRE DE FASE 6.** Esta revisión documenta la coherencia observada al cerrar la consolidación de Fase 6. No representa una certificación permanente del estado actual. La revisión más reciente es [Auditoría integral del repositorio — 2026-08-21](repository-integral-audit-2026-08-21.md).
+
 # Revisión integral final de consolidación
 
 Esta revisión se ejecutó después de las Fases 1–6 para comprobar que IA-DOS no conserve contratos paralelos o residuos semánticos entre documentación, templates, onboarding y distribución offline.
@@ -125,7 +128,7 @@ No se introdujeron nuevos Conversation Spaces, tipos de artefacto, IDs, gates, r
 
 ## Conclusión
 
-La consolidación es internamente coherente para esta fase alpha.
+La consolidación era internamente coherente para el baseline revisado en ese momento.
 
 Los próximos cambios del método deben preservar la equivalencia entre:
 

@@ -12,9 +12,10 @@ petición, hallazgo o bloqueo
 → comprobar si el espacio actual puede resolverla
 → continuar allí o abrir un único espacio especializado
 → confirmar resultado y asignar Cycle Owner
+→ aplicar gates de memoria/readiness cuando corresponda
 → planificar o ejecutar
 → revisar desde el destino declarado
-→ escalar solo cuando corresponda
+→ escalar sólo ante reorientación real
 ```
 
 Antes de abrir otra conversación, pregunta:
@@ -26,21 +27,20 @@ y requiere contexto persistente propio?
 
 Si no, continúa en el espacio actual.
 
-## Propiedad del ciclo
+## Propiedad del ciclo y responsabilidad
 
-El espacio que confirma el resultado esperado se convierte en Cycle Owner mientras el resultado permanezca dentro de su dominio.
+El espacio que confirma el resultado esperado se convierte en Cycle Owner mientras permanezca dentro de su dominio.
 
-`00` también puede gobernar un ciclo.
+El Cycle Owner actúa dentro de autoridad delegada. La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
-Todo handoff debe declarar:
+Todo handoff debe declarar, según corresponda:
 
 - Cycle Owner;
-- destino del Implementation Plan, si existe;
+- destino del Environment Readiness Report;
+- destino del Implementation Plan;
 - destino del Execution Report;
 - espacio de escalamiento;
 - estado del resultado.
-
-No uses `Retorno` como único campo ambiguo.
 
 ## Tópicos base
 
@@ -48,21 +48,17 @@ No uses `Retorno` como único campo ambiguo.
 
 **Propósito:** mantener objetivo, prioridad, límites, organización transversal y reorientación.
 
-**Abrir o volver cuando:** existe cambio de dirección, conflicto entre dominios, ampliación importante de alcance, decisión humana estratégica o bloqueo fuera de la autoridad del espacio actual.
+**Abrir o volver cuando:** existe cambio de dirección, conflicto entre dominios, ampliación importante de alcance, decisión humana estratégica o bloqueo fuera de autoridad.
 
-**No usar para:** volver a redactar tareas, recibir rutinariamente planes o reportes, ni actuar como intermediario cuando otro espacio ya gobierna el ciclo.
-
-**Como Cycle Owner:** puede planificar, ejecutar y revisar resultados propios de dirección u orquestación.
+**No usar para:** recibir rutinariamente planes/reportes o actuar como intermediario cuando otro espacio ya gobierna el ciclo.
 
 ### `10 — Producto y UX`
 
 **Propósito:** definir usuario, comportamiento, reglas funcionales, flujo y experiencia.
 
-**Abrir cuando:** falta precisar qué debe ocurrir para el usuario, cómo comienza y termina un flujo o qué comportamiento constituye éxito.
+**Abrir cuando:** falta precisar qué debe ocurrir para el usuario, cómo comienza/termina un flujo o qué comportamiento constituye éxito.
 
 **Fuera de alcance:** elegir infraestructura o ejecutar cambios físicos desde el chat.
-
-**Como Cycle Owner:** gobierna el resultado funcional hasta cerrarlo o transferir explícitamente su propiedad.
 
 ### `20 — Arquitectura y stack`
 
@@ -70,37 +66,43 @@ No uses `Retorno` como único campo ambiguo.
 
 **Abrir cuando:** existe una decisión técnica real, auditoría que interpretar, migración que diseñar o riesgo arquitectónico que impide ejecutar con seguridad.
 
-**Fuera de alcance:** redefinir silenciosamente el producto o ejecutar cambios físicos desde el chat.
+**Fuera de alcance:** redefinir silenciosamente producto o ejecutar cambios físicos desde el chat.
 
-**Como Cycle Owner:** puede enviar una Planning Task, revisar el Implementation Plan, aprobar una Execution Task técnica y revisar su evidencia.
+**Como Cycle Owner:** puede preparar Planning, Preflight o Execution Task y revisar retornos dentro de autoridad delegada; obtiene aprobación humana cuando corresponda.
 
 ### `30 — Ejecución y desarrollo`
 
-**Propósito:** coordinar una iniciativa compleja cuando el espacio que resolvió la definición no puede gobernar de forma segura su descomposición técnica.
+**Propósito:** gobernar una iniciativa compleja cuando el espacio que resolvió la definición no puede coordinar de forma segura varias unidades ejecutables.
 
-**Abrir cuando:** existen dependencias delicadas, múltiples unidades ejecutables o coordinación que requiere contexto persistente propio.
+**Abrir cuando:** existen dependencias delicadas, múltiples unidades o coordinación que requiere contexto persistente propio.
 
-**No abrir cuando:** otro espacio ya puede gobernar el plan y la primera tarea.
+**No abrir cuando:** otro espacio ya puede gobernar la primera tarea o cuando sólo hace falta una Execution Cell del coding agent.
+
+`30` es Conversation Space; no equivale a una Execution Cell.
 
 ### `40 — Calidad, seguridad y cumplimiento`
 
 **Propósito:** tratar pruebas, seguridad, privacidad, accesibilidad, riesgos y cumplimiento que requieren contexto propio.
 
-**Abrir cuando:** la validación o el riesgo es el problema dominante, no solo una verificación normal dentro de otra tarea.
+**Abrir cuando:** la validación o el riesgo es la decisión dominante, no sólo una verificación normal incluida en otra tarea.
 
 ### `50 — Operación y entrega`
 
 **Propósito:** resolver entornos, despliegue, observabilidad, releases, continuidad y operación.
 
-**Abrir cuando:** el problema dominante ocurre después de construir o requiere decisiones operativas persistentes.
+**Abrir cuando:** el problema dominante es operativo o requiere contexto persistente de entrega.
+
+**No usar como:** dispatcher obligatorio de toda Execution Task.
 
 ### `90 — Wiki y memoria`
 
-**Propósito:** sintetizar conocimiento durable, resolver contradicciones y gobernar memoria compleja.
+**Propósito:** sintetizar conocimiento durable, resolver contradicciones y gobernar memoria cuando ese trabajo merece contexto propio.
 
-**Abrir cuando:** una actualización acotada ya no basta por existir múltiples fuentes, contradicciones o reorganización importante.
+**Abrir cuando:** existen múltiples fuentes, contradicciones, reorganización importante o una síntesis durable que se beneficia de continuidad especializada.
 
-**No abrir cuando:** la memoria puede actualizarse como consecuencia directa de otra tarea.
+**No abrir por rutina:** un Memory Bootstrap mínimo o una actualización documental concreta ya confirmada pueden ser gobernados por el Conversation Space actual.
+
+La modificación física de una LLM Wiki sigue requiriendo una Execution Task documental autorizada cuando la herramienta conversacional no es el recurso escritor.
 
 ## Selección del espacio
 
@@ -109,29 +111,36 @@ No uses `Retorno` como único campo ambiguo.
 | ¿Qué priorizamos, cambiamos o escalamos? | `00` |
 | ¿Qué debe experimentar o hacer el usuario? | `10` |
 | ¿Cómo debe estructurarse técnicamente? | `20` |
-| ¿Cómo coordinamos varias unidades de ejecución? | `30` |
+| ¿Cómo gobernamos varias unidades de ejecución? | `30` |
 | ¿Cómo comprobamos o reducimos el riesgo? | `40` |
 | ¿Cómo entregamos y operamos? | `50` |
 | ¿Qué conocimiento debe consolidarse? | `90` |
 
 ## Gate de salida
 
-Cada espacio evalúa:
+Cada espacio evalúa en este orden:
 
 ```text
-¿El siguiente resultado puede ejecutarse directamente
-o necesita primero inspección y planificación técnica?
+1. ¿El siguiente resultado está definido, es pequeño y verificable?
+2. Si depende de historia, ¿la memoria necesaria ya es durable?
+3. ¿Las precondiciones indispensables del entorno están comprobadas?
+4. Si falta inspección o diseño, ¿corresponde Planning?
 ```
 
-- **Ejecución directa:** entrega una Execution Task pequeña y verificable.
-- **Planificación previa:** entrega una Planning Task.
-- **Falta una decisión del mismo dominio:** continúa solo hasta resolverla.
-- **Falta una decisión de otro dominio:** deriva una sola vez.
-- **Hace falta reorientación:** escala a `00`.
+- memoria necesaria sólo en chats → `Memory Bootstrap Gate`;
+- readiness indispensable desconocido → `Environment Preflight`;
+- falta inspección/diseño → `Planning Task`;
+- unidad lista → `Execution Task`;
+- falta decisión del mismo dominio → continúa sólo hasta resolverla;
+- falta decisión de otro dominio → `Specialist Handoff`;
+- decisión humana indispensable → deriva sólo esa decisión;
+- reorientación → escala a `00`.
+
+Cuando `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, la unidad evaluada queda bloqueada. El mismo Cycle Owner puede emitir una `Execution Task` separada cuyo único resultado sea persistir el checkpoint durable mínimo; esa tarea deja la unidad original fuera de alcance, devuelve su `Execution Report` y sólo después se reevalúa el gate original. No presentes la tarea de bootstrap como `PASS`.
 
 ## Contrato del Conversation Space
 
-Todo espacio debe declarar:
+Todo espacio debe poder declarar:
 
 - tópico y nombre;
 - objetivo único;
@@ -139,8 +148,9 @@ Todo espacio debe declarar:
 - fuera de alcance;
 - estado del resultado;
 - Cycle Owner;
-- destinos de plan y reporte;
+- destinos de preflight, plan y reporte cuando apliquen;
 - espacio de escalamiento;
-- condición de cierre.
+- condición de cierre;
+- fronteras de autoridad humana relevantes.
 
 Los números son identificadores estables, no etapas obligatorias.

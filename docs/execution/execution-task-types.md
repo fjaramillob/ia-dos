@@ -114,8 +114,9 @@ Creación o actualización de documentación técnica, pública u operativa.
 
 ### `WIKI`
 
-Actualización de memoria durable del proyecto.
+Actualización autorizada de memoria durable del proyecto.
 
+- exige que la propia Execution Task delimite el conocimiento y las rutas que puede modificar;
 - distingue hechos, decisiones, hipótesis y desconocidos;
 - no copia chats o reportes completos sin síntesis;
 - evidencia: páginas actualizadas y fuentes.
@@ -150,7 +151,7 @@ Trabajo sobre infraestructura, observabilidad, continuidad o mantenimiento opera
 | Aumentar verificación | `TEST` |
 | Reducir riesgo técnico | `HARDEN` |
 | Documentar | `DOCUMENT` |
-| Mantener memoria durable | `WIKI` |
+| Mantener memoria durable con autorización explícita | `WIKI` |
 | Entregar una versión | `RELEASE` |
 | Operar un entorno | `OPERATE` |
 
@@ -176,7 +177,9 @@ El tipo elegido influye en:
 - pruebas mínimas;
 - autorizaciones;
 - condiciones de detención;
-- formato del Execution Report;
-- necesidad de actualizar documentación o memoria.
+- formato proporcional del Execution Report;
+- documentación o memoria que la propia Execution Task autorice modificar como parte de su resultado.
+
+El tipo no autoriza por sí mismo una actualización de memoria ni convierte el Execution Report en mecanismo de consolidación durable.
 
 La `Execution Task` sigue siendo la autoridad concreta. Este registro aporta valores predeterminados y evita que cada coding agent improvise el modo de trabajo.

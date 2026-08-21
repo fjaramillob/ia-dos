@@ -5,155 +5,131 @@ IA-DOS debe producir avances verificables sin depender de una plataforma, provee
 ## Flujo principal
 
 ```text
-capturar alma y prioridad
-→ identificar el siguiente resultado concreto
-→ resolver solo la definición indispensable
+dirección suficiente
+→ siguiente resultado verificable
 → asignar Cycle Owner
-→ decidir entre Planning Task y Execution Task
-→ devolver el artefacto al destino declarado
-→ revisar, corregir o continuar
-→ escalar a 00 solo cuando corresponda
+→ Memory Bootstrap Gate cuando dependa de historia conversacional
+→ Environment Preflight cuando readiness indispensable sea desconocido
+→ Planning Task cuando falta inspección o diseño
+→ Execution Task cuando la unidad está lista
+→ artefacto vuelve al Cycle Owner
+→ revisión y decisión dentro de la autoridad aplicable
+→ persona responsable aprueba cuando corresponde
+→ escalar a 00 sólo ante reorientación real
 ```
 
 `00 — Dirección y orquestación` no es una parada obligatoria entre definición, planificación y ejecución.
 
-## Gate de planificación
+## Gate de avance
 
-Cada Cycle Owner debe evaluar:
+Evalúa en este orden:
 
 ```text
-¿El siguiente resultado está suficientemente definido,
-es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
+1. ¿El resultado está suficientemente definido, es pequeño y verificable?
+2. Si depende de historia, ¿el conocimiento necesario ya es durable?
+3. ¿Las precondiciones indispensables del entorno están comprobadas?
+4. Si falta inspección o diseño, ¿el coding agent puede proponer una primera unidad segura?
 ```
 
-### Sí
+- memoria necesaria sólo en conversaciones → `Memory Bootstrap Gate`;
+- readiness indispensable desconocido → `Environment Preflight`;
+- falta inspección o diseño → `Planning Task`;
+- todo listo → `Execution Task`;
+- decisión humana indispensable → resolver sólo esa decisión;
+- reorientación → escalar a `00`.
 
-Prepara una Execution Task pequeña y verificable.
+## Memory Bootstrap operativo
 
-### No porque falta inspección o diseño técnico
+Cuando el gate devuelve `BOOTSTRAP REQUIRED`:
 
-Prepara una Planning Task de solo lectura.
+```text
+unidad original
+→ queda bloqueada
 
-### No porque falta una decisión del mismo dominio
+Execution Task de bootstrap
+→ único resultado: checkpoint durable mínimo
+→ unidad original fuera de alcance
+→ Execution Report
+→ revisión
+→ reevaluar gate original
+```
 
-Continúa únicamente hasta resolver esa decisión.
-
-### No porque apareció una cuestión fuera del dominio
-
-Deriva al Conversation Space correspondiente o escala a `00` cuando sea transversal o estratégica.
+La tarea de bootstrap no finge `PASS` ni ejecuta el resultado original. Una unidad ordinaria dependiente de esa memoria sólo continúa después de reevaluar el gate y obtener `PASS`.
 
 ## Planning Task
 
-La Planning Task solicita al coding agent inspeccionar fuentes y estado real para proponer cómo implementar.
+La Planning Task solicita al coding agent inspeccionar fuentes y estado real en solo lectura para proponer cómo implementar.
 
 ```text
 Planning Task
-→ inspección en solo lectura
+→ Coding Agent — Planning
 → Implementation Plan
 → revisión del Cycle Owner
-→ aprobación de una unidad
-→ Execution Task
+→ aprobación humana cuando corresponda
+→ Execution Task autorizada
 ```
 
 No autoriza escritura, commits, cambios remotos, despliegues, recursos externos ni costes.
 
-Usa:
-
-- `templates/planning-task.template.md`;
-- `templates/implementation-plan.template.md`.
-
 ## Gate de tamaño
 
-Antes de aprobar una Execution Task, pregunta:
+Antes de aprobar una Execution Task pregunta:
 
 ```text
 ¿Puede completarse, verificarse y reportarse como una sola unidad
-sin mezclar resultados independientes?
+sin mezclar resultados independientes ni tomar decisiones mayores nuevas?
 ```
 
-Si no, divide el plan. No agrupes una iniciativa amplia bajo un solo tipo de ejecución.
+Si no, divide y autoriza sólo la primera unidad segura.
 
-## Propiedad y destinos
+## Propiedad y responsabilidad
 
-Todo handoff técnico declara por separado:
+Todo handoff técnico declara Cycle Owner y destino del artefacto de retorno.
 
-- Cycle Owner;
-- destino del Implementation Plan;
-- destino del Execution Report;
-- espacio de escalamiento.
+El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando el cambio afecta dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
-El plan y el reporte no tienen que volver a `00`. Vuelven al espacio responsable indicado.
+Planes y reportes no vuelven automáticamente a `00`.
 
 ## Readiness del entorno
 
-Antes de delegar, confirma únicamente:
-
-- entorno disponible: local, remoto o combinado;
-- fuentes y artefactos accesibles;
-- recursos faltantes;
-- trabajo previo que debe preservarse;
-- permisos reales;
-- datos, secretos o recursos externos restringidos.
-
-No impongas una carpeta, repositorio, proveedor, Wiki, plataforma o herramienta específica.
-
-Consulta `docs/execution/source-and-artifact-authority.md`.
-
-## Transición visible a planificación
-
-Usa una instrucción equivalente a:
-
-> Abre el entorno disponible para el proyecto e inicia una sesión de planificación en solo lectura. Pega la Planning Task siguiente. Devuelve el `Implementation Plan` completo al Conversation Space indicado; no ejecutes cambios.
-
-## Transición visible a ejecución
-
-Usa una instrucción equivalente a:
-
-> Abre el entorno disponible para el proyecto e inicia una sesión de ejecución. Pega la Execution Task siguiente. No amplíes el alcance. Devuelve el `Execution Report` completo al Conversation Space indicado.
-
-El usuario no debe reconstruir la tarea combinando varios mensajes.
-
-## Contenido mínimo de una Planning Task
+Cuando una precondición indispensable no está comprobada, usa:
 
 ```text
-Cycle Owner y destinos
-Objetivo del plan
-Contexto mínimo
-Autoridad de fuentes, artefactos y entorno
-Inspección requerida
-Fuera de alcance
-Gate de tamaño
-Condiciones de detención
-Formato del Implementation Plan
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
 ```
 
-## Contenido mínimo de una Execution Task
+en vez de inferir que el entorno está listo.
+
+Sólo:
 
 ```text
-Cycle Owner y destino del reporte
-Tipo de ejecución
-Objetivo único
-Contexto mínimo
-Autoridad y acceso de recursos
-Alcance y fuera de alcance
-Criterios de aceptación
-Pruebas o verificaciones
-Condiciones de detención
-Autorizaciones
-Formato del Execution Report
+LISTO PARA EJECUCIÓN
 ```
+
+permite considerar aprobación o reanudación de escritura. El readiness report no concede escritura por sí mismo.
+
+No impongas carpeta, repositorio, proveedor, Wiki, plataforma o herramienta específica.
+
+## Transición visible
+
+Cuando corresponda planificación, entrega una `Planning Task` autosuficiente al coding agent en modo de solo lectura y pide devolver el `Implementation Plan` al Cycle Owner.
+
+Cuando corresponda preflight, entrega un `Environment Preflight` al mismo rol de solo lectura y pide devolver `Environment Readiness Report`; no lo conviertas en Planning.
+
+Cuando corresponda ejecución, entrega una `Execution Task` completa a la Execution Cell adecuada o al entorno disponible. Reutiliza una célula activa cuando siga respondiendo bien; no abras una conversación por tarea.
 
 ## Revisión del Implementation Plan
 
 El Cycle Owner debe:
 
-1. comprobar que el plan se basa en fuentes autorizadas;
+1. comprobar fuentes y evidencia;
 2. separar hechos, inferencias y propuestas;
-3. revisar contradicciones y riesgos;
-4. comprobar dependencias y condiciones de detención;
-5. aplicar el gate de tamaño;
-6. resolver decisiones humanas pendientes;
-7. aprobar solo la primera unidad ejecutable.
+3. revisar dependencias, riesgos y condiciones de detención;
+4. aplicar el gate de tamaño;
+5. identificar decisiones humanas pendientes;
+6. autorizar, o solicitar autorización para, una sola primera unidad ejecutable.
 
 Plan producido no equivale a plan aprobado ni a ejecución autorizada.
 
@@ -166,35 +142,30 @@ El destino declarado revisa:
 3. criterios versus evidencia;
 4. verificaciones solicitadas versus ejecutadas;
 5. autorizaciones versus acciones realizadas;
-6. estado de memoria y documentación;
-7. bloqueos o trabajo parcial;
-8. siguiente resultado lógico.
+6. fuera de alcance preservado;
+7. bloqueos, desviaciones y pendientes del alcance original.
 
-Solo escala a `00` si aparece una condición real de reorientación.
+El reporte no selecciona la siguiente acción de gobierno ni propone por defecto qué memoria consolidar.
 
-## Producto y memoria en la misma ejecución
+Después de revisar la evidencia, el Cycle Owner y la persona responsable, según la autoridad aplicable, deciden cierre, corrección, reversión, transferencia, escalamiento o siguiente unidad. Separadamente evalúan si hechos nuevos merecen memoria durable.
 
-La actualización normal de memoria puede incluirse en la Execution Task cuando el conocimiento sea claro, acotado y consecuencia directa del cambio.
+Si el reporte corresponde a un memory bootstrap, primero se reevalúa el gate de la unidad original; no se autoriza automáticamente.
 
-No registres propuestas como estado implementado.
+## Memoria en la misma ejecución
 
-## Neutralidad de referencias
+Una actualización concreta de LLM Wiki puede formar parte de una Execution Task sólo cuando el conocimiento ya está confirmado, la modificación documental está explícitamente autorizada y no requiere una nueva decisión conceptual.
 
-Toda tarea y reporte usa únicamente:
-
-- el proyecto actual;
-- sus fuentes autorizadas;
-- sus recursos reales;
-- las capacidades del entorno disponible.
-
-No incluyas detalles de proyectos usados como pruebas salvo que sean fuentes explícitas del proyecto actual.
+No conviertas toda ejecución de producto en una actualización automática de memoria.
 
 ## Guardrails
 
 - no enviar una intención vaga al coding agent;
 - no ejecutar antes de resolver decisiones indispensables;
+- no omitir Memory Bootstrap Gate cuando existe dependencia chat-only;
+- no confundir `BOOTSTRAP REQUIRED` con prohibición de la unidad mínima de checkpoint;
+- no omitir Environment Preflight cuando readiness indispensable es desconocido;
 - no usar planificación para autorizar escritura implícita;
-- no abrir otra conversación para posponer una tarea que ya está lista;
+- no abrir una conversación por cada tarea cuando existe una Execution Cell válida;
 - no regresar a `00` por rutina;
 - no asumir acceso, permisos o herramientas;
 - no declarar completado algo sin evidencia;
@@ -203,9 +174,11 @@ No incluyas detalles de proyectos usados como pruebas salvo que sean fuentes exp
 ## Regla principal
 
 ```text
-Conversar solo lo indispensable.
+Conversar sólo lo indispensable.
+Persistir memoria sólo cuando haga falta.
+Comprobar readiness antes de escribir.
 Planificar cuando reduzca incertidumbre real.
 Ejecutar unidades pequeñas.
-Devolver cada artefacto al responsable declarado.
+Devolver evidencia al responsable declarado.
 Escalar únicamente para reorientar.
 ```

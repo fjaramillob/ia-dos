@@ -1,10 +1,17 @@
 # Método de trabajo
 
-IA-DOS separa dirección, razonamiento, materialización y verificación para permitir que personas y distintas herramientas de IA colaboren sobre un proyecto sin convertir chats, agentes o repositorios en fuentes de verdad paralelas.
+IA-DOS separa dirección, razonamiento, materialización y verificación para permitir que personas y distintas herramientas de IA colaboren sin convertir chats, agentes o repositorios en fuentes de verdad paralelas.
 
 ## Principio rector
 
-La persona responsable dirige. El Project Orchestrator organiza. Los Conversation Spaces razonan. Los coding agents materializan. Las fuentes de evidencia trazan. La memoria durable recuerda.
+```text
+La persona responsable dirige y conserva aprobación final aplicable.
+El Project Orchestrator organiza.
+Los Conversation Spaces gobiernan decisiones.
+Los coding agents inspeccionan o materializan según el rol.
+Las fuentes de evidencia trazan.
+La memoria durable recuerda.
+```
 
 ## Los cinco movimientos
 
@@ -16,57 +23,75 @@ Entender
 → verificar y aprender
 ```
 
-Estos movimientos no son fases rígidas. Pueden repetirse en ciclos pequeños y superponerse cuando el proyecto lo requiere.
+No son fases rígidas. Se repiten en ciclos pequeños.
 
 ## 1. Entender
 
 Lee evidencia y captura dirección suficiente antes de actuar.
 
-Esto puede incluir propósito, usuario, estado real, arquitectura, decisiones vigentes, restricciones, riesgos, código, pruebas y fuentes disponibles.
+Puede incluir propósito, usuario, estado real, arquitectura, decisiones vigentes, restricciones, riesgos, código, pruebas, fuentes disponibles y readiness indispensable.
 
-El objetivo no es producir una auditoría exhaustiva. Es reducir los supuestos que podrían afectar la siguiente decisión.
+El objetivo no es una auditoría exhaustiva, sino reducir supuestos que afecten la siguiente decisión.
 
 ## 2. Decidir
 
 Confirma una decisión pequeña, reversible y útil.
 
-Toda decisión debe distinguirse de:
+Distingue:
 
-- un hecho verificado;
-- una preferencia;
-- un supuesto;
-- una propuesta;
-- una pregunta abierta.
+- hecho verificado;
+- preferencia;
+- supuesto;
+- propuesta;
+- decisión;
+- pregunta abierta.
 
-Las decisiones durables deben registrarse en la fuente de verdad correspondiente cuando vayan a reutilizarse más allá de la conversación actual.
+El Cycle Owner actúa dentro de autoridad delegada. La persona responsable conserva aprobación final cuando cambian dirección, autoridad, riesgo o impacto relevante.
+
+Las decisiones que deban reutilizarse se registran en memoria durable cuando corresponda.
 
 ## 3. Delimitar
 
-Transforma la decisión en una unidad de trabajo acotada.
+Transforma la decisión en la **siguiente unidad segura**, no necesariamente en una Execution Task inmediata.
 
-Antes de emitir una unidad que dependa de decisiones o contexto que sólo viven en conversaciones, aplica el [Memory Bootstrap Gate](memory-bootstrap-gate.md).
+Evalúa en este orden:
 
-Una `Execution Task` debe declarar como mínimo:
+```text
+1. ¿El resultado está definido, es pequeño y verificable?
+2. Si depende de historia, ¿la memoria necesaria ya es durable?
+3. ¿Las precondiciones indispensables del entorno están comprobadas?
+4. Si falta inspección o diseño, ¿corresponde Planning?
+```
+
+Resultados:
+
+- historia necesaria sólo en chats → `Memory Bootstrap Gate`;
+- readiness indispensable desconocido → `Environment Preflight`;
+- falta inspección/diseño → `Planning Task`;
+- unidad lista → `Execution Task`.
+
+Una Execution Task declara proporcionalmente:
 
 - objetivo;
-- contexto durable estrictamente necesario;
+- Cycle Owner y destino;
+- Execution Cell o sesión cuando corresponda;
+- contexto durable necesario;
 - alcance y fuera de alcance;
-- autoridad y accesos relevantes;
-- permisos y acciones externas autorizadas;
+- autoridad y acceso;
+- permisos y acciones externas;
 - criterios de aceptación;
-- verificaciones esperadas;
-- condiciones de detención;
-- destino del reporte.
-
-Delimitar evita que una buena intención se convierta en un cambio amplio, silencioso o difícil de verificar.
+- verificaciones;
+- condiciones de detención.
 
 ## 4. Materializar
 
-Delega la modificación física a un coding agent con acceso adecuado a los artefactos y entornos necesarios.
+La modificación física se delega a `Coding Agent — Execution` con acceso adecuado y una Execution Task autorizada.
 
-El Project Orchestrator define qué debe cambiar y por qué. El coding agent inspecciona, modifica, prueba y entrega evidencia dentro de la tarea autorizada.
+El coding agent inspecciona, modifica, prueba y reporta únicamente dentro de esa tarea.
 
-La conversación no sustituye la ejecución sobre el artefacto real.
+Una Execution Cell puede preservar continuidad entre tareas, pero no hereda permisos.
+
+Cuando una tarea se bloquea, `Execution Resume` sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios.
 
 ## 5. Verificar y aprender
 
@@ -74,14 +99,23 @@ Revisa el resultado contra la tarea, no contra la confianza que inspire el agent
 
 La verificación puede incluir diff, lint, typecheck, build, pruebas, revisión visual, seguridad, logs o pasos manuales reproducibles.
 
-Después de aprobar el cambio:
+El Execution Report utiliza:
+
+```text
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+```
+
+Es evidencia. No aprueba su propio resultado, no elige la siguiente unidad y no consolida memoria durable.
+
+Después de revisar:
 
 - la implementación queda en su fuente técnica;
-- la evidencia queda en el `Execution Report`, diff, pull request u otro mecanismo autorizado;
-- el trabajo pendiente queda en el sistema de seguimiento elegido;
-- el conocimiento confirmado que deba reutilizarse regresa a la memoria durable o registro correspondiente.
+- la evidencia queda en Report, diff, PR u otro mecanismo;
+- el trabajo pendiente queda en el sistema de seguimiento;
+- el conocimiento confirmado que deba reutilizarse puede regresar a memoria durable mediante una acción autorizada.
 
-No copies conversaciones completas ni conviertas todo hallazgo en memoria permanente.
+No copies conversaciones completas ni conviertas cada hallazgo en memoria permanente.
 
 ## Arquitectura operativa
 
@@ -90,41 +124,50 @@ Persona responsable
         ↓
 Project Orchestrator
         ↓
-Conversation Spaces ligeros
+Conversation Space / Cycle Owner
         ↓
-Decisión o necesidad clara
+resultado claro
         ↓
 Memory Bootstrap Gate, cuando aplica
         ↓
-Planning Task | Execution Task
+Environment Preflight, cuando readiness es desconocido
         ↓
-Coding agent
+Planning Task, cuando falta inspección/diseño
         ↓
-Artefacto real + verificaciones
+Execution Task, cuando la unidad está lista
         ↓
-Implementation Plan | Execution Report
+Execution Cell o entorno autorizado
+        ↓
+Coding Agent
+        ↓
+Execution Report
         ↓
 Cycle Owner revisa
         ↓
-Fuentes de verdad actualizadas cuando corresponde
+Persona responsable aprueba cuando corresponde
+        ↓
+Fuentes de verdad actualizadas cuando aplica
 ```
 
 ## Regla de frontera
 
 ```text
-Project Orchestrator
-    define qué debe cambiar y por qué
+Project Orchestrator / Cycle Owner
+    define y delimita dentro de autoridad delegada
 
-Coding agent
+Coding Agent — Planning
+    inspecciona y propone
+
+Coding Agent — Execution
     realiza el cambio físico y entrega evidencia
 ```
 
-El Orchestrator no debe presentar una propuesta como si ya estuviera implementada. El coding agent no debe convertir una instrucción acotada en una decisión de producto, arquitectura o gobierno.
+El Orchestrator no presenta una propuesta como implementada. El coding agent no convierte una instrucción acotada en una decisión de producto, arquitectura o gobierno.
 
 ## Trabajo progresivo
 
 IA-DOS favorece ciclos simples que funcionan y evolucionan.
 
-No exige completar toda la definición, documentación o arquitectura antes de construir. Exige suficiente claridad para que el siguiente cambio sea útil, acotado, verificable y reversible cuando sea posible.
+No exige completar toda la definición, documentación o arquitectura antes de construir. Exige claridad suficiente para el siguiente avance seguro.
 
-La memoria durable aparece cuando hace falta para preservar conocimiento reusable, no como una ceremonia obligatoria previa a cada avance.
+La memoria durable aparece cuando hace falta para preservar conocimiento reusable, no como ceremonia previa a cada avance. Una LLM Wiki es una posible materialización de esa memoria, no una topología obligatoria.

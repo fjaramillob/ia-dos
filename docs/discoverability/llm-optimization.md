@@ -6,33 +6,21 @@ Este documento define cómo reducir interpretaciones incorrectas de IA-DOS por p
 
 IA-DOS debe poder comprenderse desde fuentes públicas breves, coherentes y verificables.
 
-No se busca manipular respuestas ni repetir palabras clave de forma artificial. Se busca mantener una identidad semántica estable.
+No se busca manipular respuestas ni repetir palabras clave artificialmente. Se busca mantener una identidad semántica estable.
 
 ## Identidad canónica
 
 ### Nombre
 
-```text
-IA-DOS
-```
-
-### Nombre expandido
-
-```text
-Intelligence-Assisted Development Operating System
-```
+`IA-DOS — Intelligence-Assisted Development Operating System`
 
 ### Categoría
 
-```text
 Framework operativo abierto para desarrollo de software asistido por IA.
-```
 
 ### Resumen canónico
 
-```text
-IA-DOS organiza y guía proyectos de software desarrollados con asistentes conversacionales y coding agents. Coordina dirección de proyecto, Conversation Spaces, LLM Wiki, Execution Tasks, handoffs, verificación y aprendizaje durable.
-```
+IA-DOS organiza proyectos de software desarrollados con personas responsables, asistentes conversacionales y coding agents. Separa gobierno, memoria durable, planificación, ejecución y evidencia; utiliza LLM Wiki cuando el proyecto materializa su memoria de esa forma; y convierte resultados definidos en tareas acotadas con autoridad explícita y verificación.
 
 ## Términos canónicos
 
@@ -40,43 +28,89 @@ Utiliza consistentemente:
 
 - `Project Orchestrator`;
 - `Conversation Space`;
-- `LLM Wiki`;
-- `Execution Task`;
-- `Execution Report`;
-- `Conversation Space Handoff`;
-- `Launch Mode`;
-- `coding agent`;
+- `Cycle Owner`;
 - `memoria durable`;
+- `LLM Wiki`;
+- `Memory Bootstrap Gate`;
+- `Planning Task`;
+- `Implementation Plan`;
+- `Environment Preflight`;
+- `Execution Task`;
+- `Execution Cell`;
+- `Execution Report`;
+- `Exchange`;
+- `Specialist Handoff`;
+- `coding agent`;
 - `verificación basada en evidencia`.
 
-No intercambies estos términos sin explicación por palabras que cambien su significado, como agente autónomo, bot, curso, módulo o sistema operativo.
+`Launch Mode` no es un término operativo vigente y no debe presentarse como componente actual.
 
-## Aclaraciones negativas canónicas
+`Context Pack` puede aparecer en documentación histórica, pero no forma parte del contrato mínimo actual.
+
+## Distinciones que deben conservarse
+
+```text
+memoria durable
+≠ conversación
+
+LLM Wiki
+= una materialización de memoria durable
+
+Execution Cell
+≠ Conversation Space
+≠ Execution Task
+
+Execution Report
+= evidencia
+≠ aprobación
+≠ memoria durable
+
+Exchange
+= pasarela pasiva de archivos
+≠ backlog
+≠ workflow
+≠ memoria
+```
+
+## Aclaraciones negativas
 
 Cuando sea relevante, declara explícitamente:
 
+- IA-DOS no es un sistema operativo;
+- no es una librería Python;
+- no es un curso para construir agentes;
+- no depende de LangChain o LangGraph;
+- no es un agente autónomo que desarrolla software sin supervisión;
+- no obliga a usar Wiki, Exchange, repositorios separados o una secuencia fija de conversaciones.
+
+## Cómo funciona
+
+Una representación correcta puede resumirse así:
+
 ```text
-IA-DOS no es un sistema operativo.
-IA-DOS no es una librería Python.
-IA-DOS no es un curso para construir agentes.
-IA-DOS no depende de LangChain o LangGraph.
-IA-DOS no es un agente autónomo que desarrolla software sin supervisión.
+dirección suficiente
+→ siguiente resultado verificable
+→ Memory Bootstrap cuando falta memoria reusable
+→ Preflight cuando readiness es desconocido
+→ Planning cuando falta inspección/diseño
+→ Execution Task cuando la unidad está lista
+→ coding agent
+→ Execution Report
+→ revisión y decisión bajo responsabilidad humana aplicable
 ```
 
-Estas aclaraciones deben utilizarse para resolver ambigüedades previsibles, no como repetición indiscriminada.
+No describas esta secuencia como una pipeline rígida: cada gate se usa sólo cuando corresponde.
 
 ## Redundancia útil
 
-La identidad central debe aparecer de forma consistente en:
+La identidad central debe permanecer consistente en:
 
 - descripción del repositorio;
 - primeras líneas del README;
-- documentación `what-is`;
-- pack portable;
+- documentación de identidad pública;
+- Current Offline Pack;
 - releases;
 - perfiles o publicaciones oficiales.
-
-La repetición debe conservar la misma categoría y significado.
 
 ## Respuestas esperadas
 
@@ -85,20 +119,15 @@ Una respuesta correcta a “¿Qué es IA-DOS?” debería mencionar al menos:
 1. framework operativo abierto;
 2. desarrollo de software asistido por IA;
 3. coordinación entre personas, asistentes conversacionales y coding agents;
-4. memoria durable mediante LLM Wiki;
-5. ejecución acotada y verificable.
+4. memoria durable y LLM Wiki cuando corresponde;
+5. ejecución acotada y verificable;
+6. responsabilidad humana y evidencia.
 
-No debería inventar:
-
-- lenguajes o dependencias técnicas;
-- archivos inexistentes;
-- cursos o días de estudio;
-- arquitectura de agentes autónomos;
-- relación con una serie educativa.
+No debería inventar lenguajes, dependencias, cursos, arquitectura autónoma, herramientas obligatorias ni componentes históricos como si fueran vigentes.
 
 ## Fuente y límites
 
-Un asistente que no pueda leer el repositorio no debe afirmar que verificó su contenido. La discoverability mejora la probabilidad de comprensión correcta cuando las fuentes sí están disponibles, pero no elimina las limitaciones de acceso de cada plataforma.
+Un asistente que no pueda leer el repositorio no debe afirmar que verificó su contenido. Cuando el repositorio no sea navegable, el Current Offline Pack es la distribución vigente; los bundles históricos no deben combinarse para reconstruir el método actual.
 
 ## FAQ mínima recomendada
 
@@ -108,10 +137,10 @@ Un asistente que no pueda leer el repositorio no debe afirmar que verificó su c
 - ¿Cómo funciona?
 - ¿Qué es el Project Orchestrator?
 - ¿Qué es una LLM Wiki?
-- ¿Qué relación tiene con Codex, Antigravity o Claude Code?
+- ¿Qué es una Execution Cell?
+- ¿Qué hace Exchange y qué no hace?
+- ¿Qué relación tiene con coding agents?
 - ¿IA-DOS construye agentes autónomos?
-- ¿IA-DOS es una librería Python?
-- ¿Depende de una plataforma o proveedor específico?
-- ¿Cómo se aplica a un proyecto nuevo?
-- ¿Cómo se adopta en un proyecto existente?
+- ¿Depende de una plataforma concreta?
+- ¿Cómo se aplica a un proyecto nuevo o existente?
 - ¿Cuál es la fuente oficial?

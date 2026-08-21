@@ -1,76 +1,113 @@
 # Readiness del entorno y reanudación
 
-Este contrato permite continuar proyectos activos sin reiniciar IA-DOS y evita autorizar escritura antes de comprobar dependencias indispensables.
+Este contrato evita autorizar escritura antes de comprobar dependencias indispensables y permite reanudar una tarea bloqueada sin replantearla cuando sus fronteras siguen intactas.
 
 ## Continuidad
 
 Cuando el proyecto ya está en desarrollo:
 
-- conserva conversaciones, Cycle Owner, Cycle ID y Task ID;
+- conserva el Cycle Owner y los identificadores aplicables;
 - no repite onboarding, clasificación ni decisiones confirmadas;
 - no vuelve a `00` salvo reorientación real;
-- continúa desde el último artefacto aceptado o estado bloqueado.
+- continúa desde el último artefacto válido o estado bloqueado.
+
+Una conversación de Execution Cell puede reutilizarse mientras siga respondiendo bien. La conversación no hereda permisos de tareas anteriores.
 
 ## Readiness antes de ejecutar
 
-Antes de aprobar una Execution Task, comprueba sin escritura:
+Antes de aprobar o iniciar escritura, comprueba sólo las precondiciones indispensables para la tarea:
 
 - runtime y versión;
-- herramienta o CLI requerida;
+- herramienta requerida;
 - servicio, daemon o contenedor operativo;
-- acceso, permisos y estado que preservar;
-- secretos, conectividad, recursos externos y costes.
+- acceso y permisos;
+- secretos o conectividad necesarios sin exponer valores;
+- recursos externos y costes relevantes;
+- estado que debe preservarse.
 
-Resultado: `LISTO | NO LISTO | DESCONOCIDO`.
+Estados canónicos:
+
+```text
+LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
+```
+
+Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.
 
 Una herramienta instalada no demuestra que su servicio esté operativo.
 
 ## Environment Preflight
 
-Úsalo cuando una dependencia indispensable no esté comprobada. Es de solo lectura, no modifica el proyecto, no instala ni inicia servicios y no abre un ciclo nuevo.
+Úsalo cuando una dependencia indispensable no esté comprobada.
 
-Devuelve `LISTO PARA EJECUCIÓN`, `NO LISTO` con una dependencia dominante o `DESCONOCIDO` por falta de acceso.
+El preflight:
+
+- es de solo lectura;
+- no crea ni modifica archivos;
+- no instala o actualiza;
+- no inicia, detiene o configura servicios;
+- no ejecuta la Execution Task;
+- devuelve un `Environment Readiness Report`.
 
 ## Acciones sobre el entorno
 
-Distingue:
+Distingue siempre:
 
 ```text
 inspeccionar
 ≠ usar un servicio ya operativo
-≠ iniciar o reiniciar un servicio
+≠ iniciar o reiniciar
 ≠ configurar
 ≠ instalar o actualizar
 ```
 
-Cada Execution Task declara por separado si autoriza consultar estado, usar, iniciar, detener, configurar e instalar.
-
-Autorizar contenedores no autoriza por sí solo iniciar una aplicación, administrar servicios del sistema ni modificar el runtime.
+Cada `Execution Task` declara por separado las capacidades autorizadas.
 
 ## Bloqueo válido
 
 Cuando una precondición falla durante ejecución:
 
 1. detén la tarea;
-2. devuelve un Execution Report bloqueado;
-3. registra evidencia y acción mínima requerida;
-4. conserva la tarea aprobada si objetivo, alcance y seguridad no cambiaron;
+2. devuelve un `Execution Report` con `Estado: BLOQUEADO`;
+3. registra evidencia y la atención concreta requerida;
+4. conserva la tarea como candidata a reanudación sólo si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios;
 5. no replanifiques por defecto.
 
 ## Execution Resume
 
-Cuando el bloqueo se resuelve sin cambiar la tarea, reanuda el mismo ciclo:
+`Execution Resume` reanuda la **misma Execution Task** después de resolver una condición bloqueante.
+
+Sólo es válido cuando permanecen sin cambios:
+
+- objetivo;
+- alcance;
+- autoridad;
+- seguridad;
+- arquitectura;
+- resultado verificable esperado.
+
+Contrato mínimo:
 
 ```text
 Artifact Type: Execution Resume
 Destination Role: Coding Agent — Execution
 Expected Output: Execution Report
 Forbidden Output: nueva Planning Task | replantear arquitectura | ampliar alcance
-Cycle ID: [MISMO CYCLE-ID]
+Cycle ID: [MISMO CYCLE-ID O NO APLICA]
 Task ID: [MISMO TASK-ID]
-Agent Session: [SESIÓN]
+Execution Cell o sesión: [NOMBRE O NO APLICA]
+Cycle Owner: [CONVERSATION SPACE]
 ```
 
-Incluye solo condición resuelta, evidencia, verificación previa, punto de reanudación, permisos vigentes y destino del reporte.
+Incluye únicamente:
 
-Replanifica únicamente cuando cambian objetivo, arquitectura, alcance, autoridad, seguridad, costes o resultado verificable.
+- condición que bloqueó;
+- evidencia de resolución;
+- verificación previa no destructiva;
+- punto exacto de reanudación;
+- permisos vigentes de la tarea original;
+- cambios externos relevantes;
+- destino del reporte.
+
+No abre un ciclo nuevo por sí mismo y no amplía permisos.
+
+Si cambió objetivo, alcance, autoridad, seguridad, arquitectura o resultado verificable, no uses Resume: prepara una nueva `Execution Task` o vuelve a Planning cuando corresponda.

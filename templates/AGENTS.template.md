@@ -30,11 +30,12 @@ La versión de IA-DOS adoptada, cuando el proyecto use manifiesto, está declara
 - Memoria durable: `[RUTA O URL O NO APLICA]`.
 - Estado durable, cuando exista starter IA-DOS: `status/current-state.md` o ruta equivalente real.
 - Decisiones durables: `decisions/` o fuente equivalente declarada.
-- Trabajo pendiente: `[ISSUES, EXCHANGE U OTRO MECANISMO]`.
+- Trabajo pendiente: `[ISSUES, BACKLOG O SISTEMA DE SEGUIMIENTO; NO EXCHANGE]`.
 - Alcance del cambio: `Execution Task` canónica.
 - Evidencia: `Execution Report`, diff, pull request u otra evidencia autorizada.
+- Historial de archivos intercambiados: Exchange, sólo cuando el proyecto lo adopta.
 
-La memoria no demuestra por sí sola que algo esté implementado. Cuando exista contradicción relevante entre memoria e implementación, conserva la evidencia y detente si afecta el resultado de la tarea.
+La memoria no demuestra por sí sola que algo esté implementado. Exchange no es backlog ni memoria. Cuando exista contradicción relevante entre memoria e implementación, conserva la evidencia y detente si afecta el resultado de la tarea.
 
 ## Acciones permitidas
 
@@ -44,7 +45,7 @@ Sólo las que la tarea autorice explícitamente, por ejemplo:
 - modificar archivos dentro del alcance;
 - ejecutar pruebas y verificaciones pertinentes;
 - actualizar documentación técnica cuando esté incluida;
-- reportar riesgos, contradicciones y trabajo pendiente.
+- reportar riesgos, contradicciones y pendientes del alcance original.
 
 ## Acciones prohibidas
 
@@ -56,11 +57,13 @@ Sólo las que la tarea autorice explícitamente, por ejemplo:
 - exponer secretos o datos sensibles;
 - editar memoria durable salvo autorización expresa;
 - leer otros proyectos del workspace sin autorización;
-- afirmar verificación sin evidencia.
+- afirmar verificación sin evidencia;
+- aprobar el propio resultado;
+- iniciar otra unidad automáticamente.
 
 ## Consumo de memoria
 
-No leas toda la Wiki por defecto.
+No leas toda la LLM Wiki por defecto.
 
 Respeta la distinción de la tarea:
 
@@ -77,6 +80,12 @@ Lectura requerida
 
 Si una referencia requerida no es accesible, no compenses leyendo indiscriminadamente otros recursos; reporta la limitación.
 
+## Execution Cell
+
+Si este repositorio se trabaja mediante una `Execution Cell`, reutiliza su conversación activa mientras siga respondiendo bien.
+
+No abras una conversación nueva sólo porque cambia la Execution Task y no heredes permisos anteriores. Cada tarea vuelve a declarar autoridad y alcance.
+
 ## Condiciones de detención
 
 Detente cuando:
@@ -87,7 +96,8 @@ Detente cuando:
 - la tarea requiere tocar recursos fuera del alcance;
 - una prueba crítica falla;
 - aparece un riesgo de seguridad, pérdida de datos o coste;
-- se requiere una decisión de producto o arquitectura no confirmada.
+- se requiere una decisión de producto o arquitectura no confirmada;
+- una precondición indispensable del entorno no está comprobada.
 
 ## Verificación mínima
 
@@ -98,9 +108,16 @@ Antes de cerrar:
 - confirma que el fuera de alcance fue respetado;
 - reporta archivos y recursos modificados;
 - reporta pruebas y evidencia;
-- indica limitaciones, riesgos y decisiones pendientes;
-- señala conocimiento potencialmente durable que merezca revisión, sin modificar la memoria automáticamente.
+- indica limitaciones, desviaciones y pendientes del alcance original;
+- utiliza `Atención requerida` sólo para un bloqueo, riesgo, desviación o decisión concreta que necesite revisión.
+
+No agregues una sección de `conocimiento potencialmente durable`, una actualización de Wiki recomendada ni una siguiente unidad por rutina. La evaluación de memoria ocurre después de revisar la evidencia, salvo que la propia tarea autorice una actualización documental concreta.
 
 ## Formato del reporte final
 
-Devuelve un `Execution Report` canónico al Cycle Owner indicado en la tarea.
+Devuelve un `Execution Report` canónico al Cycle Owner indicado:
+
+```text
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+```
