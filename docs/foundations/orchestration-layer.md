@@ -1,33 +1,52 @@
 # Capa de orquestación conversacional
 
-IA-DOS organiza la capa de conversación desde la que una persona dirige el proyecto y la conecta con planificación y ejecución técnica sin convertir chats o sesiones en fuentes de verdad paralelas.
-
-Para muchos usuarios, especialmente quienes no son programadores expertos, esta capa será la interfaz principal del desarrollo.
+IA-DOS organiza la capa desde la que una persona dirige el proyecto y la conecta con planificación y ejecución técnica sin convertir chats o sesiones en fuentes de verdad paralelas.
 
 ## Qué es
 
-La capa de orquestación conversacional puede implementarse como:
+La capa puede implementarse como Project, Gem, conversación persistente, asistente personalizado u otro entorno equivalente.
 
-- un Project de ChatGPT;
-- un Gem de Gemini;
-- un Project de Claude;
-- una conversación persistente;
-- un asistente personalizado;
-- otro entorno equivalente.
+Su función es:
 
-Su función es comprender el proyecto, ordenar contexto, separar conversaciones solo cuando aportan, registrar decisiones durables en la fuente adecuada y transformar necesidades en trabajo verificable para coding agents.
+- comprender propósito y prioridad suficientes;
+- seleccionar fuentes y contexto;
+- separar conversaciones sólo cuando aportan;
+- preservar memoria durable antes de depender de historia chat-only;
+- comprobar readiness indispensable antes de autorizar escritura;
+- transformar necesidades en Planning, Preflight o Execution según corresponda;
+- revisar retornos;
+- mantener responsabilidad humana explícita.
+
+## Responsabilidad
+
+```text
+Persona responsable
+→ define dirección, restricciones y autoridad
+→ conserva aprobación final cuando corresponde
+
+Project Orchestrator / Cycle Owner
+→ gobierna dentro de autoridad delegada
+
+Coding Agent — Planning
+→ inspecciona y propone
+
+Coding Agent — Execution
+→ ejecuta lo autorizado y produce evidencia
+```
+
+El Cycle Owner no sustituye a la persona responsable.
 
 ## Qué consume
 
-El Project Orchestrator puede recibir:
+Puede recibir:
 
 1. IA-DOS, para conocer el método;
 2. memoria durable del proyecto, cuando exista;
-3. repositorios o artefactos de implementación cuando tenga acceso;
+3. repositorios o artefactos de implementación;
 4. evidencia, reportes o referencias históricas;
-5. instrucciones específicas del usuario o del equipo.
+5. instrucciones específicas de la persona o equipo.
 
-IA-DOS define cómo trabajar. El proyecto define qué fuentes tienen autoridad para cada ámbito.
+Cada recurso declara qué ámbito gobierna. No existe una fuente universal.
 
 ## Qué produce
 
@@ -35,157 +54,159 @@ La capa conversacional puede producir:
 
 - decisiones confirmadas;
 - `Specialist Handoff`;
+- resultado `PASS` o `BOOTSTRAP REQUIRED` del Memory Bootstrap Gate;
 - `Planning Task`;
 - `Environment Preflight`;
 - `Execution Task`;
 - criterios de aceptación;
-- instrucciones para actualizar memoria durable;
-- revisión de `Implementation Plan` y `Execution Report`;
-- siguientes decisiones o escalamiento.
+- actualización documental explícitamente autorizada;
+- revisión de `Environment Readiness Report`, `Implementation Plan` y `Execution Report`;
+- cierre, corrección, transferencia, escalamiento o siguiente unidad bajo la autoridad aplicable.
 
-Una conversación no debe quedar como único lugar donde vive una decisión importante.
+Una conversación no debe quedar como único lugar donde vive conocimiento indispensable que otra unidad deberá reutilizar.
 
 ## Arquitectura
 
 ```text
-Usuario
+Persona responsable
    ↓
 Project Orchestrator / Conversation Space
-   │
-   ├── consulta método y fuentes autorizadas
-   ├── confirma el siguiente resultado
-   ├── actúa como Cycle Owner cuando corresponde
-   └── prepara un artefacto tipado
-            ↓
-      Planning Task
-            o
-      Execution Task
-            ↓
-       coding agent
-            ↓
-Implementation Plan o Execution Report
-            ↓
-      mismo Cycle Owner
-            ↓
-revisión → cierre | corrección | transferencia | escalamiento
+   ↓
+resultado verificable + Cycle Owner
+   ↓
+Memory Bootstrap Gate, cuando depende de historia
+   ↓
+Environment Preflight, cuando readiness indispensable es desconocido
+   ↓
+Planning Task, cuando falta inspección/diseño
+   o
+Execution Task, cuando la unidad está lista
+   ↓
+coding agent
+   ↓
+retorno tipado
+   ↓
+mismo Cycle Owner
+   ↓
+revisión dentro de autoridad delegada
+   ↓
+aprobación humana cuando corresponda
 ```
+
+No es una pipeline obligatoria: cada gate se usa únicamente cuando aplica.
 
 ## Conversation Spaces
 
-Un `Conversation Space` es una conversación persistente dedicada a un dominio de gobierno del proyecto.
+Un `Conversation Space` es un contexto persistente dedicado a un dominio de gobierno.
 
-La única lista normativa de tópicos y nombres vive en:
+La lista normativa vive en `docs/orchestration/topic-routing-registry.md`.
 
-`docs/orchestration/topic-routing-registry.md`
-
-No copies esa lista en otros documentos como si fuera una estructura paralela. Los espacios se abren bajo demanda cuando una brecha requiere autoridad o contexto persistente propio.
-
-Un proyecto pequeño puede trabajar durante bastante tiempo en un solo espacio. Los números identifican dominios; no representan fases obligatorias.
+Los espacios se abren bajo demanda. Un proyecto pequeño puede permanecer bastante tiempo en `00`. Los números identifican dominios; no representan fases.
 
 ## `00`
 
-`00` orienta dirección, prioridad y reorientación. No debe convertirse en dispatcher obligatorio ni recibir planes y reportes rutinarios de otros Cycle Owners.
+`00 — Dirección y orquestación` es la entrada canónica. Mantiene dirección y recibe reorientaciones o escalamiento real.
 
-Cuando otro Conversation Space confirma un resultado dentro de su dominio, ese espacio puede gobernar el ciclo y recibir directamente los retornos correspondientes.
+No es un dispatcher obligatorio ni debe recibir planes o reportes rutinarios de otros Cycle Owners.
 
 ## Conversation Space ≠ Execution Cell
 
-IA-DOS separa gobierno de continuidad de ejecución:
-
 ```text
 Conversation Space
-→ decide y gobierna
+→ gobierno y decisión
 
 Execution Cell
-→ conserva contexto durable de ejecución en el coding agent
+→ continuidad de ejecución en el coding agent
 
 Execution Task
-→ delimita una unidad concreta y sus permisos
+→ autoridad de una unidad concreta
 ```
 
-Una `Execution Cell` no representa una especialidad profesional ni una tarea. Cuando la herramienta ofrece conversaciones persistentes, puede mantenerse una sola conversación activa por célula mientras siga respondiendo bien.
+Una Execution Cell no es una tarea, profesión o Conversation Space.
 
-No abras una conversación nueva del coding agent por cada Execution Task. Reutilizar una conversación tampoco reutiliza permisos: cada tarea vuelve a declarar alcance, autoridad y acciones autorizadas.
+Mantén una conversación activa por célula mientras siga respondiendo bien. No abras una conversación nueva por cada Task y no renueves por edad, mensajes o cantidad de tareas.
 
-## Planificación técnica
+Reutilizar una conversación no acumula permisos.
 
-Cuando falta inspección o diseño, el Conversation Space Cycle Owner prepara una `Planning Task` para `Coding Agent — Planning`.
+## Planning
 
-La Planning Task:
+Cuando falta inspección o diseño, el Cycle Owner prepara una `Planning Task` de solo lectura.
 
-- es de solo lectura;
-- resuelve una incertidumbre técnica dominante;
-- produce un `Implementation Plan`;
-- no autoriza ejecución.
+Produce `Implementation Plan` y no autoriza ejecución.
 
-La política de persistencia de conversaciones de planificación se mantiene separada de la política de Execution Cells y no debe inferirse automáticamente.
+IA-DOS no impone una política universal de persistencia de conversaciones de Planning. Un nombre `PLAN — ...` puede ser un identificador lógico y no obliga a abrir una conversación nueva.
 
-## Entrada estructurada a ejecución
+## Readiness
 
-Una necesidad clara se convierte en un contrato de ejecución:
+Cuando una futura Execution Task depende de una precondición indispensable no comprobada, usa `Environment Preflight`.
+
+Produce:
 
 ```text
-necesidad o decisión confirmada
-    ↓
-Execution Task
-    ↓
-Execution Cell adecuada o entorno disponible
-    ↓
-Execution Report
+LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-Toda Execution Task sigue un único contrato semántico definido en `docs/orchestration/typed-artifact-routing.md`.
+Sólo `LISTO PARA EJECUCIÓN` habilita considerar autorización de escritura.
 
-Exchange, cuando se utiliza, sólo transporta o conserva el archivo `.md` ya construido. La identidad de la tarea pertenece al Conversation Agent y al contrato del artefacto; Exchange no genera, modifica ni valida IDs.
+## Entrada a ejecución
+
+```text
+resultado definido
++ memoria suficiente
++ entorno listo
++ autoridad aplicable
+→ Execution Task
+→ Execution Cell o entorno disponible
+→ Execution Report
+```
+
+Toda Execution Task conserva un único contrato semántico independientemente de su transporte.
+
+## Exchange
+
+Exchange, cuando se utiliza, sólo almacena o pone a disposición archivos `.md` construidos por los agentes.
+
+La identidad de la tarea pertenece al Conversation Agent y al contrato del artefacto. Exchange no genera, modifica o valida IDs, artefactos, estados, permisos, backlog, memoria o workflow.
 
 ## Optimización de contexto
 
-El Orchestrator no debe reenviar la historia completa del proyecto en cada handoff.
-
-La regla general es:
-
 ```text
-fuente durable vigente
-+
-contexto mínimo seleccionado
-+
-delta de la tarea
-+
-contrato operativo explícito
+fuentes de autoridad
++ artefacto previo válido
++ contexto durable necesario
++ delta actual
++ contrato operativo explícito
 ```
 
-Una Execution Task puede distinguir:
+Una tarea puede distinguir:
 
-- `Contexto durable necesario`: hechos que deben viajar en la tarea;
-- `Referencias Wiki`: trazabilidad o navegación, sin obligación de lectura;
-- `Lectura requerida`: documentos concretos que el coding agent debe consumir.
+- `Contexto durable necesario`;
+- `Referencias Wiki`;
+- `Lectura requerida`.
 
-Cuando una fuente durable no es accesible, el Orchestrator incluye solo el extracto indispensable. Permisos, alcance, criterios y condiciones de detención no se eliminan por compresión.
+Cuando una fuente no es accesible, incluye sólo el extracto indispensable. Permisos, alcance, criterios y condiciones de detención permanecen explícitos.
 
 ## Flujo de retorno
 
-El coding agent devuelve el artefacto solicitado al Cycle Owner indicado.
+Al revisar un Execution Report:
 
-Al revisar un `Execution Report`, el Orchestrator debe:
+1. compara objetivo versus resultado;
+2. revisa evidencia y verificaciones;
+3. comprueba alcance y autorizaciones;
+4. identifica riesgos, desviaciones, pendientes y atención requerida;
+5. el Cycle Owner decide dentro de autoridad delegada;
+6. la persona responsable aprueba cuando corresponde;
+7. después se evalúa por separado si hechos nuevos merecen memoria durable.
 
-1. comparar objetivo versus resultado;
-2. revisar evidencia y verificaciones;
-3. comprobar alcance y autorizaciones;
-4. identificar riesgos, desviaciones, pendientes del alcance original y cualquier atención requerida;
-5. decidir cierre, corrección, reversión, escalamiento o siguiente unidad;
-6. evaluar después si algún hecho nuevo merece consolidación en memoria durable.
-
-El Execution Report aporta evidencia; no selecciona la decisión de gobierno posterior y no es memoria durable.
-
-La afirmación del agente no reemplaza la evidencia.
+El reporte aporta evidencia. No selecciona la decisión de gobierno posterior y no es memoria durable.
 
 ## Regla de autoridad
 
-- La conversación dirige, revisa y decide.
-- La memoria durable conserva conocimiento vigente y confirmado.
-- La implementación demuestra qué está materializado.
-- La `Execution Task` conserva el alcance autorizado de una ejecución.
-- El `Execution Report`, diff, revisión o PR conserva evidencia.
-- Exchange, cuando existe, sólo transporta o conserva archivos intercambiados y no sustituye ninguna de las fuentes anteriores.
-
-IA-DOS conecta estas capas para que una conversación se convierta en trabajo útil, acotado, trazable y reemplazable sin depender del historial de chats.
+- la persona mantiene dirección y aprobación final aplicable;
+- la conversación gobierna;
+- la memoria durable conserva conocimiento vigente;
+- la LLM Wiki es una posible materialización de esa memoria;
+- la implementación demuestra qué está materializado;
+- la Execution Task conserva la autoridad de una ejecución;
+- el Execution Report conserva evidencia;
+- Exchange sólo conserva o transporta archivos intercambiados.
