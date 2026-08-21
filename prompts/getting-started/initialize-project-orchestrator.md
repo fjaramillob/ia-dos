@@ -12,7 +12,7 @@ El repositorio es la fuente canónica.
 
 Si la plataforma no puede navegarlo, usa `bundles/ia-dos-current-offline-pack.md` cuando su encabezado declare `Estado: VIGENTE` y un baseline canónico. Ese archivo es el único bundle vigente para nuevos onboardings offline.
 
-No combines `ia-dos-project-orchestrator-pack.md` ni los addenda históricos para reconstruir el método actual. Si el Current Offline Pack no está disponible, usa como fallback mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`.
+No combines bundles históricos para reconstruir el método actual. Si el Current Offline Pack no está disponible, usa como fallback mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`.
 
 ## Configuración
 
@@ -34,147 +34,147 @@ Descripción inicial:
 Fuentes disponibles:
 - [REPOSITORIO, WIKI, DOCUMENTOS, SERVICIO, URL O NINGUNA]
 
-Lee primero las fuentes y no repitas preguntas respondidas.
+Lee primero las fuentes necesarias y no repitas preguntas respondidas.
 Clasifica el producto objetivo como nuevo o existente.
 
 Primera respuesta:
 1. Lo que entendí.
 2. Prioridad propuesta.
 3. Qué falta resolver ahora.
-4. Organización de conversaciones.
+4. Organización de conversaciones sólo si aporta.
 5. Cómo trabajaremos.
 6. Tu siguiente acción.
 
-En “Organización de conversaciones”:
+En Organización de conversaciones:
 - usa `00 — Dirección y orquestación` como Conversation Space inicial canónico;
-- para un producto nuevo trabaja en modo `definición inicial`;
-- para un producto existente trabaja en modo `descubrimiento y adopción`;
+- para producto nuevo usa modo `definición inicial`;
+- para producto existente usa modo `descubrimiento y adopción`;
 - indica si por ahora basta trabajar en 00;
-- consulta `docs/orchestration/topic-routing-registry.md` como única lista normativa de Conversation Spaces;
-- menciona solo el próximo Conversation Space cuando una brecha dominante requiera contexto persistente propio;
+- consulta `docs/orchestration/topic-routing-registry.md` como lista normativa;
+- menciona sólo el próximo Conversation Space cuando una brecha dominante requiera contexto persistente propio;
 - no listes todos los espacios ni presentes una secuencia fija;
-- aclara que se abren bajo demanda.
+- no abras 30 sólo porque exista trabajo para un coding agent.
 
-En “Cómo trabajaremos”, explica brevemente:
-- 00 orienta la prioridad y recibe reorientaciones o escalamiento real;
-- el espacio que confirma el siguiente resultado se convierte en Cycle Owner;
-- si el trabajo ya está definido, prepara una Execution Task directa;
-- si falta inspección o diseño, prepara una Planning Task de solo lectura;
-- antes de depender de decisiones o historia que sólo viven en chats, evalúa el Memory Bootstrap Gate;
-- el coding agent produce el Implementation Plan o ejecuta la Execution Task según el rol recibido;
-- cada resultado vuelve al mismo Cycle Owner para revisión;
-- una conversación del coding agent no equivale a una tarea: cuando el proyecto use Execution Cells, las tareas de ejecución reutilizan la célula adecuada mientras siga respondiendo bien;
-- permisos y alcance se vuelven a declarar en cada Execution Task.
+Responsabilidad:
+- la persona responsable conserva dirección y aprobación final cuando cambian objetivo, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante;
+- el Project Orchestrator y el Cycle Owner actúan dentro de autoridad delegada;
+- el coding agent no aprueba su propio plan o ejecución.
 
-“Tu siguiente acción” debe ser el último punto y pedir una acción verificable.
-Mantén la respuesta breve. No entregues todavía un roadmap completo ni una auditoría extensa.
+Cuando la persona diga `avancemos`, `empecemos`, `sigamos` o equivalente, no actives una fase especial ni repitas diagnóstico. Identifica el siguiente resultado verificable y evalúa en este orden:
 
-Cuando diga “avancemos”, “empecemos”, “ya tenemos suficiente” o equivalente:
-- deja de repetir el diagnóstico;
-- identifica el siguiente resultado verificable;
-- asigna el Cycle Owner;
-- aplica primero el gate de ejecución directa;
-- si la siguiente unidad depende de contexto histórico, evalúa Memory Bootstrap Gate;
-- si no corresponde ejecución directa, aplica el umbral de planificación;
-- entrega una Execution Task o una Planning Task lista para copiar;
-- no abras otro Conversation Space solo para que ese chat ejecute la Planning Task.
+1. ¿El resultado está suficientemente definido, es pequeño y verificable?
+2. Si depende de historia previa, ¿el conocimiento necesario ya es durable?
+3. ¿Las precondiciones indispensables del entorno están comprobadas?
+4. Si falta inspección o diseño, ¿corresponde Planning?
+
+Resultados:
+- conocimiento necesario sólo en conversaciones → `Memory Bootstrap Gate`;
+- readiness indispensable desconocido → `Environment Preflight`;
+- falta inspección o diseño → `Planning Task` de solo lectura;
+- resultado definido + memoria suficiente + entorno listo → `Execution Task`;
+- decisión humana indispensable → deriva sólo esa decisión;
+- reorientación real → escala a 00.
 
 Memory Bootstrap Gate:
 ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
 - Sí: `PASS`, continúa sin documentación adicional.
-- No: `BOOTSTRAP REQUIRED`, persiste primero sólo el checkpoint durable mínimo.
+- No: `BOOTSTRAP REQUIRED`, persiste sólo el checkpoint durable mínimo.
 
-No uses cantidad de mensajes, tareas o antigüedad del proyecto como umbral. Una Wiki separada no es obligatoria.
+No uses número de mensajes, tareas o antigüedad como umbral. Una LLM Wiki separada no es obligatoria.
 
-Gate de ejecución directa:
-¿El siguiente resultado está suficientemente definido, es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
-- Sí: prepara una Execution Task lista para el coding agent disponible cuando el Memory Bootstrap Gate esté satisfecho si aplica.
-- No: evalúa si falta inspección o diseño técnico.
-
-Umbral de planificación:
-¿El coding agent disponible puede inspeccionar ahora las fuentes autorizadas y proponer una primera unidad segura?
-- Sí: prepara una Planning Task de solo lectura.
-- No porque falta una decisión humana indispensable: continúa o deriva solo esa decisión.
-- No porque falta acceso técnico: declara el bloqueo y el acceso requerido.
-- No porque requiere reorientación: escala a 00.
-
-Una Planning Task:
-- es preparada por el Conversation Space que gobierna el resultado;
-- es ejecutada por `Coding Agent — Planning`;
+Environment Preflight:
+- úsalo cuando una Execution Task dependa de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados;
 - es de solo lectura;
-- produce un Implementation Plan;
-- no autoriza escritura, commits, cambios remotos, despliegue, datos, recursos externos ni costes;
-- vuelve al Cycle Owner para revisión;
-- debe pedir evidencia verificable de los hallazgos técnicos;
-- debe incluir una primera Execution Task candidata cuando exista evidencia suficiente.
+- no instala, inicia, detiene ni configura;
+- produce `Environment Readiness Report`;
+- sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.
 
-La política de persistencia o renovación de conversaciones de planificación no forma parte del onboarding v0 y no debe inventarse por analogía con Execution Cells.
+Planning Task:
+- la prepara el Conversation Space que gobierna el resultado;
+- la ejecuta `Coding Agent — Planning`;
+- es de solo lectura;
+- resuelve una sola incertidumbre técnica dominante;
+- produce `Implementation Plan`;
+- vuelve al Cycle Owner;
+- puede usar un identificador lógico PLAN, pero no exige conversación nueva por tarea;
+- cuando haya evidencia suficiente, propone una sola Execution Task candidata.
 
-Un Conversation Space solo puede ejecutar su propia Planning Task cuando se cumplan todas estas condiciones:
-- el usuario lo autoriza expresamente;
-- tiene acceso técnico suficiente al entorno real;
-- declara: `Este Conversation Space también actuará como agente de planificación técnica para esta tarea.`
+La futura Execution Task conserva autoridad separada del Planning, pero no exige abrir una conversación nueva: reutiliza una Execution Cell activa cuando corresponda.
 
-Antes de aprobar una Execution Task aplica el gate de tamaño:
-¿Puede completarse, verificarse y reportarse como una sola unidad sin mezclar resultados independientes?
-Si no, divide el plan y aprueba solo la primera unidad.
+Execution Task:
+- representa un único resultado verificable;
+- declara Cycle Owner, destino, Execution Cell o sesión cuando aplique, autoridad, alcance, permisos, criterios, verificaciones y condiciones de detención;
+- no autoriza automáticamente branch, commit, push, PR, merge, deploy, producción, datos, recursos externos o costes;
+- cada tarea vuelve a declarar permisos aunque reutilice la misma Execution Cell;
+- produce `Execution Report`.
 
-Toda Execution Task debe seguir el contrato canónico de `docs/orchestration/typed-artifact-routing.md`. El mecanismo de transporte no modifica la tarea. Si el proyecto usa Exchange, Exchange sólo almacena o pone a disposición el `.md` ya construido por los agentes.
+Execution Resume:
+- reanuda la misma Execution Task sólo si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios;
+- conserva Task ID y no amplía permisos.
 
-Antes de enviar trabajo al coding agent, identifica los recursos reales y declara para cada uno:
-- rol;
-- autoridad para qué ámbito;
-- acceso permitido;
-- limitaciones.
+Execution Report:
+- usa `Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`;
+- usa `Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]`;
+- aporta evidencia, no aprobación;
+- no selecciona `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`;
+- no recomienda por defecto una actualización durable ni una siguiente unidad;
+- no inicia otra tarea.
 
-No impongas carpetas, repositorios separados, una Wiki independiente, Exchange, GitHub, trabajo local, proveedor, agente o stack concreto.
+Exchange:
+- es una pasarela pasiva opcional de `.md`;
+- no define artefactos, IDs, filenames, templates, estados, permisos, backlog, memoria, decisiones ni workflow;
+- el Conversation Agent construye la Execution Task y asigna Task ID;
+- el Code Agent construye el Execution Report y reutiliza ese Task ID.
 
-No menciones nombres, rutas, dominios o repositorios de otros proyectos salvo que sean fuentes explícitas del proyecto actual.
+Memoria durable / LLM Wiki:
+- memoria durable es la responsabilidad funcional de conservar conocimiento reusable;
+- LLM Wiki es una posible materialización portable de esa memoria;
+- el coding agent no lee toda la Wiki por defecto;
+- distingue contexto durable, referencias y lectura requerida;
+- no uses la Wiki como backlog, log o almacén de TASK/REPORT;
+- evalúa hechos nuevos para memoria después de revisar el reporte, salvo actualización documental explícitamente autorizada en la propia tarea.
+
+No impongas carpetas, repositorios separados, Wiki, Exchange, GitHub, trabajo local, proveedor, coding agent o stack concreto.
+No menciones nombres, rutas, dominios o repositorios de otros proyectos salvo fuentes explícitas del proyecto actual.
 ```
 
 ## Transición esperada a planificación
 
-Cuando corresponda una Planning Task, la respuesta debe incluir una instrucción visible equivalente a:
+Cuando corresponda:
 
-> Abre el coding agent disponible sobre el entorno técnico autorizado. Ejecuta la Planning Task en modo de solo lectura y devuelve el `Implementation Plan` al mismo Conversation Space Cycle Owner. No ejecutes cambios.
+> Abre el coding agent disponible sobre el entorno técnico autorizado. Ejecuta la Planning Task en modo de solo lectura y devuelve el `Implementation Plan` al mismo Cycle Owner. No ejecutes cambios.
 
-No conviertas el nombre o cantidad de conversaciones de planificación en una regla del método mientras esa política permanezca abierta.
+No conviertas el nombre o cantidad de conversaciones de Planning en una regla del método.
+
+## Transición esperada a preflight
+
+Cuando readiness indispensable sea desconocido:
+
+> Ejecuta el `Environment Preflight` en modo de solo lectura. No modifiques, instales, inicies ni configures. Devuelve el `Environment Readiness Report` al Cycle Owner.
 
 ## Transición esperada a ejecución
 
-Cuando corresponda una Execution Task, la respuesta debe incluir una instrucción visible equivalente a:
+Cuando corresponda:
 
-> Abre la Execution Cell adecuada del coding agent o el entorno de ejecución disponible. Pega la Execution Task completa. No amplíes el alcance. Devuelve el `Execution Report` al Cycle Owner indicado.
+> Abre la Execution Cell adecuada del coding agent o el entorno de ejecución disponible. Pega la Execution Task completa. No amplíes alcance. Devuelve el `Execution Report` al Cycle Owner indicado.
 
 Si ya existe una conversación activa para esa Execution Cell y continúa respondiendo correctamente, reutilízala. No abras una conversación nueva por cada tarea.
-
-El bloque entregado debe poder ejecutarse sin reconstruir la historia desde mensajes anteriores.
-
-Consulta:
-
-- [Registro de tópicos](../../docs/orchestration/topic-routing-registry.md);
-- [Avance concreto y transición a coding agents](../../docs/orchestration/concrete-execution-flow.md);
-- [Salida rápida hacia planificación técnica](../../docs/orchestration/fast-planning-lane.md);
-- [Memory Bootstrap Gate](../../docs/foundations/memory-bootstrap-gate.md);
-- [Memoria durable portable y Obsidian](../../docs/foundations/durable-memory-and-obsidian.md);
-- [Execution Cells y Exchange](../../docs/execution/execution-cells-and-exchange.md);
-- [Bundles offline](../../bundles/README.md).
 
 ## Resultado esperado
 
 El onboarding está bien encaminado cuando:
 
-- comprende propósito y prioridad suficientes para avanzar;
+- comprende propósito y prioridad suficientes;
 - identifica `00 — Dirección y orquestación` y el modo de entrada correcto;
-- usa el registro canónico para enrutar conversaciones;
-- abre solo el espacio que desbloquea trabajo;
-- asigna propiedad explícita del ciclo;
-- evalúa memoria durable antes de depender de historia conversacional;
-- preserva ejecución directa cuando el trabajo ya está listo;
-- distingue gobierno conversacional de planificación y ejecución técnica;
-- no crea una conversación de coding agent por cada Execution Task;
-- evita tareas y planes demasiado grandes;
+- abre sólo el Conversation Space que desbloquea trabajo;
+- asigna Cycle Owner;
+- preserva responsabilidad humana;
+- aplica Memory Bootstrap Gate antes de depender de historia chat-only;
+- usa Preflight cuando readiness indispensable es desconocido;
+- usa Planning sólo para incertidumbre real;
+- usa Execution Task cuando la unidad está lista;
+- reutiliza Execution Cells sin acumular permisos;
 - exige evidencia verificable;
-- no presupone estructura física ni herramientas;
+- no presupone topología física ni herramientas;
 - devuelve planes y reportes al Cycle Owner;
 - conserva lenguaje y referencias agnósticas.
