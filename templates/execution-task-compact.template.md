@@ -11,7 +11,7 @@ Forbidden Output: trabajo fuera de alcance, autoaprobación o siguiente unidad
 Método: IA-DOS
 Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [EXEC-ID]
-Agent Session: [RESULTADO]
+Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Destino: [CONVERSATION SPACE]
 Tipo: [INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE | TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE]
@@ -81,13 +81,19 @@ Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memo
 Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [EXEC-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
-Agent Session: [RESULTADO]
+Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
 
 Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, pruebas y evidencia, límites respetados, desviaciones, conocimiento durable potencial cuando exista y una sola siguiente acción. No apruebes tu propio trabajo ni inicies otra unidad.
 ```
+
+## Regla de continuidad
+
+Cuando el proyecto use una `Execution Cell`, reutiliza su conversación activa mientras siga respondiendo bien. No cambies el nombre de la célula ni abras una conversación nueva sólo porque cambia el resultado de la tarea.
+
+Los permisos no se heredan: cada Execution Task vuelve a declararlos aunque use la misma célula.
 
 ## Regla de compresión
 
