@@ -147,6 +147,14 @@ El mecanismo de transporte no crea tipos adicionales.
 
 El Conversation Agent que construye una Execution Task asigna el Task ID. Exchange no participa.
 
+Una `Execution Task` candidata producida dentro de Planning **no recibe Task ID del coding agent**. Debe declarar:
+
+```text
+Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
+```
+
+El Conversation Agent / Cycle Owner asigna la identidad únicamente cuando revisa y adopta esa candidata como Execution Task real.
+
 Esquema recomendado cuando no existe otro:
 
 ```text
@@ -178,7 +186,14 @@ pero IA-DOS no impone una política universal de conversación por Planning Task
 
 Cuando exista evidencia suficiente, el plan puede proponer una sola Execution Task candidata.
 
-La futura ejecución requiere autorización separada, pero **no exige** una conversación de ejecución nueva: puede reutilizar una Execution Cell existente.
+La candidata mantiene:
+
+```text
+Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
+Execution Cell o sesión: [NOMBRE O NO APLICA]
+```
+
+El coding agent no inventa ni reserva el Task ID. La futura ejecución requiere autorización separada, pero **no exige** una conversación de ejecución nueva: puede reutilizar una Execution Cell existente.
 
 ## Implementation Plan
 
@@ -189,10 +204,11 @@ Debe ser proporcional y contener evidencia, decisión recomendada, estrategia m�
 La candidata declara:
 
 ```text
+Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
 Execution Cell o sesión: [NOMBRE O NO APLICA]
 ```
 
-No derives una sesión nueva automáticamente desde el nombre del resultado.
+No derives una sesión nueva automáticamente desde el nombre del resultado ni asignes identidad de Execution Task desde Planning.
 
 ## Environment Preflight
 
