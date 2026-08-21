@@ -1,3 +1,7 @@
+> [!WARNING]
+> **ESTADO: HISTÓRICO — NO UTILIZAR PARA NUEVOS ONBOARDINGS.**
+> Este archivo se conserva por trazabilidad de versiones anteriores de IA-DOS. Puede contener contratos y nombres reemplazados. Para uso offline vigente consulta `bundles/ia-dos-current-offline-pack.md`. No combines este archivo con otros addenda históricos para reconstruir el método actual.
+
 # IA-DOS Project Orchestrator Pack
 
 Tipo: artefacto de distribución para asistentes conversacionales.
