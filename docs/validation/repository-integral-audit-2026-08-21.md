@@ -36,18 +36,24 @@ La revisión cubrió las superficies actuales del repositorio:
 
 Los bundles históricos se inspeccionaron para confirmar que estén marcados como históricos, pero **no se reescribieron** con contratos actuales porque su función es conservar trazabilidad de generaciones anteriores.
 
+También se distinguió explícitamente entre:
+
+- archivos revisados y corregidos;
+- archivos revisados que no requerían cambios;
+- artefactos históricos que deben conservar su contenido original con advertencia de vigencia.
+
 ## Invariantes usados como referencia
 
 ```text
 Persona responsable = dirección y aprobación final aplicable
-Conversation Space = gobierno dentro de autoridad delegada
-Execution Cell = continuidad de ejecución
-Execution Task = contrato de una unidad
-Execution Report = evidencia de ejecución
-Memoria durable = responsabilidad funcional
-LLM Wiki = memoria durable materializada cuando se adopta
-Repository = implementación
-Exchange = pasarela pasiva de archivos
+Conversation Space   = gobierno dentro de autoridad delegada
+Execution Cell       = continuidad de ejecución
+Execution Task       = contrato de una unidad
+Execution Report     = evidencia de ejecución
+Memoria durable      = responsabilidad funcional
+LLM Wiki              = materialización durable, portable y navegable
+Repository            = implementación
+Exchange              = pasarela pasiva de archivos
 ```
 
 Además:
@@ -97,6 +103,8 @@ Varias rutas rápidas enseñaban únicamente `Planning` versus `Execution` y pod
 - Memory Bootstrap Gate;
 - Environment Preflight.
 
+La segunda pasada encontró el mismo problema en `topic-routing-registry.md`, que también fue corregido.
+
 ### 5. Terminología histórica presentada como vigente
 
 Persistían referencias operativas a:
@@ -105,13 +113,13 @@ Persistían referencias operativas a:
 - `Exchange Protocol v0`;
 - `Context Pack` como concepto normal del método actual.
 
-Estos términos se conservaron sólo como compatibilidad histórica donde aporta, pero se retiraron de contratos vigentes.
+Estos términos se conservaron sólo como historia o compatibilidad donde aporta, pero se retiraron de contratos vigentes.
 
 ### 6. Cycle Owner sin frontera humana suficientemente explícita
 
 Algunos documentos podían interpretarse como si el Cycle Owner reemplazara la aprobación final de la persona.
 
-Se reforzó que el Cycle Owner gobierna dentro de autoridad delegada y que la persona responsable conserva aprobación final sobre dirección, autoridad, riesgo e impactos relevantes.
+Se reforzó que el Cycle Owner gobierna dentro de autoridad delegada y que la persona responsable conserva aprobación final sobre dirección, autoridad, riesgo e impactos relevantes cuando corresponda.
 
 ### 7. LLM Wiki y memoria durable confladas
 
@@ -124,7 +132,8 @@ memoria durable
 = responsabilidad funcional
 
 LLM Wiki
-= una materialización portable y navegable
+= materialización durable, portable y navegable
+  de esa memoria para humanos y agentes
 ```
 
 ### 8. Exchange tratado como posible backlog
@@ -141,22 +150,73 @@ La identidad pública todavía exponía componentes y secuencias anteriores. Se 
 
 El bundle vigente declaraba baseline de Fase 6 y no contenía todas las correcciones posteriores.
 
-Se regeneró para `v0.1.0-alpha.3 — auditoría integral 2026-08-21`.
+Se regeneró para `v0.1.0-alpha.3 — auditoría integral 2026-08-21` y se volvió a contrastar contra los invariantes durante la segunda pasada.
+
+### 11. Instalación local imponía topología de proyecto
+
+La guía y el prompt de instalación de IA-DOS todavía mostraban como resultado esperado:
+
+```text
+00-ia-dos/
+<proyecto>-app/
+<proyecto>-wiki/
+```
+
+Eso podía convertir una instalación de referencia del framework en una decisión accidental sobre la topología del proyecto.
+
+Se corrigió: instalar IA-DOS sólo crea, cuando está autorizado, una referencia local equivalente a:
+
+```text
+<workspace>/00-ia-dos/
+```
+
+La creación o reorganización de app, LLM Wiki, Exchange u otros recursos pertenece a tareas separadas del proyecto.
+
+### 12. Validaciones históricas podían leerse como certificación vigente
+
+`end-to-end-onboarding-validation.md` y `final-integral-review.md` conservaban títulos y conclusiones de `PASS` sin una advertencia visible de que describían el baseline de Fase 6.
+
+La auditoría actual demostró que una validación pasada no puede actuar como garantía permanente.
+
+Ambos documentos se preservaron como evidencia histórica y ahora enlazan esta auditoría como revisión más reciente.
+
+### 13. Tipo `WIKI` podía interpretarse como autorización implícita
+
+El registro de tipos de ejecución describía `WIKI` como actualización de memoria y mencionaba la necesidad de actualizar memoria entre los campos influenciados por el tipo.
+
+Se aclaró que el tipo clasifica el trabajo, pero **no concede autorización**: la propia Execution Task debe delimitar explícitamente conocimiento, rutas y permisos de una actualización durable.
 
 ## Correcciones aplicadas
 
-La revisión actualizó contratos en:
+La revisión actualizó o volvió a sincronizar contratos en:
 
-- fuentes de verdad y terminología;
-- propósito, modelo operativo, memoria portable y checklists;
-- routing, cycle ownership, fast lane, flujo concreto y handoff técnico;
-- onboarding nuevo y existente;
-- coding agents, readiness y Resume;
+- `AGENTS.md`, `README.md`, `ORCHESTRATOR.md`, `ROADMAP.md` y `CHANGELOG.md`;
+- fuentes de verdad, terminología, propósito, responsabilidades y modelo operativo;
+- memoria portable, Memory Bootstrap Gate y checklists fundacionales;
+- routing, cycle ownership, fast lane, flujo concreto, compresión y handoff técnico;
+- onboarding nuevo, existente, workspace e instalación local;
+- coding agents, tipos de ejecución, readiness y Resume;
 - identidad pública y comprensión por LLMs;
-- prompts de inicialización, workspace, ejecución y Wiki;
-- templates de AGENTS, roles, Planning, Implementation Plan, Preflight, Resume y Specialist Handoff;
-- README;
-- Current Offline Pack.
+- prompts de inicialización, instalación, workspace, Planning, Execution y Wiki;
+- templates de AGENTS, roles, Planning, Implementation Plan, Preflight, Resume, Execution Task, Execution Report y Specialist Handoff;
+- Current Offline Pack;
+- documentación de validación histórica y la propia evidencia de esta auditoría.
+
+## Superficies revisadas sin corrección de contrato
+
+Entre las superficies revisadas que no necesitaron cambios semánticos adicionales quedaron:
+
+- `docs/integrations/` y `Capability Manifest`;
+- `templates/adoption.template.yaml`;
+- `templates/wiki-starter/` después de la consolidación previa;
+- `docs/getting-started/bootstrap-exchange.md`;
+- `docs/getting-started/bootstrap-llm-wiki.md`;
+- `docs/getting-started/apply-starter-templates.md`;
+- `docs/getting-started/incorporate-existing-project-workspace.md`;
+- `research/design-influences.md`;
+- `CONTRIBUTING.md`, `GOVERNANCE.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `LICENSE` y la plantilla general de pull request.
+
+Que un archivo no cambie no significa que haya quedado fuera de cobertura.
 
 ## Históricos preservados
 
@@ -169,6 +229,8 @@ No se reescribieron como método actual:
 
 Sus encabezados ya advierten que son históricos y no deben utilizarse para nuevos onboardings.
 
+Las validaciones de Fase 6 también se preservan como evidencia histórica, pero ahora están etiquetadas explícitamente para no competir con esta auditoría vigente.
+
 ## Criterio de cierre
 
 La auditoría se considera cerrable cuando el diff final confirme que:
@@ -180,22 +242,23 @@ La auditoría se considera cerrable cuando el diff final confirme que:
 - Resume conserva objetivo, alcance, autoridad, seguridad y arquitectura;
 - Memory Bootstrap y Preflight no pueden saltarse en rutas rápidas;
 - LLM Wiki no es topología obligatoria;
+- instalar IA-DOS no crea topología del proyecto;
 - Exchange sigue pasivo;
 - responsabilidad humana está visible;
 - Current Offline Pack reproduce los contratos vigentes;
-- los bundles históricos permanecen aislados;
+- los bundles y validaciones históricos permanecen aislados de la operación actual;
 - no hay enlaces o rutas rotas introducidos por la revisión.
 
 ## Relación con validaciones anteriores
 
 `end-to-end-onboarding-validation.md` y `final-integral-review.md` documentan el estado de la consolidación de Fase 6 en su momento.
 
-Esta auditoría no invalida su valor histórico, pero **supersede su conclusión de coherencia final como evaluación del estado actual del repositorio**. Las regresiones encontradas muestran por qué las validaciones deben tratarse como evidencia fechada, no como garantía permanente.
+Esta auditoría no invalida su valor histórico, pero **reemplaza su conclusión de coherencia final como evaluación del estado actual del repositorio**. Las regresiones encontradas muestran por qué las validaciones deben tratarse como evidencia fechada, no como garantía permanente.
 
 ## Estado
 
 ```text
-AUDITORÍA EN CORRECCIÓN
+AUDITORÍA EN REVISIÓN FINAL
 ```
 
-Este estado debe cambiar a `PASS` sólo después de revisar el diff completo de la branch, resolver feedback válido de revisión y comprobar el conjunto final contra los invariantes anteriores.
+El trabajo de corrección y la segunda pasada archivo por archivo están completados. Este estado debe cambiar a `PASS` sólo después de revisar el diff completo de la branch, resolver feedback válido de pull request y comprobar el head final contra los invariantes anteriores.
