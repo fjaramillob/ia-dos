@@ -96,7 +96,7 @@ App · 02 → activa
 
 La renovación no cambia la identidad de la célula ni obliga a reiniciar el proyecto.
 
-Consulta [Execution Cells y Exchange Protocol v0](../execution/execution-cells-and-exchange.md).
+Consulta [Execution Cells y Exchange](../execution/execution-cells-and-exchange.md).
 
 ## Autorización no acumulativa
 
@@ -124,50 +124,49 @@ IA-DOS distingue el artefacto de su mecanismo de transporte.
 Execution Task
     define la unidad y sus límites
 
-Exchange Protocol v0
-    identifica, conserva y transporta TASK/REPORT
+Exchange
+    sólo mueve o conserva el archivo .md cuando se utiliza
 ```
 
-Una tarea enviada mediante Exchange sigue siendo `Artifact Type: Execution Task` y dirigida a `Coding Agent — Execution`.
+Una tarea enviada mediante Exchange sigue siendo exactamente la misma `Execution Task` y dirigida a `Coding Agent — Execution`.
 
 Una Execution Cell identifica continuidad de ejecución; tampoco sustituye el rol receptor.
 
 ## Identificadores estables
 
-IA-DOS admite distintos esquemas de identificación según el modo operativo, sin cambiar el tipo del artefacto.
+El **Conversation Agent que construye la tarea** asigna su identificador antes del handoff.
 
-### Ciclo clásico
-
-```text
-Cycle ID: CYCLE-[RESULTADO]-[N]
-Planning Task: PLAN-[RESULTADO]-[N]
-Implementation Plan: IP-[RESULTADO]-[N]
-Execution Task: EXEC-[RESULTADO]-[N]
-Execution Report: ER-[RESULTADO]-[N]
-```
-
-### Exchange Protocol v0
-
-Cuando no existe un registro central compartido, puede usarse como `Task ID`:
+El esquema puede variar según el proyecto. Cuando no existe otro esquema adoptado, IA-DOS recomienda para Execution Tasks:
 
 ```text
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
 
-El `REPORT` reutiliza exactamente el mismo `Task ID` del `TASK`.
+Ejemplo:
 
-Ejemplo genérico:
+```text
+PORTAL-10-APP-20260819-230215
+```
+
+Si la tarea se materializa como archivo:
 
 ```text
 PORTAL-10-APP-20260819-230215-TASK.md
+```
+
+El `Execution Report` reutiliza exactamente el mismo `Task ID`:
+
+```text
 PORTAL-10-APP-20260819-230215-REPORT.md
 ```
 
-Cuando Exchange no participa de un ciclo separado:
+Cuando no existe un ciclo separado:
 
 ```text
 Cycle ID: NO APLICA
 ```
+
+Exchange no participa en la generación, validación o coordinación del identificador.
 
 No mezcles dos identificadores de tarea para el mismo intercambio.
 
@@ -234,7 +233,7 @@ Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR 
 
 El estado describe el resultado ejecutado. La decisión requerida describe qué debe hacer después el Cycle Owner.
 
-En Exchange v0 puede usarse `templates/exchange-report-v0.template.md`, que mantiene este mismo contrato semántico.
+Si este reporte se materializa como `.md` para atravesar Exchange, conserva exactamente el mismo contenido y contrato.
 
 ## Gate de revisión
 
@@ -244,4 +243,4 @@ Al recibir un Execution Report, comprueba objetivo, alcance, criterios y evidenc
 
 ## Regla principal
 
-Cada intercambio debe conservar rol, autorización, identificadores y destino. Las conversaciones de ejecución pueden persistir; la autoridad de cada tarea no. Exchange no modifica el contrato semántico de los artefactos. El coding agent produce artefactos y el Conversation Space especialista toma decisiones.
+Cada intercambio debe conservar rol, autorización, identificadores y destino. Las conversaciones de ejecución pueden persistir; la autoridad de cada tarea no. Exchange no modifica ni define los artefactos: sólo puede transportar sus archivos. El coding agent produce artefactos y el Conversation Space especialista toma decisiones.
