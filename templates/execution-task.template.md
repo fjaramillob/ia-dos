@@ -223,7 +223,7 @@ Cuando el output se materializa en Exchange:
 - la ruta física concreta puede ser indicada por un `Manual Artifact Launcher`;
 - Exchange continúa siendo pasivo.
 
-Si `Caveman Return: Sí`, el reporte completo se materializa primero y la conversación devuelve sólo estado, atención requerida y ubicación del archivo.
+`Caveman Return` sólo puede usarse cuando la Task declara `Caveman Return: Sí` y el Execution Report completo fue materializado correctamente. Si falla la materialización o falta cualquiera de esas condiciones, devuelve el Execution Report completo según el contrato y canal de la Task.
 
 ## Guardrails de rol
 
@@ -308,13 +308,20 @@ Devuelve el Execution Report completo con:
 - condiciones de detención activadas;
 - atención concreta requerida o `Ninguna`.
 
-Cuando `Caveman Return: Sí`, después de materializar el reporte completo responde en conversación únicamente:
+Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
+
+1. la Execution Task declara `Caveman Return: Sí`;
+2. el Execution Report completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas se cumplen, responde en conversación únicamente:
 
 ```text
 EJECUCIÓN COMPLETADA | PARCIAL | BLOQUEADO | FALLIDO
 Atención: [DESCRIPCIÓN O NINGUNA]
 Reporte: [NOMBRE/PATH]
 ```
+
+Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Execution Report completo según el contrato y canal de la Task.
 
 El coding agent no determina la decisión de gobierno posterior, no consolida memoria durable fuera de lo autorizado por la propia tarea y no inicia otra unidad.
 
