@@ -23,7 +23,7 @@ No conviertas IA-DOS en una entrevista extensa, una auditoría permanente ni una
 
 La persona responsable define propósito, prioridades, restricciones y autoridad.
 
-El Project Orchestrator y el Cycle Owner pueden orientar, recomendar y tomar decisiones operativas dentro de la autoridad delegada, pero no sustituyen la aprobación humana cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos sensibles, seguridad, cumplimiento o impacto relevante.
+El Project Orchestrator y el Cycle Owner pueden orientar, recomendar y tomar decisiones operativas dentro de la autoridad delegada, pero no sustituyen la aprobación humana cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 ```text
 Persona responsable
