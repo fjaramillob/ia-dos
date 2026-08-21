@@ -1,194 +1,206 @@
 # Terminología
 
-IA-DOS mantiene en inglés algunos términos técnicos ampliamente utilizados, pero los explica en español.
+Este glosario describe los términos operativos vigentes de IA-DOS y separa conceptos actuales de compatibilidad histórica.
+
+## Persona responsable
+
+Persona que mantiene la dirección del proyecto y conserva la aprobación final cuando una decisión cambia objetivo, autoridad, riesgo, coste, datos, seguridad o impacto relevante.
 
 ## `Project Orchestrator`
 
-Asistente conversacional utilizado para dirigir y coordinar el proyecto desde ChatGPT, Gemini, Claude u otro entorno equivalente.
-
-Comprende el contexto, enruta decisiones, prepara tareas, selecciona contexto y revisa el retorno de los coding agents.
+Asistente conversacional que integra dirección, contexto, fuentes y contratos para conducir el siguiente avance verificable. No sustituye a la persona responsable ni ejecuta cambios físicos por defecto.
 
 ## `Conversation Space`
 
-Conversación persistente dedicada a un dominio de gobierno del proyecto, por ejemplo dirección, producto, arquitectura, operación o memoria.
+Contexto conversacional persistente dedicado a un dominio de gobierno cuando separarlo mejora claridad o continuidad.
 
-No es una etapa obligatoria ni una fuente de verdad independiente. Sus resultados durables deben registrarse en la fuente canónica correspondiente.
+Los Conversation Spaces se abren bajo demanda. Sus números son identificadores, no fases obligatorias.
+
+## `00 — Dirección y orquestación`
+
+Conversation Space inicial canónico. Mantiene dirección transversal y recibe reorientaciones o escalamiento real; no funciona como dispatcher obligatorio.
 
 ## `Cycle Owner`
 
-Conversation Space que gobierna un resultado mientras éste permanezca dentro de su dominio.
+Conversation Space que gobierna un resultado mientras permanezca dentro de su dominio.
 
-Mantiene objetivo y límites, prepara o valida tareas, revisa retornos y decide cierre, corrección, transferencia o escalamiento.
+Mantiene objetivo y límites, prepara o valida artefactos y revisa retornos dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando corresponda.
 
-## coding agent
+## `Specialist Handoff`
 
-Herramienta con capacidad de inspeccionar y, cuando está autorizado, modificar artefactos reales del proyecto.
+Artefacto que transfiere una decisión o el gobierno de un resultado a otro Conversation Space. No autoriza ejecución técnica.
 
-Puede actuar bajo roles distintos, por ejemplo `Coding Agent — Planning` o `Coding Agent — Execution`.
+## memoria durable
 
-## `Planning Task`
+Responsabilidad funcional de conservar conocimiento vigente y reusable fuera de conversaciones efímeras.
 
-Artefacto de solo lectura que delimita una incertidumbre técnica o inspección necesaria antes de ejecutar.
+Puede materializarse mediante una LLM Wiki u otro mecanismo durable adecuado al proyecto.
 
-Produce un `Implementation Plan`. No autoriza cambios físicos.
+## `LLM Wiki`
 
-## `Implementation Plan`
+Término propio de IA-DOS para una materialización durable, portable y navegable de la memoria del proyecto para humanos y agentes.
 
-Propuesta técnica producida a partir de una Planning Task.
-
-Describe evidencia, decisión recomendada, estrategia mínima y una primera unidad candidata. No equivale a ejecución autorizada ni a estado implementado.
-
-## `Execution Task`
-
-Contrato semántico de una unidad concreta, acotada, verificable y terminable dirigida a `Coding Agent — Execution`.
-
-Declara objetivo, alcance, autoridad, permisos, criterios, verificaciones, condiciones de detención y destino del reporte. El mecanismo usado para almacenarla o transportarla no cambia este contrato.
-
-## `Execution Cell`
-
-Contexto durable de ejecución definido por proyecto cuando mantener un flujo separado mejora la continuidad operacional.
-
-Una Execution Cell no es una tarea, una profesión ni un Conversation Space. Cuando la herramienta permite conversaciones persistentes, una conversación activa puede representar una instancia de la célula y reutilizarse mientras siga respondiendo bien.
-
-## `Execution Report`
-
-Artefacto de retorno que describe resultado, cambios, verificaciones, evidencia, desviaciones y pendientes de una Execution Task.
-
-El estado del reporte describe la ejecución; la decisión posterior pertenece al Cycle Owner.
-
-## `Exchange`
-
-Pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Code Agents.
-
-Exchange sólo almacena o pone a disposición archivos `.md` ya construidos por los agentes. No define ni interpreta artefactos, IDs, nombres de archivo, estados, permisos, backlog, memoria, decisiones o workflow.
-
-Las carpetas `inbox/`, `outbox/` y `archive/` son ubicaciones de intercambio o conservación, no estados del método.
-
-## `Wiki Update Task`
-
-Perfil documental de una `Execution Task` canónica utilizado cuando el resultado principal es modificar memoria durable Markdown.
-
-No es un tipo de artefacto independiente y no debilita alcance, autoridad, permisos, verificaciones ni condiciones de detención.
-
-## `Task ID`
-
-Identificador de una tarea asignado por el Conversation Agent que construye el artefacto antes de delegarlo o materializarlo como archivo.
-
-El proyecto puede adoptar un esquema propio. Cuando no existe otro esquema acordado, IA-DOS recomienda para Execution Tasks:
-
-```text
-{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
-```
-
-El Execution Report reutiliza el Task ID de su Execution Task de origen. Exchange no genera ni valida IDs.
-
-## `Cycle ID`
-
-Identificador opcional de un ciclo de trabajo cuando el proyecto utiliza ese esquema.
-
-Cuando no existe un ciclo separado puede declararse `NO APLICA`. Exchange no crea ni requiere Cycle IDs.
-
-## memoria durable / LLM Wiki
-
-Base de conocimiento que conserva estado, decisiones y contexto reusable del proyecto.
-
-Puede materializarse en Markdown, documentación versionada u otro mecanismo definido por el proyecto. No demuestra por sí sola que una implementación exista.
+Normalmente usa Markdown estándar cuando se implementa como base documental, pero no exige repositorio separado ni Obsidian.
 
 ## `Memory Bootstrap Gate`
 
-Gate que determina si una nueva Planning Task o Execution Task puede continuar sin depender de conocimiento relevante que exista únicamente en conversaciones efímeras.
+Gate previo a una Planning Task o Execution Task que pregunta si la siguiente unidad depende de conocimiento relevante que sólo existe en conversaciones efímeras.
 
-Produce uno de dos resultados:
+Resultados:
 
 ```text
 PASS
 BOOTSTRAP REQUIRED
 ```
 
-No utiliza porcentajes de cobertura, cantidad de mensajes, número de tareas ni antigüedad como umbrales automáticos.
+No usa edad, cantidad de mensajes o número de tareas como umbral.
 
 ## checkpoint durable
 
 Conjunto mínimo de conocimiento que debe persistirse cuando el Memory Bootstrap Gate devuelve `BOOTSTRAP REQUIRED`.
 
-Incluye sólo lo necesario para que la siguiente unidad no dependa de reconstruir conversaciones: propósito y límites relevantes, estado vigente, decisiones que condicionan la tarea, fuentes de verdad y desconocidos importantes.
+## `Contexto durable necesario`
 
-## `Context Pack`
-
-Patrón opcional para agrupar un conjunto pequeño de documentos o rutas que se desea entregar conjuntamente a un asistente o agente.
-
-IA-DOS ya no requiere `context-packs/` como parte del Wiki Starter. La selección de contexto puede realizarse directamente mediante contexto durable necesario, referencias y lectura requerida.
-
-## `CORE`
-
-Nombre heredado de un Context Pack transversal usado por algunos proyectos.
-
-No es requisito del método ni forma parte del Wiki Starter vigente. Proyectos existentes pueden conservarlo si sigue aportando valor.
+Extracto mínimo de conocimiento estable que debe viajar dentro de una tarea porque el receptor lo necesita directamente.
 
 ## `Referencias Wiki`
 
-Rutas de memoria durable relacionadas con una tarea para trazabilidad o navegación.
-
-Una referencia no implica que el coding agent deba leerla.
+Referencias de procedencia o navegación hacia la LLM Wiki. No implican lectura automática.
 
 ## `Lectura requerida`
 
-Lista explícita de documentos que el coding agent debe consumir antes de actuar.
+Documentos concretos que el receptor debe consumir antes de actuar.
 
-Se utiliza deliberadamente cuando la lectura directa aporta precisión real y no debe confundirse con referencias opcionales.
+## `Planning Task`
 
-## `repository`
+Artefacto dirigido a `Coding Agent — Planning` para inspección y diseño técnico en solo lectura.
 
-Repositorio versionado donde se almacena código, documentación u otros archivos de un proyecto.
+Produce `Implementation Plan` y no autoriza escritura.
 
-## `branch`
+## `Implementation Plan`
 
-Línea de trabajo separada dentro de Git. Permite realizar cambios sin modificar directamente la versión principal.
+Propuesta técnica verificable resultante de una Planning Task. No equivale a implementación ni a autorización de ejecución.
 
-## `commit`
+## `Environment Preflight`
 
-Registro versionado de uno o más cambios relacionados.
+Artefacto de solo lectura usado cuando una Execution Task depende de una precondición indispensable del entorno que no está comprobada.
 
-## `issue`
+## `Environment Readiness Report`
 
-Elemento utilizado para registrar trabajo pendiente, bugs, propuestas o preguntas dentro de una plataforma de seguimiento.
+Retorno del preflight con estados canónicos:
 
-## `pull request`
+```text
+LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
+```
 
-Solicitud para revisar e incorporar cambios desde una branch antes de agregarlos a la versión principal.
+Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.
+
+## `Execution Task`
+
+Contrato de una unidad de ejecución concreta, terminable y verificable. Declara objetivo, autoridad, alcance, permisos, criterios, verificaciones, condiciones de detención y destino del reporte.
+
+Su semántica no cambia por transportarse mediante chat, archivo, issue o Exchange.
+
+## `Execution Cell`
+
+Contexto durable de ejecución definido por proyecto.
+
+Puede reutilizar una misma conversación de coding agent entre múltiples tareas mientras siga respondiendo bien. No representa una tarea, especialidad profesional o Conversation Space. Los permisos no se acumulan entre tareas.
+
+## `Execution Resume`
+
+Artefacto que reanuda la misma Execution Task después de resolver un bloqueo, sólo si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios.
+
+## `Execution Report`
+
+Evidencia de lo ejecutado.
+
+Estados canónicos:
+
+```text
+COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+```
+
+Incluye `Atención requerida` cuando existe un bloqueo, riesgo, desviación o decisión concreta a revisar. No aprueba su propio resultado, no elige la siguiente unidad y no consolida memoria durable.
+
+## `Exchange`
+
+Pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Code Agents.
+
+No define artefactos, IDs, nombres de archivo, templates, estados, permisos, workflow, backlog, memoria o decisiones.
+
+Una topología posible es `inbox/`, `outbox/` y `archive/`; esas carpetas no son estados del método.
+
+## `Task ID`
+
+Identificador asignado por el Conversation Agent que construye una Execution Task. El Execution Report reutiliza ese ID por contrato.
+
+Exchange no genera ni valida Task IDs.
+
+## `Cycle ID`
+
+Identificador opcional de un ciclo más amplio. Puede ser `NO APLICA` cuando el proyecto no necesita uno separado.
+
+## `Coding Agent — Planning`
+
+Rol técnico de solo lectura que inspecciona fuentes autorizadas y produce un Implementation Plan.
+
+## `Coding Agent — Execution`
+
+Rol técnico que materializa únicamente una Execution Task autorizada y produce un Execution Report.
+
+## `Wiki Update Task`
+
+Perfil documental de una `Execution Task` canónica utilizado cuando el resultado principal es modificar memoria durable Markdown.
+
+No es un tipo de artefacto independiente.
+
+## `Current Offline Pack`
+
+Artefacto de distribución vigente para operar IA-DOS cuando el repositorio canónico no puede navegarse.
+
+No es una segunda fuente de verdad y debe mantenerse sincronizado con los contratos actuales.
+
+## Fuente de verdad
+
+Recurso que tiene autoridad para un tipo de información dentro de un ámbito declarado.
+
+No existe una fuente universal: implementación, memoria, evidencia, backlog y método pueden tener autoridades distintas.
 
 ## `AGENTS.md`
 
-Archivo que entrega instrucciones persistentes a los agentes que trabajan dentro de un repositorio.
+Archivo de instrucciones persistentes aplicables al recurso donde vive. No sustituye la LLM Wiki.
 
 ## handoff
 
 Traspaso estructurado entre roles o espacios. Puede transferir una decisión de dominio, una tarea o un artefacto de retorno.
 
-## `guardrail`
+## guardrail
 
-Límite o regla que impide acciones inseguras, fuera de alcance o no autorizadas.
+Límite que impide acciones inseguras, fuera de alcance o no autorizadas.
 
 ## `Definition of Done`
 
 Conjunto de condiciones que deben cumplirse antes de considerar terminado un trabajo.
 
-## `workspace`
+## workspace
 
-Entorno local o lógico que agrupa los recursos de uno o más proyectos.
+Entorno local o lógico que agrupa recursos de uno o más proyectos. IA-DOS no exige una topología universal.
 
-IA-DOS puede recomendar una estructura, pero no exige una topología universal.
+## Términos históricos o de compatibilidad
 
-## app
+### `Context Pack`
 
-Repositorio, carpeta o conjunto de artefactos que contiene la implementación ejecutable del proyecto.
+Patrón usado en versiones anteriores para agrupar contexto. No forma parte del contrato mínimo vigente y no debe reintroducirse como requisito operativo. Un proyecto existente puede conservar un mecanismo similar si sigue aportando valor local.
 
-## wiki
+### `CORE`
 
-Nombre habitual para una materialización de la memoria durable del proyecto.
+Nombre usado por starters antiguos de Wiki. No forma parte del Wiki Starter vigente.
 
-## Fuente de verdad
+### `Launch Mode`
 
-Ubicación canónica donde debe mantenerse un tipo determinado de información dentro de un ámbito concreto.
+Nombre utilizado durante una generación anterior del onboarding. Ya no es una fase ni un componente operativo: cuando la persona quiere avanzar, el Orchestrator aplica directamente los gates vigentes de memoria, readiness, Planning y Execution.
 
-Una fuente puede ser autoritativa para decisiones y no para implementación, o viceversa.
+### `Exchange Protocol v0`
+
+Nombre histórico reemplazado. El concepto vigente es simplemente `Exchange`, una pasarela pasiva de archivos sin protocolo semántico propio.
