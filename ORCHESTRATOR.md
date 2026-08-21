@@ -178,10 +178,13 @@ Transfiere gobierno o una decisión a otro Conversation Space. No autoriza inspe
 
 - preparada por el Conversation Space que gobierna;
 - ejecutada por `Coding Agent — Planning`;
-- solo lectura;
+- solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
+- puede materializar únicamente su propio `Implementation Plan` cuando `Output Delivery` lo autoriza explícitamente;
 - una incertidumbre técnica dominante;
 - produce `Implementation Plan`;
 - vuelve al mismo Cycle Owner.
+
+La materialización del output autorizado no concede permiso sobre código, configuración, datos, Git, Wiki, servicios ni otros recursos, y no convierte Planning en Execution.
 
 Puede usar un identificador lógico de Planning cuando aporte. IA-DOS no exige una conversación de planificación nueva por cada tarea.
 
@@ -191,8 +194,9 @@ La futura ejecución conserva una autorización separada, pero puede reutilizar 
 
 Se usa cuando una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados.
 
-- solo lectura;
-- no crea archivos;
+- solo lectura respecto del proyecto y entorno inspeccionados;
+- no crea ni modifica archivos del proyecto/entorno;
+- puede materializar únicamente su propio `Environment Readiness Report` cuando `Output Delivery` lo autoriza explícitamente;
 - no instala ni actualiza;
 - no inicia, detiene o configura servicios;
 - produce `Environment Readiness Report`.
@@ -203,7 +207,7 @@ Estados:
 LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura.
+Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura. La escritura del propio reporte autorizado no constituye esa autorización posterior.
 
 ## Implementation Plan
 
