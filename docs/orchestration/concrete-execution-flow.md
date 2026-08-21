@@ -14,6 +14,7 @@ dirección suficiente
 → Execution Task cuando la unidad está lista
 → artefacto vuelve al Cycle Owner
 → revisión y decisión dentro de la autoridad aplicable
+→ persona responsable aprueba cuando corresponde
 → escalar a 00 sólo ante reorientación real
 ```
 
@@ -37,13 +38,31 @@ Evalúa en este orden:
 - decisión humana indispensable → resolver sólo esa decisión;
 - reorientación → escalar a `00`.
 
+## Memory Bootstrap operativo
+
+Cuando el gate devuelve `BOOTSTRAP REQUIRED`:
+
+```text
+unidad original
+→ queda bloqueada
+
+Execution Task de bootstrap
+→ único resultado: checkpoint durable mínimo
+→ unidad original fuera de alcance
+→ Execution Report
+→ revisión
+→ reevaluar gate original
+```
+
+La tarea de bootstrap no finge `PASS` ni ejecuta el resultado original. Una unidad ordinaria dependiente de esa memoria sólo continúa después de reevaluar el gate y obtener `PASS`.
+
 ## Planning Task
 
 La Planning Task solicita al coding agent inspeccionar fuentes y estado real en solo lectura para proponer cómo implementar.
 
 ```text
 Planning Task
-→ inspección de solo lectura
+→ Coding Agent — Planning
 → Implementation Plan
 → revisión del Cycle Owner
 → aprobación humana cuando corresponda
@@ -67,13 +86,21 @@ Si no, divide y autoriza sólo la primera unidad segura.
 
 Todo handoff técnico declara Cycle Owner y destino del artefacto de retorno.
 
-El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando el cambio afecta dirección, autoridad, riesgo o impacto relevante.
+El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando el cambio afecta dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 Planes y reportes no vuelven automáticamente a `00`.
 
 ## Readiness del entorno
 
-Cuando una precondición indispensable no está comprobada, usa `Environment Preflight` en vez de inferir que el entorno está listo.
+Cuando una precondición indispensable no está comprobada, usa:
+
+```text
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
+en vez de inferir que el entorno está listo.
 
 Sólo:
 
@@ -81,13 +108,15 @@ Sólo:
 LISTO PARA EJECUCIÓN
 ```
 
-permite aprobar o reanudar escritura.
+permite considerar aprobación o reanudación de escritura. El readiness report no concede escritura por sí mismo.
 
 No impongas carpeta, repositorio, proveedor, Wiki, plataforma o herramienta específica.
 
 ## Transición visible
 
 Cuando corresponda planificación, entrega una `Planning Task` autosuficiente al coding agent en modo de solo lectura y pide devolver el `Implementation Plan` al Cycle Owner.
+
+Cuando corresponda preflight, entrega un `Environment Preflight` al mismo rol de solo lectura y pide devolver `Environment Readiness Report`; no lo conviertas en Planning.
 
 Cuando corresponda ejecución, entrega una `Execution Task` completa a la Execution Cell adecuada o al entorno disponible. Reutiliza una célula activa cuando siga respondiendo bien; no abras una conversación por tarea.
 
@@ -120,6 +149,8 @@ El reporte no selecciona la siguiente acción de gobierno ni propone por defecto
 
 Después de revisar la evidencia, el Cycle Owner y la persona responsable, según la autoridad aplicable, deciden cierre, corrección, reversión, transferencia, escalamiento o siguiente unidad. Separadamente evalúan si hechos nuevos merecen memoria durable.
 
+Si el reporte corresponde a un memory bootstrap, primero se reevalúa el gate de la unidad original; no se autoriza automáticamente.
+
 ## Memoria en la misma ejecución
 
 Una actualización concreta de LLM Wiki puede formar parte de una Execution Task sólo cuando el conocimiento ya está confirmado, la modificación documental está explícitamente autorizada y no requiere una nueva decisión conceptual.
@@ -131,6 +162,7 @@ No conviertas toda ejecución de producto en una actualización automática de m
 - no enviar una intención vaga al coding agent;
 - no ejecutar antes de resolver decisiones indispensables;
 - no omitir Memory Bootstrap Gate cuando existe dependencia chat-only;
+- no confundir `BOOTSTRAP REQUIRED` con prohibición de la unidad mínima de checkpoint;
 - no omitir Environment Preflight cuando readiness indispensable es desconocido;
 - no usar planificación para autorizar escritura implícita;
 - no abrir una conversación por cada tarea cuando existe una Execution Cell válida;
