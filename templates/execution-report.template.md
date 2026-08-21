@@ -11,7 +11,7 @@ Expected Output: revisión y decisión del Cycle Owner
 Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
-Execution Cell o sesión independiente: [NOMBRE O NO APLICA]
+Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
@@ -29,7 +29,7 @@ El `Estado` describe únicamente el resultado de la ejecución.
 - Tópico de origen: `[00 | 10 | 20 | 30 | 40 | 50 | 90]`
 - Cycle Owner: `[CONVERSATION SPACE]`
 - Destino del reporte: `[CONVERSATION SPACE]`
-- Execution Cell o sesión independiente: `[NOMBRE O NO APLICA]`
+- Execution Cell o sesión: `[NOMBRE O NO APLICA]`
 - Rol ejecutado: `Coding Agent — Execution`
 - Tipo solicitado: `[TIPO]`
 - Tipo realizado: `[TIPO]`
