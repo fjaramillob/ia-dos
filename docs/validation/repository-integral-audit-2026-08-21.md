@@ -51,9 +51,9 @@ Execution Cell       = continuidad de ejecución
 Execution Task       = contrato de una unidad
 Execution Report     = evidencia de ejecución
 Memoria durable      = responsabilidad funcional
-LLM Wiki              = materialización durable, portable y navegable
-Repository            = implementación
-Exchange              = pasarela pasiva de archivos
+LLM Wiki             = materialización durable, portable y navegable
+Repository           = implementación
+Exchange             = pasarela pasiva de archivos
 ```
 
 Además:
@@ -69,6 +69,8 @@ Además:
 - sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura;
 - Execution Resume sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios;
 - Execution Report no selecciona decisión de gobierno ni memoria posterior;
+- el Coding Agent — Planning no asigna Task ID a una Execution Task candidata;
+- la persona responsable conserva aprobación final cuando cambian dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante;
 - Exchange no define artefactos, IDs, filenames, templates, estados, permisos, backlog, memoria, decisiones o workflow.
 
 ## Hallazgos reales
@@ -120,7 +122,7 @@ Estos términos se conservaron sólo como historia o compatibilidad donde aporta
 
 Algunos documentos podían interpretarse como si el Cycle Owner reemplazara la aprobación final de la persona.
 
-Se reforzó que el Cycle Owner gobierna dentro de autoridad delegada y que la persona responsable conserva aprobación final sobre dirección, autoridad, riesgo e impactos relevantes cuando corresponda.
+Se reforzó que el Cycle Owner gobierna dentro de autoridad delegada y que la persona responsable conserva aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 ### 7. LLM Wiki y memoria durable confladas
 
@@ -151,7 +153,7 @@ La identidad pública todavía exponía componentes y secuencias anteriores. Se 
 
 El bundle vigente declaraba baseline de Fase 6 y no contenía todas las correcciones posteriores.
 
-Se regeneró para `v0.1.0-alpha.3 — auditoría integral 2026-08-21` y se volvió a contrastar contra los invariantes durante la segunda pasada.
+Se regeneró para `v0.1.0-alpha.3 — auditoría integral 2026-08-21` y se volvió a contrastar contra los invariantes durante las rondas de revisión.
 
 ### 11. Instalación local imponía topología de proyecto
 
@@ -197,8 +199,6 @@ Memory Bootstrap Gate = PASS | NO APLICA
 
 Eso introducía una circularidad: cuando el gate devolvía `BOOTSTRAP REQUIRED`, hacía falta persistir memoria antes de la unidad original, pero el contrato parecía prohibir emitir la propia Execution Task documental necesaria para materializar ese checkpoint.
 
-La revisión del patch de PR detectó la contradicción antes del cierre.
-
 La semántica consolidada queda:
 
 ```text
@@ -213,17 +213,107 @@ unidad A depende de memoria chat-only
 → A puede emitirse
 ```
 
-La excepción se sincronizó en:
-
-- `docs/foundations/memory-bootstrap-gate.md`;
-- `ORCHESTRATOR.md`;
-- `templates/execution-task.template.md`;
-- `templates/execution-task-compact.template.md`;
-- `templates/wiki-update-task.template.md`;
-- `prompts/execution/update-llm-wiki.md`;
-- `bundles/ia-dos-current-offline-pack.md`.
-
 La tarea B no puede mezclar la unidad A ni fingir que el gate original ya está en `PASS`.
+
+### 15. Contrato incompleto de `Coding Agent — Planning`
+
+Algunas superficies definían el rol sólo como:
+
+```text
+Planning Task
+→ Coding Agent — Planning
+→ Implementation Plan
+```
+
+pero el mismo rol también recibe Preflight.
+
+Se consolidaron ambos pares válidos de solo lectura:
+
+```text
+Planning Task
+→ Coding Agent — Planning
+→ Implementation Plan
+
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
+Planning y Preflight comparten rol, no artefacto ni salida.
+
+### 16. Propagación incompleta de la excepción de Memory Bootstrap
+
+Después de corregir el contrato canónico, varias superficies autónomas todavía resumían `BOOTSTRAP REQUIRED` como “persistir primero” sin enseñar la unidad separada, el fuera de alcance, la revisión del reporte y la reevaluación del gate.
+
+La revisión de pull request detectó variantes en:
+
+- initializer del Project Orchestrator;
+- onboarding de proyecto nuevo;
+- onboarding de proyecto existente;
+- handoff técnico;
+- rutas de orquestación;
+- guía conversacional;
+- prompt de incorporación de proyecto existente;
+- guía de incorporación al workspace;
+- Current Offline Pack.
+
+Se propagó la misma semántica completa a todas esas superficies vigentes.
+
+### 17. Frontera de aprobación humana no uniforme
+
+Persistían dos reducciones de autoridad:
+
+- algunas superficies omitían `cumplimiento`;
+- otras reservaban sólo `datos sensibles`, mientras el contrato vigente reserva cambios sobre `datos` en general.
+
+Se normalizó la frontera:
+
+```text
+dirección
++ autoridad
++ riesgo
++ coste
++ producción
++ datos
++ seguridad
++ cumplimiento
++ impacto relevante
+```
+
+### 18. Task ID asignado desde Planning
+
+Varias superficies de Planning permitían o inducían al coding agent a crear la identidad de una Execution Task candidata.
+
+Se consolidó:
+
+```text
+Coding Agent — Planning
+→ propone la unidad
+→ Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
+
+Conversation Agent / Cycle Owner
+→ revisa y adopta la candidata
+→ asigna Task ID
+→ construye la Execution Task real
+```
+
+La regla se propagó a Implementation Plan, Planning Task completa/compacta, prompt de Planning, Project Start Planning Brief, prompt de incorporación existente y Current Offline Pack.
+
+### 19. Paridad autónoma del Current Offline Pack
+
+La revisión encontró que el pack offline podía quedar semánticamente detrás del repositorio aun cuando los contratos canónicos ya estuvieran corregidos.
+
+Se verificó y sincronizó explícitamente en el pack:
+
+- frontera humana completa;
+- Memory Bootstrap separado;
+- rol y salida de Environment Preflight;
+- Execution Cells y autorización no acumulativa;
+- Task ID pendiente para candidatas de Planning;
+- Execution Report como evidencia;
+- Exchange pasivo.
+
+El pack sigue siendo artefacto de distribución, no segunda fuente canónica.
 
 ## Correcciones aplicadas
 
@@ -251,7 +341,6 @@ Entre las superficies revisadas que no necesitaron cambios semánticos adicional
 - `docs/getting-started/bootstrap-exchange.md`;
 - `docs/getting-started/bootstrap-llm-wiki.md`;
 - `docs/getting-started/apply-starter-templates.md`;
-- `docs/getting-started/incorporate-existing-project-workspace.md`;
 - `research/design-influences.md`;
 - `CONTRIBUTING.md`, `GOVERNANCE.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `LICENSE` y la plantilla general de pull request.
 
@@ -270,24 +359,55 @@ Sus encabezados ya advierten que son históricos y no deben utilizarse para nuev
 
 Las validaciones de Fase 6 también se preservan como evidencia histórica, pero ahora están etiquetadas explícitamente para no competir con esta auditoría vigente.
 
+## Revisión del pull request
+
+La PR #43 se revisó de forma iterativa contra heads exactos. Cada hallazgo válido se corrigió, se propagó a superficies hermanas cuando correspondía y su review thread quedó resuelto antes de solicitar una nueva revisión.
+
+La última revisión contractual se ejecutó sobre:
+
+```text
+07d90ab7f1b684af1a7c435689820acfc114b2d5
+```
+
+Codex devolvió:
+
+```text
+Didn't find any major issues.
+```
+
+No quedaron nuevos review threads abiertos en ese head.
+
+Los hallazgos automáticos fueron tratados como evidencia de revisión, no como autoridad final: cada uno se contrastó contra los contratos canónicos antes de modificar el repositorio.
+
+## Limitaciones de validación
+
+Esta auditoría es integral respecto de las superficies documentales y contractuales del repositorio bajo el baseline indicado, pero no debe interpretarse como garantía permanente frente a cambios futuros.
+
+Además:
+
+- el repositorio no tiene workflows ni status checks configurados para esta PR, por lo que no existe una suite CI que pueda declararse ejecutada;
+- no se ejecutó un clone local ni un link checker mecánico desde el entorno de esta revisión porque esa capacidad no estuvo disponible de forma fiable;
+- enlaces y rutas afectadas se revisaron desde las fuentes conectadas y el diff, pero no se afirma una validación mecánica local inexistente;
+- los bundles históricos se preservaron deliberadamente y no forman parte del contrato operativo vigente.
+
 ## Criterio de cierre
 
-La auditoría se considera cerrable cuando el diff final confirme que:
+El diff contractual revisado confirma que:
 
-- no hay variantes incompatibles de Execution Report;
-- ninguna plantilla vigente obliga a una sesión de ejecución por tarea;
+- no hay variantes vigentes conocidas de Execution Report que mezclen evidencia con decisión o memoria posterior;
+- ninguna plantilla vigente revisada obliga a una sesión de ejecución por tarea;
 - Planning session se mantiene opcional/lógica;
 - readiness usa estados canónicos;
 - Resume conserva objetivo, alcance, autoridad, seguridad y arquitectura;
-- Memory Bootstrap y Preflight no pueden saltarse en rutas rápidas;
-- `BOOTSTRAP REQUIRED` bloquea la unidad dependiente pero permite la unidad mínima de persistencia del checkpoint;
+- Memory Bootstrap y Preflight no se omiten en las rutas operativas revisadas;
+- `BOOTSTRAP REQUIRED` bloquea la unidad dependiente pero permite la unidad mínima separada de persistencia del checkpoint;
+- una candidata de Planning deja el Task ID pendiente para el Conversation Agent / Cycle Owner;
 - LLM Wiki no es topología obligatoria;
 - instalar IA-DOS no crea topología del proyecto;
 - Exchange sigue pasivo;
-- responsabilidad humana está visible;
-- Current Offline Pack reproduce los contratos vigentes;
-- los bundles y validaciones históricos permanecen aislados de la operación actual;
-- no hay enlaces o rutas rotas introducidos por la revisión.
+- responsabilidad humana está visible y usa una frontera uniforme;
+- Current Offline Pack reproduce los contratos vigentes revisados;
+- los bundles y validaciones históricos permanecen aislados de la operación actual.
 
 ## Relación con validaciones anteriores
 
@@ -298,7 +418,9 @@ Esta auditoría no invalida su valor histórico, pero **reemplaza su conclusión
 ## Estado
 
 ```text
-AUDITORÍA EN REVISIÓN FINAL
+PASS
 ```
 
-El trabajo de corrección y las pasadas archivo por archivo están completados. La revisión del PR ya detectó y corrigió una circularidad adicional de Memory Bootstrap. Este estado debe cambiar a `PASS` sólo después de revisar el diff actualizado, resolver feedback válido de pull request y comprobar el head final contra los invariantes anteriores.
+La auditoría queda cerrada para el baseline revisado. La conclusión significa que, dentro de la cobertura y limitaciones declaradas, las superficies vigentes revisadas convergen al mismo modelo operacional y que la última revisión contractual del pull request no encontró nuevos problemas mayores.
+
+Cualquier modificación futura de contratos transversales debe volver a evaluar sus representaciones en documentación canónica, prompts, templates, onboarding y Current Offline Pack; este `PASS` es evidencia fechada, no una certificación perpetua.
