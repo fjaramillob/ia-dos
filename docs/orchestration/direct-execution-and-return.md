@@ -1,150 +1,110 @@
 # Ejecución directa y retorno acotado a 00
 
-IA-DOS busca comenzar cuanto antes a construir, reparar o reformular el producto en el entorno de ejecución disponible, manteniendo el producto y la LLM Wiki alineados con evidencia.
+IA-DOS busca materializar avances verificables sin convertir `00 — Dirección y orquestación` en un dispatcher obligatorio ni saltarse memoria, readiness o planificación cuando son necesarias.
 
 ## Camino operativo
 
 ```text
-00 orienta
-→ el Conversation Space necesario resuelve la brecha
-→ ese mismo espacio prepara el prompt para el coding agent
-→ el coding agent modifica producto y Wiki cuando corresponde
-→ el Execution Report vuelve al espacio de origen
-→ el espacio revisa, corrige o prepara el siguiente ciclo
-→ 00 interviene solo cuando hace falta reorientar
+Conversation Space gobierna un resultado
+→ evalúa memoria durable cuando la unidad depende de historia
+→ comprueba readiness indispensable
+→ planifica sólo si falta inspección o diseño
+→ Execution Task cuando la unidad está lista
+→ coding agent ejecuta
+→ Execution Report vuelve al Cycle Owner
+→ revisión y decisión dentro de la autoridad delegada
+→ 00 sólo ante reorientación real
 ```
 
-`00 — Dirección y orquestación` no es una parada obligatoria entre definición y ejecución.
+La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante.
 
-## Gate de salida de cada Conversation Space
+## Gate de salida
 
-Antes de cerrar, el espacio evalúa:
+Antes de emitir una `Execution Task`, el espacio evalúa en este orden:
 
 ```text
-¿Existe suficiente claridad dentro de este espacio para preparar una Execution Task verificable?
+1. ¿El resultado es suficientemente definido, pequeño y verificable?
+2. Si depende de historia previa, ¿el conocimiento necesario ya es durable?
+3. ¿Las precondiciones indispensables del entorno están comprobadas?
+4. Si falta inspección o diseño, ¿corresponde Planning?
 ```
 
-### Sí
+Resultados:
 
-Entrega directamente:
+- conocimiento necesario sólo en conversaciones → `Memory Bootstrap Gate`;
+- readiness indispensable desconocido → `Environment Preflight`;
+- falta inspección o diseño → `Planning Task`;
+- todo listo → `Execution Task`;
+- decisión humana indispensable → deriva sólo esa decisión;
+- reorientación transversal → escala a `00`.
 
-1. la instrucción para abrir el repositorio correcto en el entorno de ejecución disponible;
-2. un prompt completo y listo para pegar;
-3. el alcance de producto y Wiki cuando corresponda;
-4. el formato requerido del `Execution Report`;
-5. la instrucción de devolver el reporte al espacio que originó la tarea.
-
-No regresa a `00` solo para resumir, validar o volver a redactar la misma tarea.
-
-### No, pero la brecha pertenece al mismo espacio
-
-Continúa únicamente hasta resolver esa brecha.
-
-### No, porque apareció una cuestión fuera de alcance
-
-Cierra con un único prompt autosuficiente para `00 — Dirección y orquestación`.
+No prepares una Execution Task sólo porque exista intención de avanzar.
 
 ## Cuándo volver a 00
 
-El retorno a `00` corresponde solo cuando existe:
+El retorno a `00` corresponde cuando existe:
 
 - cambio de objetivo o dirección;
 - expansión importante de alcance;
-- conflicto entre producto, arquitectura, ejecución o negocio;
-- nueva brecha fuera del dominio del espacio actual;
+- conflicto transversal entre dominios;
+- nueva restricción no negociable;
 - decisión humana estratégica;
-- imposibilidad de definir con seguridad el siguiente resultado verificable.
+- riesgo o bloqueo fuera de la autoridad del Cycle Owner.
 
-Terminar un análisis no es razón suficiente para volver a `00`.
+Terminar un análisis, producir un plan o recibir un reporte no son razones suficientes.
 
 ## Agnosticismo operativo
 
-Las reglas deben referirse a roles, no a proveedores:
+Las reglas se expresan mediante roles y capacidades, no proveedores.
 
-- `asistente conversacional`;
-- `Conversation Space`;
-- `coding agent`;
-- `entorno de ejecución`;
-- `repositorio de producto`;
-- `LLM Wiki`.
-
-Los nombres concretos de plataformas, modelos, editores o agentes pueden usarse solo como ejemplos no vinculantes.
-
-Cada handoff, Execution Task y Execution Report debe contener únicamente referencias del proyecto actual. No reutilices nombres, dominios, repositorios, rutas o decisiones de proyectos empleados durante pruebas o conversaciones anteriores.
-
-## Prompt de retorno a 00
-
-Cuando una cuestión se sale del tema, el espacio debe entregar un bloque listo para copiar con:
-
-```text
-Esta conversación es 00 — Dirección y orquestación.
-No reinicies el onboarding ni repitas el diagnóstico completo.
-
-Proyecto:
-[NOMBRE]
-
-Espacio de origen:
-[10 / 20 / 30 / 90]
-
-Objetivo que se estaba resolviendo:
-[...]
-
-Decisiones ya confirmadas:
-- [...]
-
-Resultado alcanzado:
-[...]
-
-Nueva brecha o conflicto:
-[...]
-
-Por qué el espacio de origen no debe resolverlo:
-[...]
-
-Decisión que debe conducir 00:
-[...]
-
-Salida esperada:
-[prompt para otro Conversation Space / prompt para coding agent / decisión humana pendiente]
-```
-
-Después de interactuar con el usuario, `00` entrega una sola salida útil y lista para copiar.
+Cada tarea utiliza únicamente referencias del proyecto actual y los recursos autorizados. No reutilices nombres, dominios, rutas o decisiones de proyectos empleados como pruebas o ejemplos.
 
 ## Retorno del Execution Report
 
-El `Execution Report` vuelve inicialmente al Conversation Space que preparó la tarea.
+El `Execution Report` vuelve al Cycle Owner declarado.
 
-Ese espacio revisa:
+La revisión compara:
 
-1. cumplimiento del objetivo;
-2. evidencia y verificaciones;
-3. respeto del alcance;
-4. estado del producto y la Wiki;
-5. bloqueos o trabajo parcial;
-6. siguiente resultado lógico.
+1. objetivo versus resultado;
+2. alcance versus cambios reales;
+3. criterios versus evidencia;
+4. verificaciones solicitadas versus ejecutadas;
+5. autorizaciones versus acciones realizadas;
+6. fuera de alcance preservado;
+7. bloqueos, desviaciones y trabajo parcial.
 
-Solo deriva a `00` si el reporte revela una condición real de reorientación.
+Después de revisar la evidencia, el Cycle Owner puede cerrar, corregir, revertir, transferir o escalar dentro de la autoridad aplicable. La persona responsable interviene cuando la decisión requiere aprobación humana.
 
-## Producto y Wiki en la misma ejecución
+El coding agent no selecciona esa decisión en el reporte ni inicia otra unidad.
 
-La actualización normal de la Wiki debe incluirse en la misma `Execution Task` que modifica el producto cuando el conocimiento sea claro, acotado y consecuencia directa del cambio.
+## Memoria durable y ejecución
 
-Ejemplos:
+Una `Execution Task` puede incluir una actualización concreta de LLM Wiki **sólo cuando**:
 
-- actualizar el estado de implementación;
-- registrar una decisión aprobada;
-- documentar un flujo construido;
-- corregir instrucciones obsoletas;
-- añadir evidencia, rutas y referencias relevantes.
+- el conocimiento a registrar ya está confirmado;
+- la tarea lo autoriza explícitamente;
+- las rutas y fuentes están declaradas;
+- la actualización forma parte inseparable del mismo resultado;
+- no requiere resolver contradicciones conceptuales nuevas.
 
-`90 — Wiki y memoria` se abre solo cuando la actualización requiere síntesis compleja, resolución de contradicciones, reorganización durable o gobierno documental que no puede describirse de forma segura dentro de la tarea actual.
+No trates la actualización de memoria como efecto automático de todo cambio de producto.
+
+Si la ejecución descubre hechos nuevos no contemplados, el `Execution Report` aporta la evidencia. Después de revisarla se evalúa por separado si algún hecho merece consolidación durable y, cuando corresponda, se autoriza una actualización documental.
+
+## Transferencia a otros Conversation Spaces
+
+Cuando la siguiente brecha pertenece claramente a otro dominio y requiere contexto persistente propio, transfiere directamente mediante un `Specialist Handoff`.
+
+No pases por `00` sólo para volver a enrutar.
 
 ## Regla principal
 
 ```text
-Resolver en conversación solo lo indispensable.
-Materializar cuanto antes en el entorno disponible.
-Documentar junto con la ejecución.
-Usar únicamente referencias del proyecto actual.
+Resolver en conversación sólo lo indispensable.
+No saltarse Memory Bootstrap ni Environment Preflight.
+Planificar sólo cuando reduce incertidumbre real.
+Ejecutar unidades acotadas.
+Revisar evidencia antes de decidir.
+Actualizar memoria sólo con conocimiento confirmado y autoridad explícita.
 Volver a 00 únicamente para reorientar.
 ```
