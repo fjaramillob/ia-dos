@@ -34,7 +34,7 @@ El mecanismo de transporte o almacenamiento no cambia este contrato. Si el proye
 - Tipo secundario, solo si es inseparable: `[TIPO O NINGUNO]`
 - Responsable humano: `[ROL O PERSONA]`
 - Coding agent o entorno: `[ROL O HERRAMIENTA DISPONIBLE]`
-- Execution Cell o sesión independiente: `[NOMBRE O NO APLICA]`
+- Execution Cell o sesión: `[NOMBRE O NO APLICA]`
 - Rol activo: `Coding Agent — Execution`
 - Implementation Plan aprobado: `[REFERENCIA O NO APLICA]`
 - Acceso a IA-DOS: `Embedded Contract | Remote Repository | Local Reference`
@@ -213,7 +213,7 @@ Expected Output: revisión y decisión del Cycle Owner
 Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
-Execution Cell o sesión independiente: [NOMBRE O NO APLICA]
+Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
