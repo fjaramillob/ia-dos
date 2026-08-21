@@ -236,6 +236,52 @@ archive/ cuando corresponda
 
 La transferencia puede ser manual. Una futura sincronización física no cambia la naturaleza pasiva de Exchange y no autoriza watchers, triggers o ejecución automática por sí misma.
 
+### Manual Artifact Launcher
+
+Cuando la persona necesita iniciar manualmente al Code Agent, puede usar un `Manual Artifact Launcher` efímero que indique:
+
+- tipo esperado;
+- ruta física del artefacto autoritativo en `inbox/`;
+- ruta física de `outbox/` cuando la tarea autorice materializar la salida;
+- instrucción de leer el artefacto completo.
+
+El launcher **no es un Artifact Type** y no agrega autoridad.
+
+```text
+Launcher = localización manual
+Artifact = contrato autoritativo
+Exchange = almacenamiento pasivo
+```
+
+Consulta [Entrega manual de artefactos](manual-artifact-delivery.md) y el [prompt reusable](../../prompts/execution/manual-artifact-launcher.md).
+
+### Materialización del output
+
+Una tarea puede autorizar explícitamente que su output completo se escriba como `.md` en `outbox/`.
+
+Esto no convierte Exchange en un sistema activo ni amplía escritura sobre el proyecto.
+
+En Planning y Preflight:
+
+```text
+solo lectura del proyecto
+≠ prohibición de materializar el propio output autorizado
+```
+
+El Code Agent puede escribir únicamente el artefacto de salida declarado y sólo en el destino autorizado.
+
+### Caveman Return
+
+Cuando el output completo ya quedó en `outbox/`, la respuesta conversacional del Code Agent puede reducirse a un `Caveman Return`:
+
+```text
+estado o resultado esencial
++ atención requerida
++ nombre/path del artefacto completo
+```
+
+El Caveman Return es una representación conversacional mínima, **no un nuevo artefacto** y no reemplaza el Implementation Plan, Environment Readiness Report o Execution Report completo.
+
 ## Inmutabilidad histórica
 
 Una vez entregado un artefacto, no debe sobrescribirse silenciosamente para alterar qué se pidió o respondió.
@@ -293,5 +339,7 @@ Execution Report = evidencia
 LLM Wiki = memoria durable materializada
 Repository = implementación
 Exchange = pasarela pasiva de archivos .md
+Manual Artifact Launcher = localización efímera, no autoridad
+Caveman Return = presentación conversacional mínima
 Persona responsable = aprobación final aplicable
 ```
