@@ -1,33 +1,27 @@
 # AGENTS.md
 
-Este archivo contiene instrucciones persistentes para agentes que modifican el repositorio de IA-DOS.
-
 ## Propósito
 
-IA-DOS es un método de orquestación para proyectos asistidos por IA. El repositorio define contratos, documentación, templates, prompts y material de adopción; no es una aplicación de runtime.
+Este repositorio contiene **IA-DOS**, un framework abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, planificación técnica, ejecución acotada, memoria durable y verificación basada en evidencia.
 
-Cuando modifiques el repositorio, prioriza coherencia metodológica, simplicidad operacional y trazabilidad. No conviertas una mejora documental acotada en un rediseño del framework.
+Estas instrucciones gobiernan a los agentes que modifican **el repositorio IA-DOS**. No sustituyen los contratos operativos de los proyectos que adopten el método.
 
-## Regla de cambio mínimo
+## Principio de trabajo
 
-Antes de escribir:
+Haz el cambio mínimo que resuelva la necesidad planteada y mantén coherencia con los contratos canónicos.
 
-1. identifica qué contrato o superficie necesita cambiar;
-2. lee sólo las fuentes canónicas directamente relacionadas;
-3. comprueba si el cambio afecta otras representaciones del mismo contrato;
-4. modifica el mínimo conjunto coherente;
-5. valida que no dejas una variante normativa anterior en otra superficie vigente.
+No conviertas una tarea documental en una oportunidad para rediseñar IA-DOS completo.
 
-No cambies archivos vecinos sólo para “modernizarlos” si no existe contradicción real.
+## Fuentes y jerarquía
 
-## Orden de autoridad documental
+Antes de actuar, consulta sólo las fuentes necesarias para el alcance actual.
 
-Usa, según el tema:
+Prioridad general:
 
-1. archivos raíz y `ORCHESTRATOR.md` para identidad, onboarding y reglas operativas generales;
-2. `docs/foundations/` para contratos fundacionales;
-3. `docs/orchestration/` y `docs/execution/` para routing, artefactos, roles y ejecución;
-4. `templates/` y `prompts/` como superficies copiables que deben permanecer alineadas con esos contratos;
+1. `AGENTS.md` para reglas de trabajo del repositorio.
+2. El documento o template directamente afectado por la tarea.
+3. Contratos canónicos relacionados cuando el cambio altere semántica compartida.
+4. `README.md`, `ORCHESTRATOR.md`, `docs/index.md` o `ROADMAP.md` cuando el cambio afecte presentación, onboarding, operación o dirección del método.
 5. `research/` como contexto e influencia, nunca como autoridad normativa por sí sola.
 
 No leas toda la documentación por defecto. Amplía la lectura sólo cuando el cambio pueda afectar contratos transversales.
@@ -62,9 +56,9 @@ Execution Cell       = continuidad de ejecución
 Execution Task       = contrato de una unidad
 Execution Report     = evidencia de ejecución
 Memoria durable      = responsabilidad funcional
-LLM Wiki             = materialización durable, portable y navegable
-Repository           = implementación
-Exchange             = pasarela pasiva de archivos
+LLM Wiki              = materialización durable, portable y navegable
+Repository            = implementación
+Exchange              = pasarela pasiva de archivos
 ```
 
 Además:
@@ -128,3 +122,32 @@ Una LLM Wiki:
 IA-DOS está en etapa **alpha de adopción en proyectos reales**.
 
 Los fundamentos y la consolidación operacional ya fueron completados. El foco actual es validar los contratos mediante uso real antes de añadir nuevas abstracciones.
+
+Consulta `ROADMAP.md` para el estado y horizonte vigentes.
+
+## Criterios de calidad
+
+Todo cambio debe:
+
+- resolver una necesidad clara o una contradicción verificable;
+- ser comprensible para personas que no sean programadoras expertas;
+- evitar duplicar contratos sin necesidad;
+- mantener terminología y enlaces consistentes;
+- distinguir hechos, decisiones, propuestas, opciones y excepciones;
+- preservar independencia de herramienta;
+- considerar consumo de contexto y tokens;
+- mantener equivalencia entre documentación canónica, templates, onboarding y distribución offline cuando comparten un contrato.
+
+## Verificación mínima
+
+Antes de cerrar una tarea:
+
+- revisa el diff completo;
+- confirma que el alcance declarado coincide con los archivos modificados;
+- verifica enlaces relativos afectados;
+- busca contradicciones con contratos relacionados;
+- comprueba que no se reintroduzcan términos o modelos reemplazados;
+- distingue claramente evidencia de ejecución, decisión de gobierno y aprobación humana aplicable;
+- reporta supuestos, limitaciones y pendientes reales.
+
+Si una revisión automática detecta una contradicción válida, corrígela antes de considerar el trabajo listo.
