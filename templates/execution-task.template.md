@@ -18,7 +18,7 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [TASK-ID]
 ```
 
-El mecanismo de transporte o almacenamiento no cambia este contrato. Si la tarea usa Exchange Protocol v0, el `Task ID` puede ser el identificador autocontenido de Exchange y `Cycle ID` puede declararse `NO APLICA` cuando no exista un ciclo separado.
+El mecanismo de transporte o almacenamiento no cambia este contrato. Si el proyecto usa Exchange, Exchange sólo almacena o pone a disposición el `.md` ya construido; no genera ni modifica `Task ID`, `Cycle ID`, estados o permisos.
 
 ## Identificación
 
@@ -34,7 +34,7 @@ El mecanismo de transporte o almacenamiento no cambia este contrato. Si la tarea
 - Tipo secundario, solo si es inseparable: `[TIPO O NINGUNO]`
 - Responsable humano: `[ROL O PERSONA]`
 - Coding agent o entorno: `[ROL O HERRAMIENTA DISPONIBLE]`
-- Agent Session o Execution Cell: `[NOMBRE O NO APLICA]`
+- Execution Cell o sesión independiente: `[NOMBRE O NO APLICA]`
 - Rol activo: `Coding Agent — Execution`
 - Implementation Plan aprobado: `[REFERENCIA O NO APLICA]`
 - Acceso a IA-DOS: `Embedded Contract | Remote Repository | Local Reference`
@@ -213,7 +213,7 @@ Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memo
 Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
-Agent Session o Execution Cell: [NOMBRE O NO APLICA]
+Execution Cell o sesión independiente: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
