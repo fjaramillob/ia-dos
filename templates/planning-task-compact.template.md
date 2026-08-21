@@ -49,7 +49,11 @@ INSPECCIÓN MÍNIMA
 ENTREGABLE
 Devuelve un Implementation Plan proporcional con estado comprobado, evidencia, decisión recomendada, estrategia mínima, dependencias inmediatas, riesgos y una sola Execution Task candidata, o una única razón bloqueante verificable.
 
-La candidata debe declarar `Execution Cell o sesión: [NOMBRE O NO APLICA]` y reutilizar una célula activa cuando corresponda. La separación de Planning y Execution es de autoridad, no una obligación de abrir una conversación nueva.
+La candidata debe declarar:
+- `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`;
+- `Execution Cell o sesión: [NOMBRE O NO APLICA]`.
+
+No asignes ni reserves el Task ID de la futura Execution Task. Esa identidad pertenece al Conversation Agent/Cycle Owner cuando adopta la candidata. Reutiliza una célula activa cuando corresponda. La separación de Planning y Execution es de autoridad, no una obligación de abrir una conversación nueva.
 
 CONTRATO OPERATIVO
 - objetivo: resolver únicamente la decisión declarada;
@@ -64,7 +68,8 @@ FUERA DE ALCANCE
 - desarrollar unidades futuras independientes;
 - copiar automáticamente implementación heredada;
 - ampliar fuentes o accesos sin autorización;
-- aprobar o ejecutar la Execution Task candidata.
+- aprobar o ejecutar la Execution Task candidata;
+- asignar el Task ID de una futura Execution Task.
 
 CONDICIONES DE DETENCIÓN
 Detente sólo cuando falte una fuente indispensable, el acceso sea insuficiente, exista riesgo de secretos o datos, se requiera escritura, una referencia sea contradictoria o no vigente, o una decisión humana indispensable impida definir una primera unidad segura.
