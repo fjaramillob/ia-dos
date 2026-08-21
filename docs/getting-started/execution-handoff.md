@@ -1,194 +1,162 @@
 # Handoff entre Conversation Space y coding agent
 
-Este flujo convierte una necesidad confirmada en planificación técnica o ejecución acotada, verificable y trazable.
+Este flujo convierte una necesidad confirmada en inspección, planificación o ejecución acotada, verificable y trazable.
 
-Consulta primero:
+Consulta según corresponda:
 
 - [Registro de tópicos conversacionales](../orchestration/topic-routing-registry.md);
 - [Propiedad y retorno del ciclo](../orchestration/cycle-ownership.md);
-- [Avance concreto y transición a coding agents](../orchestration/concrete-execution-flow.md);
-- [Registro de tipos de ejecución](../execution/execution-task-types.md);
+- [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md);
+- [Readiness del entorno y reanudación](../execution/environment-readiness-and-resume.md);
+- [Tipado de artefactos](../orchestration/typed-artifact-routing.md);
 - [Autoridad de fuentes, artefactos y entornos](../execution/source-and-artifact-authority.md).
 
 ## Flujo
 
 ```text
 Conversation Space
-→ resultado esperado
-→ Cycle Owner
-→ Planning Task o Execution Task
+→ resultado esperado + Cycle Owner
+→ Memory Bootstrap Gate cuando depende de historia
+→ Environment Preflight cuando readiness es desconocido
+→ Planning Task cuando falta inspección/diseño
+   o Execution Task cuando la unidad está lista
 → coding agent
-→ Implementation Plan o Execution Report
-→ destino declarado
-→ revisión e iteración
+→ retorno tipado
+→ mismo Cycle Owner
+→ revisión y decisión según autoridad
 ```
 
 `00` no es una parada obligatoria.
 
 ## 1. Confirmar propiedad y destinos
 
-Antes de delegar, registra:
+Antes de delegar, declara:
 
-- tópico y nombre del espacio;
-- estado del resultado;
+- resultado esperado;
 - Cycle Owner;
-- destino del Implementation Plan;
-- destino del Execution Report;
-- espacio de escalamiento.
+- destino del artefacto de retorno;
+- espacio de escalamiento cuando corresponda.
 
-No uses un único campo `Retorno` cuando pueda confundirse el destino de distintos artefactos.
+El Cycle Owner actúa dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo o impacto relevante.
 
-## 2. Aplicar el gate de planificación
+## 2. Evaluar memoria
+
+Antes de una Planning Task o Execution Task que dependa de historia previa, aplica:
+
+> ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
+
+- `PASS` → continúa;
+- `BOOTSTRAP REQUIRED` → persiste primero el checkpoint durable mínimo.
+
+No crees una LLM Wiki completa por ceremonia.
+
+## 3. Evaluar readiness
+
+Si una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, prepara `Environment Preflight` en solo lectura.
+
+Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura.
+
+## 4. Decidir Planning o Execution
 
 Pregunta:
 
 ```text
-¿El resultado está suficientemente definido,
-es pequeño y puede ejecutarse con seguridad sin planificación técnica previa?
+¿El resultado está suficientemente definido, es pequeño y puede ejecutarse
+con seguridad sin inspección o diseño técnico adicional?
 ```
 
-- **Sí:** prepara una Execution Task.
-- **No por falta de inspección o diseño:** prepara una Planning Task.
-- **No por una decisión de dominio pendiente:** continúa o deriva.
-- **No por reorientación:** escala a `00`.
+- sí → Execution Task;
+- no por falta de inspección/diseño → Planning Task;
+- no por decisión humana indispensable → deriva sólo esa decisión;
+- no por reorientación → escala a `00`.
 
-## 3. Preparar una Planning Task
+## 5. Planning Task
 
-Usa `templates/planning-task.template.md`.
+La Planning Task:
 
-Debe incluir:
+- es de solo lectura;
+- resuelve una incertidumbre técnica dominante;
+- declara fuentes, autoridad y límites;
+- devuelve un `Implementation Plan` al Cycle Owner;
+- no autoriza escritura ni ejecución.
 
-- objetivo del plan;
-- Cycle Owner y destinos;
-- contexto mínimo;
-- autoridad y acceso de fuentes, artefactos y entornos;
-- inspección requerida;
-- fuera de alcance;
-- gate de tamaño;
-- condiciones de detención;
-- formato del Implementation Plan.
+Un identificador lógico de planning no obliga a crear una conversación nueva por tarea.
 
-La Planning Task es solo lectura.
+## 6. Revisar el Implementation Plan
 
-## 4. Revisar el Implementation Plan
+El Cycle Owner compara evidencia, hechos, inferencias, riesgos, dependencias y tamaño de la primera unidad propuesta.
 
-Usa `templates/implementation-plan.template.md`.
-
-El Cycle Owner compara:
-
-- objetivo versus resultado propuesto;
-- hechos versus inferencias;
-- fuentes autorizadas versus fuentes utilizadas;
-- dependencias y riesgos;
-- unidades propuestas;
-- decisiones humanas pendientes;
-- primera tarea recomendada.
-
-Aprueba solo una unidad ejecutable.
+Cuando la primera unidad sea segura, prepara o valida una `Execution Task` candidata y obtiene la autorización humana aplicable.
 
 Plan producido no equivale a plan aprobado ni a ejecución autorizada.
 
-## 5. Elegir el tipo de ejecución
+## 7. Execution Task
 
-Toda Execution Task declara un tipo principal:
+Usa la plantilla compacta o completa según la complejidad.
 
-```text
-INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE
-TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE
-```
+Debe declarar:
 
-La planificación no es un tipo de materialización. Usa Planning Task cuando el objetivo sea diseñar cómo implementar.
-
-No mezcles varios tipos para ocultar objetivos independientes.
-
-## 6. Aplicar el gate de tamaño
-
-Confirma:
-
-```text
-¿La tarea puede completarse, verificarse y reportarse
-como una sola unidad sin mezclar resultados independientes?
-```
-
-Si no, divide antes de ejecutar.
-
-## 7. Preparar la Execution Task
-
-Usa `templates/execution-task.template.md`.
-
-Debe incluir:
-
-- Cycle Owner y destino del reporte;
-- tipo de ejecución;
 - objetivo único;
-- contexto mínimo;
-- autoridad y acceso de recursos;
-- readiness del entorno;
+- Cycle Owner y destino;
+- Execution Cell o sesión cuando corresponda;
+- contexto durable estrictamente necesario;
+- fuentes y autoridad;
 - alcance y fuera de alcance;
 - zonas autorizadas;
+- capacidades y acciones externas autorizadas;
 - criterios de aceptación;
 - verificaciones;
-- condiciones de detención;
-- documentación o memoria;
-- autorizaciones explícitas.
+- condiciones de detención.
 
-## 8. Preparar el entorno
+Antes de ejecutar, confirma que pueda completarse, verificarse y reportarse como una sola unidad.
 
-Confirma únicamente:
+Una Execution Cell activa se reutiliza mientras siga respondiendo bien. No abras una conversación nueva sólo porque cambia la tarea. Cada tarea vuelve a declarar sus permisos.
 
-- entorno disponible: local, remoto o combinado;
-- recursos accesibles y faltantes;
-- trabajo que debe preservarse;
-- permisos reales;
-- secretos o datos restringidos;
-- acciones externas o con coste.
+## 8. Ejecutar
 
-No impongas una estructura física o herramienta concreta.
+El coding agent:
 
-## 9. Ejecutar con el coding agent
+1. valida rol y tarea;
+2. lee instrucciones locales aplicables;
+3. inspecciona el estado real antes de escribir;
+4. modifica sólo lo autorizado;
+5. ejecuta verificaciones;
+6. revisa el diff;
+7. devuelve un `Execution Report` al destino indicado.
 
-El agente debe:
+## 9. Revisar el Execution Report
 
-1. confirmar objetivo, Cycle Owner y destino;
-2. revisar instrucciones aplicables;
-3. inspeccionar el estado real antes de escribir;
-4. respetar autoridad, acceso y autorizaciones;
-5. modificar solo el alcance aprobado;
-6. detenerse ante contradicciones o riesgos;
-7. ejecutar verificaciones aplicables;
-8. revisar los cambios completos;
-9. devolver el artefacto requerido al destino indicado.
+El reporte utiliza:
 
-## 10. Cerrar el ciclo
+```text
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+```
 
-Después de aprobar el resultado:
+El Cycle Owner revisa objetivo, alcance, evidencia, verificaciones, autorizaciones, desviaciones y pendientes del alcance original.
 
-- conserva implementación y evidencia en sus fuentes correspondientes;
-- actualiza memoria solo con conocimiento confirmado;
-- prepara una corrección o la siguiente unidad desde el mismo Cycle Owner;
-- transfiere propiedad de forma explícita cuando cambie el dominio;
-- escala a `00` solo por reorientación real.
+El coding agent no aprueba su propio resultado, no selecciona la siguiente acción y no consolida memoria durable por defecto.
+
+Después de revisar la evidencia, la autoridad correspondiente decide cierre, corrección, reversión, transferencia, escalamiento o siguiente unidad. Separadamente se evalúa si hechos nuevos merecen consolidación durable.
+
+## 10. Cerrar o continuar
+
+Al cerrar:
+
+- la implementación permanece en el artefacto técnico real;
+- la evidencia permanece en Report/diff/PR u otro mecanismo;
+- la memoria durable se actualiza sólo con conocimiento confirmado y mediante una acción autorizada;
+- Exchange, si existe, sólo conserva o transporta los `.md` intercambiados;
+- `00` recibe únicamente reorientación real.
 
 ## Rechaza el cierre cuando
 
-- falta Cycle Owner o destino;
+- falta autoridad o destino;
 - una Planning Task produjo cambios;
 - un plan se presenta como implementación;
+- readiness indispensable sigue `NO LISTO` o `DESCONOCIDO`;
 - la Execution Task mezcla resultados independientes;
-- faltan verificaciones exigidas sin explicación;
+- faltan verificaciones requeridas sin explicación;
 - aparecen cambios fuera de alcance;
 - se tomaron acciones no autorizadas;
-- memoria o documentación presenta propuestas como hechos.
-
-## Verificación final
-
-- [ ] El resultado y su estado están declarados.
-- [ ] El Cycle Owner está definido.
-- [ ] Los destinos de plan, reporte y escalamiento están separados.
-- [ ] Se aplicó el gate de planificación.
-- [ ] Se aplicó el gate de tamaño.
-- [ ] La autoridad y acceso de recursos están explícitos.
-- [ ] El entorno real fue confirmado sin imponer topología.
-- [ ] Los criterios y verificaciones son observables.
-- [ ] Las autorizaciones están declaradas.
-- [ ] El artefacto vuelve al destino correcto.
+- el reporte pretende aprobar su propio resultado o decidir la memoria posterior.
