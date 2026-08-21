@@ -1,10 +1,10 @@
 # Iniciar un proyecto nuevo desde la capa conversacional
 
-Este recorrido comienza en conversación. La preparación local aparece después, cuando una tarea necesita repositorios, archivos, Git o un coding agent.
+Este recorrido comienza en conversación. La preparación técnica aparece después, cuando una unidad necesita repositorios, archivos, Git, servicios o un coding agent.
 
 ## 1. Inicializar el Project Orchestrator
 
-Utiliza `prompts/getting-started/initialize-project-orchestrator.md` y entrega una descripción inicial, documentos, repositorios o fuentes disponibles.
+Utiliza `prompts/getting-started/initialize-project-orchestrator.md` y entrega una descripción inicial y las fuentes disponibles.
 
 ## 2. Confirmar el escenario
 
@@ -12,108 +12,129 @@ Clasifica el producto objetivo como nuevo. Una migración, reconstrucción o sis
 
 ## 3. Abrir `00 — Dirección y orquestación`
 
-Para un producto nuevo, `00` trabaja en modo `definición inicial` y captura solo lo necesario para avanzar:
+Para un producto nuevo, `00` trabaja en modo `definición inicial` y captura sólo lo necesario para avanzar:
 
 - propósito;
 - usuario principal;
 - problema central;
 - promesa de valor;
-- principios no negociables;
+- principios o restricciones no negociables;
 - prioridad o primer resultado;
 - límites y riesgos relevantes.
 
-La primera respuesta debe incluir:
+La primera respuesta debe ser breve y seguir como base:
 
 1. Lo que entendí.
 2. Prioridad propuesta.
 3. Qué falta resolver ahora.
-4. Organización de conversaciones.
+4. Organización de conversaciones sólo si aporta.
 5. Cómo trabajaremos.
 6. Tu siguiente acción.
 
-## 4. Organizar conversaciones bajo demanda
+## 4. Conversation Spaces bajo demanda
 
-Usa `docs/orchestration/topic-routing-registry.md` como única lista normativa de Conversation Spaces.
+Usa `docs/orchestration/topic-routing-registry.md` como lista normativa de Conversation Spaces.
 
 `00` debe indicar si basta seguir allí o si la brecha dominante justifica abrir un único espacio especializado con contexto persistente propio.
 
-No copies ni mantengas aquí una lista paralela de tópicos. No abras espacios como secuencia automática. Si `00` ya puede preparar una `Execution Task`, pasa directamente a ejecución.
+No abras espacios como secuencia automática. No abras `30` sólo porque exista trabajo para un coding agent; ejecución conversacional y Execution Cells son conceptos distintos.
 
-## 5. Activar Launch Mode
+## 5. Cuando la persona quiere avanzar
 
-Cuando el usuario indique que quiere avanzar:
+Expresiones como `avancemos`, `empecemos`, `sigamos` o equivalentes no activan una fase especial.
 
-1. confirma la dirección en pocas líneas;
-2. identifica el siguiente resultado verificable;
-3. evalúa primero si puede ejecutarse directamente;
-4. si falta inspección o diseño técnico, prepara una `Planning Task` de solo lectura;
-5. abre otro Conversation Space sólo cuando una decisión de dominio indispensable requiera contexto persistente propio;
-6. antes de emitir una tarea que dependa de decisiones o contexto histórico, evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md);
-7. prepara una `Execution Task` tan pronto como la unidad esté definida, sea segura y el gate no detecte una dependencia de memoria no durable.
-
-La Planning Task vuelve al mismo Cycle Owner como `Implementation Plan`. No abre por sí sola otro ciclo ni autoriza ejecución.
-
-## 6. Preparar el entorno cuando corresponda
-
-La instalación local no es un requisito previo del onboarding. Se recomienda cuando la siguiente tarea necesita acceso real a repositorios, archivos, Git o herramientas locales.
-
-En ese momento, el Orchestrator puede enlazar las instrucciones aplicables:
-
-- [Preparar el workspace local](workspace-setup.md)
-- [Instalar IA-DOS](install-ia-dos.md)
-- [Crear el proyecto en el workspace](create-new-project-workspace.md)
-- [Crear o conectar la memoria durable](bootstrap-llm-wiki.md)
-- [Preparar el handoff de ejecución](execution-handoff.md)
-
-Estas guías son opciones de implementación. No impongas una topología física cuando el proyecto no la necesita.
-
-## 7. Ejecutar y retornar
+El Project Orchestrator identifica el siguiente resultado verificable y evalúa:
 
 ```text
-Conversation Space Cycle Owner
-→ Execution Task
-→ Execution Cell adecuada o entorno de ejecución disponible
-→ coding agent
-→ cambios + verificaciones
-→ Execution Report
-→ mismo Cycle Owner
-→ revisión e iteración
+1. ¿El resultado está suficientemente definido y acotado?
+2. Si depende de historia previa, ¿el conocimiento necesario ya es durable?
+3. ¿Las precondiciones indispensables del entorno están comprobadas?
+4. Si falta inspección o diseño, ¿corresponde Planning?
 ```
 
-Una `Execution Task` no implica una conversación nueva. Si el proyecto utiliza Execution Cells y ya existe una conversación activa adecuada que continúa respondiendo bien, reutilízala.
+Según el caso:
 
-Cada Execution Task vuelve a declarar permisos, alcance, criterios y condiciones de detención. La conversación puede persistir; la autorización no.
+- conocimiento necesario sólo en conversaciones → `Memory Bootstrap Gate`;
+- readiness indispensable desconocido → `Environment Preflight`;
+- falta inspección o diseño → `Planning Task` de solo lectura;
+- unidad definida + memoria suficiente + entorno listo → `Execution Task`;
+- decisión humana indispensable → deriva sólo esa decisión;
+- reorientación → `00`.
 
-Exchange puede utilizarse como pasarela pasiva opcional para trasladar los archivos `.md` de `Execution Task` y `Execution Report` entre agentes. No cambia el contrato de esos artefactos ni define sus IDs, estados o permisos.
+No fuerces una Execution Task sólo porque la persona manifestó intención de avanzar.
 
-Solo vuelve a `00` cuando exista una reorientación real: cambio de objetivo, conflicto entre dominios, expansión importante de alcance o decisión humana estratégica.
+## 6. Memory Bootstrap Gate
 
-## Memoria durable
+Antes de una Planning Task o Execution Task que dependa de historia, pregunta:
 
-La memoria durable se construye progresivamente a partir de conocimiento confirmado. No copies conversaciones completas en la Wiki ni obligues al coding agent a leerla completa.
-
-El Memory Bootstrap Gate devuelve:
+> ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
 
 ```text
 PASS
-→ la siguiente unidad no depende de conocimiento que sólo vive en chats
+→ continúa sin documentación adicional
 
 BOOTSTRAP REQUIRED
 → persiste primero el checkpoint durable mínimo
 ```
 
-Un bootstrap mínimo no exige documentar toda la arquitectura ni abrir `90`. Cuando se use Markdown, consulta [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
+Una LLM Wiki separada no es obligatoria y `90 — Wiki y memoria` no debe abrirse por rutina.
+
+## 7. Preparar el entorno cuando corresponda
+
+La instalación local no es requisito previo del onboarding.
+
+Cuando la siguiente unidad necesite acceso real, utiliza sólo las guías aplicables:
+
+- [Preparar el workspace local](workspace-setup.md)
+- [Instalar IA-DOS](install-ia-dos.md)
+- [Crear el proyecto en el workspace](create-new-project-workspace.md)
+- [Crear o conectar la memoria durable](bootstrap-llm-wiki.md)
+- [Preparar el handoff técnico](execution-handoff.md)
+
+No impongas una topología física cuando el proyecto no la necesita.
+
+## 8. Ejecutar y retornar
+
+```text
+Conversation Space / Cycle Owner
+→ Execution Task
+→ Execution Cell adecuada o entorno disponible
+→ coding agent
+→ cambios + verificaciones
+→ Execution Report
+→ mismo Cycle Owner
+→ revisión
+```
+
+Una `Execution Task` no implica una conversación nueva. Si existe una Execution Cell adecuada y su conversación activa sigue respondiendo bien, reutilízala.
+
+Cada tarea vuelve a declarar permisos, alcance, criterios y condiciones de detención.
+
+Exchange puede utilizarse como pasarela pasiva opcional de `.md`. No cambia contratos, IDs, estados o permisos.
+
+## 9. Responsabilidad y revisión
+
+El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante.
+
+El `Execution Report` aporta evidencia mediante:
+
+```text
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+```
+
+El coding agent no aprueba su propio resultado, no decide la siguiente unidad y no consolida memoria durable por defecto.
 
 ## Resultado esperado
 
-- dirección inicial clara;
-- `00 — Dirección y orquestación` usado en modo `definición inicial`;
-- organización mínima de conversaciones;
-- registro canónico usado para enrutar tópicos;
-- ningún espacio abierto por rutina;
-- Memory Bootstrap Gate evaluado cuando la siguiente unidad dependa de historia conversacional;
-- primera Planning Task o Execution Task verificable preparada;
-- entorno preparado sólo cuando la ejecución lo requiere;
+- dirección inicial suficiente;
+- `00 — Dirección y orquestación` como entrada canónica;
+- Conversation Spaces bajo demanda;
+- ningún `Launch Mode` o fase artificial;
+- Memory Bootstrap Gate aplicado cuando la unidad dependa de historia conversacional;
+- Environment Preflight usado cuando readiness indispensable sea desconocido;
+- Planning Task sólo cuando reduzca incertidumbre real;
+- Execution Task acotada cuando la unidad esté lista;
 - Execution Cell reutilizada cuando corresponda;
-- Execution Report devuelto al Cycle Owner;
-- memoria durable actualizada progresivamente con conocimiento confirmado.
+- evidencia devuelta al Cycle Owner;
+- memoria durable construida progresivamente sólo cuando aporte.
