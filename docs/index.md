@@ -23,7 +23,9 @@ La primera adopción sigue este orden:
 15. Devuelve el artefacto al Cycle Owner declarado.
 16. Escala a `00` sólo cuando exista reorientación real.
 
-Si la plataforma no puede navegar el repositorio canónico, usa `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md` como contrato offline mínimo. No combines bundles o addenda heredados para un onboarding nuevo. `bundles/ia-dos-current-offline-pack.md` sólo debe usarse cuando su encabezado declare sincronización con la versión o commit adoptado.
+Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md), cuyo encabezado debe declarar `Estado: VIGENTE` y un baseline canónico. Es el único bundle actual para nuevos onboardings offline. No combines los bundles o addenda históricos; consulta la [política de bundles](../bundles/README.md).
+
+Si el Current Offline Pack no está disponible, usa como fallback mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`.
 
 ## Contratos operativos
 
@@ -71,7 +73,7 @@ Estas guías son opciones de implementación, no requisitos normativos del méto
 - [Conversation Space Handoff](../templates/conversation-space-handoff.template.md)
 - [`90 — Wiki y memoria`](orchestration/wiki-and-memory.md)
 
-El [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) se conserva como artefacto de distribución, pero no debe tratarse como vigente hasta que su encabezado confirme sincronización con la versión adoptada.
+Para plataformas sin navegación del repositorio, el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) es el artefacto de distribución vigente. [Bundles](../bundles/README.md) documenta qué archivos son actuales y cuáles se conservan sólo como históricos.
 
 ## Planificación
 

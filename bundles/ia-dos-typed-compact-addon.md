@@ -1,3 +1,7 @@
+> [!WARNING]
+> **ESTADO: HISTÓRICO — NO UTILIZAR PARA NUEVOS ONBOARDINGS.**
+> Este addendum pertenece a una generación anterior de IA-DOS y contiene formatos operativos reemplazados. Para uso offline vigente consulta `bundles/ia-dos-current-offline-pack.md`. No lo combines con otros bundles históricos.
+
 # IA-DOS Typed and Compact Artifact Addendum
 
 Complemento obligatorio del pack operativo para plataformas sin acceso al repositorio canónico.

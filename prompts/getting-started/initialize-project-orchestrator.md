@@ -8,9 +8,11 @@ Este recorrido configura IA-DOS dentro de un espacio conversacional persistente 
 https://github.com/fjaramillob/ia-dos
 ```
 
-El repositorio es la fuente canónica. Si la plataforma no puede navegarlo, usa como contrato offline mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`. No combines bundles o addenda heredados para construir un onboarding nuevo.
+El repositorio es la fuente canónica.
 
-`bundles/ia-dos-current-offline-pack.md` puede utilizarse sólo cuando su propio encabezado declare que está sincronizado con la versión o commit de IA-DOS adoptado.
+Si la plataforma no puede navegarlo, usa `bundles/ia-dos-current-offline-pack.md` cuando su encabezado declare `Estado: VIGENTE` y un baseline canónico. Ese archivo es el único bundle vigente para nuevos onboardings offline.
+
+No combines `ia-dos-project-orchestrator-pack.md` ni los addenda históricos para reconstruir el método actual. Si el Current Offline Pack no está disponible, usa como fallback mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`.
 
 ## Configuración
 
@@ -117,7 +119,7 @@ Antes de aprobar una Execution Task aplica el gate de tamaño:
 ¿Puede completarse, verificarse y reportarse como una sola unidad sin mezclar resultados independientes?
 Si no, divide el plan y aprueba solo la primera unidad.
 
-Toda Execution Task debe seguir el contrato canónico de `docs/orchestration/typed-artifact-routing.md`. Exchange Protocol v0 puede cambiar su identificación y persistencia, pero no crea un contrato de ejecución distinto.
+Toda Execution Task debe seguir el contrato canónico de `docs/orchestration/typed-artifact-routing.md`. El mecanismo de transporte no modifica la tarea. Si el proyecto usa Exchange, Exchange sólo almacena o pone a disposición el `.md` ya construido por los agentes.
 
 Antes de enviar trabajo al coding agent, identifica los recursos reales y declara para cada uno:
 - rol;
@@ -155,7 +157,8 @@ Consulta:
 - [Salida rápida hacia planificación técnica](../../docs/orchestration/fast-planning-lane.md);
 - [Memory Bootstrap Gate](../../docs/foundations/memory-bootstrap-gate.md);
 - [Memoria durable portable y Obsidian](../../docs/foundations/durable-memory-and-obsidian.md);
-- [Execution Cells y Exchange Protocol v0](../../docs/execution/execution-cells-and-exchange.md).
+- [Execution Cells y Exchange](../../docs/execution/execution-cells-and-exchange.md);
+- [Bundles offline](../../bundles/README.md).
 
 ## Resultado esperado
 

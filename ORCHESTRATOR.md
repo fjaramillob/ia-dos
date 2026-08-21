@@ -141,7 +141,7 @@ Tipos válidos:
 - Execution Resume;
 - Execution Report.
 
-El mecanismo de transporte no crea tipos adicionales. Exchange Protocol v0 puede aportar un `Task ID` autocontenido, persistencia y transporte manual, pero una tarea en Exchange sigue siendo `Artifact Type: Execution Task` y conserva el mismo contrato operativo.
+El mecanismo de transporte no crea tipos adicionales. El Conversation Agent asigna la identidad de la tarea antes del handoff. Exchange, cuando se utiliza, sólo almacena o pone a disposición el archivo `.md` ya construido y no genera ni valida IDs, contratos o estados.
 
 Consulta `docs/orchestration/typed-artifact-routing.md` y `docs/execution/execution-cells-and-exchange.md`.
 
@@ -224,7 +224,7 @@ Toda Execution Task:
 
 La conversación de una Execution Cell puede reutilizarse para múltiples tareas mientras siga respondiendo bien. Reutilizar la conversación no reutiliza permisos de tareas anteriores.
 
-Para Exchange v0 puede utilizarse `templates/exchange-task-v0.template.md`. Esa plantilla es un perfil compacto de una Execution Task canónica, no un contrato alternativo.
+Si la tarea se materializa como `.md` y atraviesa Exchange, conserva exactamente el mismo contrato y puede usar las plantillas canónicas `templates/execution-task-compact.template.md` o `templates/execution-task.template.md`. Exchange no añade un perfil de tarea propio.
 
 ## Execution Resume
 
@@ -273,4 +273,4 @@ Cuando el proyecto utiliza una Wiki Markdown:
 
 Consulta `docs/foundations/durable-memory-and-obsidian.md`.
 
-Exchange conserva historial operacional cuando el proyecto lo adopta; no sustituye la memoria durable ni la implementación.
+Exchange, cuando el proyecto lo utiliza, sólo transporta o conserva los archivos `.md` intercambiados; no sustituye la memoria durable ni la implementación.

@@ -255,7 +255,9 @@ Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 6. Antes de depender de contexto histórico que sólo viva en chats, evalúa el Memory Bootstrap Gate.
 7. Usa Exchange sólo cuando una pasarela de `.md` entre agentes aporte valor real.
 
-Si la plataforma no puede navegar el repositorio canónico, usa como contrato offline mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`. No combines bundles heredados. El archivo `bundles/ia-dos-current-offline-pack.md` sólo debe utilizarse cuando su propio encabezado declare que está sincronizado con la versión o commit de IA-DOS adoptado.
+Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](bundles/ia-dos-current-offline-pack.md) cuando su encabezado declare `Estado: VIGENTE` y un baseline canónico. Es el único bundle actual para nuevos onboardings offline. No combines los bundles históricos; consulta [Bundles](bundles/README.md).
+
+Si el Current Offline Pack no está disponible, usa como fallback mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`.
 
 ## Contratos principales
 
