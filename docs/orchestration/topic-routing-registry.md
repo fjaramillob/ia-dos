@@ -136,6 +136,8 @@ Cada espacio evalúa en este orden:
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
 
+Cuando `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, la unidad evaluada queda bloqueada. El mismo Cycle Owner puede emitir una `Execution Task` separada cuyo único resultado sea persistir el checkpoint durable mínimo; esa tarea deja la unidad original fuera de alcance, devuelve su `Execution Report` y sólo después se reevalúa el gate original. No presentes la tarea de bootstrap como `PASS`.
+
 ## Contrato del Conversation Space
 
 Todo espacio debe poder declarar:
