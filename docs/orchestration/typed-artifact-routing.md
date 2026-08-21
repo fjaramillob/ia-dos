@@ -4,12 +4,12 @@ Este contrato evita que un bloque destinado a un Conversation Space sea interpre
 
 ## Regla principal
 
-Todo bloque transferible nuevo debe comenzar con:
+Todo bloque transferible nuevo comienza con:
 
 ```text
 Artifact Type: [TIPO]
 Destination Role: [ROL RECEPTOR]
-Expected Output: [ARTEFACTO]
+Expected Output: [ARTEFACTO O REVISIÓN]
 Forbidden Output: [ARTEFACTO O ACCIÓN]
 Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [TASK-ID O NO APLICA]
@@ -19,63 +19,40 @@ El receptor valida el encabezado antes de actuar.
 
 ## Contrato semántico único
 
-IA-DOS mantiene un solo contrato semántico para cada tipo de artefacto.
-
-Un mecanismo de transporte o almacenamiento no crea un tipo nuevo. En particular:
+Un mecanismo de transporte o almacenamiento no crea un tipo nuevo.
 
 ```text
 Execution Task
-    = contrato de ejecución
+= contrato de ejecución
 
 Exchange
-    = pasarela pasiva de archivos Markdown
+= pasarela pasiva de archivos Markdown
 ```
 
-Por lo tanto, una tarea almacenada o transferida mediante Exchange sigue siendo exactamente la misma `Execution Task`, conserva `Destination Role: Coding Agent — Execution` y debe declarar alcance, autoridad, permisos, criterios, verificaciones y condiciones de detención suficientes para ejecutar con seguridad.
+Una tarea transferida mediante Exchange sigue siendo la misma Execution Task. Exchange no genera, modifica, valida o coordina IDs, contratos, estados o permisos.
 
-`Execution Cell` identifica continuidad de ejecución cuando el proyecto usa ese modelo, pero no reemplaza el rol receptor.
+Una `Execution Cell` identifica continuidad de ejecución cuando el proyecto usa ese modelo, pero no reemplaza `Destination Role`, Cycle Owner ni autoridad por tarea.
 
 ## Identificadores
 
-El **Conversation Agent que construye la tarea** asigna el `Task ID` antes del handoff o de materializar el artefacto como archivo.
+El Conversation Agent que construye una Execution Task asigna el `Task ID` antes del handoff o materialización como archivo.
 
-Exchange no genera, modifica, valida ni coordina IDs.
-
-Cuando el proyecto no utiliza otro esquema acordado, IA-DOS recomienda para una `Execution Task` un identificador autocontenido:
+Cuando el proyecto no usa otro esquema, IA-DOS recomienda:
 
 ```text
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
 
-Ejemplo:
+Si se materializa como Markdown, puede usarse:
 
 ```text
-PORTAL-10-APP-20260820-164500
+{TASK-ID}-TASK.md
+{TASK-ID}-REPORT.md
 ```
 
-Si el artefacto se materializa como Markdown, el Conversation Agent puede usar:
+El Execution Report reutiliza exactamente el Task ID de su Execution Task.
 
-```text
-PORTAL-10-APP-20260820-164500-TASK.md
-```
-
-El `Execution Report` reutiliza exactamente el mismo `Task ID` y, cuando se materializa como archivo:
-
-```text
-PORTAL-10-APP-20260820-164500-REPORT.md
-```
-
-Cuando no existe un `Cycle ID` separado, declara:
-
-```text
-Cycle ID: NO APLICA
-```
-
-No inventes un ciclo solamente para satisfacer el encabezado.
-
-## Compatibilidad de transición
-
-`Artifact: Implementation Plan` y `Artifact: Execution Report` siguen siendo alias heredados cuando el cuerpo conserva IDs, sesión o Execution Cell cuando corresponda, Cycle Owner y estado. Las salidas nuevas usan `Artifact Type:`.
+`Cycle ID` puede ser `NO APLICA`; no inventes un ciclo para satisfacer el encabezado.
 
 ## Tipos permitidos
 
@@ -84,7 +61,7 @@ No inventes un ciclo solamente para satisfacer el encabezado.
 ```text
 Artifact Type: Specialist Handoff
 Destination Role: Conversation Space — [TÓPICO]
-Expected Output: decisión de dominio | Planning Task | Execution Task
+Expected Output: decisión de dominio | Planning Task | Environment Preflight | Execution Task
 Forbidden Output: Implementation Plan | Execution Report | cambios técnicos
 ```
 
@@ -97,6 +74,8 @@ Expected Output: Implementation Plan
 Forbidden Output: cambios | commits | despliegues | Execution Report
 ```
 
+La sesión de Planning, cuando se declara, puede ser un identificador lógico. No impone una política universal de conversación por tarea.
+
 ### Environment Preflight
 
 ```text
@@ -106,27 +85,33 @@ Expected Output: Environment Readiness Report
 Forbidden Output: cambios | instalaciones | inicio de servicios | ejecución
 ```
 
-El preflight conserva el ciclo vigente cuando exista y solo comprueba precondiciones.
-
 ### Environment Readiness Report
 
 ```text
 Artifact Type: Environment Readiness Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: Autorizar ejecución | Resolver dependencia | Corregir preflight | Escalar
+Expected Output: revisión del readiness y decisión bajo la autoridad aplicable
 Forbidden Output: iniciar ejecución automáticamente | modificar el entorno
 ```
 
-El reporte declara `LISTO PARA EJECUCIÓN`, `NO LISTO` o `DESCONOCIDO` y no autoriza escritura por sí mismo.
+Estados:
+
+```text
+LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
+```
+
+Sólo `LISTO PARA EJECUCIÓN` permite considerar aprobación o reanudación de escritura.
 
 ### Implementation Plan
 
 ```text
 Artifact Type: Implementation Plan
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: Aprobar | Corregir | Rechazar | Escalar
+Expected Output: revisión del plan bajo la autoridad aplicable
 Forbidden Output: ejecución automática
 ```
+
+El plan propone. No aprueba su propia Execution Task candidata.
 
 ### Execution Task
 
@@ -137,18 +122,19 @@ Expected Output: Execution Report
 Forbidden Output: ampliar alcance | aprobar el propio resultado | iniciar otra unidad
 ```
 
-Toda Execution Task, independientemente de dónde se almacene o cómo se transporte, debe mantener explícitos los controles que no pueden inferirse de memoria conversacional:
+Toda Execution Task mantiene explícitos:
 
 - objetivo único;
-- alcance incluido y fuera de alcance;
-- autoridad y acceso de los recursos relevantes;
-- capacidades o acciones externas autorizadas;
+- Cycle Owner y destino;
+- Execution Cell o sesión cuando corresponda;
+- alcance y fuera de alcance;
+- autoridad y acceso;
+- capacidades y acciones externas autorizadas;
 - criterios de aceptación;
-- verificaciones esperadas;
-- condiciones de detención;
-- destino del Execution Report.
+- verificaciones;
+- condiciones de detención.
 
-El contexto durable puede compactarse o referenciarse, pero estos controles operativos no deben desaparecer por compresión.
+El contexto durable puede compactarse, pero estos controles no desaparecen por compresión.
 
 ### Execution Resume
 
@@ -156,21 +142,19 @@ El contexto durable puede compactarse o referenciarse, pero estos controles oper
 Artifact Type: Execution Resume
 Destination Role: Coding Agent — Execution
 Expected Output: Execution Report
-Forbidden Output: nueva Planning Task | replantear arquitectura | ampliar alcance
+Forbidden Output: nueva Planning Task | replantear arquitectura | ampliar alcance | ampliar permisos
 ```
 
-Conserva el `Task ID` y el `Cycle ID` cuando exista. Reanuda una tarea aprobada después de resolver una condición bloqueante.
+Conserva Task ID y sólo es válido cuando objetivo, alcance, autoridad, seguridad y arquitectura de la Execution Task original siguen sin cambios.
 
 ### Execution Report
 
 ```text
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: revisión y decisión del Cycle Owner
+Expected Output: revisión de evidencia bajo la autoridad aplicable
 Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 ```
-
-El estado del reporte describe únicamente el resultado de la ejecución.
 
 Estados canónicos:
 
@@ -178,9 +162,17 @@ Estados canónicos:
 COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 ```
 
-Cuando exista un bloqueo, riesgo, desviación o decisión concreta que el Cycle Owner deba revisar, el reporte puede declararlo como `Atención requerida`. El coding agent no elige por adelantado la acción de gobierno posterior.
+`Atención requerida` identifica un bloqueo, riesgo, desviación o decisión concreta que requiere revisión. No selecciona `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`.
 
-Después de revisar la evidencia, el Cycle Owner puede aprobar y cerrar, corregir, revertir, escalar o evaluar memoria durable. Estas son decisiones del receptor, no estados ni campos de decisión seleccionados por el executor.
+El Execution Report no crea por defecto una sección de conocimiento potencialmente durable ni una actualización recomendada.
+
+## Autoridad después del retorno
+
+`Destination Role: Cycle Owner` no significa autoridad humana ilimitada.
+
+El Cycle Owner revisa y decide dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+
+La evaluación de memoria durable ocurre después de revisar evidencia, salvo que una Execution Task haya autorizado una actualización documental concreta.
 
 ## Gate de compatibilidad
 
@@ -189,9 +181,9 @@ Antes de responder, valida:
 1. ¿Mi rol coincide con `Destination Role`?
 2. ¿El artefacto solicitado coincide con `Expected Output`?
 3. ¿La acción requerida está autorizada?
-4. ¿Existe una contradicción entre encabezado y cuerpo?
+4. ¿Existe contradicción entre encabezado y cuerpo?
 
-Cuando el rol no coincida, no ejecutes: indica el rol esperado y devuelve el bloque sin transformarlo silenciosamente. Ante contradicción prevalece la opción más restrictiva.
+Cuando el rol no coincida, no ejecutes. Ante contradicción prevalece la opción más restrictiva.
 
 ## Reglas por receptor
 
@@ -201,6 +193,10 @@ Un coding agent puede recibir Planning Task, Environment Preflight, Execution Ta
 
 Ningún coding agent asume identidad de Conversation Space, Cycle Owner o Project Orchestrator ni decide el siguiente ciclo.
 
+## Compatibilidad histórica
+
+`Artifact: Implementation Plan` y `Artifact: Execution Report` pueden aparecer en artefactos históricos. Las salidas nuevas usan `Artifact Type:`.
+
 ## Cierre
 
-El encabezado funciona como un tipo fuerte: declara quién puede actuar, qué puede producir y qué está prohibido. El mecanismo usado para mover o conservar el artefacto no modifica ese contrato.
+El encabezado funciona como un tipo fuerte: declara quién puede actuar, qué salida se espera y qué está prohibido. El mecanismo usado para mover o conservar el artefacto no modifica ese contrato.
