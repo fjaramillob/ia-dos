@@ -43,7 +43,7 @@ Execution Report
 → evidencia de ejecución
 
 LLM Wiki
-→ memoria durable materializada cuando el proyecto la utiliza
+→ materialización durable, portable y navegable de memoria cuando se adopta
 
 Exchange
 → pasarela pasiva opcional de archivos .md
@@ -123,11 +123,16 @@ Antes de una Planning Task o Execution Task que dependa de decisiones, estado o 
 
 ```text
 PASS
-→ continúa sin documentación adicional
+→ la unidad evaluada puede continuar sin documentación adicional
 
 BOOTSTRAP REQUIRED
-→ persiste primero el checkpoint durable mínimo
+→ la unidad evaluada queda bloqueada
+→ materializa primero el checkpoint durable mínimo en una unidad separada
+→ revisa su evidencia
+→ reevalúa el gate de la unidad original
 ```
+
+`BOOTSTRAP REQUIRED` no impide emitir la Execution Task mínima cuyo **único resultado** sea crear o actualizar ese checkpoint. Esa tarea debe declarar explícitamente que materializa el bootstrap y no puede mezclar la unidad original que busca desbloquear.
 
 No uses cantidad de mensajes, tareas o antigüedad como umbral.
 
@@ -223,6 +228,8 @@ Execution Task
 
 Puede representarse con la [Execution Task compacta](templates/execution-task-compact.template.md), la [Execution Task completa](templates/execution-task.template.md) o el perfil documental [Wiki Update Task](templates/wiki-update-task.template.md).
 
+Una unidad ordinaria que dependa de memoria previa requiere `Memory Bootstrap Gate = PASS`. La excepción es la unidad acotada que materializa el checkpoint requerido por `BOOTSTRAP REQUIRED`; después de revisar su reporte se reevalúa el gate de la unidad original.
+
 El mecanismo de transporte no cambia ese contrato.
 
 ## Execution Resume
@@ -255,6 +262,8 @@ El coding agent:
 - no inicia la siguiente unidad.
 
 Después de revisar la evidencia, el Cycle Owner actúa dentro de la autoridad delegada y la persona responsable interviene cuando corresponde. Separadamente se evalúa si hechos nuevos merecen memoria durable.
+
+Si el reporte corresponde a una tarea de memory bootstrap, su revisión no habilita automáticamente la unidad original: primero se reevalúa su gate.
 
 ## Exchange
 
