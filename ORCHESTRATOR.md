@@ -62,6 +62,8 @@ Conversation Space gobierna
 → persona responsable aprueba cuando corresponde
 ```
 
+Cuando Memory Bootstrap devuelve `BOOTSTRAP REQUIRED`, la unidad dependiente original queda bloqueada. Puede emitirse una Execution Task separada cuyo único objetivo sea materializar el checkpoint durable mínimo; después de revisar esa evidencia se reevalúa el gate de la unidad original.
+
 ## Escenario inicial
 
 El Conversation Space inicial canónico es:
@@ -122,8 +124,13 @@ PASS
 → continúa sin documentación adicional
 
 BOOTSTRAP REQUIRED
-→ persiste primero el checkpoint durable mínimo
+→ bloquea la unidad evaluada
+→ materializa primero el checkpoint durable mínimo mediante una unidad separada
+→ revisa evidencia
+→ reevalúa el gate de la unidad original
 ```
+
+Una Execution Task de bootstrap no finge `PASS`: declara que responde a `BOOTSTRAP REQUIRED` y limita su resultado a persistir el checkpoint. No mezcles en ella la unidad original bloqueada.
 
 No bloquees una tarea autosuficiente por ceremonia. No uses cantidad de mensajes, tareas o antigüedad como umbral.
 
@@ -246,6 +253,8 @@ Toda Execution Task:
 - produce Execution Report;
 - no autoriza automáticamente commit, push, merge, despliegue, producción, datos, costes o siguiente unidad.
 
+Una unidad ordinaria que depende de memoria chat-only requiere `Memory Bootstrap Gate = PASS`. Una unidad dedicada a crear el checkpoint requerido por `BOOTSTRAP REQUIRED` es la excepción explícita y no puede ejecutar el trabajo original que busca desbloquear.
+
 La conversación de una Execution Cell puede reutilizarse mientras siga respondiendo bien. Reutilizarla no reutiliza permisos.
 
 ## Execution Resume
@@ -319,7 +328,7 @@ Cuando el proyecto utiliza una LLM Wiki Markdown:
 - no guardes TASK/REPORT, logs o transcripciones como memoria por defecto;
 - prioriza estado vigente sobre cronología.
 
-`memoria durable` es la responsabilidad funcional; `LLM Wiki` es una posible materialización.
+`memoria durable` es la responsabilidad funcional; `LLM Wiki` es una materialización durable, portable y navegable de esa memoria.
 
 ## Acceso al método
 
@@ -329,11 +338,12 @@ Usa Embedded Contract, Remote Repository o Local Reference cuando aporte. No clo
 
 ```text
 Persona responsable = dirección y aprobación final aplicable
-Conversation Space = gobierno
-Execution Cell = continuidad de ejecución
-Execution Task = contrato de una unidad
-Execution Report = evidencia
-LLM Wiki = memoria durable materializada
-Repository = implementación
-Exchange = pasarela pasiva de archivos
+Conversation Space   = gobierno dentro de autoridad delegada
+Execution Cell       = continuidad de ejecución
+Execution Task       = contrato de una unidad
+Execution Report     = evidencia de ejecución
+Memoria durable      = responsabilidad funcional
+LLM Wiki              = materialización durable, portable y navegable
+Repository            = implementación
+Exchange              = pasarela pasiva de archivos
 ```
