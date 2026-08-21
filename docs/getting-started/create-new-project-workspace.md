@@ -49,9 +49,24 @@ proyectos/
     └── nombre-proyecto-wiki/
 ```
 
-Exchange puede agregarse después como recurso hermano cuando una pasarela de archivos aporte valor.
+Exchange puede agregarse después como recurso hermano cuando una pasarela de archivos Markdown entre agentes aporte valor.
 
-También son válidos monorepos, documentación dentro de la app u otras configuraciones. No crees una carpeta sólo porque aparece en un ejemplo.
+También son válidos:
+
+```text
+nombre-proyecto/
+└── repositorio-monorepo/
+    ├── app/
+    └── docs/
+```
+
+```text
+nombre-proyecto-app/
+```
+
+si la siguiente unidad todavía no necesita una Wiki separada.
+
+No crees una carpeta sólo porque aparece en un ejemplo.
 
 ## Qué se crea en este paso
 
@@ -59,7 +74,11 @@ Crea únicamente los recursos autorizados.
 
 ### Implementación, cuando corresponda
 
-Un repositorio nuevo puede comenzar con `README.md`.
+Un repositorio nuevo puede comenzar con:
+
+```text
+README.md
+```
 
 El README inicial sólo necesita declarar:
 
@@ -78,6 +97,16 @@ Antes de crearla evalúa el [Memory Bootstrap Gate](../foundations/memory-bootst
 Cuando el proyecto decida crear una Wiki Markdown, usa directamente `templates/wiki-starter/` y [Aplicar las plantillas mínimas de adopción](apply-starter-templates.md).
 
 No crees un `index.md` provisional ni una segunda estructura transitoria que luego deba migrarse.
+
+El starter utiliza:
+
+```text
+00-home.md
+project-brief.md
+status/current-state.md
+```
+
+como núcleo inicial, con `decisions/` y `sources/` disponibles para conocimiento durable real.
 
 ### Exchange, cuando corresponda
 
@@ -102,9 +131,66 @@ No crees templates, IDs, registros, estados o automatización dentro de Exchange
 
 Cada recurso puede tener su propio repositorio Git, compartir un monorepo o no usar Git todavía, según la decisión del proyecto.
 
-No conviertas la carpeta exterior en repositorio Git por defecto. Inicializa Git sólo cuando esté autorizado y la topología elegida lo requiera.
+No conviertas la carpeta exterior en repositorio Git por defecto.
 
-Crea un commit sólo cuando los archivos fueron revisados, la identidad Git está configurada, no hay secretos y la tarea autoriza commit.
+Inicializa Git sólo cuando esté autorizado y la topología elegida lo requiera.
+
+```bash
+git init -b main
+```
+
+Crea un commit sólo cuando:
+
+- los archivos fueron revisados;
+- la identidad Git está configurada;
+- no hay secretos;
+- la tarea autoriza commit.
+
+No crees automáticamente repositorios remotos ni definas su visibilidad sin aprobación.
+
+## Ejemplo PowerShell
+
+Este ejemplo crea sólo una carpeta de proyecto y un recurso de implementación. Agrega otros recursos únicamente cuando hayan sido decididos.
+
+```powershell
+$Workspace = Join-Path $HOME "proyectos"
+$Project = "nombre-proyecto"
+$ProjectRoot = Join-Path $Workspace $Project
+$App = Join-Path $ProjectRoot "$Project-app"
+
+if ($Project -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$') {
+    Write-Error "El project-slug no cumple la convención recomendada."
+    exit 1
+}
+
+if (Test-Path $ProjectRoot) {
+    Write-Error "La carpeta del proyecto ya existe. Detente y revisa su contenido."
+    exit 1
+}
+
+New-Item -ItemType Directory -Path $App -Force | Out-Null
+```
+
+## Ejemplo macOS o Linux
+
+```bash
+WORKSPACE="$HOME/proyectos"
+PROJECT="nombre-proyecto"
+PROJECT_ROOT="$WORKSPACE/$PROJECT"
+APP="$PROJECT_ROOT/$PROJECT-app"
+
+if ! printf '%s' "$PROJECT" | grep -Eq '^[a-z0-9]+(-[a-z0-9]+)*$'; then
+  echo "El project-slug no cumple la convención recomendada." >&2
+  exit 1
+fi
+
+if [ -e "$PROJECT_ROOT" ]; then
+  echo "La carpeta del proyecto ya existe. Detente y revisa su contenido." >&2
+  exit 1
+fi
+
+mkdir -p "$APP"
+```
 
 ## Fuentes de verdad al finalizar
 
@@ -147,7 +233,7 @@ Detente antes de escribir cuando:
 
 ## Siguiente paso
 
-Si el Memory Bootstrap Gate devuelve `BOOTSTRAP REQUIRED`, continúa con [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
+Si el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) devuelve `BOOTSTRAP REQUIRED`, continúa con [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
 Si se decidió utilizar Exchange, crea o conecta únicamente su pasarela con [Crear o conectar Exchange](bootstrap-exchange.md).
 
