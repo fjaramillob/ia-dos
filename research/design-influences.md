@@ -177,13 +177,16 @@ Esta formulación es una decisión propia de IA-DOS y no se atribuye a una únic
 
 ## Human-in-the-loop y evidencia verificable
 
-IA-DOS comparte con múltiples prácticas de ingeniería asistida por IA la necesidad de mantener a una persona responsable de decisiones que cambian dirección, autoridad o riesgo.
+IA-DOS comparte con múltiples prácticas de ingeniería asistida por IA la necesidad de mantener a una persona responsable de las decisiones finales que cambian dirección, autoridad o riesgo.
 
 Su síntesis concreta es:
 
 ```text
+Persona responsable
+→ conserva la aprobación final y la responsabilidad
+
 Conversation Space / Cycle Owner
-→ gobierna y decide
+→ gobierna el ciclo, revisa evidencia y propone o ejecuta decisiones dentro de la autoridad delegada
 
 Coding Agent — Planning
 → inspecciona y propone
@@ -195,7 +198,7 @@ Execution Report
 → describe el resultado observado
 ```
 
-El coding agent no aprueba su propio resultado ni decide automáticamente la siguiente unidad.
+El coding agent no aprueba su propio resultado ni decide automáticamente la siguiente unidad. El Conversation Space o Cycle Owner tampoco reemplaza la aprobación humana cuando el cambio exige una decisión reservada a la persona responsable.
 
 Esta frontera es central para IA-DOS, pero no se presenta como una invención exclusiva ni se atribuye a una fuente única.
 
@@ -213,7 +216,7 @@ Dominios persistentes de gobierno conversacional. Separan dirección, producto, 
 
 ### Cycle Owner
 
-El Conversation Space que gobierna un resultado mientras éste permanezca dentro de su dominio.
+El Conversation Space que gobierna un resultado mientras éste permanezca dentro de su dominio, sin sustituir la aprobación final humana cuando corresponda.
 
 ### Execution Cells
 
