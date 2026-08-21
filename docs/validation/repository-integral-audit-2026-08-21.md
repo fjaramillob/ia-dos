@@ -64,6 +64,7 @@ Además:
 - una Execution Cell no se renueva por edad, tiempo o cantidad de tareas;
 - cada Execution Task vuelve a declarar permisos;
 - Memory Bootstrap Gate ocurre antes de una Planning/Execution Task que dependa de historia chat-only;
+- `BOOTSTRAP REQUIRED` bloquea la unidad dependiente original, no la unidad mínima necesaria para materializar el checkpoint;
 - Environment Preflight precede escritura cuando readiness indispensable es desconocido;
 - sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura;
 - Execution Resume sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios;
@@ -186,19 +187,57 @@ El registro de tipos de ejecución describía `WIKI` como actualización de memo
 
 Se aclaró que el tipo clasifica el trabajo, pero **no concede autorización**: la propia Execution Task debe delimitar explícitamente conocimiento, rutas y permisos de una actualización durable.
 
+### 14. Circularidad entre Memory Bootstrap Gate y Execution Task
+
+La primera versión corregida de `Execution Task` exigía:
+
+```text
+Memory Bootstrap Gate = PASS | NO APLICA
+```
+
+Eso introducía una circularidad: cuando el gate devolvía `BOOTSTRAP REQUIRED`, hacía falta persistir memoria antes de la unidad original, pero el contrato parecía prohibir emitir la propia Execution Task documental necesaria para materializar ese checkpoint.
+
+La revisión del patch de PR detectó la contradicción antes del cierre.
+
+La semántica consolidada queda:
+
+```text
+unidad A depende de memoria chat-only
+→ BOOTSTRAP REQUIRED
+→ unidad A queda bloqueada
+→ Execution Task B sólo materializa el checkpoint mínimo
+→ Execution Report B
+→ revisión
+→ se reevalúa el gate de A
+→ PASS
+→ A puede emitirse
+```
+
+La excepción se sincronizó en:
+
+- `docs/foundations/memory-bootstrap-gate.md`;
+- `ORCHESTRATOR.md`;
+- `templates/execution-task.template.md`;
+- `templates/execution-task-compact.template.md`;
+- `templates/wiki-update-task.template.md`;
+- `prompts/execution/update-llm-wiki.md`;
+- `bundles/ia-dos-current-offline-pack.md`.
+
+La tarea B no puede mezclar la unidad A ni fingir que el gate original ya está en `PASS`.
+
 ## Correcciones aplicadas
 
 La revisión actualizó o volvió a sincronizar contratos en:
 
 - `AGENTS.md`, `README.md`, `ORCHESTRATOR.md`, `ROADMAP.md` y `CHANGELOG.md`;
 - fuentes de verdad, terminología, propósito, responsabilidades y modelo operativo;
-- memoria portable, Memory Bootstrap Gate y checklists fundacionales;
+- Memory Bootstrap Gate, memoria portable y checklists fundacionales;
 - routing, cycle ownership, fast lane, flujo concreto, compresión y handoff técnico;
 - onboarding nuevo, existente, workspace e instalación local;
 - coding agents, tipos de ejecución, readiness y Resume;
 - identidad pública y comprensión por LLMs;
 - prompts de inicialización, instalación, workspace, Planning, Execution y Wiki;
-- templates de AGENTS, roles, Planning, Implementation Plan, Preflight, Resume, Execution Task, Execution Report y Specialist Handoff;
+- templates de AGENTS, roles, Planning, Implementation Plan, Preflight, Resume, Execution Task, Execution Report, Wiki Update Task y Specialist Handoff;
 - Current Offline Pack;
 - documentación de validación histórica y la propia evidencia de esta auditoría.
 
@@ -241,6 +280,7 @@ La auditoría se considera cerrable cuando el diff final confirme que:
 - readiness usa estados canónicos;
 - Resume conserva objetivo, alcance, autoridad, seguridad y arquitectura;
 - Memory Bootstrap y Preflight no pueden saltarse en rutas rápidas;
+- `BOOTSTRAP REQUIRED` bloquea la unidad dependiente pero permite la unidad mínima de persistencia del checkpoint;
 - LLM Wiki no es topología obligatoria;
 - instalar IA-DOS no crea topología del proyecto;
 - Exchange sigue pasivo;
@@ -261,4 +301,4 @@ Esta auditoría no invalida su valor histórico, pero **reemplaza su conclusión
 AUDITORÍA EN REVISIÓN FINAL
 ```
 
-El trabajo de corrección y la segunda pasada archivo por archivo están completados. Este estado debe cambiar a `PASS` sólo después de revisar el diff completo de la branch, resolver feedback válido de pull request y comprobar el head final contra los invariantes anteriores.
+El trabajo de corrección y las pasadas archivo por archivo están completados. La revisión del PR ya detectó y corrigió una circularidad adicional de Memory Bootstrap. Este estado debe cambiar a `PASS` sólo después de revisar el diff actualizado, resolver feedback válido de pull request y comprobar el head final contra los invariantes anteriores.
