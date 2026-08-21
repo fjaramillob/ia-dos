@@ -40,6 +40,7 @@ Si modificas alguno de estos conceptos, comprueba sus representaciones relaciona
 - memoria durable / `LLM Wiki`;
 - Exchange;
 - tipado de artefactos;
+- `Output Delivery`, `Manual Artifact Launcher` y `Caveman Return` cuando se adopten;
 - Current Offline Pack.
 
 Una modificación de un contrato canónico no debe dejar una variante incompatible en templates, onboarding, `ORCHESTRATOR.md` o distribución offline.
@@ -70,6 +71,10 @@ Además:
 - la autorización de una Execution Task es explícita y no acumulativa;
 - el `Task ID` lo asigna el Conversation Agent que construye la tarea;
 - Exchange no define IDs, artefactos, filenames, templates, estados, permisos, backlog, memoria, decisiones o workflow;
+- `Manual Artifact Launcher` es efímero y no autoritativo: sólo localiza input y, cuando aplica, destino físico del output;
+- `Output Delivery` sólo autoriza materializar el artefacto de salida expresamente declarado; no amplía permisos sobre proyecto, entorno o recursos inspeccionados;
+- `Caveman Return` sólo puede compactar la conversación cuando la Task lo declara y el output completo ya fue materializado; nunca sustituye el artefacto canónico;
+- `Coding Agent — Planning` y `Environment Preflight` son de solo lectura respecto del proyecto/entorno, aunque puedan materializar su propio output cuando exista autorización explícita de `Output Delivery`;
 - `Execution Report` no aprueba su propio resultado ni elige la decisión de gobierno posterior;
 - el Cycle Owner revisa y gobierna dentro de la autoridad delegada; no sustituye la aprobación humana cuando una decisión cambia dirección, autoridad, riesgo o impacto reservado a la persona responsable;
 - antes de emitir una Planning Task o Execution Task que dependa de historia previa, `Memory Bootstrap Gate` evalúa si existe conocimiento relevante únicamente en conversaciones efímeras y exige persistir el checkpoint mínimo cuando corresponda;

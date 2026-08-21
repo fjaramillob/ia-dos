@@ -1,6 +1,6 @@
 # Planning Task
 
-Usa esta plantilla cuando el coding agent deba inspeccionar y proponer cómo implementar antes de autorizar escritura.
+Usa esta plantilla cuando el coding agent deba inspeccionar y proponer cómo implementar antes de autorizar escritura sobre el proyecto.
 
 ## Identificación
 
@@ -76,7 +76,30 @@ No copies toda la historia del proyecto.
 |---|---|---|---|---|
 | `[RECURSO]` | `[ROL]` | `[ÁMBITO]` | `Lectura` | `[LÍMITES]` |
 
-La Planning Task es de solo lectura. Una necesidad de escritura requiere otra tarea y autorización explícita.
+La Planning Task es de solo lectura respecto del proyecto y de las fuentes inspeccionadas.
+
+## Output Delivery
+
+Si el proyecto usa Exchange u otro mecanismo de materialización, puede autorizarse explícitamente la escritura del **único artefacto de salida** sin convertir Planning en una tarea de modificación del producto.
+
+```text
+Output Delivery:
+Channel: [Exchange | Conversation | Otro | NO APLICA]
+Location: [outbox | destino lógico | NO APLICA]
+Filename: [PLAN-ID-IMPLEMENTATION-PLAN.md | OTRO | NO APLICA]
+Caveman Return: [Sí | No]
+```
+
+Cuando `Output Delivery` autoriza archivo:
+
+- el coding agent puede crear únicamente el Implementation Plan declarado;
+- no puede usar ese permiso para modificar código, schema, datos, Git, Wiki, configuración ni otras fuentes;
+- la ruta física concreta puede ser resuelta por un `Manual Artifact Launcher` sin ampliar autoridad.
+
+```text
+Planning read-only del proyecto
+≠ prohibición de materializar el output autorizado
+```
 
 ## Acceso al método
 
@@ -119,7 +142,8 @@ La Execution Task candidata debe indicar `Execution Cell o sesión: [NOMBRE O NO
 
 ## Fuera de alcance
 
-- modificar artefactos;
+- modificar artefactos del proyecto o fuentes inspeccionadas;
+- escribir archivos distintos del output expresamente autorizado;
 - crear commits o cambios remotos;
 - desplegar;
 - crear recursos externos o costes;
@@ -140,7 +164,7 @@ Detente cuando:
 - el acceso no permita inspección suficiente;
 - exista riesgo de secretos o datos sensibles;
 - una contradicción requiera decisión humana indispensable;
-- preparar el plan exija escritura no autorizada;
+- preparar el plan exija escritura no autorizada distinta de su propia materialización declarada;
 - la inspección se expanda a objetivos independientes.
 
 No te detengas por decisiones que puedan mantenerse como supuesto reversible sin comprometer la seguridad de la primera unidad.
@@ -154,15 +178,34 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Sesión de planificación: [PLAN — RESULTADO | NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA REVISIÓN | BLOQUEADO
-Cambios realizados: Ninguno
+Cambios al proyecto: Ninguno
 ```
 
 El Implementation Plan propone. La decisión de aprobar, corregir, rechazar o escalar pertenece al Cycle Owner dentro de la autoridad delegada y a la persona responsable cuando corresponda.
 
+Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
+
+1. la Planning Task declara `Caveman Return: Sí`;
+2. el Implementation Plan completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas se cumplen, responde en conversación únicamente con:
+
+```text
+PLAN LISTO | BLOQUEADO
+Resultado: [UNA FRASE]
+Atención: [DESCRIPCIÓN O NINGUNA]
+Archivo: [NOMBRE/PATH DEL IMPLEMENTATION PLAN]
+```
+
+Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Implementation Plan completo según el contrato y canal de la Task.
+
+El Caveman Return no reemplaza el Implementation Plan.
+
 ## Declaración final
 
 ```text
-No se modificaron artefactos.
+No se modificaron artefactos del proyecto ni fuentes inspeccionadas.
+Sólo se materializó el Implementation Plan cuando Output Delivery lo autorizó.
 No se realizaron cambios remotos ni despliegues.
 El plan no constituye autorización de ejecución.
 El Implementation Plan vuelve al Cycle Owner indicado.

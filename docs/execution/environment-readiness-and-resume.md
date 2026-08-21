@@ -41,12 +41,15 @@ Una herramienta instalada no demuestra que su servicio esté operativo.
 
 El preflight:
 
-- es de solo lectura;
-- no crea ni modifica archivos;
+- es de solo lectura respecto del proyecto y entorno inspeccionados;
+- no crea ni modifica archivos del proyecto/entorno;
+- puede materializar únicamente su propio `Environment Readiness Report` cuando `Output Delivery` lo autoriza explícitamente;
 - no instala o actualiza;
 - no inicia, detiene o configura servicios;
 - no ejecuta la Execution Task;
 - devuelve un `Environment Readiness Report`.
+
+La materialización del reporte autorizado no convierte el preflight en ejecución ni concede permisos de escritura sobre el entorno.
 
 ## Acciones sobre el entorno
 

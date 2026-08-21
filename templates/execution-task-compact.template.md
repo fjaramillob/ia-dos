@@ -4,6 +4,16 @@ Usa este bloque como salida operativa por defecto cuando el resultado está defi
 
 Una unidad ordinaria que dependa de memoria chat-only requiere `Memory Bootstrap Gate = PASS`. La excepción es una Execution Task cuyo **único resultado** sea materializar el checkpoint mínimo exigido por `BOOTSTRAP REQUIRED`.
 
+Antes de emitir una Execution Task real, el Conversation Agent asigna su `Task ID`. Si el proyecto no tiene otra convención, usa:
+
+```text
+{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
+```
+
+Ejemplo: `PROPACTO-10-APP-20260821-130700`.
+
+Una candidata de Planning mantiene `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR` hasta ese momento.
+
 ```text
 Artifact Type: Execution Task
 Destination Role: Coding Agent — Execution
@@ -68,6 +78,14 @@ CAPACIDADES Y AUTORIZACIONES
 - despliegue o producción: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
 - datos, servicios externos o costes: [AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]
 
+OUTPUT DELIVERY
+- Channel: [Exchange | Conversation | Otro]
+- Location: [outbox | destino lógico | NO APLICA]
+- Filename: [{EXEC-ID}-REPORT.md | OTRO | NO APLICA]
+- Caveman Return: [Sí | No]
+
+Si Output Delivery autoriza un archivo, ese permiso cubre únicamente el Execution Report declarado y no amplía ninguna zona modificable. Un Manual Artifact Launcher puede resolver el path físico sin modificar autoridad.
+
 CRITERIOS DE ACEPTACIÓN
 - [ ] [RESULTADO OBSERVABLE]
 
@@ -99,6 +117,18 @@ Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera revisión. No elijas la decisión de gobierno posterior, no consolides memoria durable fuera de lo autorizado y no inicies otra unidad.
+
+Usa `Caveman Return` únicamente cuando:
+1. la Task declara `Caveman Return: Sí`;
+2. el Execution Report completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas condiciones se cumplen, responde en conversación únicamente:
+
+EJECUCIÓN COMPLETADA | PARCIAL | BLOQUEADO | FALLIDO
+Atención: [DESCRIPCIÓN O NINGUNA]
+Reporte: [NOMBRE/PATH]
+
+Si falla la materialización o falta cualquiera de las dos condiciones, devuelve el Execution Report completo según el contrato y canal de la Task.
 ```
 
 ## Regla de continuidad

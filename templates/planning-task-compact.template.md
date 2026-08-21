@@ -1,12 +1,14 @@
 # Planning Task compacta
 
-Usa este bloque como salida operativa para pegar en el coding agent. La plantilla completa permanece como referencia de diseño y validación.
+Usa este bloque como salida operativa para el coding agent. La plantilla completa permanece como referencia de diseño y validación.
+
+Cuando la tarea se materializa en Exchange, puede ser consumida mediante `Manual Artifact Launcher` en vez de pegar todo su contenido nuevamente en conversación.
 
 ```text
 Artifact Type: Planning Task
 Destination Role: Coding Agent — Planning
 Expected Output: Implementation Plan
-Forbidden Output: cambios | commits | despliegues | ejecución
+Forbidden Output: cambios del proyecto | commits | despliegues | ejecución
 
 Método: IA-DOS
 Cycle ID: [CYCLE-ID O NO APLICA]
@@ -14,7 +16,7 @@ Task ID: [PLAN-ID]
 Sesión de planificación, cuando aporte: [PLAN — RESULTADO | NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Destino: [CONVERSATION SPACE]
-Autoridad: solo lectura
+Autoridad sobre el proyecto: solo lectura
 Acceso a IA-DOS: Embedded Contract | Remote Repository | Local Reference
 Referencia local: [RUTA O NO DISPONIBLE]
 
@@ -55,15 +57,28 @@ La candidata debe declarar:
 
 No asignes ni reserves el Task ID de la futura Execution Task. Esa identidad pertenece al Conversation Agent/Cycle Owner cuando adopta la candidata. Reutiliza una célula activa cuando corresponda. La separación de Planning y Execution es de autoridad, no una obligación de abrir una conversación nueva.
 
+OUTPUT DELIVERY
+- Channel: [Exchange | Conversation | Otro | NO APLICA]
+- Location: [outbox | destino lógico | NO APLICA]
+- Filename: [PLAN-ID-IMPLEMENTATION-PLAN.md | OTRO | NO APLICA]
+- Caveman Return: [Sí | No]
+
+Cuando Output Delivery autoriza archivo:
+- escribe únicamente el Implementation Plan declarado;
+- no uses ese permiso para modificar fuentes o artefactos del proyecto;
+- el path físico puede venir del Manual Artifact Launcher sin ampliar autoridad.
+
 CONTRATO OPERATIVO
 - objetivo: resolver únicamente la decisión declarada;
 - permisos: lectura sobre las fuentes autorizadas;
+- escritura permitida: sólo el output declarado cuando Output Delivery lo autoriza;
 - límites: no ampliar recursos, alcance ni decisiones;
 - verificación: evidencia trazable para cada hallazgo que condicione el plan;
 - retorno: Implementation Plan al Cycle Owner declarado.
 
 FUERA DE ALCANCE
-- implementar o modificar artefactos;
+- implementar o modificar artefactos del proyecto;
+- escribir archivos distintos del output autorizado;
 - diseñar arquitectura o roadmap completos;
 - desarrollar unidades futuras independientes;
 - copiar automáticamente implementación heredada;
@@ -72,7 +87,7 @@ FUERA DE ALCANCE
 - asignar el Task ID de una futura Execution Task.
 
 CONDICIONES DE DETENCIÓN
-Detente sólo cuando falte una fuente indispensable, el acceso sea insuficiente, exista riesgo de secretos o datos, se requiera escritura, una referencia sea contradictoria o no vigente, o una decisión humana indispensable impida definir una primera unidad segura.
+Detente sólo cuando falte una fuente indispensable, el acceso sea insuficiente, exista riesgo de secretos o datos, se requiera escritura no autorizada distinta del output declarado, una referencia sea contradictoria o no vigente, o una decisión humana indispensable impida definir una primera unidad segura.
 
 FALLBACK AUTOSUFICIENTE
 Cuando una fuente durable declarada no sea accesible, indícalo e incluye sólo el extracto indispensable provisto por la tarea. Conserva la referencia original y no presentes el extracto como autoridad nueva.
@@ -85,7 +100,20 @@ Planning Task ID: [PLAN-ID]
 Sesión de planificación, cuando aporte: [PLAN — RESULTADO | NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA REVISIÓN | BLOQUEADO
-Cambios realizados: Ninguno
+Cambios al proyecto: Ninguno
+
+Usa `Caveman Return` únicamente cuando:
+1. la Task declara `Caveman Return: Sí`;
+2. el Implementation Plan completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas condiciones se cumplen, responde en conversación únicamente:
+
+PLAN LISTO | BLOQUEADO
+Resultado: [UNA FRASE]
+Atención: [DESCRIPCIÓN O NINGUNA]
+Archivo: [NOMBRE/PATH]
+
+Si falla la materialización o falta cualquiera de las dos condiciones, devuelve el Implementation Plan completo según el contrato y canal de la Task.
 
 No implementes cambios. No actúes como Project Orchestrator. No cambies el Cycle Owner. No inicies otro ciclo.
 ```
@@ -96,4 +124,4 @@ El coding agent propone; el Cycle Owner revisa dentro de autoridad delegada y la
 
 Aplica `docs/orchestration/context-compression-by-authority.md`.
 
-El bloque operativo usa documentos concretos como autoridad, transporta el delta del ciclo y mantiene explícitos permisos, límites y condiciones de detención.
+El bloque operativo usa documentos concretos como autoridad, transporta el delta del ciclo y mantiene explícitos permisos, límites, Output Delivery y condiciones de detención.

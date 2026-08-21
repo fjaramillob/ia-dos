@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — auditoría integral 2026-08-21`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — adopción real / entrega manual 2026-08-21`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -143,6 +143,8 @@ Tipos vigentes:
 
 El mecanismo de transporte no crea tipos adicionales.
 
+`Manual Artifact Launcher`, `Output Delivery` y `Caveman Return` son convenciones de entrega, no Artifact Types.
+
 ## Identidad
 
 El Conversation Agent que construye una Execution Task asigna el Task ID. Exchange no participa.
@@ -161,6 +163,14 @@ Esquema recomendado cuando no existe otro:
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
 
+Ejemplo:
+
+```text
+PROPACTO-10-APP-20260821-130700
+```
+
+`YYYYMMDD-HHMMSS` significa año-mes-día y hora-minuto-segundo. Se asigna al adoptar y construir la Execution Task real; no desde Planning.
+
 Si se materializa como archivo:
 
 ```text
@@ -172,9 +182,11 @@ El Execution Report reutiliza exactamente el Task ID de su tarea.
 
 `Cycle ID` puede ser `NO APLICA`; no inventes un ciclo sólo para completar el encabezado.
 
+El esquema temporal anterior no obliga a usar timestamps como ID de Planning.
+
 ## Planning Task
 
-Es de solo lectura, resuelve una incertidumbre técnica dominante y produce Implementation Plan.
+Es de solo lectura respecto del proyecto, resuelve una incertidumbre técnica dominante y produce Implementation Plan.
 
 Puede usar un identificador lógico:
 
@@ -185,7 +197,6 @@ PLAN — [RESULTADO]
 pero IA-DOS no impone una política universal de conversación por Planning Task.
 
 Cuando exista evidencia suficiente, el plan puede proponer una sola Execution Task candidata.
-
 La candidata mantiene:
 
 ```text
@@ -194,6 +205,18 @@ Execution Cell o sesión: [NOMBRE O NO APLICA]
 ```
 
 El coding agent no inventa ni reserva el Task ID. La futura ejecución requiere autorización separada, pero **no exige** una conversación de ejecución nueva: puede reutilizar una Execution Cell existente.
+
+Una Planning Task puede autorizar explícitamente materializar su propio Implementation Plan como archivo sin dejar de ser solo lectura respecto del proyecto:
+
+```text
+Output Delivery:
+Channel: Exchange
+Location: outbox
+Filename: [PLAN-ID-IMPLEMENTATION-PLAN.md]
+Caveman Return: Sí | No
+```
+
+Ese permiso cubre únicamente el output declarado.
 
 ## Implementation Plan
 
@@ -234,12 +257,14 @@ Environment Preflight
 → Environment Readiness Report
 ```
 
-El Preflight es de solo lectura y no:
+El Preflight es de solo lectura respecto del entorno y no:
 
-- modifica archivos;
+- modifica fuentes inspeccionadas;
 - instala o actualiza;
 - inicia, detiene o configura servicios;
 - ejecuta la Execution Task.
+
+Puede materializar su Environment Readiness Report cuando la tarea lo autoriza explícitamente.
 
 El Environment Readiness Report produce:
 
@@ -265,7 +290,8 @@ Toda tarea declara en forma proporcional:
 - capacidades y acciones externas autorizadas;
 - criterios de aceptación;
 - verificaciones;
-- condiciones de detención.
+- condiciones de detención;
+- Output Delivery cuando corresponda.
 
 Precondición de memoria:
 
@@ -387,6 +413,74 @@ Exchange no define:
 
 Nada ocurre automáticamente por mover un archivo. `archive/` no significa aprobado o completado.
 
+## Entrega manual con Exchange
+
+Cuando Exchange funciona manualmente:
+
+```text
+Conversation Agent
+→ materializa artefacto completo en inbox
+
+Persona
+→ pega Manual Artifact Launcher
+
+Code Agent
+→ lee artefacto completo
+→ trabaja dentro de autoridad
+→ materializa el output completo únicamente cuando la Task lo autoriza mediante Output Delivery
+→ usa Caveman Return sólo si la Task declara Caveman Return: Sí y el output completo fue materializado correctamente
+
+Conversation Agent / Cycle Owner
+→ consume el artefacto completo
+```
+
+### Manual Artifact Launcher
+
+Es un prompt efímero y no autoritativo que puede declarar:
+
+```text
+Tipo esperado: [ARTIFACT TYPE]
+Archivo autoritativo: [PATH]
+Directorio físico de salida: [PATH | NO APLICA]
+```
+
+El launcher sólo localiza input/output. No amplía objetivo, alcance, permisos, salida ni condiciones de detención. La presencia de un `outbox` o de una ruta física no autoriza por sí misma a escribir allí.
+
+### Output Delivery
+
+Una tarea puede declarar:
+
+```text
+Output Delivery:
+Channel: Exchange
+Location: outbox
+Filename: [NOMBRE.md]
+Caveman Return: Sí | No
+```
+
+Sólo esta declaración autoriza materializar el output indicado en el destino declarado. El mero uso de Exchange o del Manual Artifact Launcher no crea esa autorización.
+
+Para Planning o Preflight, materializar **únicamente** su output declarado no modifica las fuentes inspeccionadas y no convierte la tarea en escritura sobre el proyecto.
+
+### Caveman Return
+
+Sólo puede usarse cuando se cumplen conjuntamente estas condiciones:
+
+1. la Task autoritativa declara `Caveman Return: Sí`;
+2. el output completo fue materializado correctamente en el destino declarado.
+
+Es una representación conversacional mínima del artefacto completo ya materializado:
+
+```text
+estado o resultado esencial
++ atención requerida
++ nombre/path del output
+```
+
+Si la Task declara `Caveman Return: No`, usa `Channel: Conversation`, no declara `Output Delivery` o la materialización falla, no compactes la salida por esta convención: devuelve el artefacto completo según el contrato y canal de la Task.
+
+No es un Artifact Type y no reemplaza Implementation Plan, Environment Readiness Report o Execution Report.
+
 ## Autoridad
 
 ```text
@@ -427,6 +521,8 @@ Conversation ≠ Execution Cell
 Execution Cell ≠ Specialist
 Exchange ≠ Contract
 Exchange ≠ Memory
+Manual Artifact Launcher ≠ autoridad
+Caveman Return ≠ artefacto completo
 Execution Report ≠ decisión del Cycle Owner
 Execution Report ≠ memoria durable
 
@@ -435,5 +531,7 @@ REPORT carries execution evidence.
 Durable memory carries current knowledge.
 Repository carries implementation.
 Exchange only carries files.
+Launcher only locates artifacts.
+Caveman Return only summarizes delivery after Task opt-in and successful full-output materialization.
 Human authority remains explicit.
 ```

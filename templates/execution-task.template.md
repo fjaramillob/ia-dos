@@ -20,6 +20,39 @@ Task ID: [TASK-ID]
 
 El mecanismo de transporte o almacenamiento no cambia este contrato. Si el proyecto usa Exchange, Exchange sólo almacena o pone a disposición el `.md` ya construido y no genera ni modifica IDs, estados o permisos.
 
+## Identidad de la tarea
+
+El Conversation Agent asigna el `Task ID` al construir la Execution Task real. Una candidata de Planning llega con:
+
+```text
+Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
+```
+
+y recibe identidad sólo cuando se adopta.
+
+Cuando el proyecto no tiene otro esquema, usa la recomendación IA-DOS:
+
+```text
+{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
+```
+
+Ejemplo:
+
+```text
+PROPACTO-10-APP-20260821-130700
+```
+
+`YYYYMMDD-HHMMSS` usa año-mes-día y hora-minuto-segundo para ordenar cronológicamente y reducir colisiones en operación manual.
+
+Si se materializa mediante Exchange, nombres recomendados:
+
+```text
+{TASK-ID}-TASK.md
+{TASK-ID}-REPORT.md
+```
+
+Exchange no define ni valida esos nombres.
+
 ## Precondiciones de emisión
 
 Antes de emitir la tarea confirma:
@@ -171,6 +204,27 @@ Si esta tarea responde a `BOOTSTRAP REQUIRED`, incluye explícitamente la unidad
 - Despliegue o producción: `Autorizado | No autorizado | No aplica`
 - Datos, recursos externos o costes: `[AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]`
 
+## Output Delivery
+
+Declara cómo debe volver el Execution Report cuando sea necesario materializarlo:
+
+```text
+Output Delivery:
+Channel: [Exchange | Conversation | Otro]
+Location: [outbox | destino lógico | NO APLICA]
+Filename: [{TASK-ID}-REPORT.md | OTRO | NO APLICA]
+Caveman Return: [Sí | No]
+```
+
+Cuando el output se materializa en Exchange:
+
+- el permiso cubre únicamente el Execution Report declarado;
+- no amplía zonas modificables ni acciones externas;
+- la ruta física concreta puede ser indicada por un `Manual Artifact Launcher`;
+- Exchange continúa siendo pasivo.
+
+`Caveman Return` sólo puede usarse cuando la Task declara `Caveman Return: Sí` y el Execution Report completo fue materializado correctamente. Si falla la materialización o falta cualquiera de esas condiciones, devuelve el Execution Report completo según el contrato y canal de la Task.
+
 ## Guardrails de rol
 
 - no actuar como `00` ni Project Orchestrator;
@@ -241,7 +295,7 @@ Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 ## Entrega requerida
 
-Devuelve:
+Devuelve el Execution Report completo con:
 
 - resultado observable;
 - recursos revisados y modificados;
@@ -253,6 +307,21 @@ Devuelve:
 - pendientes del alcance original;
 - condiciones de detención activadas;
 - atención concreta requerida o `Ninguna`.
+
+Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
+
+1. la Execution Task declara `Caveman Return: Sí`;
+2. el Execution Report completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas se cumplen, responde en conversación únicamente:
+
+```text
+EJECUCIÓN COMPLETADA | PARCIAL | BLOQUEADO | FALLIDO
+Atención: [DESCRIPCIÓN O NINGUNA]
+Reporte: [NOMBRE/PATH]
+```
+
+Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Execution Report completo según el contrato y canal de la Task.
 
 El coding agent no determina la decisión de gobierno posterior, no consolida memoria durable fuera de lo autorizado por la propia tarea y no inicia otra unidad.
 

@@ -63,7 +63,7 @@ No crees una LLM Wiki completa por ceremonia.
 
 ## 3. Evaluar readiness
 
-Si una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, prepara `Environment Preflight` en solo lectura.
+Si una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, prepara `Environment Preflight` en solo lectura respecto del entorno inspeccionado.
 
 Contrato tipado:
 
@@ -72,6 +72,8 @@ Environment Preflight
 → Coding Agent — Planning
 → Environment Readiness Report
 ```
+
+Si el Preflight declara `Output Delivery`, el coding agent puede materializar únicamente ese `Environment Readiness Report`; esto no autoriza cambios sobre el entorno.
 
 Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura. El readiness report no concede escritura por sí mismo.
 
@@ -95,11 +97,12 @@ Una unidad ordinaria dependiente de memoria previa sólo llega a este gate despu
 
 La Planning Task:
 
-- es de solo lectura;
+- es de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
+- puede autorizar únicamente la materialización de su propio `Implementation Plan` mediante `Output Delivery`;
 - resuelve una incertidumbre técnica dominante;
 - declara fuentes, autoridad y límites;
 - devuelve un `Implementation Plan` al Cycle Owner;
-- no autoriza escritura ni ejecución.
+- no autoriza escritura sobre el proyecto ni ejecución.
 
 Un identificador lógico de planning no obliga a crear una conversación nueva por tarea.
 
@@ -145,6 +148,8 @@ El coding agent:
 6. revisa el diff;
 7. devuelve un `Execution Report` al destino indicado.
 
+Cuando la Task usa `Output Delivery`, materializa únicamente el output declarado en el destino autorizado. Si además declara `Caveman Return: Sí`, la conversación puede limitarse al estado/resultado esencial, atención requerida y referencia al archivo completo ya materializado.
+
 ## 9. Revisar el Execution Report
 
 El reporte utiliza:
@@ -175,7 +180,7 @@ Al cerrar:
 ## Rechaza el cierre cuando
 
 - falta autoridad o destino;
-- una Planning Task produjo cambios;
+- una Planning Task modificó el proyecto o entorno fuera de la materialización de su propio output expresamente autorizado;
 - un plan se presenta como implementación;
 - readiness indispensable sigue `NO LISTO` o `DESCONOCIDO`;
 - una unidad ordinaria depende de memoria chat-only sin haber resuelto `BOOTSTRAP REQUIRED`;

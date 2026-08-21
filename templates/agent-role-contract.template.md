@@ -42,7 +42,7 @@ Destino del artefacto:
 [CONVERSATION SPACE]
 
 Autoridad:
-Solo lectura | Escritura acotada según la tarea
+Solo lectura del proyecto/entorno | Escritura acotada según la tarea
 ```
 
 ## Compatibilidad de rol y artefacto
@@ -67,7 +67,9 @@ Coding Agent — Execution
 → Execution Report
 ```
 
-`Coding Agent — Planning` es siempre de solo lectura, pero `Planning Task` y `Environment Preflight` siguen siendo artefactos diferentes: el primero propone cómo implementar y el segundo sólo comprueba readiness declarado.
+`Coding Agent — Planning` es siempre de solo lectura respecto de las fuentes, el proyecto y el entorno inspeccionados, pero puede materializar únicamente su propio artefacto de salida cuando la Task lo autoriza mediante `Output Delivery`. `Planning Task` y `Environment Preflight` siguen siendo artefactos diferentes: el primero propone cómo implementar y el segundo sólo comprueba readiness declarado.
+
+La materialización del output no autoriza cambios en código, configuración, datos, Git, Wiki, servicios o cualquier otro recurso inspeccionado.
 
 Usa sólo el campo de sesión o célula pertinente al rol. Un nombre de Planning puede funcionar como identificador lógico, pero IA-DOS no exige abrir una conversación de planificación nueva por cada tarea.
 
@@ -86,6 +88,7 @@ El coding agent:
 - no abre otro ciclo ni inicia trabajo posterior;
 - no amplía el alcance;
 - devuelve exactamente el artefacto solicitado al destino declarado;
+- sólo materializa físicamente el output cuando la Task lo autoriza y únicamente en el destino declarado;
 - declara bloqueos y limitaciones con evidencia.
 
 La separación entre Planning y Execution es una frontera de autoridad. No implica que la futura ejecución deba abrir una conversación nueva: una Execution Task puede reutilizar una Execution Cell existente, pero vuelve a declarar permisos completos.
@@ -94,7 +97,8 @@ La separación entre Planning y Execution es una frontera de autoridad. No impli
 
 Cuando el artefacto de entrada sea `Environment Preflight`:
 
-- no modifiques archivos ni configuración;
+- no modifiques archivos ni configuración del proyecto o entorno inspeccionado;
+- si `Output Delivery` está autorizado, puedes materializar únicamente el `Environment Readiness Report` declarado;
 - no instales ni actualices;
 - no inicies, detengas o configures servicios;
 - comprueba únicamente las precondiciones autorizadas;

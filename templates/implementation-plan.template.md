@@ -9,7 +9,7 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Sesión de planificación: [PLAN — RESULTADO | NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA REVISIÓN | BLOQUEADO
-Cambios realizados: Ninguno
+Cambios al proyecto: Ninguno
 ```
 
 ## Identificación
@@ -23,6 +23,7 @@ Cambios realizados: Ninguno
 - Rol ejecutado: `Coding Agent — Planning`
 - Estado: `Listo para revisión | Bloqueado`
 - Decisión técnica dominante: `[UNA SOLA DECISIÓN]`
+- Materialización del propio plan: `[RUTA/NOMBRE AUTORIZADO | Conversación | NO APLICA]`
 
 ## Fuentes y accesos utilizados
 
@@ -170,7 +171,8 @@ El coding agent no selecciona por sí mismo la decisión de aprobar, corregir, r
 
 ## Declaración de solo lectura
 
-- [ ] No se modificaron artefactos.
+- [ ] No se modificaron artefactos, datos, configuración ni estado del proyecto inspeccionado.
+- [ ] Si Output Delivery lo autorizó, sólo se materializó este Implementation Plan en el destino declarado.
 - [ ] No se realizaron cambios remotos ni despliegues.
 - [ ] El plan no se trató como autorización de ejecución.
 - [ ] Las limitaciones de acceso fueron declaradas.
@@ -181,3 +183,5 @@ El coding agent no selecciona por sí mismo la decisión de aprobar, corregir, r
 - [ ] El plan vuelve al destino indicado.
 - [ ] No se cambió el Cycle Owner ni se abrió otro ciclo.
 - [ ] La futura ejecución mantiene autorización separada sin imponer una conversación nueva.
+
+La materialización autorizada del propio Implementation Plan no convierte Planning en una operación de escritura sobre el producto.

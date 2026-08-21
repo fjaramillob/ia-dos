@@ -72,12 +72,15 @@ No son fuentes de verdad durables.
 
 Debe:
 
-- trabajar en solo lectura;
+- trabajar en solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
 - inspeccionar únicamente fuentes autorizadas;
 - registrar evidencia y límites;
 - producir un Implementation Plan proporcional;
+- materializar únicamente su propio `Implementation Plan` o `Environment Readiness Report` cuando la Task autoriza expresamente `Output Delivery`;
 - preparar una sola Execution Task candidata cuando exista evidencia suficiente;
-- no escribir, aprobar su plan o ejecutar.
+- no escribir sobre el proyecto/entorno, aprobar su plan o ejecutar.
+
+La materialización del output autorizado no concede permiso sobre código, configuración, datos, Git, Wiki, servicios u otros recursos y no convierte Planning en Execution.
 
 Un identificador `PLAN — ...` puede ser lógico. IA-DOS no exige una conversación nueva por Planning Task.
 
@@ -112,9 +115,11 @@ El coding agent no selecciona la acción de gobierno posterior, no recomienda po
 
 ## Readiness
 
-Cuando una futura Execution Task depende de una precondición indispensable no comprobada, corresponde `Environment Preflight` en solo lectura.
+Cuando una futura Execution Task depende de una precondición indispensable no comprobada, corresponde `Environment Preflight` en solo lectura respecto del entorno inspeccionado.
 
-Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de escritura.
+El Preflight puede materializar únicamente su propio `Environment Readiness Report` cuando esa entrega esté expresamente autorizada.
+
+Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de escritura sobre el proyecto/entorno.
 
 ## Memoria durable y LLM Wiki
 
@@ -142,7 +147,8 @@ Project Orchestrator / Cycle Owner
     gobierna y delimita dentro de autoridad delegada
 
 Coding Agent — Planning
-    inspecciona y propone
+    inspecciona y propone en solo lectura del proyecto/entorno
+    puede materializar sólo su output expresamente autorizado
 
 Coding Agent — Execution
     materializa y reporta evidencia

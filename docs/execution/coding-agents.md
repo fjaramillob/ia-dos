@@ -10,7 +10,7 @@ Un coding agent puede actuar como:
 
 ### `Coding Agent — Planning`
 
-Rol de **solo lectura** utilizado por dos artefactos de entrada distintos:
+Rol de **solo lectura respecto del proyecto y entorno inspeccionados** utilizado por dos artefactos de entrada distintos:
 
 ```text
 Planning Task
@@ -22,9 +22,11 @@ Environment Preflight
 → Environment Readiness Report
 ```
 
-Cuando recibe una `Planning Task`, inspecciona y propone cómo implementar sin modificar artefactos.
+Cuando recibe una `Planning Task`, inspecciona y propone cómo implementar sin modificar las fuentes, código, datos, Git, Wiki o configuración inspeccionados. Si la Task declara `Output Delivery`, puede materializar únicamente el propio `Implementation Plan` en el destino autorizado.
 
-Cuando recibe un `Environment Preflight`, comprueba únicamente las precondiciones declaradas y devuelve readiness; no diseña implementación ni modifica, instala, inicia o configura el entorno.
+Cuando recibe un `Environment Preflight`, comprueba únicamente las precondiciones declaradas; no diseña implementación ni modifica, instala, inicia o configura el entorno. Si existe `Output Delivery`, puede materializar únicamente el `Environment Readiness Report` declarado.
+
+La escritura del output autorizado no transforma Planning en Execution y no concede permiso sobre otros recursos.
 
 ### `Coding Agent — Execution`
 
@@ -45,7 +47,8 @@ Project Orchestrator / Conversation Space
 → comprende, gobierna, delimita y revisa
 
 Coding Agent — Planning
-→ inspecciona o comprueba readiness en solo lectura
+→ inspecciona o comprueba readiness en solo lectura del proyecto/entorno
+→ puede materializar sólo su output declarado
 
 Coding Agent — Execution
 → materializa, verifica y reporta
@@ -91,18 +94,20 @@ Cuando la información necesaria sólo vive en conversaciones y debe reutilizars
 Una `Planning Task`:
 
 - utiliza `Coding Agent — Planning`;
-- es de solo lectura;
+- es de solo lectura respecto de las fuentes y el proyecto inspeccionados;
+- puede autorizar únicamente la materialización de su propio `Implementation Plan` mediante `Output Delivery`;
 - resuelve una incertidumbre técnica dominante;
 - devuelve `Implementation Plan`;
-- no autoriza cambios físicos ni una ejecución posterior.
+- no autoriza cambios físicos sobre el proyecto ni una ejecución posterior.
 
 ## Environment Preflight
 
 Un `Environment Preflight`:
 
-- utiliza el mismo rol `Coding Agent — Planning` porque también es de solo lectura;
+- utiliza el mismo rol `Coding Agent — Planning` porque también es de solo lectura respecto del entorno inspeccionado;
 - comprueba sólo runtime, herramienta, servicio, acceso, secreto o conectividad indispensable declarados;
-- no modifica archivos;
+- no modifica archivos o configuración del proyecto/entorno;
+- puede autorizar únicamente la materialización de su propio `Environment Readiness Report` mediante `Output Delivery`;
 - no instala ni actualiza;
 - no inicia, detiene o configura servicios;
 - devuelve `Environment Readiness Report` con:
