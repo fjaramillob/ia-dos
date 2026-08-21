@@ -39,11 +39,17 @@ Antes de emitir una Planning Task o Execution Task que dependa de decisiones, es
 
 ```text
 PASS
-→ la siguiente unidad puede ejecutarse sin reconstruir conversaciones
+→ la unidad evaluada puede continuar sin reconstruir conversaciones
 
 BOOTSTRAP REQUIRED
-→ persiste primero el checkpoint durable mínimo
+→ la unidad evaluada queda bloqueada
+→ emite una Execution Task separada cuyo único resultado sea persistir el checkpoint durable mínimo
+→ deja la unidad original explícitamente fuera de alcance
+→ revisa el Execution Report del bootstrap
+→ reevalúa el gate de la unidad original
 ```
+
+La tarea de bootstrap declara explícitamente que responde a `BOOTSTRAP REQUIRED`; no finge `PASS` ni ejecuta la unidad original que busca desbloquear.
 
 No reconstruyas toda la historia. Captura sólo estado vigente, decisiones que condicionan la siguiente unidad, fuentes de verdad y desconocidos relevantes.
 
@@ -51,7 +57,7 @@ Una LLM Wiki separada no es obligatoria.
 
 ## 6. Obtener evidencia o readiness cuando falten
 
-Después de satisfacer el gate de memoria, identifica qué falta realmente:
+Después de satisfacer el gate de memoria —o cuando la unidad actual sea precisamente el checkpoint de bootstrap— identifica qué falta realmente:
 
 - falta inspección o diseño técnico → `Planning Task` de solo lectura;
 - falta comprobar runtime, servicio, acceso, secreto o conectividad indispensable → `Environment Preflight`;
@@ -59,9 +65,17 @@ Después de satisfacer el gate de memoria, identifica qué falta realmente:
 
 Planning y Preflight no modifican artefactos.
 
+El Preflight usa el contrato tipado:
+
+```text
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
 El resultado vuelve al mismo Cycle Owner. No abras otro Conversation Space sólo para ejecutar la inspección técnica.
 
-Sólo un `Environment Readiness Report` con `LISTO PARA EJECUCIÓN` permite considerar aprobación o reanudación de escritura.
+Sólo un `Environment Readiness Report` con `LISTO PARA EJECUCIÓN` permite considerar aprobación o reanudación de escritura. El reporte no concede esa autorización por sí mismo.
 
 ## 7. Preparar el entorno cuando corresponda
 
@@ -93,6 +107,8 @@ Conversation Space / Cycle Owner
 Una Execution Task no obliga a crear una conversación nueva. Reutiliza una Execution Cell activa cuando corresponda.
 
 Cada tarea vuelve a declarar alcance, autoridad y permisos. La continuidad conversacional no hereda autorizaciones anteriores.
+
+Si el Execution Report corresponde a un memory bootstrap, primero reevalúa el gate de la unidad original; no la autoriza automáticamente.
 
 Exchange puede utilizarse como pasarela pasiva opcional para `.md`. No sustituye backlog, memoria o implementación y no define artefactos, IDs o estados.
 
@@ -132,7 +148,9 @@ El coding agent no aprueba su propio resultado ni inicia otra unidad.
 - estado real comprendido sin inventar historia;
 - Conversation Spaces bajo demanda;
 - Memory Bootstrap Gate satisfecho antes de depender de contexto histórico;
+- `BOOTSTRAP REQUIRED` resuelto mediante una unidad de checkpoint separada antes de retomar la unidad original;
 - Planning o Preflight usado sólo cuando corresponde;
+- Preflight tipado como `Environment Preflight → Coding Agent — Planning → Environment Readiness Report`;
 - primera Execution Task acotada cuando la unidad está lista;
 - Execution Cell reutilizada cuando corresponda;
 - evidencia devuelta al Cycle Owner;
