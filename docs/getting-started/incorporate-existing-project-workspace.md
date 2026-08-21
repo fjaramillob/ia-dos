@@ -27,6 +27,8 @@ Registra:
 - estado del working tree;
 - repositorios relacionados;
 - documentación o memoria existente;
+- backlog o mecanismo de seguimiento existente;
+- Exchange existente, si lo hay;
 - pipelines, despliegues e integraciones relevantes;
 - dependencias de rutas que podrían romperse al mover recursos.
 
@@ -81,6 +83,8 @@ ruta-existente/proyecto-app/
 otra-ruta/proyecto-wiki/
 ```
 
+Exchange puede vivir como recurso hermano, subdirectorio, carpeta sincronizada, repositorio independiente o no existir.
+
 La topología elegida debe preservar historia, accesos y rutas reales. No necesita coincidir con un ejemplo mientras las fuentes de verdad y la forma de acceso sean claras.
 
 ## Paso 4 — Incorporar la implementación sin alterar su historia
@@ -120,7 +124,22 @@ Si debe crearse una Wiki Markdown nueva, usa `templates/wiki-starter/` y [Crear 
 
 No crees un `index.md` provisional ni una carpeta de tareas dentro de la Wiki por defecto.
 
-## Paso 7 — Registrar la adopción
+## Paso 7 — Evaluar Exchange por separado
+
+La necesidad de Exchange no se deriva automáticamente de tener una Wiki, varias conversaciones o muchas tareas.
+
+Úsalo sólo cuando una pasarela de archivos Markdown entre Conversation Agent y Code Agent aporte valor.
+
+Si ya existe un mecanismo equivalente:
+
+- conserva su historia;
+- determina si es realmente una pasarela, backlog, memoria u otra cosa;
+- no migres ni renombres artefactos por estética;
+- no le atribuyas generación de IDs, templates, estados o decisiones si no la tiene.
+
+Si se decide usar Exchange, consulta [Crear o conectar Exchange](bootstrap-exchange.md).
+
+## Paso 8 — Registrar la adopción
 
 Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templates/adoption.template.yaml` y registra sólo recursos reales:
 
@@ -135,6 +154,8 @@ Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templ
 | Project Orchestrator | entorno conversacional utilizado |
 | Excepciones | motivo e impacto cuando existan |
 
+Exchange se registra sólo como recurso de transporte; no como fuente de tareas.
+
 ## Verificación
 
 Antes de considerar el proyecto incorporado, confirma:
@@ -146,6 +167,8 @@ Antes de considerar el proyecto incorporado, confirma:
 - [ ] El modelo de adopción refleja la estructura real.
 - [ ] El Memory Bootstrap Gate fue evaluado cuando la siguiente unidad depende de contexto histórico.
 - [ ] La memoria existente fue preservada o el starter vigente se utilizó para una Wiki nueva.
+- [ ] Exchange, si existe, se mantiene como pasarela pasiva y no como backlog, memoria o generador de identidad.
+- [ ] No se asumió automatización inexistente.
 - [ ] No se expusieron secretos.
 - [ ] Las rutas reales fueron reportadas.
 
@@ -163,6 +186,8 @@ Detente cuando:
 
 ## Siguiente paso
 
-Si el Memory Bootstrap Gate requiere memoria, crea o actualiza sólo el checkpoint mínimo y vuelve a la unidad que originó esa necesidad.
+Si el Memory Bootstrap Gate requiere memoria, crea o actualiza sólo el checkpoint mínimo.
 
-Si el gate pasa, continúa con la siguiente Planning Task, Environment Preflight o Execution Task sin convertir la adopción en un proyecto paralelo.
+Si se decidió utilizar Exchange, crea o conecta únicamente la pasarela.
+
+Después vuelve a la Planning Task, Environment Preflight o Execution Task que originó la adopción. No conviertas la incorporación en un proyecto paralelo.

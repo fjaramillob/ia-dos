@@ -49,7 +49,7 @@ proyectos/
     └── nombre-proyecto-wiki/
 ```
 
-Exchange puede agregarse después como recurso hermano cuando el proyecto lo adopte.
+Exchange puede agregarse después como recurso hermano cuando una pasarela de archivos Markdown entre agentes aporte valor.
 
 También son válidos:
 
@@ -107,6 +107,25 @@ status/current-state.md
 ```
 
 como núcleo inicial, con `decisions/` y `sources/` disponibles para conocimiento durable real.
+
+### Exchange, cuando corresponda
+
+Exchange no forma parte obligatoria del bootstrap.
+
+Créalo sólo cuando una pasarela de archivos Markdown entre Conversation Agent y Code Agent aporte una ventaja operacional concreta.
+
+Consulta [Crear o conectar Exchange](bootstrap-exchange.md).
+
+Una estructura posible es:
+
+```text
+nombre-proyecto-exch/
+├── inbox/
+├── outbox/
+└── archive/
+```
+
+No crees templates, IDs, registros, estados o automatización dentro de Exchange. Los artefactos llegan ya construidos por los agentes responsables.
 
 ## Git
 
@@ -186,6 +205,8 @@ Registra sólo las que existan:
 | Método IA-DOS | `[VERSIÓN / COMMIT / REFERENCIA]` |
 | Dirección conversacional | `[PROJECT, GEM O EQUIVALENTE]` |
 
+Exchange no reemplaza ninguna fuente de verdad; sólo sirve como pasarela de archivos.
+
 ## Verificación
 
 Antes de cerrar:
@@ -195,6 +216,7 @@ Antes de cerrar:
 - [ ] Sólo se crearon recursos autorizados.
 - [ ] No se eligió stack ni arquitectura implícitamente.
 - [ ] La memoria, si se creó, usa directamente el starter vigente.
+- [ ] Exchange, si se creó, sólo contiene la pasarela acordada y no lógica propia.
 - [ ] No existen secretos.
 - [ ] Git, commits o remotes sólo se usaron cuando estaban autorizados.
 - [ ] Las rutas reales fueron reportadas.
@@ -213,4 +235,6 @@ Detente antes de escribir cuando:
 
 Si el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) devuelve `BOOTSTRAP REQUIRED`, continúa con [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
-Si devuelve `PASS`, continúa con la siguiente Planning Task o Execution Task sin crear documentación adicional por ceremonia.
+Si se decidió utilizar Exchange, crea o conecta únicamente su pasarela con [Crear o conectar Exchange](bootstrap-exchange.md).
+
+Después continúa con la siguiente Planning Task o Execution Task sin crear componentes adicionales por ceremonia.

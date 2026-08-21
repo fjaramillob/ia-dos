@@ -24,9 +24,6 @@ memory:
   decisions: "[decisions/ | RUTA_EQUIVALENTE | NO_APLICA]"
   sources: "[sources/ | RUTA_EQUIVALENTE | NO_APLICA]"
 
-work:
-  task_source: "[EXCHANGE | GITHUB_ISSUES | OTHER | NO_APLICA]"
-
 verification:
   require_evidence: true
   require_out_of_scope: true
