@@ -23,7 +23,7 @@ Cada proyecto define sus propias fuentes y puede mantener, según necesidad:
 - Conversation Spaces;
 - Execution Cells;
 - backlog o sistema de seguimiento;
-- Exchange Protocol v0;
+- Exchange;
 - riesgos e historial.
 
 Ninguno de estos elementos exige por sí solo una topología física concreta.
@@ -41,7 +41,7 @@ proyectos/
     └── nombre-proyecto-exch/   # opcional
 ```
 
-Separar implementación, memoria durable e historial operacional puede facilitar autoridad y consumo selectivo de contexto. Sin embargo, IA-DOS no exige repositorios independientes.
+Separar implementación, memoria durable e intercambio de archivos puede facilitar autoridad y consumo selectivo de contexto. Sin embargo, IA-DOS no exige repositorios independientes.
 
 Un proyecto puede utilizar:
 
@@ -81,7 +81,7 @@ Clonar IA-DOS no es requisito técnico para utilizar el método desde un asisten
 
 ## Adoptar por proyecto
 
-Cada proyecto incorpora sólo los elementos que necesita. Entre los artefactos disponibles se encuentran:
+Cada proyecto incorpora sólo los elementos que necesita. Entre los artefactos y recursos disponibles se encuentran:
 
 - memoria durable o LLM Wiki;
 - `.ia-dos.yaml` mediante `templates/adoption.template.yaml`;
@@ -89,7 +89,7 @@ Cada proyecto incorpora sólo los elementos que necesita. Entre los artefactos d
 - `AGENTS.md` para coding agents;
 - Planning Tasks y Execution Tasks;
 - Execution Cells cuando exista ejecución recurrente;
-- Exchange Protocol v0 cuando convenga conservar `Execution Task` y `Execution Report` fuera de conversaciones;
+- Exchange cuando una pasarela de archivos Markdown entre agentes aporte valor;
 - guardrails y verificaciones específicas del proyecto.
 
 El trabajo cotidiano debe utilizar las fuentes del proyecto y transportar sólo el contexto necesario. No es necesario cargar IA-DOS completo ni toda la memoria durable en cada conversación o tarea.
@@ -98,15 +98,7 @@ El trabajo cotidiano debe utilizar las fuentes del proyecto y transportar sólo 
 
 Exchange se incorpora únicamente cuando resuelve una necesidad operacional concreta.
 
-Su alcance v0 es deliberadamente estrecho:
-
-```text
-Execution Task
-        ↓
-Execution Report
-```
-
-No almacena por defecto Planning Tasks, Implementation Plans, backlog, decisiones o memoria durable.
+No define qué artefactos pueden existir ni cuáles deben circular. Sólo almacena y pone a disposición archivos `.md` ya construidos por los agentes.
 
 Una adopción puede verse así:
 
@@ -114,8 +106,11 @@ Una adopción puede verse así:
 Backlog / Issues
 → qué queda por hacer
 
+Conversation Agent
+→ construye el artefacto y define su identidad
+
 Exchange
-→ qué se pidió ejecutar y qué reportó el ejecutor
+→ pasa el .md hacia el otro agente y recibe el .md de retorno
 
 Wiki / memoria durable
 → qué sabemos que es verdad ahora
@@ -126,7 +121,7 @@ Implementación
 
 Cuando Exchange no aporta valor, declara `resources.exchange: NO_APLICA` o simplemente no lo incorpores si el proyecto no utiliza manifiesto.
 
-Consulta [Crear o conectar Exchange Protocol v0](../getting-started/bootstrap-exchange.md).
+Consulta [Crear o conectar Exchange](../getting-started/bootstrap-exchange.md).
 
 ## Fronteras de autoridad
 
@@ -143,7 +138,7 @@ memoria durable
 → conocimiento vigente y confirmado
 
 Exchange
-→ historial operacional de Execution Task / Execution Report
+→ pasarela pasiva de archivos Markdown
 
 backlog
 → trabajo pendiente
@@ -152,7 +147,7 @@ implementación
 → estado materializado
 ```
 
-Exchange no sustituye backlog, memoria durable ni implementación.
+Exchange no sustituye backlog, memoria durable, implementación ni contrato de artefactos.
 
 ## Visibilidad y seguridad
 
@@ -168,7 +163,7 @@ Cada proyecto debe declarar qué versión o commit de IA-DOS utiliza cuando nece
 
 Usa `templates/adoption.template.yaml` como punto de partida cuando corresponda.
 
-Cuando Exchange se adopta, las copias locales de `TASK.md` y `REPORT.md` corresponden a esa versión adoptada. No deben cambiar automáticamente porque `main` evolucione.
+Los artefactos que atraviesan Exchange conservan el contrato con el que fueron construidos. Exchange no los transforma cuando IA-DOS evoluciona.
 
 Los proyectos no reciben cambios del framework de forma silenciosa. Cada actualización debe revisarse antes de adoptarse.
 
