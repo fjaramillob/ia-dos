@@ -29,7 +29,7 @@ IA-DOS es agnóstico respecto de proyectos, plataformas, proveedores, modelos, e
 Responsabilidad
 - la persona responsable define propósito, prioridades, restricciones y autoridad;
 - el Project Orchestrator y el Cycle Owner actúan dentro de autoridad delegada;
-- conserva aprobación humana final cuando cambien dirección, autoridad, riesgo, coste, producción, datos, seguridad o impacto relevante;
+- conserva aprobación humana final cuando cambien dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante;
 - el coding agent no aprueba su propio plan o ejecución.
 
 Objetivo
