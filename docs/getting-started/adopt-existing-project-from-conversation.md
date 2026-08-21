@@ -59,11 +59,11 @@ Una LLM Wiki separada no es obligatoria.
 
 Después de satisfacer el gate de memoria —o cuando la unidad actual sea precisamente el checkpoint de bootstrap— identifica qué falta realmente:
 
-- falta inspección o diseño técnico → `Planning Task` de solo lectura;
-- falta comprobar runtime, servicio, acceso, secreto o conectividad indispensable → `Environment Preflight`;
+- falta inspección o diseño técnico → `Planning Task` de solo lectura respecto del proyecto/entorno;
+- falta comprobar runtime, servicio, acceso, secreto o conectividad indispensable → `Environment Preflight` de solo lectura respecto del entorno;
 - unidad ya definida y entorno listo → `Execution Task`.
 
-Planning y Preflight no modifican artefactos.
+Planning y Preflight no modifican artefactos, datos, configuración ni estado del proyecto o entorno inspeccionado. Cuando la Task declara `Output Delivery`, sí pueden materializar **únicamente su propio artefacto de salida** en el destino autorizado: `Implementation Plan` o `Environment Readiness Report`. Esa excepción no convierte el rol en Execution ni concede escritura adicional.
 
 El Preflight usa el contrato tipado:
 
@@ -75,7 +75,7 @@ Environment Preflight
 
 El resultado vuelve al mismo Cycle Owner. No abras otro Conversation Space sólo para ejecutar la inspección técnica.
 
-Sólo un `Environment Readiness Report` con `LISTO PARA EJECUCIÓN` permite considerar aprobación o reanudación de escritura. El reporte no concede esa autorización por sí mismo.
+Sólo un `Environment Readiness Report` con `LISTO PARA EJECUCIÓN` permite considerar aprobación o reanudación de escritura sobre el proyecto/entorno. La materialización del propio reporte autorizado no constituye esa autorización posterior.
 
 ## 7. Preparar el entorno cuando corresponda
 
@@ -150,6 +150,7 @@ El coding agent no aprueba su propio resultado ni inicia otra unidad.
 - Memory Bootstrap Gate satisfecho antes de depender de contexto histórico;
 - `BOOTSTRAP REQUIRED` resuelto mediante una unidad de checkpoint separada antes de retomar la unidad original;
 - Planning o Preflight usado sólo cuando corresponde;
+- Planning/Preflight conservan solo lectura del proyecto/entorno y materializan únicamente su output cuando `Output Delivery` lo autoriza;
 - Preflight tipado como `Environment Preflight → Coding Agent — Planning → Environment Readiness Report`;
 - primera Execution Task acotada cuando la unidad está lista;
 - Execution Cell reutilizada cuando corresponda;
