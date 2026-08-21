@@ -75,7 +75,7 @@ No inventes un ciclo solamente para satisfacer el encabezado.
 
 ## Compatibilidad de transición
 
-`Artifact: Implementation Plan` y `Artifact: Execution Report` siguen siendo alias heredados cuando el cuerpo conserva IDs, sesión o Execution Cell cuando corresponda, Cycle Owner, estado y decisión requerida. Las salidas nuevas usan `Artifact Type:`.
+`Artifact: Implementation Plan` y `Artifact: Execution Report` siguen siendo alias heredados cuando el cuerpo conserva IDs, sesión o Execution Cell cuando corresponda, Cycle Owner y estado. Las salidas nuevas usan `Artifact Type:`.
 
 ## Tipos permitidos
 
@@ -166,11 +166,11 @@ Conserva el `Task ID` y el `Cycle ID` cuando exista. Reanuda una tarea aprobada 
 ```text
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memoria
-Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
+Expected Output: revisión y decisión del Cycle Owner
+Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 ```
 
-El estado del reporte describe el resultado de la ejecución y no la decisión posterior del Cycle Owner.
+El estado del reporte describe únicamente el resultado de la ejecución.
 
 Estados canónicos:
 
@@ -178,13 +178,9 @@ Estados canónicos:
 COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 ```
 
-La decisión requerida se declara por separado. Por ejemplo:
+Cuando exista un bloqueo, riesgo, desviación o decisión concreta que el Cycle Owner deba revisar, el reporte puede declararlo como `Atención requerida`. El coding agent no elige por adelantado la acción de gobierno posterior.
 
-```text
-APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
-```
-
-No uses `CORRECTION_REQUIRED` u otra decisión como estado de ejecución.
+Después de revisar la evidencia, el Cycle Owner puede aprobar y cerrar, corregir, revertir, escalar o evaluar memoria durable. Estas son decisiones del receptor, no estados ni campos de decisión seleccionados por el executor.
 
 ## Gate de compatibilidad
 

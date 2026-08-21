@@ -48,6 +48,7 @@ Estos contratos no crean una secuencia obligatoria ni imponen herramientas o est
 - [Adoptar un producto existente desde conversación](getting-started/adopt-existing-project-from-conversation.md)
 - [Avance concreto y transición a coding agents](orchestration/concrete-execution-flow.md)
 - [Preparar y revisar un handoff técnico](getting-started/execution-handoff.md)
+- [Validación end-to-end de onboarding](validation/end-to-end-onboarding-validation.md)
 
 ## Preparación del entorno, cuando corresponda
 

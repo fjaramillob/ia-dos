@@ -238,9 +238,9 @@ Reanuda la misma Execution Task cuando una condición bloqueante fue resuelta si
 
 ## Retorno
 
-- Environment Readiness Report: autorizar ejecución, resolver dependencia, corregir preflight o escalar;
-- Implementation Plan: aprobar, corregir, rechazar o escalar;
-- Execution Report: cerrar, corregir, revertir, revisar memoria o escalar.
+- Environment Readiness Report: el Cycle Owner decide autorizar ejecución, resolver dependencia, corregir preflight o escalar;
+- Implementation Plan: el Cycle Owner decide aprobar, corregir, rechazar o escalar;
+- Execution Report: el coding agent reporta evidencia y atención concreta requerida; el Cycle Owner decide aprobar y cerrar, corregir, revertir, escalar o evaluar memoria durable.
 
 En Execution Report separa siempre:
 
@@ -248,11 +248,13 @@ En Execution Report separa siempre:
 Estado de ejecución
 COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 
-Decisión requerida
-APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
+Atención requerida
+[DESCRIPCIÓN CONCRETA O NINGUNA]
 ```
 
-El coding agent no cambia ownership, no aprueba su resultado y no inicia otro ciclo o tarea.
+El coding agent no cambia ownership, no aprueba su resultado, no elige la decisión de gobierno posterior y no inicia otro ciclo o tarea.
+
+La evaluación de qué hechos deben consolidarse en memoria durable ocurre después de revisar el reporte; no es una sección obligatoria del Execution Report.
 
 ## Acceso al método
 

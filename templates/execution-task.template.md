@@ -18,7 +18,7 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [TASK-ID]
 ```
 
-El mecanismo de transporte o almacenamiento no cambia este contrato. Si la tarea usa Exchange Protocol v0, el `Task ID` puede ser el identificador autocontenido de Exchange y `Cycle ID` puede declararse `NO APLICA` cuando no exista un ciclo separado.
+El mecanismo de transporte o almacenamiento no cambia este contrato. Si el proyecto usa Exchange, Exchange sólo almacena o pone a disposición el `.md` ya construido; no genera ni modifica `Task ID`, `Cycle ID`, estados o permisos.
 
 ## Identificación
 
@@ -34,7 +34,7 @@ El mecanismo de transporte o almacenamiento no cambia este contrato. Si la tarea
 - Tipo secundario, solo si es inseparable: `[TIPO O NINGUNO]`
 - Responsable humano: `[ROL O PERSONA]`
 - Coding agent o entorno: `[ROL O HERRAMIENTA DISPONIBLE]`
-- Agent Session o Execution Cell: `[NOMBRE O NO APLICA]`
+- Execution Cell o sesión: `[NOMBRE O NO APLICA]`
 - Rol activo: `Coding Agent — Execution`
 - Implementation Plan aprobado: `[REFERENCIA O NO APLICA]`
 - Acceso a IA-DOS: `Embedded Contract | Remote Repository | Local Reference`
@@ -199,24 +199,24 @@ Detente y reporta cuando:
 ## Documentación y memoria
 
 - artefactos técnicos a actualizar: `[LISTA O NINGUNO]`
-- conocimiento durable que debe registrarse: `[DECISIONES O NINGUNO]`
+- conocimiento durable que la propia tarea autoriza registrar: `[DECISIONES O NINGUNO]`
 - ADR o equivalente requerido: `Sí | No`
 
-No registres propuestas como estado implementado.
+No registres propuestas como estado implementado. Si la tarea no autoriza una actualización durable concreta, el coding agent sólo reporta hechos y evidencia; el Cycle Owner evaluará después qué merece consolidarse.
 
 ## Encabezado de retorno obligatorio
 
 ```text
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memoria | Ninguna
-Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
+Expected Output: revisión y decisión del Cycle Owner
+Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
-Agent Session o Execution Cell: [NOMBRE O NO APLICA]
+Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 ```
 
 ## Entrega requerida
@@ -226,12 +226,12 @@ El coding agent debe devolver un `Execution Report` al destino declarado, incluy
 - resultado observable;
 - recursos revisados y modificados;
 - instrucciones locales consultadas;
-- pruebas y evidencia;
+- pruebas, verificaciones y evidencia;
 - autorizaciones utilizadas;
-- fuera de alcance respetado;
-- desviaciones, riesgos y decisiones pendientes;
-- estado del entorno y del control de versiones;
-- conocimiento potencialmente durable o actualización durable recomendada;
-- una sola siguiente acción.
+- fuera de alcance preservado;
+- desviaciones o problemas;
+- pendientes del alcance original;
+- condiciones de detención activadas;
+- cualquier atención concreta que requiera revisión del Cycle Owner.
 
-El coding agent no determina que su trabajo quedó aprobado y no inicia automáticamente el siguiente ciclo o tarea.
+El coding agent no determina la decisión de gobierno posterior, no consolida memoria durable salvo autorización explícita de la propia tarea y no inicia automáticamente el siguiente ciclo o tarea.

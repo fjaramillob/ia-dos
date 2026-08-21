@@ -35,7 +35,7 @@ No puede escribir, aprobar su propio plan, ejecutar, cambiar el Cycle Owner, act
 
 Puede modificar únicamente lo autorizado, ejecutar verificaciones y producir evidencia.
 
-No puede ampliar alcance, iniciar otra unidad, aprobar su propio resultado, integrar o desplegar sin autorización explícita.
+No puede ampliar alcance, iniciar otra unidad, aprobar su propio resultado, integrar o desplegar sin autorización explícita ni seleccionar la decisión de gobierno posterior.
 
 ## Contrato de rol IA-DOS
 
@@ -48,7 +48,7 @@ Método: IA-DOS
 Rol activo: Coding Agent — Planning | Coding Agent — Execution
 Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [TASK-ID]
-Agent Session o Execution Cell: [NOMBRE CUANDO CORRESPONDA]
+Execution Cell o sesión: [NOMBRE CUANDO CORRESPONDA]
 Cycle Owner: [CONVERSATION SPACE]
 Artefacto de entrada: Planning Task | Execution Task
 Artefacto de salida: Implementation Plan | Execution Report
@@ -219,19 +219,21 @@ Cambios realizados: Ninguno
 Decisión requerida: Aprobar | Corregir | Rechazar | Escalar
 ```
 
+En planificación, `Decisión requerida` puede expresar la revisión esperada porque el Implementation Plan es una propuesta y no una ejecución autorizada.
+
 ### Execution Report
 
 ```text
 Artifact Type: Execution Report
 Execution Task ID: [TASK-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
-Execution Cell o Agent Session: [NOMBRE CUANDO CORRESPONDA]
+Execution Cell o sesión: [NOMBRE CUANDO CORRESPONDA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 ```
 
-El estado describe el resultado ejecutado. La decisión requerida describe qué debe hacer después el Cycle Owner.
+El estado describe el resultado ejecutado. `Atención requerida` identifica hechos que el Cycle Owner debe revisar sin elegir por él la acción posterior.
 
 Si este reporte se materializa como `.md` para atravesar Exchange, conserva exactamente el mismo contenido y contrato.
 
@@ -239,7 +241,9 @@ Si este reporte se materializa como `.md` para atravesar Exchange, conserva exac
 
 Al recibir un Implementation Plan, el Cycle Owner no reinicia el diagnóstico. Comprueba evidencia, tamaño y seguridad, y aprueba o corrige una sola Execution Task candidata.
 
-Al recibir un Execution Report, comprueba objetivo, alcance, criterios y evidencia. Luego cierra, emite una corrección acotada, revierte, inicia una nueva unidad o escala solo ante reorientación real.
+Al recibir un Execution Report, comprueba objetivo, alcance, criterios y evidencia. Luego decide aprobar y cerrar, emitir una corrección acotada, revertir, iniciar una nueva unidad, evaluar memoria durable o escalar sólo ante reorientación real.
+
+La evaluación de memoria ocurre después de revisar la evidencia; el coding agent no incluye por defecto una sección de conocimiento durable ni decide su incorporación.
 
 ## Regla principal
 
