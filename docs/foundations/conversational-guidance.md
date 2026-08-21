@@ -75,6 +75,8 @@ resultado acotado + memoria suficiente + entorno listo
 → Execution Task
 ```
 
+Cuando `Memory Bootstrap Gate` devuelve `BOOTSTRAP REQUIRED`, la unidad dependiente original queda bloqueada. Puede emitirse una `Execution Task` separada cuyo único objetivo sea persistir el checkpoint durable mínimo; esa tarea mantiene la unidad original fuera de alcance. Después de revisar su `Execution Report`, reevalúa el gate de la unidad original antes de continuar.
+
 No fuerces una `Execution Task` sólo porque la persona expresó intención de avanzar.
 
 ## Estrategia antes que ceremonia
@@ -131,11 +133,17 @@ Antes de una `Planning Task` o `Execution Task` que dependa de historia previa, 
 
 ```text
 PASS
-→ continúa sin documentación adicional
+→ la unidad evaluada puede continuar sin documentación adicional
 
 BOOTSTRAP REQUIRED
-→ persiste primero el checkpoint durable mínimo
+→ la unidad evaluada queda bloqueada
+→ materializa primero el checkpoint durable mínimo mediante una Execution Task separada
+→ deja la unidad original fuera de alcance
+→ revisa el Execution Report del bootstrap
+→ reevalúa el gate de la unidad original
 ```
+
+`BOOTSTRAP REQUIRED` no bloquea la unidad mínima necesaria para crear la memoria. Esa tarea declara explícitamente que materializa el checkpoint y no puede mezclar el trabajo original que busca desbloquear.
 
 Cuando exista una LLM Wiki:
 
@@ -148,7 +156,7 @@ Cuando exista una LLM Wiki:
 
 ## Responsabilidad humana y Cycle Owner
 
-La persona responsable conserva la aprobación final y la responsabilidad sobre decisiones que cambian dirección, autoridad, riesgo o impacto relevante.
+La persona responsable conserva la aprobación final y la responsabilidad cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 El `Cycle Owner` gobierna el resultado dentro de la autoridad delegada:
 
@@ -195,7 +203,7 @@ No conviertas automáticamente esa frase en autorización para:
 
 - ampliar alcance;
 - asumir costes;
-- modificar producción o datos sensibles;
+- modificar producción o datos;
 - cambiar seguridad o cumplimiento;
 - tomar decisiones irreversibles;
 - ejecutar acciones externas no declaradas.
@@ -236,7 +244,7 @@ Cuando el proyecto ya está en desarrollo:
 - conserva el Cycle Owner mientras el resultado permanezca dentro de su dominio;
 - vuelve a `00` sólo ante reorientación real de objetivo, límites o dirección.
 
-Si la siguiente unidad depende de conocimiento que sólo existe en conversaciones anteriores, no intentes compensarlo reenviando todo el historial: aplica el `Memory Bootstrap Gate` y persiste sólo el checkpoint durable necesario.
+Si la siguiente unidad depende de conocimiento que sólo existe en conversaciones anteriores, no intentes compensarlo reenviando todo el historial: aplica el `Memory Bootstrap Gate` y persiste sólo el checkpoint durable necesario mediante la unidad separada de bootstrap cuando corresponda.
 
 ## Handoffs y artefactos
 
