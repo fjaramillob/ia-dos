@@ -40,7 +40,7 @@ No sustituye la responsabilidad humana ni ejecuta una tarea destinada al coding 
 
 ### Coding Agent — Planning
 
-Es un rol de solo lectura que admite dos contratos diferentes:
+Es un rol de solo lectura **respecto del proyecto y entorno inspeccionados** que admite dos contratos diferentes:
 
 ```text
 Planning Task
@@ -52,9 +52,11 @@ Environment Preflight
 
 Con una `Planning Task` puede inspeccionar, verificar, comparar, proponer y preparar una Execution Task candidata.
 
-Con un `Environment Preflight` sólo comprueba las precondiciones declaradas. No diseña una solución, no modifica el entorno y devuelve readiness.
+Con un `Environment Preflight` sólo comprueba las precondiciones declaradas. No diseña una solución ni modifica el entorno.
 
-No puede escribir, aprobar su propio plan o readiness, ejecutar cambios, cambiar Cycle Owner, actuar como `00` ni iniciar otro ciclo.
+Cuando la Task declara `Output Delivery`, puede materializar únicamente su propio `Implementation Plan` o `Environment Readiness Report` en el destino autorizado. Esa escritura de salida no concede permiso sobre código, configuración, datos, Git, Wiki, servicios ni otros recursos.
+
+No puede aprobar su propio plan o readiness, ejecutar cambios, cambiar Cycle Owner, actuar como `00` ni iniciar otro ciclo.
 
 ### Coding Agent — Execution
 
@@ -87,7 +89,7 @@ Cycle Owner: [CONVERSATION SPACE]
 Artefacto de entrada: Planning Task | Environment Preflight | Execution Task | Execution Resume
 Artefacto de salida: Implementation Plan | Environment Readiness Report | Execution Report
 Destino: [CONVERSATION SPACE]
-Autoridad: [SOLO LECTURA | ESCRITURA ACOTADA]
+Autoridad: [SOLO LECTURA DEL PROYECTO/ENTORNO | ESCRITURA ACOTADA]
 ```
 
 Compatibilidad canónica:
@@ -110,7 +112,7 @@ Usa sólo el campo de sesión/célula pertinente al rol.
 
 ## Sesiones de planificación
 
-Planning conserva una frontera explícita de autorización y es siempre de solo lectura.
+Planning conserva una frontera explícita de autorización y es siempre de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados.
 
 Puede utilizar un identificador lógico como:
 
@@ -120,7 +122,9 @@ PLAN — [RESULTADO]
 
 IA-DOS no establece una política universal sobre persistencia o renovación de conversaciones de Planning. No abras una conversación nueva por tarea sólo por este nombre.
 
-El rol `Coding Agent — Planning` también ejecuta Environment Preflight en solo lectura, pero un preflight no necesita ni implica una sesión `PLAN — ...`.
+El rol `Coding Agent — Planning` también ejecuta Environment Preflight en solo lectura del entorno, pero un preflight no necesita ni implica una sesión `PLAN — ...`.
+
+La materialización de un output expresamente autorizado no transforma Planning en Execution.
 
 La planificación nunca se convierte automáticamente en ejecución.
 
@@ -140,7 +144,7 @@ Devuelve:
 LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-No modifica, instala, actualiza, inicia, detiene o configura. `LISTO PARA EJECUCIÓN` permite que el Cycle Owner considere una autorización posterior; no constituye autorización de escritura por sí mismo.
+No modifica, instala, actualiza, inicia, detiene o configura el entorno. Si la Task declara `Output Delivery`, puede materializar únicamente el `Environment Readiness Report` declarado. `LISTO PARA EJECUCIÓN` permite que el Cycle Owner considere una autorización posterior; no constituye autorización de escritura por sí mismo.
 
 ## Execution Cells
 
@@ -180,7 +184,8 @@ La frontera obligatoria es de **rol y autoridad**, no de conversación física.
 
 ```text
 Planning Task
-→ solo lectura
+→ solo lectura del proyecto/entorno
+→ materializa únicamente su output cuando está autorizado
 → Implementation Plan
 → revisión
 → Execution Task autorizada
@@ -235,7 +240,8 @@ Planning Task ID: [PLAN-ID]
 Sesión de planificación: [PLAN — RESULTADO | NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA REVISIÓN | BLOQUEADO
-Cambios realizados: Ninguno
+Cambios en proyecto/entorno: Ninguno
+Output materializado: [RUTA O NO]
 ```
 
 El plan propone. El coding agent no selecciona por sí mismo aprobación, corrección, rechazo o escalamiento.
@@ -248,7 +254,8 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [PREFLIGHT-ID]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
-Cambios realizados: Ninguno
+Cambios en proyecto/entorno: Ninguno
+Output materializado: [RUTA O NO]
 ```
 
 El reporte sólo demuestra readiness observado bajo el preflight autorizado.
@@ -284,7 +291,7 @@ La evaluación de memoria ocurre después de revisar evidencia, salvo que la pro
 ```text
 Conversation Space = gobierno
 Execution Cell = continuidad
-Coding Agent — Planning = solo lectura para Planning y Preflight
+Coding Agent — Planning = solo lectura del proyecto/entorno; output propio sólo si está autorizado
 Execution Task = autoridad de una unidad
 Execution Report = evidencia
 Persona responsable = aprobación final aplicable
