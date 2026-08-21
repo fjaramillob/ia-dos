@@ -11,10 +11,10 @@ Persona responsable
 Conversation Space / Cycle Owner
 → gobierna resultado dentro de autoridad delegada
 → aplica gates de memoria/readiness cuando corresponda
-→ prepara Planning Task o Execution Task
+→ prepara Planning Task | Environment Preflight | Execution Task | Execution Resume
 
 Coding Agent
-→ planifica o ejecuta según el rol recibido
+→ planifica, comprueba readiness o ejecuta según rol y artefacto recibido
 → devuelve artefacto verificable
 
 Cycle Owner
@@ -40,11 +40,33 @@ No sustituye la responsabilidad humana ni ejecuta una tarea destinada al coding 
 
 ### Coding Agent — Planning
 
-Puede inspeccionar, verificar, comparar, proponer y preparar una Execution Task candidata.
+Es un rol de solo lectura que admite dos contratos diferentes:
 
-No puede escribir, aprobar su propio plan, ejecutar, cambiar Cycle Owner, actuar como `00` ni iniciar otro ciclo.
+```text
+Planning Task
+→ Implementation Plan
+
+Environment Preflight
+→ Environment Readiness Report
+```
+
+Con una `Planning Task` puede inspeccionar, verificar, comparar, proponer y preparar una Execution Task candidata.
+
+Con un `Environment Preflight` sólo comprueba las precondiciones declaradas. No diseña una solución, no modifica el entorno y devuelve readiness.
+
+No puede escribir, aprobar su propio plan o readiness, ejecutar cambios, cambiar Cycle Owner, actuar como `00` ni iniciar otro ciclo.
 
 ### Coding Agent — Execution
+
+Admite:
+
+```text
+Execution Task
+→ Execution Report
+
+Execution Resume
+→ Execution Report
+```
 
 Puede modificar únicamente lo autorizado, ejecutar verificaciones y producir evidencia.
 
@@ -62,10 +84,26 @@ Task ID: [TASK-ID]
 Sesión de planificación: [PLAN — RESULTADO | NO APLICA]
 Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
-Artefacto de entrada: Planning Task | Execution Task
-Artefacto de salida: Implementation Plan | Execution Report
+Artefacto de entrada: Planning Task | Environment Preflight | Execution Task | Execution Resume
+Artefacto de salida: Implementation Plan | Environment Readiness Report | Execution Report
 Destino: [CONVERSATION SPACE]
 Autoridad: [SOLO LECTURA | ESCRITURA ACOTADA]
+```
+
+Compatibilidad canónica:
+
+```text
+Coding Agent — Planning + Planning Task
+→ Implementation Plan
+
+Coding Agent — Planning + Environment Preflight
+→ Environment Readiness Report
+
+Coding Agent — Execution + Execution Task
+→ Execution Report
+
+Coding Agent — Execution + Execution Resume
+→ Execution Report
 ```
 
 Usa sólo el campo de sesión/célula pertinente al rol.
@@ -82,7 +120,27 @@ PLAN — [RESULTADO]
 
 IA-DOS no establece una política universal sobre persistencia o renovación de conversaciones de Planning. No abras una conversación nueva por tarea sólo por este nombre.
 
+El rol `Coding Agent — Planning` también ejecuta Environment Preflight en solo lectura, pero un preflight no necesita ni implica una sesión `PLAN — ...`.
+
 La planificación nunca se convierte automáticamente en ejecución.
+
+## Environment Preflight
+
+El preflight comparte el rol de solo lectura con Planning, no su propósito.
+
+Debe limitarse a:
+
+- runtime, herramienta, servicio, acceso, secreto o conectividad indispensable declarados;
+- comprobaciones no destructivas autorizadas;
+- evidencia suficiente para clasificar readiness.
+
+Devuelve:
+
+```text
+LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
+```
+
+No modifica, instala, actualiza, inicia, detiene o configura. `LISTO PARA EJECUCIÓN` permite que el Cycle Owner considere una autorización posterior; no constituye autorización de escritura por sí mismo.
 
 ## Execution Cells
 
@@ -166,7 +224,7 @@ Una tarea puede usar:
 
 No clones IA-DOS dentro del producto ni crees una referencia local sin autorización.
 
-## Contrato de retorno
+## Contratos de retorno
 
 ### Implementation Plan
 
@@ -181,6 +239,19 @@ Cambios realizados: Ninguno
 ```
 
 El plan propone. El coding agent no selecciona por sí mismo aprobación, corrección, rechazo o escalamiento.
+
+### Environment Readiness Report
+
+```text
+Artifact Type: Environment Readiness Report
+Cycle ID: [CYCLE-ID O NO APLICA]
+Task ID: [PREFLIGHT-ID]
+Cycle Owner: [CONVERSATION SPACE]
+Estado: LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
+Cambios realizados: Ninguno
+```
+
+El reporte sólo demuestra readiness observado bajo el preflight autorizado.
 
 ### Execution Report
 
@@ -202,6 +273,8 @@ El reporte no incluye por defecto una sección de conocimiento potencialmente du
 
 Al recibir un Implementation Plan, el Cycle Owner revisa evidencia, tamaño, seguridad y decisiones pendientes. Obtiene aprobación humana cuando corresponda antes de autorizar una Execution Task.
 
+Al recibir un Environment Readiness Report, confirma que corresponde al preflight vigente. Sólo `LISTO PARA EJECUCIÓN` puede habilitar una autorización posterior de escritura.
+
 Al recibir un Execution Report, compara objetivo, alcance, criterios, autorizaciones y evidencia. Luego decide dentro de la autoridad delegada; la persona responsable interviene cuando corresponde.
 
 La evaluación de memoria ocurre después de revisar evidencia, salvo que la propia tarea haya autorizado una actualización documental concreta.
@@ -211,7 +284,7 @@ La evaluación de memoria ocurre después de revisar evidencia, salvo que la pro
 ```text
 Conversation Space = gobierno
 Execution Cell = continuidad
-Planning = solo lectura
+Coding Agent — Planning = solo lectura para Planning y Preflight
 Execution Task = autoridad de una unidad
 Execution Report = evidencia
 Persona responsable = aprobación final aplicable
