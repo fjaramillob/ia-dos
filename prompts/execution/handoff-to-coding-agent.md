@@ -47,13 +47,19 @@ Al finalizar, construye un `Execution Report` canónico con:
 
 Si `Output Delivery` declara un archivo, materializa primero el Execution Report completo en el destino autorizado. Ese permiso no amplía escritura sobre el producto.
 
-Si `Caveman Return: Sí`, responde en conversación únicamente:
+Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
+1. la Execution Task declara `Caveman Return: Sí`;
+2. el Execution Report completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas se cumplen, responde en conversación únicamente:
 
 EJECUCIÓN COMPLETADA | PARCIAL | BLOQUEADO | FALLIDO
 Atención: [DESCRIPCIÓN O NINGUNA]
 Reporte: [NOMBRE/PATH]
 
-No pegues el Execution Report completo en conversación cuando ya fue materializado, salvo instrucción explícita del artefacto.
+Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Execution Report completo según el contrato y canal de la Task e incluye la falla de entrega en `Atención requerida` cuando corresponda.
+
+No pegues el Execution Report completo en conversación cuando ya fue materializado correctamente y la Task autorizó Caveman Return, salvo instrucción explícita del artefacto.
 
 No agregues por rutina:
 - una decisión `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`;
