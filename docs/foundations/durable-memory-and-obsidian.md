@@ -1,10 +1,21 @@
 # Memoria durable portable y consumo desde Obsidian
 
-IA-DOS trata la memoria durable como una base de conocimiento del proyecto, no como una transcripción de conversaciones ni como una dependencia de una herramienta específica.
+IA-DOS distingue entre la responsabilidad de conservar conocimiento reusable y su posible materialización documental.
+
+```text
+memoria durable
+= responsabilidad funcional
+
+LLM Wiki
+= materialización durable, portable y navegable
+  de esa memoria para humanos y agentes
+```
+
+La LLM Wiki no es una transcripción de conversaciones ni una dependencia de una herramienta específica.
 
 ## Principio
 
-La memoria durable debe ser simultáneamente:
+Cuando un proyecto utiliza una LLM Wiki Markdown, debe ser:
 
 - legible por personas;
 - navegable desde Obsidian u otro visor Markdown;
@@ -18,86 +29,63 @@ Obsidian como interfaz de consumo
 IA-DOS como gobierno de la memoria
 ```
 
+Obsidian no se convierte en una fuente de verdad separada.
+
 ## Cuándo debe existir
 
-La memoria no se crea por cantidad de mensajes ni por ceremonia.
+No se crea por cantidad de mensajes ni por ceremonia.
 
-Evalúa el [Memory Bootstrap Gate](memory-bootstrap-gate.md): si la siguiente unidad depende de conocimiento relevante que sólo vive en conversaciones, primero debe existir un checkpoint durable mínimo.
+Evalúa el [Memory Bootstrap Gate](memory-bootstrap-gate.md): si la siguiente Planning Task o Execution Task depende de conocimiento relevante que sólo vive en conversaciones, primero debe existir un checkpoint durable mínimo.
 
-Si la tarea es autosuficiente y puede apoyarse en implementación o fuentes durables, el gate no bloquea el avance.
+Si la tarea es autosuficiente y puede apoyarse en implementación o fuentes durables, el gate devuelve `PASS` y no exige crear una Wiki.
 
 ## Una sola base de conocimiento
 
-Cuando un proyecto utiliza una Wiki local y remota, evita mantener copias conceptualmente distintas para GitHub, Obsidian y agentes.
+Cuando un proyecto utiliza Markdown local y remoto, evita mantener copias conceptualmente distintas para GitHub, Obsidian y agentes.
 
 Una topología válida es:
 
 ```text
-proyecto-wiki/
-    Markdown canónico
-        ↓
-    GitHub versiona, cuando aplica
-    Obsidian navega
-    Project Orchestrator sintetiza
-    coding agents leen sólo cuando corresponde
+LLM Wiki / Markdown canónico
+    ↓
+Git versiona, cuando aplica
+Obsidian navega
+Conversation Agent gobierna y selecciona contexto
+coding agents leen sólo lo requerido
 ```
 
-Obsidian es una interfaz sobre la memoria durable, no una fuente de verdad adicional.
+La ubicación puede ser un repositorio separado, documentación dentro de la app, un monorepo u otra estructura clara. IA-DOS no impone una topología física.
 
 ## Starter mínimo para Wikis nuevas
 
-El contenido real de `templates/wiki-starter/` es:
+`templates/wiki-starter/` contiene:
 
 ```text
-proyecto-wiki/
-├── 00-home.md
-├── project-brief.md
-├── AGENTS.md
-├── status/
-│   └── current-state.md
-├── decisions/
-│   └── README.md
-└── sources/
-    └── README.md
+00-home.md
+project-brief.md
+AGENTS.md
+status/current-state.md
+decisions/README.md
+sources/README.md
 ```
 
-Cuando el proyecto necesita declarar formalmente su adopción, agrega `.ia-dos.yaml` desde `templates/adoption.template.yaml`. El manifiesto es opcional y no forma parte del starter físico.
+`.ia-dos.yaml` es opcional y se agrega sólo cuando el proyecto necesita una adopción reproducible.
 
-La estructura es un punto de partida, no un esquema obligatorio para Wikis existentes. No renombres una memoria ya clara y navegable sólo para coincidir con estos nombres.
+No renombres una memoria existente y clara sólo para coincidir con el starter.
 
 ## Estructura por conocimiento
 
 La Wiki no replica los Conversation Spaces `00–90`.
 
-Los Conversation Spaces representan gobierno y autoridad. La Wiki organiza conocimiento reusable.
+Los Conversation Spaces representan gobierno. La LLM Wiki organiza conocimiento reusable.
 
-A medida que aparece contenido real, pueden surgir páginas como:
-
-```text
-product/financial-model.md
-architecture/runtime.md
-architecture/data-model.md
-operations/deployment.md
-decisions/single-writer.md
-```
-
-No crees carpetas vacías por anticipación.
-
-## Páginas modulares
-
-Prefiere páginas acotadas por tema en lugar de documentos monolíticos cuando el contenido pueda mantenerse y consumirse de forma independiente.
-
-El objetivo no es maximizar fragmentación. Divide sólo cuando mejora mantenimiento o recuperación selectiva.
+Crea páginas nuevas sólo cuando el contenido tenga suficiente entidad para mantenerse y consumirse de forma independiente. No anticipes carpetas vacías.
 
 ## Estado vigente primero
 
-La Wiki responde principalmente:
+La LLM Wiki responde principalmente:
 
 > ¿Qué sabemos que es verdad ahora?
-
-No debe narrar por defecto la historia completa de cómo se llegó a cada decisión.
-
-La cronología detallada puede vivir en Git, Exchange, issues, ADRs u otros artefactos históricos.
 
 Mantén explícita la diferencia entre:
 
@@ -105,44 +93,34 @@ Mantén explícita la diferencia entre:
 - decidido o aprobado pero no implementado;
 - pendiente;
 - fuera de alcance;
-- desconocido cuando corresponda.
+- desconocido.
 
-Una decisión aceptada no demuestra implementación. La implementación sigue siendo autoridad para demostrar estado técnico real.
+Una decisión aceptada no demuestra implementación. La implementación real sigue siendo autoridad para demostrar estado técnico.
 
 ## Markdown portable
 
-Usa características ampliamente compatibles:
+Prefiere:
 
 - Markdown estándar;
-- enlaces Markdown relativos;
+- enlaces relativos;
 - nombres de archivo descriptivos;
 - rutas estables;
-- YAML frontmatter mínimo sólo cuando aporte una función real.
+- YAML frontmatter sólo cuando aporte una función real.
 
-Ejemplo de enlace canónico:
-
-```md
-[Estado actual](status/current-state.md)
-```
-
-Los wikilinks de Obsidian pueden ser útiles como conveniencia local, pero no deben ser necesarios para comprender o navegar la fuente canónica.
-
-Los plugins de Obsidian tampoco deben contener semántica indispensable para agentes o lectores fuera de la aplicación.
+Los wikilinks y plugins de Obsidian pueden ser conveniencias locales, pero la semántica crítica no debe depender de ellos.
 
 ## Mapa de memoria
 
-En el starter, `00-home.md` actúa como punto de entrada humano y agéntico.
+En el starter, `00-home.md` funciona como punto de entrada y mapa. Debe orientar hacia páginas concretas sin duplicarlas.
 
-Su función es orientar hacia páginas concretas, no duplicar su contenido.
+Una Wiki existente puede conservar otro nombre para su home si cumple esa función.
 
-Una Wiki existente puede conservar otro nombre para su home si cumple la misma función.
+## Lo que no vive por defecto en la LLM Wiki
 
-## Lo que no vive por defecto en la Wiki
+No guardes como memoria vigente:
 
-No guardes como memoria durable sólo porque exista:
-
-- TASK completo;
-- REPORT completo;
+- TASK completos;
+- REPORT completos;
 - logs;
 - diffs;
 - transcripciones;
@@ -150,80 +128,84 @@ No guardes como memoria durable sólo porque exista:
 - outputs de tests;
 - backlog operativo.
 
-Cuando un hecho descubierto en esos artefactos resulta durable, se sintetiza y se incorpora después de revisión.
+Estos artefactos pueden aportar evidencia o historia. Si un hecho descubierto en ellos merece persistirse, primero se revisa y luego se sintetiza mediante una actualización autorizada.
 
 ## Consumo por coding agents
 
-El coding agent no debe leer toda la Wiki por defecto.
+El coding agent no debe leer toda la LLM Wiki por defecto.
 
-Una `Execution Task` distingue:
+Una tarea distingue:
 
 ### Contexto durable necesario
 
-Extracto mínimo que el Orchestrator incluye porque la tarea lo necesita.
+Extracto mínimo incluido porque la tarea lo necesita directamente.
 
 ### Referencias Wiki
 
-Rutas relacionadas para trazabilidad y navegación. Referenciar no significa leer.
+Rutas relacionadas para procedencia o navegación. Referenciar no significa leer.
 
 ### Lectura requerida
 
-Documentos concretos que el coding agent sí debe consumir antes de ejecutar.
+Documentos concretos que sí deben consumirse antes de actuar.
 
-El modo habitual es que la tarea sea ejecutable con contexto mínimo seleccionado. La lectura directa de Wiki se reserva para cuando aporte precisión real.
-
-Los hechos del repositorio que sean baratos de descubrir no necesitan duplicarse en `Contexto durable necesario`; ese bloque prioriza decisiones, restricciones y estado no obvio que condicionen la ejecución.
+Los hechos técnicos baratos de descubrir no necesitan duplicarse en contexto durable. Ese bloque prioriza decisiones, restricciones y estado no obvio que condicionan la ejecución.
 
 ## Fallback cuando la Wiki no es accesible
 
-Si el coding agent no puede acceder físicamente a la Wiki:
+Si el coding agent no puede acceder físicamente:
 
-1. el Orchestrator selecciona los hechos vigentes necesarios;
-2. los incluye en `Contexto durable necesario`;
+1. el Conversation Agent selecciona los hechos vigentes indispensables;
+2. los incluye en la tarea;
 3. conserva la referencia original cuando aporte trazabilidad;
-4. no copia la Wiki completa.
-
-Esto permite que IA-DOS funcione con coding agents que tengan capacidades de archivos diferentes.
+4. no copia la Wiki completa;
+5. declara la limitación.
 
 ## Rehidratación de conversaciones
 
-Una nueva conversación de una Execution Cell debe poder recuperar contexto suficiente desde:
+Una conversación nueva de una Execution Cell debe poder recuperar contexto suficiente desde:
 
 ```text
-memoria durable vigente
-+
-TASK actual
-+
-Exchange específico cuando aporte
+LLM Wiki relevante
++ estado técnico actual
++ Execution Task o contrato operativo actual
++ delta vigente
 ```
 
-No debería necesitar leer la conversación anterior completa.
+Exchange específico puede aportar historial cuando sea útil, pero no sustituye ninguna de esas fuentes.
 
-Si el conocimiento indispensable sólo existe en ese chat anterior, el Memory Bootstrap Gate no está satisfecho.
+Si el conocimiento indispensable sólo existe en un chat anterior, el Memory Bootstrap Gate no está satisfecho.
 
 ## Gobierno de la memoria
 
-El coding agent puede descubrir hechos durante una ejecución, pero no decide unilateralmente qué se convierte en memoria durable.
+El coding agent puede descubrir hechos durante una ejecución, pero el `Execution Report` sigue siendo evidencia, no un artefacto de consolidación de memoria.
 
 ```text
-Execution Report
-    ↓ conocimiento potencialmente durable
-Conversation Space revisa
-    ↓
-90 — Wiki y memoria, cuando aporta
-    ↓
-Wiki
+Coding Agent
+→ Execution Report con hechos y evidencia observados
+
+Cycle Owner + persona responsable, según autoridad
+→ revisan el resultado
+→ evalúan por separado qué hechos nuevos merecen memoria durable
+
+Conversation Space / 90, cuando aporta
+→ sintetiza el cambio documental
+
+Execution Task documental autorizada
+→ materializa la actualización de LLM Wiki
 ```
 
-Una Execution Cell como `Wiki Sync` puede encargarse de la modificación física o sincronización Git cuando sea necesario, mientras la síntesis de contenido permanece en el plano conversacional.
+Si la propia Execution Task ya autoriza una actualización durable concreta con conocimiento confirmado, el coding agent puede materializarla dentro de ese alcance. Fuera de ese caso, no crea una sección de `conocimiento potencialmente durable` ni decide qué debe incorporarse.
 
-## Regla principal
+Una Execution Cell como `Wiki Sync` puede encargarse de la modificación física o sincronización cuando exista un flujo durable que lo justifique. No se crea automáticamente por usar una Wiki.
+
+## Fronteras
 
 ```text
-Wiki = estado durable reusable
-Exchange = historial de instrucciones y retornos
-Repositorio = implementación
-Conversaciones = razonamiento y trabajo activo
+LLM Wiki = conocimiento vigente reusable
+Exchange = archivos intercambiados / historial cuando se conserva
+Repository = implementación
+Execution Report = evidencia de una ejecución
+Conversations = razonamiento y gobierno activo
 ```
 
-Diseña la memoria para que estas fronteras sigan siendo visibles tanto para personas como para agentes.
+Diseña la memoria para que estas fronteras sigan visibles para personas y agentes.
