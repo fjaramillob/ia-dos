@@ -245,7 +245,7 @@ Cuando la persona necesita iniciar manualmente al Code Agent, puede usar un `Man
 - ruta física de `outbox/` cuando la tarea autorice materializar la salida;
 - instrucción de leer el artefacto completo.
 
-El launcher **no es un Artifact Type** y no agrega autoridad.
+El launcher **no es un Artifact Type** y no agrega autoridad ni elige el modo de retorno.
 
 ```text
 Launcher = localización manual
@@ -264,7 +264,7 @@ Esto no convierte Exchange en un sistema activo ni amplía escritura sobre el pr
 En Planning y Preflight:
 
 ```text
-solo lectura del proyecto
+solo lectura del proyecto/entorno
 ≠ prohibición de materializar el propio output autorizado
 ```
 
@@ -272,13 +272,18 @@ El Code Agent puede escribir únicamente el artefacto de salida declarado y sól
 
 ### Caveman Return
 
-Cuando el output completo ya quedó en `outbox/`, la respuesta conversacional del Code Agent puede reducirse a un `Caveman Return`:
+La respuesta conversacional del Code Agent puede reducirse a un `Caveman Return` **sólo cuando**:
+
+1. la Task autoritativa declara `Caveman Return: Sí`;
+2. el output completo fue materializado correctamente en el destino declarado.
 
 ```text
 estado o resultado esencial
 + atención requerida
 + nombre/path del artefacto completo
 ```
+
+Si cualquiera de esas condiciones falta, el Code Agent devuelve el artefacto completo según el canal y contrato de la Task.
 
 El Caveman Return es una representación conversacional mínima, **no un nuevo artefacto** y no reemplaza el Implementation Plan, Environment Readiness Report o Execution Report completo.
 
@@ -340,6 +345,6 @@ LLM Wiki = memoria durable materializada
 Repository = implementación
 Exchange = pasarela pasiva de archivos .md
 Manual Artifact Launcher = localización efímera, no autoridad
-Caveman Return = presentación conversacional mínima
+Caveman Return = presentación conversacional mínima sólo por opt-in de la Task
 Persona responsable = aprobación final aplicable
 ```
