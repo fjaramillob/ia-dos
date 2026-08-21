@@ -69,11 +69,16 @@ Pregunta:
 
 ```text
 PASS
-→ continúa sin documentación adicional
+→ la unidad evaluada puede continuar sin documentación adicional
 
 BOOTSTRAP REQUIRED
-→ persiste primero el checkpoint durable mínimo
+→ la unidad evaluada queda bloqueada
+→ materializa primero el checkpoint durable mínimo mediante una Execution Task separada
+→ revisa su Execution Report
+→ reevalúa el gate de la unidad original
 ```
+
+`BOOTSTRAP REQUIRED` no bloquea la unidad mínima necesaria para crear la memoria. Esa tarea declara explícitamente que materializa el checkpoint y no puede mezclar la unidad original que busca desbloquear.
 
 No uses edad, número de mensajes, tareas o porcentajes como umbral.
 
@@ -226,6 +231,18 @@ Toda tarea declara en forma proporcional:
 - verificaciones;
 - condiciones de detención.
 
+Precondición de memoria:
+
+```text
+unidad ordinaria que depende de memoria previa
+→ Memory Bootstrap Gate = PASS
+
+unidad cuyo único resultado es crear el checkpoint requerido
+→ BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT
+```
+
+La segunda no puede ejecutar la unidad original. Después de revisar el bootstrap se reevalúa el gate original.
+
 Por defecto no autorices commit, push, PR, merge, deploy, producción, datos, servicios externos o costes sin declaración explícita.
 
 Antes de ejecutarla, confirma que puede completarse, verificarse y reportarse como una sola unidad.
@@ -303,6 +320,8 @@ El coding agent no crea por defecto una sección de conocimiento potencialmente 
 Después de revisar evidencia, el Cycle Owner decide dentro de autoridad delegada y la persona responsable interviene cuando corresponda.
 
 La evaluación de memoria durable ocurre después de la revisión, salvo que la Task ya haya autorizado una actualización documental concreta.
+
+Si el reporte corresponde a una tarea de memory bootstrap, su revisión no autoriza automáticamente la unidad original; primero se reevalúa su Memory Bootstrap Gate.
 
 ## Exchange
 
