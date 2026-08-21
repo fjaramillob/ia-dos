@@ -120,7 +120,7 @@ Wiki Sync
 
 La conversación puede renovarse por degradación o contaminación de contexto, pero la célula continúa. Los permisos no se acumulan entre tareas: cada `Execution Task` vuelve a declarar su autoridad.
 
-Consulta [Execution Cells y Exchange Protocol v0](docs/execution/execution-cells-and-exchange.md).
+Consulta [Execution Cells y Exchange](docs/execution/execution-cells-and-exchange.md).
 
 ## Un solo contrato de Execution Task
 
@@ -132,23 +132,25 @@ Execution Task
 + criterios + verificaciones + condiciones de detención
 ```
 
-Puede representarse con la [Execution Task compacta](templates/execution-task-compact.template.md), la [Execution Task completa](templates/execution-task.template.md), el perfil [Exchange Execution Task v0](templates/exchange-task-v0.template.md) o el perfil documental [Wiki Update Task](templates/wiki-update-task.template.md).
+Puede representarse con la [Execution Task compacta](templates/execution-task-compact.template.md), la [Execution Task completa](templates/execution-task.template.md) o el perfil documental [Wiki Update Task](templates/wiki-update-task.template.md).
 
-Exchange y Wiki Update no debilitan el contrato: sólo especializan identificación, persistencia o propósito documental.
+El mecanismo utilizado para transportar o almacenar la tarea no cambia ese contrato.
 
-## Exchange Protocol v0
+## Exchange
 
-Exchange es un componente opcional para conservar manualmente fuera de las conversaciones el historial operacional del par:
+Exchange es una **pasarela pasiva de archivos Markdown** entre Conversation Agents y Code Agents.
 
 ```text
-Execution Task
-        ↓
-Execution Report
+Conversation Agent
+→ construye Execution Task.md + Task ID
+→ inbox/
+→ Code Agent
+→ construye Execution Report.md con el mismo Task ID
+→ outbox/
+→ Conversation Agent / Cycle Owner
 ```
 
-En v0 no almacena por defecto Planning Tasks, Implementation Plans, backlog ni memoria durable.
-
-Una topología posible es:
+Una topología mínima posible es:
 
 ```text
 Proyecto/
@@ -157,40 +159,29 @@ Proyecto/
 └── proyecto-exch/
     ├── inbox/
     ├── outbox/
-    ├── archive/
-    └── templates/
-        ├── TASK.md
-        └── REPORT.md
+    └── archive/
 ```
 
-Esta topología es opcional. Exchange puede vivir en otra ubicación o no existir.
+La topología es opcional. Exchange puede vivir en otra ubicación o no existir.
 
-```text
-inbox/
-→ TASK dentro del flujo activo
+Exchange **no define**:
 
-outbox/
-→ REPORT pendiente de revisión
+- IDs;
+- nombres de archivo;
+- templates;
+- tipos de artefacto;
+- estados;
+- permisos;
+- workflow;
+- backlog;
+- memoria durable;
+- decisiones.
 
-archive/
-→ intercambio revisado y fuera del flujo activo
-```
+El `Task ID` lo asigna el agente conversacional al construir la Execution Task. El Execution Report lo reutiliza por contrato. Exchange sólo almacena y pone a disposición los `.md` resultantes.
 
-Estas carpetas no constituyen una máquina de estados. En v0 el movimiento es manual y no dispara ejecuciones.
+`inbox/`, `outbox/` y `archive/` son ubicaciones de paso, no estados automáticos. Nada ocurre por mover un archivo.
 
-Exchange no sustituye la Wiki, el backlog ni el repositorio. Permite conservar qué se pidió y qué respondió el ejecutor, incluso si una conversación de coding agent se renueva.
-
-El `Task ID` puede usar:
-
-```text
-{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
-```
-
-El `REPORT` reutiliza exactamente el mismo `Task ID` del `TASK`. Cuando no existe un ciclo separado, `Cycle ID` puede declararse `NO APLICA`.
-
-Exchange v0 no exige `REGISTRY.md`, contador compartido, sufijo anti-colisión, watcher, trigger, polling ni sincronización automática.
-
-Consulta [Crear o conectar Exchange Protocol v0](docs/getting-started/bootstrap-exchange.md).
+Consulta [Crear o conectar Exchange](docs/getting-started/bootstrap-exchange.md).
 
 ## Memoria durable portable
 
@@ -262,7 +253,7 @@ Una aprobación autoriza solo la Execution Task presentada, no el plan general.
 4. Abre `00 — Dirección y orquestación`; usa modo `definición inicial` para un producto nuevo o modo `descubrimiento y adopción` para uno existente.
 5. Avanza mediante tareas tipadas que regresan al Cycle Owner.
 6. Antes de depender de contexto histórico que sólo viva en chats, evalúa el Memory Bootstrap Gate.
-7. Adopta Exchange sólo cuando conservar TASK/REPORT fuera de las conversaciones aporte valor real.
+7. Usa Exchange sólo cuando una pasarela de `.md` entre agentes aporte valor real.
 
 Si la plataforma no puede navegar el repositorio canónico, usa como contrato offline mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`. No combines bundles heredados. El archivo `bundles/ia-dos-current-offline-pack.md` sólo debe utilizarse cuando su propio encabezado declare que está sincronizado con la versión o commit de IA-DOS adoptado.
 
@@ -275,7 +266,7 @@ Si la plataforma no puede navegar el repositorio canónico, usa como contrato of
 - [Salida rápida](docs/orchestration/fast-planning-lane.md)
 - [Tipado de artefactos](docs/orchestration/typed-artifact-routing.md)
 - [Roles y sesiones](docs/orchestration/agent-role-and-artifact-loop.md)
-- [Execution Cells y Exchange v0](docs/execution/execution-cells-and-exchange.md)
+- [Execution Cells y Exchange](docs/execution/execution-cells-and-exchange.md)
 - [Compresión de contexto](docs/orchestration/context-compression-by-authority.md)
 - [Memory Bootstrap Gate](docs/foundations/memory-bootstrap-gate.md)
 - [Memoria durable portable](docs/foundations/durable-memory-and-obsidian.md)
@@ -292,8 +283,6 @@ Si la plataforma no puede navegar el repositorio canónico, usa como contrato of
 - [Execution Task compacta](templates/execution-task-compact.template.md)
 - [Execution Task completa](templates/execution-task.template.md)
 - [Execution Report](templates/execution-report.template.md)
-- [Exchange Execution Task v0](templates/exchange-task-v0.template.md)
-- [Exchange Execution Report v0](templates/exchange-report-v0.template.md)
 - [Wiki Update Task](templates/wiki-update-task.template.md)
 - [Adoption Manifest](templates/adoption.template.yaml)
 - [Wiki Starter](templates/wiki-starter/00-home.md)
