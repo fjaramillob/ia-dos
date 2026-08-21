@@ -28,6 +28,7 @@ Durante la planificación:
 - no detengas el plan por decisiones reversibles y seguras que puedan mantenerse como supuestos;
 - propone una primera unidad pequeña y verificable;
 - prepara una Execution Task candidata lista para revisión cuando exista evidencia suficiente;
+- deja `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`; no inventes ni reserves el Task ID de la futura Execution Task;
 - en la candidata declara `Execution Cell o sesión: [NOMBRE O NO APLICA]` y reutiliza una célula existente cuando corresponda;
 - no fuerces una conversación de ejecución nueva sólo por separar Planning y Execution;
 - menciona sólo dependencias inmediatas;
@@ -42,7 +43,7 @@ Al finalizar, entrega un `Implementation Plan` con:
 - estrategia mínima;
 - decisiones pendientes clasificadas;
 - primera unidad recomendada;
-- Execution Task candidata cuando sea segura;
+- Execution Task candidata cuando sea segura, con Task ID pendiente;
 - una única razón bloqueante verificable cuando no pueda prepararse;
 - brechas de otro dominio sin desarrollarlas;
 - documentación que la futura Execution Task deba actualizar explícitamente, si aplica;
@@ -51,6 +52,7 @@ Al finalizar, entrega un `Implementation Plan` con:
 Devuelve el plan directamente al Cycle Owner indicado.
 No ejecutes la candidata ni realices cambios físicos.
 No apruebes tu propio plan.
+No asignes el Task ID de la futura Execution Task: el Conversation Agent/Cycle Owner lo asigna al adoptar la candidata.
 No selecciones por tu cuenta la decisión de gobierno posterior.
 La futura ejecución requiere autorización separada y puede reutilizar una Execution Cell activa.
 ```
@@ -59,6 +61,6 @@ La futura ejecución requiere autorización separada y puede reutilizar una Exec
 
 El Conversation Space puede entregar una instrucción equivalente a:
 
-> Abre el coding agent disponible sobre el entorno técnico autorizado y pega la Planning Task completa en modo de solo lectura. Devuelve el Implementation Plan a este mismo Conversation Space para revisión. No ejecutes cambios.
+> Abre el coding agent disponible sobre el entorno técnico autorizado y pega la Planning Task completa en modo de solo lectura. Devuelve el Implementation Plan a este mismo Conversation Space para revisión. No ejecutes cambios ni asignes el Task ID de la futura Execution Task.
 
 No conviertas un nombre de sesión `PLAN — ...` en obligación de abrir una conversación nueva por tarea.
