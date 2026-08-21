@@ -65,16 +65,20 @@ Consolidación ejecutada durante las Fases 1–6:
 - Current Offline Pack sincronizado con los contratos canónicos;
 - validación end-to-end de los principales recorridos de onboarding y continuidad.
 
-Invariantes consolidados:
+La auditoría integral posterior de 2026-08-21 detectó residuos documentales de contratos anteriores y reforzó las fronteras sin introducir una nueva arquitectura del método. Las validaciones de Fase 6 se conservan como evidencia histórica de su baseline, no como garantía permanente del repositorio.
+
+Invariantes consolidados actualmente:
 
 ```text
-Conversation Space = gobierno y decisión
-Execution Cell     = continuidad de ejecución
-Execution Task     = contrato de una unidad
-Execution Report   = evidencia de ejecución
-LLM Wiki           = memoria durable materializada
-Repository         = implementación
-Exchange           = pasarela pasiva de archivos
+Persona responsable = dirección y aprobación final aplicable
+Conversation Space   = gobierno dentro de autoridad delegada
+Execution Cell       = continuidad de ejecución
+Execution Task       = contrato de una unidad
+Execution Report     = evidencia de ejecución
+Memoria durable      = responsabilidad funcional
+LLM Wiki              = materialización durable, portable y navegable
+Repository            = implementación
+Exchange              = pasarela pasiva de archivos
 ```
 
 ---
@@ -84,6 +88,8 @@ Exchange           = pasarela pasiva de archivos
 **Estado: SIGUIENTE**
 
 Objetivo: dejar que el método siga evolucionando a partir de uso real, no de arquitectura anticipada.
+
+La auditoría integral del repositorio forma parte de la preparación de esta etapa: antes de volver a validar IA-DOS en proyectos reales, las superficies normativas, copiables y offline deben enseñar el mismo contrato vigente.
 
 ### Prioridades
 
@@ -188,6 +194,6 @@ No son prioridad de la etapa alpha:
 - sincronización automática con Google Drive u otros proveedores;
 - RAG o retrieval automático sobre toda la LLM Wiki;
 - orquestación multiagente autónoma;
-- automatización compleja que reemplace decisiones del Conversation Agent o Cycle Owner.
+- automatización compleja que reemplace decisiones del Conversation Agent, Cycle Owner o persona responsable.
 
 Estas capacidades pueden evaluarse en el futuro si resuelven problemas observados. No son requisitos para que IA-DOS funcione correctamente.
