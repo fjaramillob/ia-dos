@@ -74,8 +74,14 @@ PASS
 → continúa sin documentación adicional
 
 BOOTSTRAP REQUIRED
-→ persiste primero el checkpoint durable mínimo
+→ la unidad evaluada queda bloqueada
+→ emite una Execution Task separada cuyo único resultado sea persistir el checkpoint durable mínimo
+→ deja la unidad original explícitamente fuera de alcance
+→ revisa el Execution Report del bootstrap
+→ reevalúa el gate de la unidad original
 ```
+
+La tarea de bootstrap no finge `PASS` y no puede ejecutar la unidad original que busca desbloquear. Declara explícitamente que responde a `BOOTSTRAP REQUIRED`.
 
 Una LLM Wiki separada no es obligatoria y `90 — Wiki y memoria` no debe abrirse por rutina.
 
@@ -114,7 +120,7 @@ Exchange puede utilizarse como pasarela pasiva opcional de `.md`. No cambia cont
 
 ## 9. Responsabilidad y revisión
 
-El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante.
+El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 El `Execution Report` aporta evidencia mediante:
 
@@ -125,6 +131,8 @@ Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 El coding agent no aprueba su propio resultado, no decide la siguiente unidad y no consolida memoria durable por defecto.
 
+Si el reporte corresponde a un memory bootstrap, su revisión no habilita automáticamente la unidad original: primero se reevalúa su Memory Bootstrap Gate.
+
 ## Resultado esperado
 
 - dirección inicial suficiente;
@@ -132,6 +140,7 @@ El coding agent no aprueba su propio resultado, no decide la siguiente unidad y 
 - Conversation Spaces bajo demanda;
 - ningún `Launch Mode` o fase artificial;
 - Memory Bootstrap Gate aplicado cuando la unidad dependa de historia conversacional;
+- `BOOTSTRAP REQUIRED` resuelto mediante una unidad de checkpoint separada antes de retomar la unidad original;
 - Environment Preflight usado cuando readiness indispensable sea desconocido;
 - Planning Task sólo cuando reduzca incertidumbre real;
 - Execution Task acotada cuando la unidad esté lista;
