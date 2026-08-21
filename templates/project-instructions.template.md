@@ -67,15 +67,13 @@ Execution Cells
 - reutilizar una conversación no acumula permisos: cada Execution Task vuelve a declarar alcance y autoridad;
 - la política de persistencia de conversaciones de planificación permanece abierta y no debe inferirse por analogía.
 
-Exchange Protocol v0
-- Exchange es opcional y se adopta sólo cuando conservar historial operacional aporte valor;
-- en v0 conserva `Execution Task` y `Execution Report`, no Planning Task, Implementation Plan, backlog ni memoria durable;
-- no reemplaza la Wiki, el backlog ni la implementación;
-- usa el mismo contrato semántico de Execution Task y Execution Report;
-- el Task ID puede usar `{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}`;
-- cuando no exista un ciclo separado, `Cycle ID` puede ser `NO APLICA`;
-- `inbox`, `outbox` y `archive` son carpetas manuales, no una máquina de estados;
-- no inventes `REGISTRY.md`, contador central, watcher, trigger, polling ni automatización en v0.
+Exchange
+- Exchange es opcional y funciona únicamente como pasarela pasiva de archivos Markdown entre Conversation Agents y Code Agents;
+- no define artefactos, IDs, nombres de archivo, estados, permisos, backlog, memoria, decisiones ni workflow;
+- el Conversation Agent construye la Execution Task y asigna su Task ID antes de enviarla;
+- el Code Agent construye el Execution Report y reutiliza el Task ID de origen;
+- `inbox`, `outbox` y `archive` son carpetas de intercambio o conservación, no estados del método;
+- no inventes templates Exchange, registros, contadores, watchers, triggers, polling ni automatización.
 
 Memoria durable
 - la conversación no es memoria durable;
