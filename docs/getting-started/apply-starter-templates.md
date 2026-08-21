@@ -10,8 +10,6 @@ Las plantillas no deben copiarse sin revisión. Adáptalas al proyecto y complet
 templates/
 ├── adoption.template.yaml
 ├── AGENTS.template.md
-├── exchange-task-v0.template.md
-├── exchange-report-v0.template.md
 └── wiki-starter/
     ├── 00-home.md
     ├── project-brief.md
@@ -26,7 +24,7 @@ templates/
 
 El Wiki Starter ya no crea `tasks/`, `context-packs/`, `log.md` ni una página de arquitectura vacía. Esos elementos aparecen sólo cuando existe una necesidad real.
 
-Exchange tampoco se crea automáticamente. Se adopta únicamente cuando conservar `Execution Task` y `Execution Report` fuera de las conversaciones aporta valor operacional.
+Exchange tampoco se crea automáticamente. Cuando se usa, no requiere templates propios: sólo recibe archivos `.md` ya construidos por los agentes.
 
 ## Antes de crear la Wiki
 
@@ -38,9 +36,9 @@ Cuando el gate devuelve `BOOTSTRAP REQUIRED`, crea o actualiza sólo el checkpoi
 
 ## Antes de crear Exchange
 
-Evalúa si existe una razón real para conservar TASK/REPORT fuera del chat.
+Evalúa si una pasarela de archivos entre Conversation Agent y Code Agent aporta valor operacional.
 
-Cuando corresponda, consulta [Crear o conectar Exchange Protocol v0](bootstrap-exchange.md).
+Cuando corresponda, consulta [Crear o conectar Exchange](bootstrap-exchange.md).
 
 No confundas esta decisión con el Memory Bootstrap Gate:
 
@@ -49,7 +47,7 @@ Wiki / memoria durable
 → conserva conocimiento vigente
 
 Exchange
-→ conserva historial operacional TASK/REPORT
+→ transporta y puede conservar archivos .md
 ```
 
 Un proyecto puede necesitar uno, ambos o ninguno en un momento determinado.
@@ -76,10 +74,7 @@ nombre-proyecto/
 └── nombre-proyecto-exch/          # opcional
     ├── inbox/
     ├── outbox/
-    ├── archive/
-    └── templates/
-        ├── TASK.md
-        └── REPORT.md
+    └── archive/
 ```
 
 También son válidos monorepos, documentación dentro de la app, Exchange dentro de otro recurso u otras configuraciones. No reorganices un proyecto existente sólo para coincidir con este ejemplo.
@@ -101,12 +96,11 @@ Completa:
 - modelo de adopción;
 - Project Orchestrator utilizado;
 - rutas o URLs reales de implementación, memoria, backlog y Exchange cuando exista;
-- fuente de Execution Tasks cuando se declare;
 - excepciones reales.
 
 No declares `main`, `latest` o `current` como versión adoptada cuando necesites reproducibilidad.
 
-Exchange y backlog son recursos distintos. Por ejemplo, GitHub Issues puede conservar trabajo pendiente mientras Exchange conserva las tareas efectivamente delegadas y sus reportes.
+Exchange y backlog son recursos distintos. El backlog conserva trabajo pendiente; Exchange sólo sirve como pasarela de archivos.
 
 ## Paso 2 — Incorporar `AGENTS.md` en la implementación cuando corresponda
 
@@ -146,16 +140,16 @@ No crees arquitectura, producto u operaciones sólo para llenar carpetas.
 
 ## Paso 4 — Crear Exchange cuando corresponda
 
-Si el proyecto adopta Exchange v0:
+Si el proyecto adopta Exchange:
 
-1. crea `inbox/`, `outbox/`, `archive/` y `templates/` o equivalentes claros;
-2. copia `templates/exchange-task-v0.template.md` como `templates/TASK.md` dentro del almacén Exchange;
-3. copia `templates/exchange-report-v0.template.md` como `templates/REPORT.md`;
-4. registra la ruta real en `.ia-dos.yaml` cuando exista manifiesto;
+1. crea `inbox/`, `outbox/` y `archive/` o equivalentes claros;
+2. registra la ruta real en `.ia-dos.yaml` cuando exista manifiesto;
+3. no copies templates especiales de Exchange;
+4. no definas IDs desde Exchange;
 5. no crees `REGISTRY.md`, contador compartido, watcher ni automatización;
 6. no migres conversaciones históricas por defecto.
 
-La copia de TASK/REPORT queda asociada a la versión de IA-DOS adoptada. No se actualiza silenciosamente cuando cambie el framework.
+La `Execution Task` que llegue a `inbox/` es exactamente la tarea canónica que construyó el Conversation Agent. El `Execution Report` que llegue a `outbox/` es exactamente el reporte canónico que construyó el Code Agent.
 
 ## Paso 5 — Separar estado de intención
 
@@ -184,6 +178,7 @@ Confirma:
 - la memoria identifica dónde demostrar implementación y trabajo pendiente;
 - la fuente de tareas no se duplica dentro de la Wiki;
 - Exchange, si existe, no se usa como memoria vigente ni backlog;
+- Exchange no genera ni valida IDs;
 - `inbox/`, `outbox/` y `archive/` no se interpretan como una máquina de estados automática;
 - los agentes no reciben acceso automático a todo el workspace.
 
@@ -220,7 +215,7 @@ Las plantillas no:
 - [ ] La implementación y otras fuentes de verdad están identificadas.
 - [ ] No se duplicaron tareas o historial operacional dentro de la Wiki.
 - [ ] Exchange sólo existe cuando aporta valor y no funciona como backlog accidental.
-- [ ] Las plantillas Exchange corresponden a la versión adoptada cuando se usa.
+- [ ] Exchange no define artefactos, IDs o estados.
 - [ ] `.ia-dos.yaml` declara una versión concreta cuando se usa.
 - [ ] No existen secretos.
 - [ ] No quedan placeholders interpretables como hechos.
