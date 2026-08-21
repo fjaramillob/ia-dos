@@ -1,6 +1,8 @@
 # Execution Task compacta
 
-Usa este bloque como salida operativa por defecto cuando el resultado está definido, el Memory Bootstrap Gate está satisfecho cuando aplica, el entorno está `LISTO PARA EJECUCIÓN` cuando requiere readiness y existe la autorización aplicable.
+Usa este bloque como salida operativa por defecto cuando el resultado está definido, la precondición de memoria permite esta unidad, el entorno está `LISTO PARA EJECUCIÓN` cuando requiere readiness y existe la autorización aplicable.
+
+Una unidad ordinaria que dependa de memoria chat-only requiere `Memory Bootstrap Gate = PASS`. La excepción es una Execution Task cuyo **único resultado** sea materializar el checkpoint mínimo exigido por `BOOTSTRAP REQUIRED`.
 
 ```text
 Artifact Type: Execution Task
@@ -20,10 +22,12 @@ OBJETIVO ÚNICO
 [RESULTADO CONCRETO, TERMINABLE Y VERIFICABLE]
 
 PRECONDICIONES
-- Memory Bootstrap Gate: [PASS | NO APLICA]
+- Memory Bootstrap Gate: [PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT | NO APLICA]
 - Readiness indispensable: [LISTO PARA EJECUCIÓN | NO APLICA]
-- Planning previo: [REFERENCIA APROBADA | NO APLICA]
+- Planning previo: [REFERENCIA REVISADA | NO APLICA]
 - autorización humana adicional requerida: [RESUELTA | NO APLICA]
+
+Si se declara `BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`, esta tarea no puede incluir la unidad original que quedó bloqueada. Tras revisar el reporte del bootstrap, reevalúa el gate antes de emitir aquella unidad.
 
 FUENTES DE AUTORIDAD
 | Recurso o documento | Rol | Autoridad para | Acceso | Vigencia o referencia |
@@ -77,6 +81,8 @@ INSTRUCCIONES LOCALES
 CONDICIONES DE DETENCIÓN
 Detente cuando falte información crítica, una fuente contradiga el estado real, una referencia no sea accesible o vigente, aparezca trabajo previo que pueda perderse, sea necesario tocar una zona o usar una capacidad no autorizada, falle una verificación crítica, exista riesgo de seguridad, datos o coste, o la tarea revele resultados independientes.
 
+Para una tarea de memory bootstrap, detente también si sería necesario resolver contenido no confirmado o ejecutar la unidad original antes de revisar el checkpoint.
+
 FALLBACK DE CONTEXTO
 Cuando una fuente durable no sea accesible, usa sólo el extracto indispensable contenido en la tarea, conserva la referencia original y reporta la limitación. No compenses el acceso faltante ampliando alcance.
 
@@ -92,7 +98,7 @@ Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
-Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera revisión. No elijas la decisión de gobierno posterior, no consolides memoria durable y no inicies otra unidad.
+Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera revisión. No elijas la decisión de gobierno posterior, no consolides memoria durable fuera de lo autorizado y no inicies otra unidad.
 ```
 
 ## Regla de continuidad
