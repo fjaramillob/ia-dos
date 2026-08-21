@@ -48,7 +48,7 @@ Cuando el proyecto no usa otro esquema, IA-DOS recomienda:
 Ejemplo:
 
 ```text
-PROPACTO-10-APP-20260821-130700
+PROYECTO-10-APP-20260821-130700
 ```
 
 El timestamp usa orden `año-mes-día` seguido por `hora-minuto-segundo` para ordenar cronológicamente por texto y reducir colisiones en uso manual.
@@ -83,6 +83,7 @@ Output Delivery:
 Channel: Exchange
 Location: outbox
 Filename: [NOMBRE.md]
+Caveman Return: Sí | No
 ```
 
 Una instrucción efímera puede resolver `inbox/` y `outbox/` a paths absolutos mediante un `Manual Artifact Launcher`.
@@ -91,11 +92,15 @@ El launcher:
 
 - localiza el artefacto;
 - puede localizar físicamente el destino de output;
+- puede repetir el modo de retorno ya declarado por la Task;
+- no elige ni cambia ese modo;
 - no modifica el artefacto;
 - no agrega permisos;
 - no reemplaza `Destination Role`, `Expected Output` ni `Forbidden Output`.
 
-Cuando el output completo ya fue materializado, la conversación puede usar un `Caveman Return` con estado, atención requerida y ubicación del archivo. El artefacto completo continúa siendo la salida autoritativa.
+La conversación usa `Caveman Return` únicamente cuando la Task autoritativa declara `Caveman Return: Sí` **y** el output completo fue materializado correctamente. Si falta cualquiera de esas condiciones, el receptor devuelve el artefacto completo según el contrato y canal de la Task.
+
+El artefacto completo continúa siendo la salida autoritativa.
 
 Consulta `docs/execution/manual-artifact-delivery.md`.
 
@@ -116,7 +121,7 @@ Forbidden Output: Implementation Plan | Execution Report | cambios técnicos
 Artifact Type: Planning Task
 Destination Role: Coding Agent — Planning
 Expected Output: Implementation Plan
-Forbidden Output: cambios | commits | despliegues | Execution Report
+Forbidden Output: cambios del proyecto | commits | despliegues | Execution Report
 ```
 
 La sesión de Planning, cuando se declara, puede ser un identificador lógico. No impone una política universal de conversación por tarea.
@@ -129,7 +134,7 @@ Si la Planning Task autoriza `Output Delivery`, el Code Agent puede materializar
 Artifact Type: Environment Preflight
 Destination Role: Coding Agent — Planning
 Expected Output: Environment Readiness Report
-Forbidden Output: cambios | instalaciones | inicio de servicios | ejecución
+Forbidden Output: cambios del entorno | instalaciones | inicio de servicios | ejecución
 ```
 
 La materialización explícitamente autorizada del Environment Readiness Report no cuenta como modificación del entorno inspeccionado.
