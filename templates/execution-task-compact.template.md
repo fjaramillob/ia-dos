@@ -1,12 +1,12 @@
 # Execution Task compacta
 
-Usa este bloque como salida operativa por defecto cuando el trabajo ya está definido, el entorno está listo y el Cycle Owner ha autorizado la ejecución.
+Usa este bloque como salida operativa por defecto cuando el resultado está definido, el Memory Bootstrap Gate está satisfecho cuando aplica, el entorno está `LISTO PARA EJECUCIÓN` cuando requiere readiness y existe la autorización aplicable.
 
 ```text
 Artifact Type: Execution Task
 Destination Role: Coding Agent — Execution
 Expected Output: Execution Report
-Forbidden Output: trabajo fuera de alcance, autoaprobación o siguiente unidad
+Forbidden Output: trabajo fuera de alcance | autoaprobación | siguiente unidad
 
 Método: IA-DOS
 Cycle ID: [CYCLE-ID O NO APLICA]
@@ -19,13 +19,19 @@ Tipo: [INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE | TEST | HARDEN | 
 OBJETIVO ÚNICO
 [RESULTADO CONCRETO, TERMINABLE Y VERIFICABLE]
 
+PRECONDICIONES
+- Memory Bootstrap Gate: [PASS | NO APLICA]
+- Readiness indispensable: [LISTO PARA EJECUCIÓN | NO APLICA]
+- Planning previo: [REFERENCIA APROBADA | NO APLICA]
+- autorización humana adicional requerida: [RESUELTA | NO APLICA]
+
 FUENTES DE AUTORIDAD
 | Recurso o documento | Rol | Autoridad para | Acceso | Vigencia o referencia |
 |---|---|---|---|---|
 | [RECURSO] | [MEMORIA DURABLE / IMPLEMENTACIÓN / EVIDENCIA / REFERENCIA] | [ÁMBITO] | [LECTURA / ESCRITURA / ACCIÓN] | [RUTA, VERSIÓN, COMMIT O FECHA] |
 
 ARTEFACTO PREVIO VÁLIDO
-- [IMPLEMENTATION PLAN APROBADO, READINESS REPORT, EXECUTION REPORT O NO APLICA]
+- [IMPLEMENTATION PLAN REVISADO, READINESS REPORT, EXECUTION REPORT O NO APLICA]
 
 DELTA DEL CICLO
 - [DECISIÓN O CAMBIO QUE HABILITA ESTA EJECUCIÓN]
@@ -72,12 +78,12 @@ CONDICIONES DE DETENCIÓN
 Detente cuando falte información crítica, una fuente contradiga el estado real, una referencia no sea accesible o vigente, aparezca trabajo previo que pueda perderse, sea necesario tocar una zona o usar una capacidad no autorizada, falle una verificación crítica, exista riesgo de seguridad, datos o coste, o la tarea revele resultados independientes.
 
 FALLBACK DE CONTEXTO
-Cuando una fuente durable no sea accesible, usa solo el extracto indispensable contenido en la tarea, conserva la referencia original y reporta la limitación. No compenses el acceso faltante ampliando el alcance.
+Cuando una fuente durable no sea accesible, usa sólo el extracto indispensable contenido en la tarea, conserva la referencia original y reporta la limitación. No compenses el acceso faltante ampliando alcance.
 
 CONTRATO DE RETORNO
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: revisión y decisión del Cycle Owner
+Expected Output: revisión de evidencia bajo la autoridad aplicable
 Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [EXEC-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
@@ -86,17 +92,21 @@ Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
-Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera el Cycle Owner. No elijas por él la decisión de gobierno posterior, no consolides memoria durable y no inicies otra unidad.
+Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera revisión. No elijas la decisión de gobierno posterior, no consolides memoria durable y no inicies otra unidad.
 ```
 
 ## Regla de continuidad
 
-Cuando el proyecto use una `Execution Cell`, reutiliza su conversación activa mientras siga respondiendo bien. No cambies el nombre de la célula ni abras una conversación nueva sólo porque cambia el resultado de la tarea.
+Cuando el proyecto use una Execution Cell, reutiliza su conversación activa mientras siga respondiendo bien. No cambies el nombre de la célula ni abras una conversación nueva sólo porque cambia el resultado.
 
 Los permisos no se heredan: cada Execution Task vuelve a declararlos aunque use la misma célula.
+
+## Regla de autoridad
+
+El Cycle Owner prepara o valida la tarea dentro de autoridad delegada. La persona responsable conserva la aprobación final cuando cambian dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 ## Regla de compresión
 
 Aplica `docs/orchestration/context-compression-by-authority.md`.
 
-La memoria durable contiene el contexto estable. La tarea transporta referencias precisas, el delta vigente y el contrato operativo completo. Permisos, límites y condiciones de detención nunca se omiten por compresión.
+La memoria durable contiene contexto estable. La tarea transporta referencias precisas, delta vigente y contrato operativo completo. Permisos, límites y condiciones de detención nunca se omiten por compresión.
