@@ -56,13 +56,13 @@ Artefacto de retorno que describe resultado, cambios, verificaciones, evidencia,
 
 El estado del reporte describe la ejecución; la decisión posterior pertenece al Cycle Owner.
 
-## `Exchange Protocol v0`
+## `Exchange`
 
-Perfil opcional de identificación, persistencia y transporte **manual** para conservar `Execution Task` y `Execution Report` fuera de las conversaciones.
+Pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Code Agents.
 
-En v0 no almacena por defecto Planning Tasks, Implementation Plans, backlog o memoria durable. Tampoco define watchers, triggers, polling, sincronización automática ni una máquina de estados.
+Exchange sólo almacena o pone a disposición archivos `.md` ya construidos por los agentes. No define ni interpreta artefactos, IDs, nombres de archivo, estados, permisos, backlog, memoria, decisiones o workflow.
 
-No crea un tipo nuevo de Execution Task o Execution Report y no sustituye memoria, implementación ni backlog.
+Las carpetas `inbox/`, `outbox/` y `archive/` son ubicaciones de intercambio o conservación, no estados del método.
 
 ## `Wiki Update Task`
 
@@ -72,19 +72,21 @@ No es un tipo de artefacto independiente y no debilita alcance, autoridad, permi
 
 ## `Task ID`
 
-Identificador de una tarea o intercambio.
+Identificador de una tarea asignado por el Conversation Agent que construye el artefacto antes de delegarlo o materializarlo como archivo.
 
-Puede seguir el esquema clásico adoptado por el proyecto o, en Exchange v0, usar un identificador autocontenido como:
+El proyecto puede adoptar un esquema propio. Cuando no existe otro esquema acordado, IA-DOS recomienda para Execution Tasks:
 
 ```text
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
 
+El Execution Report reutiliza el Task ID de su Execution Task de origen. Exchange no genera ni valida IDs.
+
 ## `Cycle ID`
 
 Identificador opcional de un ciclo de trabajo cuando el proyecto utiliza ese esquema.
 
-Exchange v0 no exige inventar un Cycle ID: puede declararse `NO APLICA`.
+Cuando no existe un ciclo separado puede declararse `NO APLICA`. Exchange no crea ni requiere Cycle IDs.
 
 ## memoria durable / LLM Wiki
 
