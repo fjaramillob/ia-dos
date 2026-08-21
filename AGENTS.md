@@ -1,27 +1,33 @@
 # AGENTS.md
 
+Este archivo contiene instrucciones persistentes para agentes que modifican el repositorio de IA-DOS.
+
 ## Propósito
 
-Este repositorio contiene **IA-DOS**, un framework abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, planificación técnica, ejecución acotada, memoria durable y verificación basada en evidencia.
+IA-DOS es un método de orquestación para proyectos asistidos por IA. El repositorio define contratos, documentación, templates, prompts y material de adopción; no es una aplicación de runtime.
 
-Estas instrucciones gobiernan a los agentes que modifican **el repositorio IA-DOS**. No sustituyen los contratos operativos de los proyectos que adopten el método.
+Cuando modifiques el repositorio, prioriza coherencia metodológica, simplicidad operacional y trazabilidad. No conviertas una mejora documental acotada en un rediseño del framework.
 
-## Principio de trabajo
+## Regla de cambio mínimo
 
-Haz el cambio mínimo que resuelva la necesidad planteada y mantén coherencia con los contratos canónicos.
+Antes de escribir:
 
-No conviertas una tarea documental en una oportunidad para rediseñar IA-DOS completo.
+1. identifica qué contrato o superficie necesita cambiar;
+2. lee sólo las fuentes canónicas directamente relacionadas;
+3. comprueba si el cambio afecta otras representaciones del mismo contrato;
+4. modifica el mínimo conjunto coherente;
+5. valida que no dejas una variante normativa anterior en otra superficie vigente.
 
-## Fuentes y jerarquía
+No cambies archivos vecinos sólo para “modernizarlos” si no existe contradicción real.
 
-Antes de actuar, consulta sólo las fuentes necesarias para el alcance actual.
+## Orden de autoridad documental
 
-Prioridad general:
+Usa, según el tema:
 
-1. `AGENTS.md` para reglas de trabajo del repositorio.
-2. El documento o template directamente afectado por la tarea.
-3. Contratos canónicos relacionados cuando el cambio altere semántica compartida.
-4. `README.md`, `ORCHESTRATOR.md`, `docs/index.md` o `ROADMAP.md` cuando el cambio afecte presentación, onboarding, operación o dirección del método.
+1. archivos raíz y `ORCHESTRATOR.md` para identidad, onboarding y reglas operativas generales;
+2. `docs/foundations/` para contratos fundacionales;
+3. `docs/orchestration/` y `docs/execution/` para routing, artefactos, roles y ejecución;
+4. `templates/` y `prompts/` como superficies copiables que deben permanecer alineadas con esos contratos;
 5. `research/` como contexto e influencia, nunca como autoridad normativa por sí sola.
 
 No leas toda la documentación por defecto. Amplía la lectura sólo cuando el cambio pueda afectar contratos transversales.
@@ -40,6 +46,7 @@ Si modificas alguno de estos conceptos, comprueba sus representaciones relaciona
 - memoria durable / `LLM Wiki`;
 - Exchange;
 - tipado de artefactos;
+- `Output Delivery`, `Manual Artifact Launcher` y `Caveman Return` cuando se adopten;
 - Current Offline Pack.
 
 Una modificación de un contrato canónico no debe dejar una variante incompatible en templates, onboarding, `ORCHESTRATOR.md` o distribución offline.
@@ -55,9 +62,9 @@ Execution Cell       = continuidad de ejecución
 Execution Task       = contrato de una unidad
 Execution Report     = evidencia de ejecución
 Memoria durable      = responsabilidad funcional
-LLM Wiki              = materialización durable, portable y navegable
-Repository            = implementación
-Exchange              = pasarela pasiva de archivos
+LLM Wiki             = materialización durable, portable y navegable
+Repository           = implementación
+Exchange             = pasarela pasiva de archivos
 ```
 
 Además:
@@ -70,6 +77,10 @@ Además:
 - la autorización de una Execution Task es explícita y no acumulativa;
 - el `Task ID` lo asigna el Conversation Agent que construye la tarea;
 - Exchange no define IDs, artefactos, filenames, templates, estados, permisos, backlog, memoria, decisiones o workflow;
+- `Manual Artifact Launcher` es efímero y no autoritativo: sólo localiza input y, cuando aplica, destino físico del output;
+- `Output Delivery` sólo autoriza materializar el artefacto de salida expresamente declarado; no amplía permisos sobre proyecto, entorno o recursos inspeccionados;
+- `Caveman Return` sólo puede compactar la conversación cuando la Task lo declara y el output completo ya fue materializado; nunca sustituye el artefacto canónico;
+- `Coding Agent — Planning` y `Environment Preflight` son de solo lectura respecto del proyecto/entorno, aunque puedan materializar su propio output cuando exista autorización explícita de `Output Delivery`;
 - `Execution Report` no aprueba su propio resultado ni elige la decisión de gobierno posterior;
 - el Cycle Owner revisa y gobierna dentro de la autoridad delegada; no sustituye la aprobación humana cuando una decisión cambia dirección, autoridad, riesgo o impacto reservado a la persona responsable;
 - antes de emitir una Planning Task o Execution Task que dependa de historia previa, `Memory Bootstrap Gate` evalúa si existe conocimiento relevante únicamente en conversaciones efímeras y exige persistir el checkpoint mínimo cuando corresponda;
@@ -117,32 +128,3 @@ Una LLM Wiki:
 IA-DOS está en etapa **alpha de adopción en proyectos reales**.
 
 Los fundamentos y la consolidación operacional ya fueron completados. El foco actual es validar los contratos mediante uso real antes de añadir nuevas abstracciones.
-
-Consulta `ROADMAP.md` para el estado y horizonte vigentes.
-
-## Criterios de calidad
-
-Todo cambio debe:
-
-- resolver una necesidad clara o una contradicción verificable;
-- ser comprensible para personas que no sean programadoras expertas;
-- evitar duplicar contratos sin necesidad;
-- mantener terminología y enlaces consistentes;
-- distinguir hechos, decisiones, propuestas, opciones y excepciones;
-- preservar independencia de herramienta;
-- considerar consumo de contexto y tokens;
-- mantener equivalencia entre documentación canónica, templates, onboarding y distribución offline cuando comparten un contrato.
-
-## Verificación mínima
-
-Antes de cerrar una tarea:
-
-- revisa el diff completo;
-- confirma que el alcance declarado coincide con los archivos modificados;
-- verifica enlaces relativos afectados;
-- busca contradicciones con contratos relacionados;
-- comprueba que no se reintroduzcan términos o modelos reemplazados;
-- distingue claramente evidencia de ejecución, decisión de gobierno y aprobación humana aplicable;
-- reporta supuestos, limitaciones y pendientes reales.
-
-Si una revisión automática detecta una contradicción válida, corrígela antes de considerar el trabajo listo.
