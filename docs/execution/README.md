@@ -60,9 +60,11 @@ Cuando un proyecto adopta Exchange de forma manual:
 artefacto completo en inbox
 → Manual Artifact Launcher
 → Code Agent
-→ artefacto completo en outbox
-→ Caveman Return en conversación
+→ si la Task autoriza Output Delivery: artefacto completo en el destino declarado
+→ si además declara Caveman Return: Sí y la materialización fue correcta: Caveman Return en conversación
 ```
+
+Si la Task no autoriza `Output Delivery`, el mero uso de Exchange o del launcher no permite escribir en `outbox`. Si no declara `Caveman Return: Sí` o el output completo no fue materializado correctamente, se devuelve el artefacto completo según el contrato y canal de la Task.
 
 El launcher sólo localiza archivos. `Output Delivery` autoriza únicamente la materialización declarada. El Caveman Return es una representación conversacional mínima y no reemplaza el Implementation Plan, Environment Readiness Report o Execution Report completo.
 
