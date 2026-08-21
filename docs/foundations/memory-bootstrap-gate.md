@@ -9,7 +9,10 @@ No obliga a crear una Wiki separada ni a documentar todo antes de construir. Su 
 ```text
 si la siguiente unidad depende de conocimiento
 que sólo vive en conversación
-→ crea o actualiza memoria durable mínima antes de continuar
+→ bloquea esa unidad
+→ materializa primero el checkpoint durable mínimo
+→ revisa la evidencia del bootstrap
+→ reevalúa la unidad original
 ```
 
 Si la siguiente unidad es autosuficiente y el estado necesario puede demostrarse directamente desde implementación, fuentes autorizadas o la propia tarea, el gate no debe bloquearla.
@@ -35,11 +38,40 @@ Antes de continuar pregunta:
 
 ### Sí
 
+Resultado:
+
+```text
+PASS
+```
+
 Continúa. No crees documentación por ceremonia.
 
 ### No
 
-Crea o actualiza un checkpoint durable mínimo antes de emitir la siguiente tarea.
+Resultado:
+
+```text
+BOOTSTRAP REQUIRED
+```
+
+La unidad que dependía de esa memoria **no puede emitirse todavía**.
+
+`BOOTSTRAP REQUIRED` no prohíbe toda Execution Task. Permite una unidad acotada cuyo resultado principal sea crear o actualizar el checkpoint durable mínimo requerido para desbloquear la unidad original.
+
+Esa unidad de bootstrap puede usar `BOOTSTRAP`, `WIKI` o `DOCUMENT` según el resultado real, pero sigue siendo una `Execution Task` canónica con alcance, autoridad, permisos, criterios y verificaciones explícitos.
+
+```text
+unidad A depende de memoria chat-only
+→ Memory Bootstrap Gate = BOOTSTRAP REQUIRED
+→ Execution Task de bootstrap de memoria
+→ Execution Report
+→ revisión
+→ Memory Bootstrap Gate de unidad A se reevalúa
+→ PASS
+→ unidad A puede emitirse
+```
+
+No uses la excepción para mezclar el bootstrap y la unidad original en una sola tarea. El resultado del bootstrap es persistir el checkpoint; el resultado de la unidad original permanece separado.
 
 ## Checkpoint durable mínimo
 
@@ -86,10 +118,13 @@ Ejemplo:
 
 ```text
 00 define varias reglas de producto
-→ siguiente tarea depende de ellas
+→ siguiente unidad depende de ellas
 → reglas sólo existen en chat
-→ bootstrap mínimo
-→ Execution Task
+→ BOOTSTRAP REQUIRED
+→ tarea acotada persiste esas reglas
+→ evidencia revisada
+→ PASS para la unidad original
+→ Execution Task original
 ```
 
 ## Proyecto existente
@@ -128,20 +163,26 @@ Si eso no es posible porque el conocimiento necesario sólo vive en el chat ante
 
 Puede intervenir cuando existe trabajo real de síntesis, contradicciones o gobierno documental, pero el Project Orchestrator o un Conversation Space autorizado puede ordenar un bootstrap mínimo directamente cuando el conocimiento ya está confirmado.
 
+La modificación física del checkpoint requiere una tarea autorizada cuando el Conversation Space no tiene capacidad de escritura directa sobre la fuente durable.
+
 ## Resultado del gate
 
 El gate sólo produce uno de estos resultados:
 
 ```text
 PASS
-→ la siguiente unidad no depende de memoria conversacional no durable
+→ la unidad evaluada no depende de memoria conversacional no durable
 
 BOOTSTRAP REQUIRED
-→ falta persistir conocimiento mínimo antes de continuar
+→ la unidad evaluada queda bloqueada hasta persistir el checkpoint mínimo
 ```
+
+Una Execution Task dedicada a materializar ese checkpoint declara explícitamente que responde a `BOOTSTRAP REQUIRED`; no finge que el gate de la unidad original ya está en `PASS`.
 
 No introduce porcentajes de cobertura ni niveles de madurez.
 
 ## Regla final
 
 La memoria durable debe aparecer **antes de que sea necesaria para no olvidar**, no después de que el proyecto ya dependa de reconstruir conversaciones.
+
+`BOOTSTRAP REQUIRED` bloquea la unidad que necesita la memoria; no bloquea la unidad mínima necesaria para crear esa memoria.
