@@ -80,7 +80,7 @@ Una decisión bloqueante impide preparar una unidad segura. Las demás permanece
 
 ## Primera unidad recomendada
 
-- ID propuesto:
+- Task ID: `PENDIENTE — lo asigna el Conversation Agent/Cycle Owner al adoptar la candidata`
 - tipo principal:
 - resultado único:
 - alcance:
@@ -93,22 +93,35 @@ Una decisión bloqueante impide preparar una unidad segura. Las demás permanece
 - destino del Execution Report:
 - Execution Cell o sesión: `[NOMBRE O NO APLICA]`
 
+El coding agent de Planning no asigna el Task ID de la futura Execution Task. Puede identificar la unidad con un título descriptivo dentro del plan, pero la identidad operativa se asigna únicamente cuando el Conversation Agent/Cycle Owner adopta y construye la Execution Task real.
+
 Si el proyecto ya utiliza una Execution Cell adecuada y su conversación activa sigue respondiendo bien, reutilízala. No propongas una nueva sesión sólo porque el resultado tiene otro nombre.
 
 ## Execution Task candidata
 
-Entrega un bloque autosuficiente listo para copiar cuando la primera unidad pueda definirse con seguridad.
+Entrega un bloque autosuficiente listo para revisión cuando la primera unidad pueda definirse con seguridad.
+
+La candidata puede estar estructuralmente lista para copiar, pero **no es todavía una Execution Task autorizada** y mantiene el `Task ID` pendiente.
 
 La tarea candidata:
 
 - no autoriza ejecución hasta recibir la aprobación aplicable;
 - contiene un único resultado verificable;
 - conserva el Cycle ID cuando exista;
-- usa un Task ID distinto del Planning Task ID;
+- declara `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`;
+- no inventa ni reserva un Task ID por cuenta del coding agent;
 - declara `Execution Cell o sesión` sin forzar una conversación nueva;
-- declara `Coding Agent — Execution` como rol activo;
+- declara `Coding Agent — Execution` como rol futuro;
 - vuelve a declarar permisos, alcance y condiciones de detención;
 - no exige reconstruirla desde el resto del plan.
+
+Cuando el Cycle Owner adopta la candidata, el Conversation Agent:
+
+1. revisa la evidencia y el alcance propuesto;
+2. resuelve la autorización humana aplicable;
+3. asigna el Task ID;
+4. valida o completa el contrato de Execution Task;
+5. sólo entonces la entrega a `Coding Agent — Execution`.
 
 La separación correcta es de **autoridad**, no necesariamente de conversación:
 
@@ -116,7 +129,7 @@ La separación correcta es de **autoridad**, no necesariamente de conversación:
 Planning Task
 → Implementation Plan
 → revisión / aprobación aplicable
-→ Execution Task
+→ Conversation Agent asigna Task ID y construye Execution Task
 → Execution Cell existente o sesión autorizada
 → Execution Report
 ```
@@ -153,7 +166,7 @@ No agregues una sección de conocimiento potencialmente durable derivada automá
 
 El Cycle Owner revisa el plan dentro de su autoridad delegada y obtiene aprobación humana cuando corresponda.
 
-El coding agent no selecciona por sí mismo la decisión de aprobar, corregir, rechazar o escalar.
+El coding agent no selecciona por sí mismo la decisión de aprobar, corregir, rechazar o escalar y no asigna el Task ID de la candidata.
 
 ## Declaración de solo lectura
 
@@ -164,6 +177,7 @@ El coding agent no selecciona por sí mismo la decisión de aprobar, corregir, r
 - [ ] El alcance se mantuvo proporcional a la decisión dominante.
 - [ ] Las decisiones pendientes fueron clasificadas.
 - [ ] Se incluyó una Execution Task candidata o una razón bloqueante verificable.
+- [ ] El Task ID de la candidata quedó pendiente para el Conversation Agent/Cycle Owner.
 - [ ] El plan vuelve al destino indicado.
 - [ ] No se cambió el Cycle Owner ni se abrió otro ciclo.
 - [ ] La futura ejecución mantiene autorización separada sin imponer una conversación nueva.
