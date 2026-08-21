@@ -49,24 +49,9 @@ proyectos/
     └── nombre-proyecto-wiki/
 ```
 
-Exchange puede agregarse después como recurso hermano cuando el proyecto lo adopte.
+Exchange puede agregarse después como recurso hermano cuando una pasarela de archivos aporte valor.
 
-También son válidos:
-
-```text
-nombre-proyecto/
-└── repositorio-monorepo/
-    ├── app/
-    └── docs/
-```
-
-```text
-nombre-proyecto-app/
-```
-
-si la siguiente unidad todavía no necesita una Wiki separada.
-
-No crees una carpeta sólo porque aparece en un ejemplo.
+También son válidos monorepos, documentación dentro de la app u otras configuraciones. No crees una carpeta sólo porque aparece en un ejemplo.
 
 ## Qué se crea en este paso
 
@@ -74,11 +59,7 @@ Crea únicamente los recursos autorizados.
 
 ### Implementación, cuando corresponda
 
-Un repositorio nuevo puede comenzar con:
-
-```text
-README.md
-```
+Un repositorio nuevo puede comenzar con `README.md`.
 
 El README inicial sólo necesita declarar:
 
@@ -98,23 +79,13 @@ Cuando el proyecto decida crear una Wiki Markdown, usa directamente `templates/w
 
 No crees un `index.md` provisional ni una segunda estructura transitoria que luego deba migrarse.
 
-El starter utiliza:
-
-```text
-00-home.md
-project-brief.md
-status/current-state.md
-```
-
-como núcleo inicial, con `decisions/` y `sources/` disponibles para conocimiento durable real.
-
 ### Exchange, cuando corresponda
 
-Exchange no forma parte obligatoria del bootstrap de un proyecto nuevo.
+Exchange no forma parte obligatoria del bootstrap.
 
-Créalo sólo cuando conservar `Execution Task` y `Execution Report` fuera de la conversación aporte una ventaja operacional concreta.
+Créalo sólo cuando una pasarela de archivos Markdown entre Conversation Agent y Code Agent aporte una ventaja operacional concreta.
 
-Consulta [Crear o conectar Exchange Protocol v0](bootstrap-exchange.md).
+Consulta [Crear o conectar Exchange](bootstrap-exchange.md).
 
 Una estructura posible es:
 
@@ -122,78 +93,18 @@ Una estructura posible es:
 nombre-proyecto-exch/
 ├── inbox/
 ├── outbox/
-├── archive/
-└── templates/
-    ├── TASK.md
-    └── REPORT.md
+└── archive/
 ```
 
-No crees `REGISTRY.md`, contador compartido, watcher, trigger ni automatización en v0.
+No crees templates, IDs, registros, estados o automatización dentro de Exchange. Los artefactos llegan ya construidos por los agentes responsables.
 
 ## Git
 
 Cada recurso puede tener su propio repositorio Git, compartir un monorepo o no usar Git todavía, según la decisión del proyecto.
 
-No conviertas la carpeta exterior en repositorio Git por defecto.
+No conviertas la carpeta exterior en repositorio Git por defecto. Inicializa Git sólo cuando esté autorizado y la topología elegida lo requiera.
 
-Inicializa Git sólo cuando esté autorizado y la topología elegida lo requiera.
-
-```bash
-git init -b main
-```
-
-Crea un commit sólo cuando:
-
-- los archivos fueron revisados;
-- la identidad Git está configurada;
-- no hay secretos;
-- la tarea autoriza commit.
-
-No crees automáticamente repositorios remotos ni definas su visibilidad sin aprobación.
-
-## Ejemplo PowerShell
-
-Este ejemplo crea sólo una carpeta de proyecto y un recurso de implementación. Agrega otros recursos únicamente cuando hayan sido decididos.
-
-```powershell
-$Workspace = Join-Path $HOME "proyectos"
-$Project = "nombre-proyecto"
-$ProjectRoot = Join-Path $Workspace $Project
-$App = Join-Path $ProjectRoot "$Project-app"
-
-if ($Project -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$') {
-    Write-Error "El project-slug no cumple la convención recomendada."
-    exit 1
-}
-
-if (Test-Path $ProjectRoot) {
-    Write-Error "La carpeta del proyecto ya existe. Detente y revisa su contenido."
-    exit 1
-}
-
-New-Item -ItemType Directory -Path $App -Force | Out-Null
-```
-
-## Ejemplo macOS o Linux
-
-```bash
-WORKSPACE="$HOME/proyectos"
-PROJECT="nombre-proyecto"
-PROJECT_ROOT="$WORKSPACE/$PROJECT"
-APP="$PROJECT_ROOT/$PROJECT-app"
-
-if ! printf '%s' "$PROJECT" | grep -Eq '^[a-z0-9]+(-[a-z0-9]+)*$'; then
-  echo "El project-slug no cumple la convención recomendada." >&2
-  exit 1
-fi
-
-if [ -e "$PROJECT_ROOT" ]; then
-  echo "La carpeta del proyecto ya existe. Detente y revisa su contenido." >&2
-  exit 1
-fi
-
-mkdir -p "$APP"
-```
+Crea un commit sólo cuando los archivos fueron revisados, la identidad Git está configurada, no hay secretos y la tarea autoriza commit.
 
 ## Fuentes de verdad al finalizar
 
@@ -208,7 +119,7 @@ Registra sólo las que existan:
 | Método IA-DOS | `[VERSIÓN / COMMIT / REFERENCIA]` |
 | Dirección conversacional | `[PROJECT, GEM O EQUIVALENTE]` |
 
-Exchange no reemplaza backlog ni memoria durable. Si ambos existen, registra cada recurso por separado.
+Exchange no reemplaza ninguna fuente de verdad; sólo sirve como pasarela de archivos.
 
 ## Verificación
 
@@ -219,7 +130,7 @@ Antes de cerrar:
 - [ ] Sólo se crearon recursos autorizados.
 - [ ] No se eligió stack ni arquitectura implícitamente.
 - [ ] La memoria, si se creó, usa directamente el starter vigente.
-- [ ] Exchange, si se creó, tiene una razón operacional concreta y no contiene automatización asumida.
+- [ ] Exchange, si se creó, sólo contiene la pasarela acordada y no lógica propia.
 - [ ] No existen secretos.
 - [ ] Git, commits o remotes sólo se usaron cuando estaban autorizados.
 - [ ] Las rutas reales fueron reportadas.
@@ -236,8 +147,8 @@ Detente antes de escribir cuando:
 
 ## Siguiente paso
 
-Si el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) devuelve `BOOTSTRAP REQUIRED`, continúa con [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
+Si el Memory Bootstrap Gate devuelve `BOOTSTRAP REQUIRED`, continúa con [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
-Si el proyecto decidió adoptar Exchange, configúralo con [Crear o conectar Exchange Protocol v0](bootstrap-exchange.md).
+Si se decidió utilizar Exchange, crea o conecta únicamente su pasarela con [Crear o conectar Exchange](bootstrap-exchange.md).
 
 Después continúa con la siguiente Planning Task o Execution Task sin crear componentes adicionales por ceremonia.
