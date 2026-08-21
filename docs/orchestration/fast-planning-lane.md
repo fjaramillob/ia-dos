@@ -16,6 +16,8 @@ Conversation Space especialista
 → artefacto vuelve al mismo Cycle Owner
 ```
 
+Cuando `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, la ruta rápida no salta el bloqueo: emite únicamente una Execution Task separada para materializar el checkpoint mínimo y reevalúa la unidad original después de revisar ese reporte.
+
 ## Responsabilidades
 
 ### Conversation Space especialista / Cycle Owner
@@ -26,12 +28,13 @@ Conversation Space especialista
 - decide entre preflight, planificación y ejecución dentro de la autoridad delegada;
 - prepara la tarea aplicable;
 - revisa el retorno;
-- solicita aprobación humana cuando la decisión excede la autoridad delegada.
+- solicita aprobación humana cuando la decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 ### Coding agent
 
-- inspecciona en solo lectura cuando recibe Planning Task o Environment Preflight;
-- ejecuta únicamente cuando recibe una Execution Task autorizada;
+- usa `Coding Agent — Planning` en solo lectura cuando recibe `Planning Task` o `Environment Preflight`;
+- devuelve `Implementation Plan` para Planning y `Environment Readiness Report` para Preflight;
+- ejecuta únicamente cuando recibe una `Execution Task` autorizada;
 - respeta las instrucciones y fuentes aplicables;
 - produce evidencia verificable;
 - no inicia otra unidad.
@@ -55,6 +58,40 @@ Evalúa:
 - **Reorientación real:** escala a `00`.
 
 La ruta rápida no significa omitir controles; significa no añadir conversaciones intermedias sin valor.
+
+## Excepción de bootstrap
+
+Si el gate devuelve `BOOTSTRAP REQUIRED`:
+
+```text
+unidad original
+→ bloqueada
+
+Execution Task de bootstrap
+→ sólo checkpoint durable mínimo
+→ unidad original fuera de alcance
+→ Execution Report
+→ revisión
+→ reevaluar gate original
+```
+
+La tarea de bootstrap no declara `PASS` ni puede mezclar el resultado que busca desbloquear.
+
+## Planning y Preflight
+
+Los dos usan `Coding Agent — Planning` porque son de solo lectura, pero no son intercambiables:
+
+```text
+Planning Task
+→ Coding Agent — Planning
+→ Implementation Plan
+
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
+Sólo un readiness report con `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de escritura; el reporte no concede esa autorización por sí mismo.
 
 ## Planning Task
 
