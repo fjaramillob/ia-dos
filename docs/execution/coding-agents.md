@@ -1,6 +1,6 @@
 # Coding agents
 
-Un coding agent es la herramienta que inspecciona, planifica o materializa cambios sobre artefactos reales dentro de límites explícitos.
+Un coding agent es la herramienta que inspecciona, planifica, comprueba readiness o materializa cambios sobre artefactos reales dentro de límites explícitos.
 
 Ejemplos incluyen Codex, Claude Code, Antigravity y agentes integrados en un IDE. IA-DOS no depende de una herramienta concreta.
 
@@ -8,10 +8,35 @@ Ejemplos incluyen Codex, Claude Code, Antigravity y agentes integrados en un IDE
 
 Un coding agent puede actuar como:
 
-- `Coding Agent — Planning`: recibe una `Planning Task`, trabaja en solo lectura y devuelve un `Implementation Plan`;
-- `Coding Agent — Execution`: recibe una `Execution Task` autorizada, modifica únicamente lo permitido y devuelve un `Execution Report`.
+### `Coding Agent — Planning`
 
-La planificación no autoriza ejecución y una conversación reutilizada no acumula permisos.
+Rol de **solo lectura** utilizado por dos artefactos de entrada distintos:
+
+```text
+Planning Task
+→ Coding Agent — Planning
+→ Implementation Plan
+
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
+Cuando recibe una `Planning Task`, inspecciona y propone cómo implementar sin modificar artefactos.
+
+Cuando recibe un `Environment Preflight`, comprueba únicamente las precondiciones declaradas y devuelve readiness; no diseña implementación ni modifica, instala, inicia o configura el entorno.
+
+### `Coding Agent — Execution`
+
+Recibe una `Execution Task` autorizada o un `Execution Resume`, modifica únicamente lo permitido y devuelve un `Execution Report`.
+
+```text
+Execution Task | Execution Resume
+→ Coding Agent — Execution
+→ Execution Report
+```
+
+La planificación o el preflight no autorizan ejecución y una conversación reutilizada no acumula permisos.
 
 ## Frontera con el Project Orchestrator
 
@@ -20,7 +45,7 @@ Project Orchestrator / Conversation Space
 → comprende, gobierna, delimita y revisa
 
 Coding Agent — Planning
-→ inspecciona y propone
+→ inspecciona o comprueba readiness en solo lectura
 
 Coding Agent — Execution
 → materializa, verifica y reporta
@@ -28,19 +53,19 @@ Coding Agent — Execution
 
 La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante. El Cycle Owner actúa dentro de la autoridad delegada.
 
-Un coding agent no debe asumir autoridad para cambiar propósito, prioridades, arquitectura, alcance, costes, seguridad o producción cuando la tarea no lo autoriza.
+Un coding agent no debe asumir autoridad para cambiar propósito, prioridades, arquitectura, alcance, costes, seguridad o producción cuando el artefacto recibido no lo autoriza.
 
 ## Entrada mínima
 
-La tarea debe contener o referenciar de forma inequívoca:
+La tarea o preflight debe contener o referenciar de forma inequívoca:
 
-- objetivo;
-- contexto durable estrictamente necesario;
+- objetivo o precondiciones a comprobar;
+- contexto estrictamente necesario;
 - alcance y fuera de alcance;
 - autoridad y acceso de los recursos relevantes;
 - permisos y acciones externas autorizadas;
-- criterios de aceptación;
-- verificaciones esperadas;
+- salida esperada;
+- verificaciones o evidencia requeridas;
 - condiciones de detención;
 - destino del artefacto de retorno.
 
@@ -60,6 +85,35 @@ Lectura requerida
 ```
 
 Cuando la información necesaria sólo vive en conversaciones y debe reutilizarse, corresponde al Conversation Agent aplicar el `Memory Bootstrap Gate`; el coding agent no reconstruye por defecto el historial conversacional.
+
+## Planning Task
+
+Una `Planning Task`:
+
+- utiliza `Coding Agent — Planning`;
+- es de solo lectura;
+- resuelve una incertidumbre técnica dominante;
+- devuelve `Implementation Plan`;
+- no autoriza cambios físicos ni una ejecución posterior.
+
+## Environment Preflight
+
+Un `Environment Preflight`:
+
+- utiliza el mismo rol `Coding Agent — Planning` porque también es de solo lectura;
+- comprueba sólo runtime, herramienta, servicio, acceso, secreto o conectividad indispensable declarados;
+- no modifica archivos;
+- no instala ni actualiza;
+- no inicia, detiene o configura servicios;
+- devuelve `Environment Readiness Report` con:
+
+```text
+LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
+```
+
+Sólo `LISTO PARA EJECUCIÓN` permite que el Cycle Owner considere autorizar o reanudar escritura.
+
+Compartir el rol de solo lectura no convierte un preflight en una Planning Task ni un Environment Readiness Report en un Implementation Plan.
 
 ## Execution Cells
 
@@ -99,6 +153,8 @@ Cuando una tarea afecta memoria durable, el coding agent no decide unilateralmen
 
 La tarea debe especificar el conocimiento confirmado y las rutas autorizadas. El agente materializa ese cambio, preserva Markdown portable, valida navegación y devuelve evidencia.
 
+Si la tarea responde a `BOOTSTRAP REQUIRED`, puede materializar el checkpoint durable mínimo autorizado, pero no continuar con la unidad original que ese checkpoint busca desbloquear.
+
 Si durante la ejecución descubre hechos adicionales, los reporta como parte del resultado observable o como `Atención requerida` cuando necesiten revisión. No crea por defecto una sección de `Conocimiento potencialmente durable` ni recomienda automáticamente qué debe incorporarse a la LLM Wiki.
 
 Consulta [Actualizar la memoria durable](updating-the-llm-wiki.md).
@@ -127,7 +183,7 @@ Debe incluir, según corresponda:
 - condiciones de detención activadas;
 - evidencia verificable.
 
-El `Execution Report` no aprueba su propio resultado, no elige la siguiente unidad y no consolida memoria durable.
+El `Execution Report` no aprueba su propio resultado, no elige la siguiente unidad y no consolida memoria durable fuera de lo explícitamente autorizado por la tarea.
 
 ## Git y acciones externas
 
