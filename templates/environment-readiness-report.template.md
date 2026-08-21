@@ -1,6 +1,6 @@
 # Environment Readiness Report
 
-Usa este retorno después de ejecutar un `Environment Preflight` de solo lectura.
+Usa este retorno después de ejecutar un `Environment Preflight` de solo lectura sobre el entorno.
 
 ```text
 Artifact Type: Environment Readiness Report
@@ -17,7 +17,8 @@ Dependencia dominante: [ELEMENTO O NINGUNA]
 Evidencia:
 - [COMANDO, SALIDA O REFERENCIA]
 Acción mínima requerida: [ACCIÓN O NINGUNA]
-Cambios realizados: Ninguno
+Cambios al entorno: Ninguno
+Materialización del propio reporte: [RUTA/NOMBRE AUTORIZADO | Conversación | NO APLICA]
 ```
 
 `Estado` describe exclusivamente readiness del entorno.
@@ -29,5 +30,7 @@ Cambios realizados: Ninguno
 No autorices ni reanudes escritura cuando el estado sea `NO LISTO` o `DESCONOCIDO`.
 
 El coding agent no resuelve la dependencia automáticamente salvo una tarea posterior que lo autorice. El Cycle Owner revisa dentro de la autoridad delegada y la persona responsable interviene cuando la acción requerida necesita aprobación humana.
+
+La materialización explícitamente autorizada de este propio reporte no cuenta como modificación del entorno inspeccionado y no concede permisos adicionales.
 
 El campo de sesión de planificación es opcional y no obliga a abrir una conversación nueva.
