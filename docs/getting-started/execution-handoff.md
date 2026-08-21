@@ -37,7 +37,7 @@ Antes de delegar, declara:
 - destino del artefacto de retorno;
 - espacio de escalamiento cuando corresponda.
 
-El Cycle Owner actúa dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo o impacto relevante.
+El Cycle Owner actúa dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 ## 2. Evaluar memoria
 
@@ -45,8 +45,19 @@ Antes de una Planning Task o Execution Task que dependa de historia previa, apli
 
 > ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
 
-- `PASS` → continúa;
-- `BOOTSTRAP REQUIRED` → persiste primero el checkpoint durable mínimo.
+```text
+PASS
+→ continúa con la unidad evaluada
+
+BOOTSTRAP REQUIRED
+→ bloquea la unidad evaluada
+→ emite una Execution Task separada cuyo único resultado sea persistir el checkpoint durable mínimo
+→ deja la unidad original fuera de alcance
+→ revisa el Execution Report del bootstrap
+→ reevalúa el gate de la unidad original
+```
+
+La tarea de bootstrap declara explícitamente que responde a `BOOTSTRAP REQUIRED`; no finge `PASS` ni ejecuta la unidad que busca desbloquear.
 
 No crees una LLM Wiki completa por ceremonia.
 
@@ -54,7 +65,15 @@ No crees una LLM Wiki completa por ceremonia.
 
 Si una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, prepara `Environment Preflight` en solo lectura.
 
-Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura.
+Contrato tipado:
+
+```text
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
+Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura. El readiness report no concede escritura por sí mismo.
 
 ## 4. Decidir Planning o Execution
 
@@ -69,6 +88,8 @@ con seguridad sin inspección o diseño técnico adicional?
 - no por falta de inspección/diseño → Planning Task;
 - no por decisión humana indispensable → deriva sólo esa decisión;
 - no por reorientación → escala a `00`.
+
+Una unidad ordinaria dependiente de memoria previa sólo llega a este gate después de `Memory Bootstrap Gate = PASS`. La unidad separada de checkpoint es la excepción explícita descrita arriba.
 
 ## 5. Planning Task
 
@@ -139,6 +160,8 @@ El coding agent no aprueba su propio resultado, no selecciona la siguiente acci�
 
 Después de revisar la evidencia, la autoridad correspondiente decide cierre, corrección, reversión, transferencia, escalamiento o siguiente unidad. Separadamente se evalúa si hechos nuevos merecen consolidación durable.
 
+Si el reporte corresponde a un memory bootstrap, primero reevalúa el gate de la unidad original; no la autoriza automáticamente.
+
 ## 10. Cerrar o continuar
 
 Al cerrar:
@@ -155,6 +178,7 @@ Al cerrar:
 - una Planning Task produjo cambios;
 - un plan se presenta como implementación;
 - readiness indispensable sigue `NO LISTO` o `DESCONOCIDO`;
+- una unidad ordinaria depende de memoria chat-only sin haber resuelto `BOOTSTRAP REQUIRED`;
 - la Execution Task mezcla resultados independientes;
 - faltan verificaciones requeridas sin explicación;
 - aparecen cambios fuera de alcance;
