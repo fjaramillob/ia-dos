@@ -8,6 +8,16 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- ejecutada una auditoría integral del repositorio vigente para alinear contratos, onboarding, prompts, templates, discoverability, validaciones y distribución offline con el modelo consolidado;
+- reforzada la frontera entre responsabilidad humana y `Cycle Owner`: el Conversation Space gobierna dentro de autoridad delegada y no sustituye aprobación humana cuando cambian dirección, autoridad, riesgo o impacto relevante;
+- eliminado de superficies vigentes cualquier requisito residual para que `Execution Report` recomiende memoria durable, elija la decisión de gobierno posterior o proponga automáticamente la siguiente unidad;
+- eliminada la creación implícita de una conversación de ejecución por cada Planning Task; las `Execution Cells` pueden reutilizar su conversación activa mientras siga respondiendo bien y cada tarea vuelve a declarar permisos;
+- alineados `Environment Preflight` y `Execution Resume` con `LISTO PARA EJECUCIÓN` y con la preservación obligatoria de objetivo, alcance, autoridad, seguridad y arquitectura;
+- corregidas rutas rápidas de orquestación para evaluar `Memory Bootstrap Gate` y readiness indispensable antes de autorizar ejecución;
+- consolidada la distinción `memoria durable` como responsabilidad funcional y `LLM Wiki` como su materialización durable, portable y navegable cuando se adopta;
+- corregida la instalación local de IA-DOS para que cree únicamente una referencia `00-ia-dos/` y no imponga ni cree topología app/wiki/Exchange del proyecto;
+- marcadas las validaciones de Fase 6 como evidencia histórica fechada para evitar interpretarlas como garantía permanente del repositorio actual;
+- regenerado el `Current Offline Pack` con los contratos vigentes de la auditoría integral de `v0.1.0-alpha.3`;
 - simplificado `Exchange` como pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Code Agents;
 - eliminado cualquier rol de Exchange en generación o validación de IDs, nombres de archivo, templates, estados, permisos, backlog, memoria, decisiones o workflow;
 - eliminados `templates/exchange-task-v0.template.md` y `templates/exchange-report-v0.template.md`: la `Execution Task` y el `Execution Report` canónicos son exactamente los mismos artefactos que atraviesan Exchange;
