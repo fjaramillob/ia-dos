@@ -90,7 +90,7 @@ Una Execution Task no obliga a crear una conversación nueva del coding agent. C
 
 Cada tarea vuelve a declarar alcance y permisos. La continuidad conversacional no hereda autorizaciones anteriores.
 
-Exchange Protocol v0 puede conservar `TASK/REPORT` fuera de la conversación, pero es opcional y no sustituye backlog, memoria durable ni implementación.
+Exchange puede utilizarse como pasarela pasiva opcional para trasladar archivos `.md` entre Conversation Agents y Code Agents. No sustituye backlog, memoria durable ni implementación, y no define el contenido o la identidad de los artefactos.
 
 Solo vuelve a `00` cuando aparezca una reorientación real.
 
