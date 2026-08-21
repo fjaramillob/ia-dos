@@ -55,14 +55,20 @@ Al finalizar, entrega un `Implementation Plan` con:
 
 Si `Output Delivery` declara un archivo, materializa primero el Implementation Plan completo en el destino autorizado.
 
-Si `Caveman Return: Sí`, responde en conversación únicamente:
+Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
+1. la Planning Task declara `Caveman Return: Sí`;
+2. el Implementation Plan completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas se cumplen, responde en conversación únicamente:
 
 PLAN LISTO | BLOQUEADO
 Resultado: [UNA FRASE]
 Atención: [DESCRIPCIÓN O NINGUNA]
 Archivo: [NOMBRE/PATH DEL IMPLEMENTATION PLAN]
 
-No pegues el Implementation Plan completo en conversación cuando ya fue materializado, salvo instrucción explícita del artefacto.
+Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Implementation Plan completo según el contrato y canal de la Task y declara la limitación de entrega cuando corresponda.
+
+No pegues el Implementation Plan completo en conversación cuando ya fue materializado correctamente y la Task autorizó Caveman Return, salvo instrucción explícita del artefacto.
 
 No ejecutes la candidata ni realices cambios físicos distintos del output autorizado.
 No apruebes tu propio plan.
