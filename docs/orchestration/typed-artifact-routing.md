@@ -21,37 +21,51 @@ El receptor valida el encabezado antes de actuar.
 
 IA-DOS mantiene un solo contrato semántico para cada tipo de artefacto.
 
-Un mecanismo de transporte, almacenamiento o identificación no crea un tipo nuevo. En particular:
+Un mecanismo de transporte o almacenamiento no crea un tipo nuevo. En particular:
 
 ```text
 Execution Task
     = contrato de ejecución
 
-Exchange Protocol v0
-    = perfil opcional de identificación, persistencia y transporte
+Exchange
+    = pasarela pasiva de archivos Markdown
 ```
 
-Por lo tanto, una tarea almacenada en Exchange sigue siendo `Artifact Type: Execution Task`, conserva `Destination Role: Coding Agent — Execution` y debe declarar alcance, autoridad, permisos, criterios, verificaciones y condiciones de detención suficientes para ejecutar con seguridad.
+Por lo tanto, una tarea almacenada o transferida mediante Exchange sigue siendo exactamente la misma `Execution Task`, conserva `Destination Role: Coding Agent — Execution` y debe declarar alcance, autoridad, permisos, criterios, verificaciones y condiciones de detención suficientes para ejecutar con seguridad.
 
 `Execution Cell` identifica continuidad de ejecución cuando el proyecto usa ese modelo, pero no reemplaza el rol receptor.
 
 ## Identificadores
 
-El esquema de identificación puede variar sin cambiar el tipo de artefacto.
+El **Conversation Agent que construye la tarea** asigna el `Task ID` antes del handoff o de materializar el artefacto como archivo.
 
-### Ciclo clásico
+Exchange no genera, modifica, valida ni coordina IDs.
 
-Puede utilizar `Cycle ID` y un `Task ID` del esquema adoptado por el proyecto.
-
-### Exchange Protocol v0
-
-Puede utilizar como `Task ID` el identificador autocontenido:
+Cuando el proyecto no utiliza otro esquema acordado, IA-DOS recomienda para una `Execution Task` un identificador autocontenido:
 
 ```text
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
 
-Cuando el intercambio no utiliza un `Cycle ID` separado, declara:
+Ejemplo:
+
+```text
+PORTAL-10-APP-20260820-164500
+```
+
+Si el artefacto se materializa como Markdown, el Conversation Agent puede usar:
+
+```text
+PORTAL-10-APP-20260820-164500-TASK.md
+```
+
+El `Execution Report` reutiliza exactamente el mismo `Task ID` y, cuando se materializa como archivo:
+
+```text
+PORTAL-10-APP-20260820-164500-REPORT.md
+```
+
+Cuando no existe un `Cycle ID` separado, declara:
 
 ```text
 Cycle ID: NO APLICA
@@ -123,7 +137,7 @@ Expected Output: Execution Report
 Forbidden Output: ampliar alcance | aprobar el propio resultado | iniciar otra unidad
 ```
 
-Toda Execution Task, independientemente de dónde se almacene o cómo se identifique, debe mantener explícitos los controles que no pueden inferirse de memoria conversacional:
+Toda Execution Task, independientemente de dónde se almacene o cómo se transporte, debe mantener explícitos los controles que no pueden inferirse de memoria conversacional:
 
 - objetivo único;
 - alcance incluido y fuera de alcance;
