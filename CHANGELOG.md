@@ -8,11 +8,13 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
-- acotado `Exchange Protocol v0` al par `Execution Task` / `Execution Report`, dejando Planning Task, Implementation Plan, backlog y memoria durable fuera de su almacén por defecto;
-- definido `inbox/`, `outbox/` y `archive/` como ubicaciones manuales del flujo y no como una máquina de estados automática;
-- eliminado `Estado: READY` del perfil Exchange Task v0 para evitar introducir un workflow inexistente;
-- distinguida explícitamente la fuente de `Execution Tasks` del backlog en `adoption.template.yaml` mediante `work.execution_task_source`;
-- alineados onboarding, workspace, adopción e instrucciones persistentes para adoptar Exchange sólo cuando aporte continuidad o trazabilidad real;
+- simplificado `Exchange` como pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Code Agents;
+- eliminado cualquier rol de Exchange en generación o validación de IDs, nombres de archivo, templates, estados, permisos, backlog, memoria, decisiones o workflow;
+- eliminados `templates/exchange-task-v0.template.md` y `templates/exchange-report-v0.template.md`: la `Execution Task` y el `Execution Report` canónicos son exactamente los mismos artefactos que atraviesan Exchange;
+- trasladada la responsabilidad del `Task ID` al Conversation Agent que construye la tarea; el Execution Report reutiliza ese mismo ID por contrato;
+- reducido Exchange a `inbox/`, `outbox/` y `archive/` como ubicaciones de intercambio o conservación, no estados del método;
+- actualizado `adoption.template.yaml` para registrar Exchange únicamente como recurso opcional y no como fuente de tareas;
+- alineados onboarding, workspace, adopción, terminología e instrucciones persistentes con esta frontera pasiva de Exchange;
 - definido el `Memory Bootstrap Gate` para impedir que una nueva unidad dependa de conocimiento relevante que exista únicamente en conversaciones, sin imponer una Wiki completa por ceremonia;
 - modernizado el Wiki Starter hacia un checkpoint Markdown mínimo con `00-home.md`, `project-brief.md`, `status/current-state.md`, `decisions/`, `sources/` y `AGENTS.md`;
 - retirados del Wiki Starter vigente `tasks/`, `context-packs/`, `CORE`, `log.md` y la página de arquitectura vacía; los proyectos existentes pueden conservar esos patrones cuando sigan aportando valor;
@@ -24,36 +26,29 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - alineado el onboarding para que `topic-routing-registry.md` sea la única lista normativa de Conversation Spaces;
 - unificado `00 — Dirección y orquestación` como nombre canónico del espacio inicial, usando `definición inicial` y `descubrimiento y adopción` como modos de entrada;
 - actualizado el fallback offline para usar `ORCHESTRATOR.md` + `templates/project-instructions.template.md` hasta que `ia-dos-current-offline-pack.md` declare sincronización con la versión adoptada;
-- alineadas las instrucciones persistentes con Execution Cells, Exchange v0, memoria durable selectiva y el contrato semántico único de Execution Task;
+- alineadas las instrucciones persistentes con Execution Cells, Exchange, memoria durable selectiva y el contrato semántico único de Execution Task;
 - aclarado en los recorridos de proyecto nuevo y existente que una Execution Task no implica abrir una conversación nueva del coding agent;
 - alineada la capa conversacional para separar Conversation Space, Execution Cell, Execution Task y memoria durable;
 - actualizado el modelo de adopción para tratar app, wiki y Exchange como opciones de topología y no como requisitos físicos;
 - actualizado el índice de documentación para reflejar el camino de onboarding vigente y la política abierta de conversaciones de planificación;
 - unificado `Execution Task` como contrato semántico único, independientemente de si se transporta por chat, archivo, issue o Exchange;
-- redefinido `Exchange Protocol v0` como perfil opcional de identificación, persistencia y transporte, no como contrato alternativo de ejecución;
-- alineado `Exchange Execution Task v0` con tipado, autoridad, alcance, capacidades, criterios, verificaciones y condiciones de detención canónicas;
-- alineado `Exchange Execution Report v0` para separar estado de ejecución de decisión requerida del Cycle Owner;
 - estados canónicos de Execution Report: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`;
 - aclarado que `Execution Cell` aporta continuidad operacional y no sustituye `Destination Role`, `Cycle Owner` ni permisos por tarea;
-- aclarado que `Cycle ID` puede ser `NO APLICA` en Exchange v0 cuando no existe un ciclo separado;
-- documentada Exchange como historial operacional y evidencia, no como segunda memoria durable ni backlog;
-- actualizada la terminología canónica para `Cycle Owner`, `Planning Task`, `Implementation Plan`, `Execution Cell`, `Execution Report`, `Exchange Protocol v0`, `Referencias Wiki` y `Lectura requerida`;
+- aclarado que `Cycle ID` puede ser `NO APLICA` cuando no existe un ciclo separado;
+- actualizada la terminología canónica para `Cycle Owner`, `Planning Task`, `Implementation Plan`, `Execution Cell`, `Execution Report`, `Exchange`, `Referencias Wiki` y `Lectura requerida`;
 - eliminado un ejemplo de proyecto real de la documentación común y reemplazado por un ejemplo sintético;
 - explicitado que la política de persistencia de conversaciones de planificación continúa abierta y no debe inferirse de nombres de sesión de ejemplo.
 
 ### Added
 
-- guía `Crear o conectar Exchange Protocol v0` para adopción manual, copia de templates, semántica de carpetas, archivo y verificaciones sin automatización;
+- guía `Crear o conectar Exchange` para configurar únicamente una pasarela de archivos `.md`, sin templates propios, IDs propios ni automatización;
 - contrato `Memory Bootstrap Gate` con resultados `PASS` y `BOOTSTRAP REQUIRED`, sin porcentajes de cobertura ni umbrales artificiales por tiempo, mensajes o cantidad de tareas;
 - `Execution Cell` como contexto durable de ejecución definido por proyecto;
 - política para mantener una sola conversación activa por Execution Cell mientras siga respondiendo bien;
 - renovación de conversaciones solo ante degradación o contaminación de contexto, sin crear una célula nueva;
 - regla explícita de que reutilizar una conversación no acumula permisos entre tareas;
-- `Exchange Protocol v0` como almacén manual de instrucciones y respuestas fuera de las conversaciones;
-- topología opcional `proyecto-app / proyecto-wiki / proyecto-exch`;
-- ID autocontenido de Exchange `{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}`;
-- plantillas `Exchange Task v0` y `Exchange Report v0`;
-- sección `Conocimiento potencialmente durable` en el reporte de Exchange;
+- Exchange como pasarela opcional de archivos Markdown con topología mínima `inbox/`, `outbox/` y `archive/`;
+- esquema recomendado de `Task ID` `{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}` asignado por el Conversation Agent que construye la Execution Task;
 - guía de memoria durable portable para GitHub, Markdown, Obsidian y consumo selectivo por agentes;
 - distinción entre `Contexto durable necesario`, `Referencias Wiki` y `Lectura requerida`;
 - gate explícito para pasar al coding agent tan pronto como exista una `Execution Task` verificable;
