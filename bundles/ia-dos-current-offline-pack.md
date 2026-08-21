@@ -197,7 +197,6 @@ PLAN — [RESULTADO]
 pero IA-DOS no impone una política universal de conversación por Planning Task.
 
 Cuando exista evidencia suficiente, el plan puede proponer una sola Execution Task candidata.
-
 La candidata mantiene:
 
 ```text
@@ -428,11 +427,11 @@ Persona
 Code Agent
 → lee artefacto completo
 → trabaja dentro de autoridad
-→ materializa output completo en outbox
-→ responde con Caveman Return cuando fue solicitado
+→ materializa el output completo únicamente cuando la Task lo autoriza mediante Output Delivery
+→ usa Caveman Return sólo si la Task declara Caveman Return: Sí y el output completo fue materializado correctamente
 
 Conversation Agent / Cycle Owner
-→ consume artefacto completo
+→ consume el artefacto completo
 ```
 
 ### Manual Artifact Launcher
@@ -445,7 +444,7 @@ Archivo autoritativo: [PATH]
 Directorio físico de salida: [PATH | NO APLICA]
 ```
 
-El launcher sólo localiza input/output. No amplía objetivo, alcance, permisos, salida ni condiciones de detención.
+El launcher sólo localiza input/output. No amplía objetivo, alcance, permisos, salida ni condiciones de detención. La presencia de un `outbox` o de una ruta física no autoriza por sí misma a escribir allí.
 
 ### Output Delivery
 
@@ -459,9 +458,16 @@ Filename: [NOMBRE.md]
 Caveman Return: Sí | No
 ```
 
+Sólo esta declaración autoriza materializar el output indicado en el destino declarado. El mero uso de Exchange o del Manual Artifact Launcher no crea esa autorización.
+
 Para Planning o Preflight, materializar **únicamente** su output declarado no modifica las fuentes inspeccionadas y no convierte la tarea en escritura sobre el proyecto.
 
 ### Caveman Return
+
+Sólo puede usarse cuando se cumplen conjuntamente estas condiciones:
+
+1. la Task autoritativa declara `Caveman Return: Sí`;
+2. el output completo fue materializado correctamente en el destino declarado.
 
 Es una representación conversacional mínima del artefacto completo ya materializado:
 
@@ -470,6 +476,8 @@ estado o resultado esencial
 + atención requerida
 + nombre/path del output
 ```
+
+Si la Task declara `Caveman Return: No`, usa `Channel: Conversation`, no declara `Output Delivery` o la materialización falla, no compactes la salida por esta convención: devuelve el artefacto completo según el contrato y canal de la Task.
 
 No es un Artifact Type y no reemplaza Implementation Plan, Environment Readiness Report o Execution Report.
 
@@ -524,6 +532,6 @@ Durable memory carries current knowledge.
 Repository carries implementation.
 Exchange only carries files.
 Launcher only locates artifacts.
-Caveman Return only summarizes delivery.
+Caveman Return only summarizes delivery after Task opt-in and successful full-output materialization.
 Human authority remains explicit.
 ```
