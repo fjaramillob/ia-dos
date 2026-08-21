@@ -124,13 +124,15 @@ El Implementation Plan debe contener:
 
 La Execution Task candidata debe declarar:
 
-- Task ID propio;
+- `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`;
 - `Execution Cell o sesión: [NOMBRE O NO APLICA]`;
-- rol `Coding Agent — Execution`;
-- permisos de escritura exactos;
+- rol futuro `Coding Agent — Execution`;
+- permisos de escritura requeridos;
 - criterios y pruebas;
 - destino del Execution Report;
 - estado `Candidata pendiente de aprobación`.
+
+El Coding Agent — Planning no asigna ni reserva el Task ID. El Conversation Agent/Cycle Owner lo asigna únicamente al revisar y adoptar la candidata como Execution Task real.
 
 No declares que se abrirá una sesión de ejecución nueva por defecto. Si el proyecto ya tiene una Execution Cell adecuada y activa, la futura tarea puede reutilizarla. La autorización de ejecución sigue siendo separada del Planning y se vuelve a declarar completa.
 
@@ -144,6 +146,7 @@ Si la candidata depende de runtime, servicio, acceso, secreto o conectividad ind
 - no crear ni modificar archivos;
 - no instalar dependencias;
 - no crear ramas, commits o PR;
+- no asignar el Task ID de la futura Execution Task;
 - no diseñar el roadmap completo;
 - no detallar unidades posteriores independientes;
 - no copiar arquitectura heredada;
@@ -162,4 +165,4 @@ Estado: LISTO PARA REVISIÓN | BLOQUEADO
 Cambios realizados: Ninguno
 ```
 
-El coding agent no aprueba la candidata. El Cycle Owner revisa dentro de la autoridad delegada y la persona responsable conserva la aprobación final cuando corresponda.
+El coding agent no aprueba la candidata ni asigna su Task ID. El Cycle Owner revisa dentro de la autoridad delegada y la persona responsable conserva la aprobación final cuando corresponda.
