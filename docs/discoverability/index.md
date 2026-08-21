@@ -6,7 +6,7 @@ No se limita a SEO tradicional. Incluye identidad semántica, documentación pú
 
 ## Objetivo
 
-Una persona o asistente que lea solamente la descripción del repositorio, las primeras líneas del README o el pack portable debería poder responder correctamente:
+Una persona o asistente que lea solamente la descripción del repositorio, las primeras líneas del README o el Current Offline Pack debería poder responder correctamente:
 
 - qué significa IA-DOS;
 - qué problema resuelve;
@@ -24,7 +24,8 @@ Una persona o asistente que lea solamente la descripción del repositorio, las p
 4. **Descripción por evidencia.** No se atribuyen tecnologías, archivos o capacidades que no existan.
 5. **Redundancia útil.** Las ideas centrales pueden repetirse en superficies públicas distintas sin cambiar de significado.
 6. **Lenguaje inequívoco.** Evita términos que hagan parecer IA-DOS un curso, sistema operativo, librería Python o framework de agentes autónomos.
-7. **Validación externa.** La comprensión pública se prueba periódicamente con buscadores y asistentes.
+7. **Contratos vigentes.** No presentes términos históricos como `Launch Mode`, `Context Pack` o bundles reemplazados como componentes operativos actuales.
+8. **Validación externa.** La comprensión pública se prueba periódicamente con buscadores y asistentes.
 
 ## Superficies públicas prioritarias
 
@@ -32,10 +33,12 @@ Una persona o asistente que lea solamente la descripción del repositorio, las p
 - primeras líneas del README;
 - sección `Qué es` y `Qué no es`;
 - documentación canónica;
-- `IA-DOS Project Orchestrator Pack`;
+- `IA-DOS Current Offline Pack`;
 - topics de GitHub;
 - releases y changelog;
 - futuras páginas o perfiles oficiales.
+
+Los bundles históricos se conservan por trazabilidad, pero no son superficies de onboarding vigente.
 
 ## Identidad y definiciones
 
@@ -63,7 +66,6 @@ developer-workflow
 llm-wiki
 coding-agents
 ai-workflow
-prompt-engineering
 documentation
 open-source
 ```
@@ -72,4 +74,4 @@ Evita usar `ai-agent` como topic principal mientras IA-DOS no sea una librería 
 
 ## Regla principal
 
-IA-DOS debe ser reconocible por lo que realmente es antes de explicar todos sus componentes.
+IA-DOS debe ser reconocible por lo que realmente es y por sus contratos vigentes antes de explicar todos sus componentes.
