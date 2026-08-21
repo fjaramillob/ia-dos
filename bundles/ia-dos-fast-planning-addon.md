@@ -1,3 +1,7 @@
+> [!WARNING]
+> **ESTADO: HISTÓRICO — NO UTILIZAR PARA NUEVOS ONBOARDINGS.**
+> Este addendum pertenece a una generación anterior de IA-DOS y depende de contratos reemplazados. Para uso offline vigente consulta `bundles/ia-dos-current-offline-pack.md`. No lo combines con otros bundles históricos.
+
 # IA-DOS Fast Planning Addendum
 
 Tipo: complemento del pack operativo para asistentes conversacionales sin acceso al repositorio canónico.
