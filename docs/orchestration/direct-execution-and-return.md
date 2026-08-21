@@ -6,17 +6,18 @@ IA-DOS busca materializar avances verificables sin convertir `00 — Dirección 
 
 ```text
 Conversation Space gobierna un resultado
-→ evalúa memoria durable cuando la unidad depende de historia
+→ evalúa Memory Bootstrap cuando la unidad depende de historia
 → comprueba readiness indispensable
 → planifica sólo si falta inspección o diseño
 → Execution Task cuando la unidad está lista
 → coding agent ejecuta
 → Execution Report vuelve al Cycle Owner
 → revisión y decisión dentro de la autoridad delegada
+→ persona responsable aprueba cuando corresponde
 → 00 sólo ante reorientación real
 ```
 
-La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante.
+La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
 ## Gate de salida
 
@@ -39,6 +40,38 @@ Resultados:
 - reorientación transversal → escala a `00`.
 
 No prepares una Execution Task sólo porque exista intención de avanzar.
+
+## Excepción operativa de Memory Bootstrap
+
+Cuando el gate devuelve `BOOTSTRAP REQUIRED`:
+
+```text
+unidad original
+→ queda bloqueada
+
+Execution Task de bootstrap
+→ único objetivo: persistir checkpoint durable mínimo
+→ unidad original fuera de alcance
+→ Execution Report
+→ revisión
+→ reevaluar gate original
+```
+
+La tarea de bootstrap declara explícitamente que responde a `BOOTSTRAP REQUIRED`; no finge `PASS` y no ejecuta la unidad que busca desbloquear.
+
+Una unidad ordinaria dependiente de esa memoria sólo puede continuar después de reevaluar el gate y obtener `PASS`.
+
+## Readiness
+
+Cuando readiness indispensable sea desconocido, usa el flujo tipado:
+
+```text
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
+El Preflight es de solo lectura. Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de escritura; el reporte no concede esa autorización por sí mismo.
 
 ## Cuándo volver a 00
 
@@ -77,6 +110,8 @@ Después de revisar la evidencia, el Cycle Owner puede cerrar, corregir, reverti
 
 El coding agent no selecciona esa decisión en el reporte ni inicia otra unidad.
 
+Si el reporte corresponde a un memory bootstrap, su revisión no habilita automáticamente la unidad original: primero se reevalúa el gate de esa unidad.
+
 ## Memoria durable y ejecución
 
 Una `Execution Task` puede incluir una actualización concreta de LLM Wiki **sólo cuando**:
@@ -102,6 +137,7 @@ No pases por `00` sólo para volver a enrutar.
 ```text
 Resolver en conversación sólo lo indispensable.
 No saltarse Memory Bootstrap ni Environment Preflight.
+BOOTSTRAP REQUIRED bloquea la unidad original, no el checkpoint mínimo.
 Planificar sólo cuando reduce incertidumbre real.
 Ejecutar unidades acotadas.
 Revisar evidencia antes de decidir.
