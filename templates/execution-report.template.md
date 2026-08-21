@@ -1,13 +1,13 @@
 # Execution Report
 
-El `Execution Report` registra evidencia de lo ejecutado. No decide por el Cycle Owner y no funciona como mecanismo de consolidación de memoria durable.
+El `Execution Report` registra evidencia de lo ejecutado. No decide por el Cycle Owner, no sustituye la aprobación humana aplicable y no funciona como mecanismo de consolidación de memoria durable.
 
 ## Encabezado de retorno
 
 ```text
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: revisión y decisión del Cycle Owner
+Expected Output: revisión de evidencia bajo la autoridad aplicable
 Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [TASK-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
@@ -19,7 +19,7 @@ Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 El `Estado` describe únicamente el resultado de la ejecución.
 
-`Atención requerida` identifica un bloqueo, riesgo, desviación o decisión concreta que el Cycle Owner deba revisar. No selecciona por adelantado una acción de gobierno como `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`.
+`Atención requerida` identifica un bloqueo, riesgo, desviación o decisión concreta que requiere revisión. No selecciona por adelantado `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`.
 
 ## Identificación
 
@@ -38,7 +38,7 @@ El `Estado` describe únicamente el resultado de la ejecución.
 - Commit, cambio remoto o equivalente: `[REFERENCIA O NO APLICA]`
 - Estado: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`
 
-Incluye rama, commit u otras referencias sólo cuando existan y sean relevantes para verificar la tarea. No agregues metadata de herramienta o modelo por rutina.
+Incluye metadata técnica sólo cuando exista y sea relevante para verificar la tarea.
 
 ## Resultado
 
@@ -60,7 +60,7 @@ Usa `Ninguno` cuando la tarea fue solo lectura.
 
 - instrucciones locales aplicables;
 - contrato IA-DOS embebido, remoto o local cuando corresponda;
-- otras fuentes autorizadas necesarias para la tarea.
+- otras fuentes autorizadas necesarias.
 
 Declara `No disponible` cuando una instrucción requerida no pudo consultarse.
 
@@ -96,7 +96,7 @@ No declares una acción que no haya ocurrido.
 - `Ninguna`, o
 - `[DESVIACIÓN, PROBLEMA, MOTIVO Y EFECTO]`
 
-Indica cualquier diferencia entre la tarea aprobada y lo realmente ejecutado. No normalices una ampliación de alcance sólo porque el cambio ya ocurrió.
+Indica cualquier diferencia entre la tarea autorizada y lo realmente ejecutado. No normalices una ampliación de alcance sólo porque ya ocurrió.
 
 ## Pendientes del alcance original
 
@@ -110,20 +110,26 @@ No uses esta sección como backlog general ni agregues trabajo futuro independie
 - `Ninguna`, o
 - `[CONDICIÓN Y ACCIÓN TOMADA]`
 
-## Atención requerida al Cycle Owner
+## Atención requerida
 
 - `Ninguna`, o
 - `[PREGUNTA, BLOQUEO, RIESGO O DECISIÓN CONCRETA QUE REQUIERE REVISIÓN]`
 
-Esta sección aporta información para la revisión. La decisión posterior pertenece exclusivamente al Cycle Owner.
+Esta sección aporta información a la revisión y no preselecciona la decisión posterior.
 
-Después de revisar la evidencia, el Cycle Owner puede aprobar y cerrar, corregir, revertir, escalar o evaluar si corresponde actualizar memoria durable. Esas acciones no las decide ni las marca el coding agent dentro del Execution Report.
+## Revisión posterior
+
+Después de revisar la evidencia, el Cycle Owner puede cerrar, corregir, revertir, transferir, escalar o continuar **dentro de la autoridad delegada**.
+
+La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+
+Estas acciones no las decide ni las marca el coding agent dentro del Execution Report.
 
 ## Frontera con memoria durable
 
-El Execution Report puede contener hechos y evidencia descubiertos durante la ejecución porque forman parte del resultado observado, pero no debe crear una sección paralela de “conocimiento durable” ni recomendar automáticamente qué incorporar a la Wiki.
+El reporte puede contener hechos y evidencia descubiertos durante la ejecución porque forman parte del resultado observado, pero no crea una sección paralela de “conocimiento durable” ni recomienda automáticamente qué incorporar a la LLM Wiki.
 
-La evaluación de qué conocimiento merece consolidación ocurre después de la revisión del reporte, bajo gobierno conversacional y, cuando aporta, `90 — Wiki y memoria`.
+La evaluación de memoria ocurre después de revisar el reporte. Si un hecho nuevo merece persistirse, se autoriza una actualización documental separada, salvo que la propia Execution Task ya incluyera una actualización durable concreta.
 
 ## Declaración final
 
@@ -131,8 +137,9 @@ La evaluación de qué conocimiento merece consolidación ocurre después de la 
 - [ ] Reporté verificaciones ejecutadas y omitidas.
 - [ ] No oculté fallos ni trabajo incompleto.
 - [ ] No amplié alcance sin autorización.
-- [ ] Respeté la autoridad y acceso de cada recurso.
+- [ ] Respeté autoridad y acceso de cada recurso.
 - [ ] No expuse secretos o datos sensibles.
-- [ ] No cambié el Cycle Owner ni abrí otro ciclo.
+- [ ] No cambié Cycle Owner ni abrí otro ciclo.
 - [ ] No aprobé mi propio resultado ni elegí la decisión de gobierno posterior.
+- [ ] No recomendé memoria durable o una siguiente unidad por rutina.
 - [ ] Este reporte vuelve al destino indicado.
