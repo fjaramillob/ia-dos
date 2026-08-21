@@ -70,7 +70,7 @@ Cuando la persona diga `avancemos`, `empecemos`, `sigamos` o equivalente, no act
 Resultados:
 - conocimiento necesario sólo en conversaciones → `Memory Bootstrap Gate`;
 - readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección o diseño → `Planning Task` de solo lectura;
+- falta inspección o diseño → `Planning Task` de solo lectura respecto del proyecto/entorno;
 - resultado definido + memoria suficiente + entorno listo → `Execution Task`;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación real → escala a 00.
@@ -98,21 +98,25 @@ No uses número de mensajes, tareas o antigüedad como umbral. Una LLM Wiki sepa
 
 Environment Preflight:
 - úsalo cuando una futura Execution Task dependa de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados;
-- lo ejecuta `Coding Agent — Planning` en solo lectura;
+- lo ejecuta `Coding Agent — Planning` en solo lectura respecto del entorno inspeccionado;
 - no es una Planning Task aunque comparta ese rol;
-- no instala, inicia, detiene ni configura;
+- no instala, inicia, detiene ni configura el entorno;
+- si declara `Output Delivery`, puede materializar únicamente su propio `Environment Readiness Report`;
 - produce `Environment Readiness Report`;
 - sólo `LISTO PARA EJECUCIÓN` permite considerar una autorización posterior de escritura.
 
 Planning Task:
 - la prepara el Conversation Space que gobierna el resultado;
 - la ejecuta `Coding Agent — Planning`;
-- es de solo lectura;
+- es de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
+- si declara `Output Delivery`, puede materializar únicamente su propio `Implementation Plan`;
 - resuelve una sola incertidumbre técnica dominante;
 - produce `Implementation Plan`;
 - vuelve al Cycle Owner;
 - puede usar un identificador lógico PLAN, pero no exige conversación nueva por tarea;
 - cuando haya evidencia suficiente, propone una sola Execution Task candidata.
+
+La escritura del output expresamente autorizado no convierte Planning/Preflight en Execution ni amplía permiso sobre código, datos, Git, Wiki, configuración, servicios o recursos externos.
 
 La futura Execution Task conserva autoridad separada del Planning, pero no exige abrir una conversación nueva: reutiliza una Execution Cell activa cuando corresponda.
 
@@ -145,6 +149,13 @@ Exchange:
 - el Conversation Agent construye la Execution Task y asigna Task ID;
 - el Code Agent construye el Execution Report y reutiliza ese Task ID.
 
+Entrega manual cuando el proyecto usa Exchange:
+- el `Manual Artifact Launcher` sólo localiza el `.md` autoritativo y, cuando aplica, el directorio físico de salida;
+- el launcher nunca amplía la autoridad declarada por la Task;
+- `Output Delivery` puede autorizar la materialización del artefacto de salida declarado;
+- `Caveman Return` sólo se usa cuando la Task declara `Caveman Return: Sí` y el output completo fue materializado correctamente;
+- si no existe esa declaración, devuelve el artefacto completo según el contrato y canal de la Task.
+
 Memoria durable / LLM Wiki:
 - memoria durable es la responsabilidad funcional de conservar conocimiento reusable;
 - LLM Wiki es una posible materialización durable, portable y navegable de esa memoria;
@@ -167,7 +178,7 @@ Cuando el Memory Bootstrap Gate devuelva `BOOTSTRAP REQUIRED`:
 
 Cuando corresponda:
 
-> Abre el coding agent disponible sobre el entorno técnico autorizado. Ejecuta la Planning Task en modo de solo lectura y devuelve el `Implementation Plan` al mismo Cycle Owner. No ejecutes cambios.
+> Abre el coding agent disponible sobre el entorno técnico autorizado. Ejecuta la Planning Task en modo de solo lectura respecto del proyecto/entorno y devuelve el `Implementation Plan` al mismo Cycle Owner. Si la Task autoriza `Output Delivery`, puedes materializar únicamente ese plan en el destino declarado. No ejecutes cambios del proyecto.
 
 No conviertas el nombre o cantidad de conversaciones de Planning en una regla del método.
 
@@ -175,7 +186,7 @@ No conviertas el nombre o cantidad de conversaciones de Planning en una regla de
 
 Cuando readiness indispensable sea desconocido:
 
-> Ejecuta el `Environment Preflight` con `Coding Agent — Planning` en modo de solo lectura. No modifiques, instales, inicies ni configures. Devuelve el `Environment Readiness Report` al Cycle Owner.
+> Ejecuta el `Environment Preflight` con `Coding Agent — Planning` en modo de solo lectura respecto del entorno. No modifiques, instales, inicies ni configures el entorno. Si el Preflight autoriza `Output Delivery`, materializa únicamente el `Environment Readiness Report` declarado. Devuélvelo al Cycle Owner.
 
 ## Transición esperada a ejecución
 
@@ -200,6 +211,7 @@ El onboarding está bien encaminado cuando:
 - usa Planning sólo para incertidumbre real;
 - usa Execution Task cuando la unidad está lista;
 - reutiliza Execution Cells sin acumular permisos;
+- permite materializar únicamente el output explícitamente autorizado sin debilitar las fronteras de rol;
 - exige evidencia verificable;
 - no presupone topología física ni herramientas;
 - devuelve planes, readiness reports y execution reports al Cycle Owner;
