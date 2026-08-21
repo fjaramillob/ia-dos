@@ -1,3 +1,7 @@
+> [!WARNING]
+> **ESTADO: HISTÓRICO — NO UTILIZAR PARA NUEVOS ONBOARDINGS.**
+> Este addendum pertenece a una generación anterior de IA-DOS y contiene reglas reemplazadas, incluyendo sesiones separadas e identificadores clásicos. Para uso offline vigente consulta `bundles/ia-dos-current-offline-pack.md`. No lo combines con otros bundles históricos.
+
 # IA-DOS Agent Role and Artifact Loop Addendum
 
 Complemento obligatorio del pack operativo para plataformas sin acceso al repositorio canónico.
