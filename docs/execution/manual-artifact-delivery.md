@@ -43,9 +43,9 @@ El launcher puede declarar únicamente:
 - directorio físico de salida cuando exista;
 - instrucción de leer el archivo completo;
 - recordatorio de que el artefacto, no el launcher, define objetivo, alcance, autoridad, restricciones, salida y condiciones de detención;
-- modo conversacional de retorno.
+- repetición del modo de retorno **ya declarado por la Task**, cuando ayude a evitar ambigüedad.
 
-El launcher no puede ampliar permisos ni corregir silenciosamente el contenido del artefacto.
+El launcher no puede elegir, cambiar ni ampliar el modo de retorno. Tampoco puede ampliar permisos ni corregir silenciosamente el contenido del artefacto.
 
 ## Separar contrato y ubicación física
 
@@ -77,6 +77,7 @@ Output Delivery:
 Channel: Exchange
 Location: outbox
 Filename: [NOMBRE.md]
+Caveman Return: Sí | No
 ```
 
 `Location: outbox` describe el destino lógico elegido por el proyecto. El launcher puede resolverlo a una ruta física concreta.
@@ -101,7 +102,10 @@ La misma distinción puede aplicarse a `Environment Preflight` y otros retornos 
 
 ## Caveman Return
 
-Cuando el output completo ya quedó materializado, la conversación del Code Agent puede utilizar un **Caveman Return**.
+La conversación del Code Agent puede utilizar un **Caveman Return** únicamente cuando se cumplen conjuntamente estas condiciones:
+
+1. la Task autoritativa declara `Caveman Return: Sí`;
+2. el output completo fue materializado correctamente en el destino declarado.
 
 ```text
 Caveman Return
@@ -125,6 +129,8 @@ Debe ser breve y contener sólo:
 2. atención requerida concreta o `Ninguna`;
 3. nombre o ubicación del artefacto completo.
 
+Si la Task declara `Caveman Return: No`, usa `Channel: Conversation` o no declara `Output Delivery`, no compactes la salida por esta convención: devuelve el artefacto completo según el contrato y canal autoritativos.
+
 Ejemplo de Planning:
 
 ```text
@@ -132,7 +138,7 @@ PLAN LISTO
 
 Resultado: `closed_at` puede soportar el archivado propuesto.
 Atención: falta definir autoridad para las acciones destructivas.
-Archivo: PROPACTO-...-IMPLEMENTATION-PLAN.md
+Archivo: PROYECTO-...-IMPLEMENTATION-PLAN.md
 ```
 
 Ejemplo de Execution:
@@ -141,7 +147,7 @@ Ejemplo de Execution:
 EJECUCIÓN COMPLETADA
 
 Atención: Ninguna.
-Reporte: PROPACTO-...-REPORT.md
+Reporte: PROYECTO-...-REPORT.md
 ```
 
 Ejemplo bloqueado:
@@ -150,7 +156,7 @@ Ejemplo bloqueado:
 BLOQUEADO
 
 Atención: falta la condición concreta indicada en el reporte.
-Reporte: PROPACTO-...-REPORT.md
+Reporte: PROYECTO-...-REPORT.md
 ```
 
 No copies en el Caveman Return el detalle que ya existe en el artefacto completo.
@@ -170,7 +176,7 @@ Cuando el proyecto no tiene otro esquema, IA-DOS recomienda:
 Ejemplo:
 
 ```text
-PROPACTO-10-APP-20260821-130700
+PROYECTO-10-APP-20260821-130700
 ```
 
 Una candidata producida por Planning mantiene:
@@ -203,8 +209,8 @@ Persona
 Code Agent
 → lee TASK.md completo
 → trabaja dentro de autoridad
-→ materializa output completo en outbox
-→ responde con Caveman Return
+→ materializa output completo cuando la Task lo autoriza
+→ usa Caveman Return sólo si la Task declara Sí y el output completo existe
 
 Conversation Agent / Cycle Owner
 → consume el output completo
@@ -220,7 +226,7 @@ Artifact = contrato y evidencia completos
 Launcher = localización manual
 Exchange = almacenamiento pasivo
 Output Delivery = permiso acotado de materialización
-Caveman Return = presentación conversacional mínima
+Caveman Return = presentación conversacional mínima sólo por opt-in de la Task
 ```
 
 Ninguna de estas convenciones cambia la autoridad definida por el artefacto.
