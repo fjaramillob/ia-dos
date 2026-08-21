@@ -4,7 +4,7 @@
 
 **Uso:** onboarding y operación de IA-DOS cuando el asistente no puede navegar el repositorio canónico.
 
-**Baseline canónico:** `c28006bf23ca098e7fc1d5eaaf9b71330779cf04` — contratos consolidados de Fases 1–4.
+**Baseline canónico:** `IA-DOS alpha — Fase 5` — contratos consolidados y distribución offline alineada.
 
 **Fuente canónica:** `https://github.com/fjaramillob/ia-dos`
 
@@ -140,23 +140,27 @@ Cuando el usuario diga `avancemos`, `empecemos`, `ya tenemos suficiente` o equiv
 2. identifica el siguiente resultado verificable;
 3. confirma el Cycle Owner;
 4. evalúa Memory Bootstrap Gate cuando corresponda;
-5. aplica ejecución directa primero;
-6. si no es segura, usa Planning Task;
-7. entrega un bloque listo para el coding agent.
+5. comprueba readiness del entorno cuando la ejecución dependa de runtime, herramienta, servicio, acceso, secreto o conectividad;
+6. aplica ejecución directa sólo cuando memoria y entorno estén listos;
+7. si falta inspección o diseño, usa Planning Task;
+8. entrega un bloque listo para el coding agent.
 
-### Gate de ejecución directa
+Evalúa en este orden:
 
 ```text
-¿El resultado está suficientemente definido,
-es pequeño y puede ejecutarse con seguridad
-sin planificación técnica previa?
+1. ¿El resultado está definido, es pequeño y puede ejecutarse con seguridad?
+2. Si depende de historia, ¿la memoria necesaria ya es durable?
+3. ¿Las precondiciones indispensables del entorno están comprobadas?
+4. Si falta diseño, ¿el coding agent puede proponer una primera unidad segura?
 ```
 
-- Sí → `Execution Task`.
-- No por falta de inspección o diseño → `Planning Task`.
-- No por una decisión humana indispensable → resuelve o deriva sólo esa decisión.
-- No por falta de acceso → declara el bloqueo.
-- No por reorientación → escala a `00`.
+- ejecución lista, memoria suficiente y entorno listo → `Execution Task`;
+- memoria necesaria sólo disponible en conversaciones → `Memory Bootstrap Gate`;
+- readiness desconocido → `Environment Preflight`;
+- falta inspección o diseño → `Planning Task`;
+- dependencia local no lista → resolverla sin autorizar escritura;
+- falta una decisión humana indispensable → resuelve o deriva sólo esa decisión;
+- reorientación real → escala a `00`.
 
 ## 8. Memory Bootstrap Gate
 
@@ -448,7 +452,7 @@ No inventes `REGISTRY.md`, contadores, watchers, triggers, polling o automatizac
 
 ## 18. Environment Preflight
 
-Cuando el trabajo esté definido pero una precondición indispensable sea desconocida, usa un preflight de solo lectura.
+Cuando una Execution Task dependa de runtime, herramienta, servicio, acceso, secreto o conectividad no comprobados, usa un preflight de solo lectura antes de aprobar o reanudar escritura.
 
 ```text
 Artifact Type: Environment Preflight
@@ -459,6 +463,14 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: [PREFLIGHT-ID]
 Cycle Owner: [CONVERSATION SPACE]
 ```
+
+El preflight:
+
+- sólo inspecciona;
+- no crea ni modifica archivos;
+- no instala ni actualiza;
+- no inicia, detiene o configura servicios;
+- produce `Environment Readiness Report`.
 
 Distingue:
 
@@ -472,13 +484,38 @@ inspeccionar
 
 Cada nivel requiere autorización propia.
 
+El `Environment Readiness Report` debe declarar:
+
+```text
+Estado: LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
+Dependencia dominante: [ELEMENTO O NINGUNA]
+Evidencia: [COMANDO, SALIDA O REFERENCIA]
+Acción mínima requerida: [ACCIÓN O NINGUNA]
+Cambios realizados: Ninguno
+```
+
+El Cycle Owner puede:
+
+- autorizar ejecución cuando el estado sea `LISTO PARA EJECUCIÓN`;
+- resolver dependencia;
+- corregir el preflight;
+- escalar cuando corresponda.
+
+**Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.** `NO LISTO` y `DESCONOCIDO` detienen la ejecución.
+
 ## 19. Execution Resume
 
-Usa `Execution Resume` sólo para reanudar la misma Execution Task después de resolver una condición bloqueante sin cambiar objetivo, alcance o autoridad.
+Usa `Execution Resume` sólo para reanudar la misma Execution Task después de resolver una condición bloqueante **sin cambiar objetivo, alcance, autoridad, seguridad ni arquitectura**.
 
-Debe conservar el mismo `Task ID` y permisos vigentes.
+Debe:
 
-Si cambia el contrato de la tarea, crea una nueva Execution Task.
+- conservar el mismo `Task ID`;
+- incluir evidencia de la condición resuelta;
+- mantener únicamente los permisos ya autorizados;
+- no ampliar alcance;
+- no iniciar otra tarea o ciclo.
+
+Si cambia objetivo, alcance, autoridad, seguridad o arquitectura, no uses `Execution Resume`: crea una nueva Execution Task o vuelve a planificación cuando corresponda.
 
 ## 20. Execution Report
 
