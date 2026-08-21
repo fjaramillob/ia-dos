@@ -102,12 +102,18 @@ Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA REVISIÓN | BLOQUEADO
 Cambios al proyecto: Ninguno
 
-Si `Caveman Return: Sí`, materializa primero el Implementation Plan completo y responde en conversación únicamente:
+Usa `Caveman Return` únicamente cuando:
+1. la Task declara `Caveman Return: Sí`;
+2. el Implementation Plan completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas condiciones se cumplen, responde en conversación únicamente:
 
 PLAN LISTO | BLOQUEADO
 Resultado: [UNA FRASE]
 Atención: [DESCRIPCIÓN O NINGUNA]
 Archivo: [NOMBRE/PATH]
+
+Si falla la materialización o falta cualquiera de las dos condiciones, devuelve el Implementation Plan completo según el contrato y canal de la Task.
 
 No implementes cambios. No actúes como Project Orchestrator. No cambies el Cycle Owner. No inicies otro ciclo.
 ```
