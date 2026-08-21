@@ -71,6 +71,13 @@ Resultados
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a 00.
 
+Memory Bootstrap
+- PASS permite continuar con la unidad evaluada;
+- BOOTSTRAP REQUIRED bloquea esa unidad hasta persistir el checkpoint mínimo;
+- BOOTSTRAP REQUIRED permite una Execution Task separada cuyo único resultado sea materializar ese checkpoint;
+- esa tarea no puede incluir la unidad original y declara explícitamente `BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`;
+- después de revisar su Execution Report, reevalúa el gate de la unidad original.
+
 Planning
 - la Planning Task es sólo lectura y produce Implementation Plan;
 - resuelve una incertidumbre técnica dominante;
@@ -95,6 +102,8 @@ Execution Cells
 Execution Task
 - representa una sola unidad verificable;
 - declara objetivo, autoridad, alcance, permisos, criterios, verificaciones y condiciones de detención;
+- una unidad ordinaria dependiente de memoria previa requiere Memory Bootstrap Gate = PASS;
+- la excepción es la unidad mínima de checkpoint definida arriba;
 - no autoriza automáticamente branch, commit, push, PR, merge, deploy, producción, datos, recursos externos o costes;
 - produce Execution Report al Cycle Owner.
 
@@ -121,9 +130,7 @@ Exchange
 Memoria durable y LLM Wiki
 - conversación no es memoria durable;
 - memoria durable es la responsabilidad funcional de conservar conocimiento reusable;
-- LLM Wiki es una posible materialización portable de esa memoria;
-- PASS del Memory Bootstrap Gate permite continuar sin documentación adicional;
-- BOOTSTRAP REQUIRED exige sólo el checkpoint mínimo;
+- LLM Wiki es una posible materialización durable, portable y navegable de esa memoria;
 - no obligues al coding agent a leer toda la Wiki;
 - distingue contexto durable, referencias y lectura requerida;
 - no uses la Wiki como backlog, log o almacén de TASK/REPORT;
