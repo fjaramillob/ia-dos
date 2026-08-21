@@ -2,7 +2,7 @@
 
 Usa este perfil cuando el producto sea nuevo o el repositorio esté vacío o casi vacío y sea necesario definir una fundación técnica mínima antes de ejecutar.
 
-No reemplaza la Planning Task. La especializa para inicios de proyecto.
+No reemplaza la Planning Task. La especializa para inicios de proyecto y conserva su contrato de `Output Delivery` cuando esté declarado.
 
 ## Identificación
 
@@ -66,6 +66,8 @@ No obligues al coding agent a leer toda la documentación de IA-DOS o toda la LL
 | `[MEMORIA]` | decisiones y contexto | estado aceptado | lectura | contrastar con implementación |
 | `[HEREDADO]` | evidencia histórica | patrones y aprendizaje | lectura | no copiar automáticamente |
 | `IA-DOS` | método | roles, tareas y retorno | referencia | no decide el stack |
+
+La autoridad permanece de solo lectura respecto del proyecto, entorno y fuentes inspeccionadas. Si la Planning Task declara `Output Delivery`, puede materializarse únicamente el propio `Implementation Plan` en el destino autorizado.
 
 ## Baseline técnico a evaluar
 
@@ -138,12 +140,14 @@ No declares que se abrirá una sesión de ejecución nueva por defecto. Si el pr
 
 ## Readiness
 
-Si la candidata depende de runtime, servicio, acceso, secreto o conectividad indispensable no comprobados, el plan debe señalar un `Environment Preflight` antes de autorizar escritura.
+Si la candidata depende de runtime, servicio, acceso, secreto o conectividad indispensable no comprobados, el plan debe señalar un `Environment Preflight` antes de autorizar escritura sobre el proyecto o entorno.
 
 ## Restricciones
 
 - no implementar;
-- no crear ni modificar archivos;
+- no crear ni modificar archivos del proyecto, entorno o fuentes inspeccionadas;
+- si `Output Delivery` lo autoriza, escribir únicamente el propio `Implementation Plan` declarado y sólo en su destino;
+- no escribir ningún otro archivo;
 - no instalar dependencias;
 - no crear ramas, commits o PR;
 - no asignar el Task ID de la futura Execution Task;
@@ -152,6 +156,8 @@ Si la candidata depende de runtime, servicio, acceso, secreto o conectividad ind
 - no copiar arquitectura heredada;
 - no clonar IA-DOS sin autorización;
 - no responder como Conversation Space o Project Orchestrator.
+
+La materialización del propio output autorizado no convierte este perfil en Execution ni concede permisos sobre el proyecto o entorno.
 
 ## Cierre
 
@@ -162,7 +168,10 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Sesión de planificación: [PLAN — BOOTSTRAP | NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: LISTO PARA REVISIÓN | BLOQUEADO
-Cambios realizados: Ninguno
+Cambios al proyecto/entorno: Ninguno
+Output materializado: [RUTA O NO]
 ```
+
+Si la Task declara `Caveman Return: Sí`, sólo puede compactarse la conversación cuando el Implementation Plan completo fue materializado correctamente; de lo contrario, devuelve el plan completo según el contrato y canal de la Task.
 
 El coding agent no aprueba la candidata ni asigna su Task ID. El Cycle Owner revisa dentro de la autoridad delegada y la persona responsable conserva la aprobación final cuando corresponda.
