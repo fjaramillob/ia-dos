@@ -1,34 +1,48 @@
-# Crear o conectar Exchange Protocol v0
+# Crear o conectar Exchange
 
-Exchange es opcional. Su función es conservar fuera de las conversaciones el historial operacional de `Execution Task` y `Execution Report` cuando eso aporta continuidad, trazabilidad o independencia del chat del coding agent.
+Exchange es opcional. Su única función es actuar como **pasarela de archivos Markdown** entre Conversation Agents y Code Agents cuando conviene desacoplar el intercambio del historial de las conversaciones.
 
-No es memoria durable, backlog ni automatización.
+Exchange no define el contenido, identidad, formato o estado de los artefactos que transporta.
 
 ## Cuándo adoptarlo
 
-Exchange suele aportar cuando:
+Puede aportar cuando:
 
-- una Execution Cell ya acumula varias tareas;
-- se quiere poder renovar una conversación del coding agent sin perder el historial de instrucciones y retornos;
-- varios agentes o herramientas podrían ejecutar la misma línea de trabajo en momentos distintos;
-- se necesita una evidencia durable de qué se pidió y qué respondió el ejecutor;
-- conservar TASK/REPORT fuera del chat reduce una dependencia operacional relevante.
+- se quiere que una Execution Cell pueda renovarse sin depender del historial del chat;
+- Conversation Agent y Code Agent necesitan intercambiar archivos mediante una carpeta compartida o sincronizada;
+- se quiere conservar físicamente el historial de archivos enviados y recibidos;
+- el canal de conversación no es un medio durable o accesible para ambos lados.
 
 No lo adoptes sólo porque IA-DOS lo soporta.
 
-## Alcance de v0
+## Responsabilidades
 
-El flujo vigente cubre exclusivamente:
+La frontera es estricta:
 
 ```text
-Execution Task
-        ↓
-Execution Report
+Conversation Agent
+→ construye la Execution Task
+→ asigna Task ID
+→ materializa el .md cuando corresponde
+
+Exchange
+→ almacena / expone el archivo
+
+Code Agent
+→ consume la tarea
+→ construye el Execution Report
+→ reutiliza el Task ID según el contrato del artefacto
+
+Exchange
+→ almacena / expone el archivo de retorno
+
+Conversation Agent / Cycle Owner
+→ revisa y decide
 ```
 
-Planning Task, Implementation Plan, backlog, decisiones y memoria durable permanecen fuera del almacén Exchange por defecto.
+Exchange no interviene en ninguna de esas decisiones.
 
-## Topología recomendada
+## Topología mínima
 
 Una estructura simple es:
 
@@ -36,13 +50,10 @@ Una estructura simple es:
 proyecto-exch/
 ├── inbox/
 ├── outbox/
-├── archive/
-└── templates/
-    ├── TASK.md
-    └── REPORT.md
+└── archive/
 ```
 
-La ubicación es una decisión del proyecto. Puede ser una carpeta local, repositorio independiente, subdirectorio de un monorepo u otro almacenamiento durable equivalente.
+La ubicación es una decisión del proyecto. Puede ser una carpeta local, una carpeta sincronizada, un repositorio, un subdirectorio de un monorepo u otro almacenamiento durable equivalente.
 
 No crees un repositorio separado si esa separación no aporta valor.
 
@@ -50,128 +61,77 @@ No crees un repositorio separado si esa separación no aporta valor.
 
 ### `inbox/`
 
-Contiene TASK preparados para transferir o que todavía forman parte del flujo activo.
+Pasarela desde Conversation Agent hacia Code Agent.
 
-Estar en `inbox/` no concede permisos adicionales y no implica que un agente los haya ejecutado.
+Contiene archivos `.md` ya construidos por el lado emisor.
 
 ### `outbox/`
 
-Contiene REPORT devueltos por el ejecutor y pendientes de revisión del Cycle Owner.
+Pasarela desde Code Agent hacia Conversation Agent.
 
-Un REPORT en `outbox/` no está aprobado por su mera ubicación.
+Contiene archivos `.md` ya construidos por el lado emisor.
 
 ### `archive/`
 
-Conserva intercambios ya revisados y retirados del flujo activo.
+Almacena archivos retirados del intercambio activo cuando el proyecto desea conservarlos como historial.
 
-Archivar no significa necesariamente aprobar. También pueden archivarse resultados bloqueados, revertidos o sustituidos después de que exista una decisión explícita.
+Archivar no significa aprobar. Sólo significa que el archivo ya no necesita permanecer en la pasarela activa.
 
-### `templates/`
+Estas carpetas no son estados del método ni conceden permisos.
 
-Conserva la copia adoptada de los perfiles Exchange utilizados por el proyecto.
+## Identidad y nombres de archivo
 
-Al crear Exchange desde IA-DOS, copia:
+Exchange no genera ni valida IDs.
 
-```text
-templates/exchange-task-v0.template.md
-→ proyecto-exch/templates/TASK.md
+El `Task ID` de una Execution Task se define antes de que el archivo llegue a Exchange, normalmente por el Conversation Agent que construye la tarea.
 
-templates/exchange-report-v0.template.md
-→ proyecto-exch/templates/REPORT.md
-```
+El Execution Report reutiliza el identificador de su tarea de origen porque así lo exige su contrato, no porque Exchange lo determine.
 
-La copia queda asociada a la versión de IA-DOS adoptada por el proyecto. No la actualices silenciosamente cuando cambie `main`.
+Los nombres de archivo también pertenecen al proceso que materializa los artefactos.
 
-## Identificación
+IA-DOS puede recomendar convenciones para facilitar correlación humana y mecánica, pero Exchange funciona igual con cualquier nombre inequívoco.
 
-Cada TASK puede generar su ID sin consultar estado compartido:
+## Flujo manual v0
 
 ```text
-{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
-```
-
-Ejemplo:
-
-```text
-PORTAL-20-APP-20260820-164500
-```
-
-Archivos activos:
-
-```text
-PORTAL-20-APP-20260820-164500-TASK.md
-PORTAL-20-APP-20260820-164500-REPORT.md
-```
-
-El REPORT reutiliza exactamente el mismo `Task ID`.
-
-No crees `REGISTRY.md`, contador compartido, secuencia global ni sufijos anti-colisión en v0.
-
-## Flujo manual
-
-```text
-Conversation Space
-        ↓ genera TASK
+Conversation Agent
+        ↓ genera artefacto .md
 inbox/
-        ↓ copiar / pegar manualmente
-Execution Cell
-        ↓ responde con REPORT
+        ↓ transferencia manual
+Code Agent
+        ↓ genera artefacto de retorno .md
 outbox/
+        ↓ transferencia manual
+Conversation Agent / Cycle Owner
         ↓ revisión
-Cycle Owner
-        ↓ cierre, corrección o escalamiento
-archive/
+archive/ cuando corresponda
 ```
 
-La respuesta del coding agent puede seguir ocurriendo normalmente en su conversación. Mientras Exchange sea manual, copiar ese resultado al archivo REPORT forma parte de la operación humana o conversacional del flujo.
+Nada ocurre automáticamente por la presencia o movimiento de un archivo.
 
 ## No sobrescribir historia
 
-Una vez que un TASK fue transferido al ejecutor, no lo edites silenciosamente para cambiar lo que supuestamente se pidió.
+Una vez entregado un archivo al otro lado, no lo sobrescribas silenciosamente para alterar qué se pidió o qué se respondió.
 
-Cuando una corrección necesite nuevas instrucciones:
-
-- conserva el TASK y REPORT anteriores;
-- registra la nueva instrucción según la política adoptada por el proyecto;
-- no borres evidencia para simplificar el historial.
-
-Exchange v0 no impone todavía un esquema de versiones para correcciones.
-
-## Archivo recomendado
-
-Cuando el volumen lo justifique:
-
-```text
-archive/
-└── YYYY/
-    └── MM/
-        └── {TASK-ID}/
-            ├── TASK.md
-            └── REPORT.md
-```
-
-No es necesario reorganizar el archivo después de cada tarea si el volumen todavía es pequeño.
+Si se requiere una corrección, el agente responsable genera el nuevo artefacto según las reglas vigentes del proyecto. Exchange sólo almacena el resultado.
 
 ## Adopción en `.ia-dos.yaml`
 
-Cuando el proyecto usa manifiesto, registra la ubicación real:
+Cuando el proyecto usa manifiesto y Exchange existe, registra únicamente su ubicación:
 
 ```yaml
 resources:
   exchange: "[RUTA_O_URL]"
-
-work:
-  execution_task_source: "EXCHANGE"
 ```
 
-Si Exchange no se usa:
+Si no se usa:
 
 ```yaml
 resources:
   exchange: "NO_APLICA"
 ```
 
-Exchange puede coexistir con un backlog distinto. Por ejemplo, Issues puede conservar trabajo pendiente mientras Exchange conserva TASK/REPORT ejecutados.
+No hace falta declarar a Exchange como fuente de tareas ni replicar allí el backlog.
 
 ## Seguridad
 
@@ -184,38 +144,44 @@ No guardes en Exchange:
 - credenciales;
 - datos sensibles innecesarios.
 
-Un TASK debe referenciar secretos por nombre o mecanismo seguro cuando sea necesario, no copiar sus valores.
+Los artefactos deben referenciar secretos mediante mecanismos seguros cuando corresponda, no copiar sus valores.
 
-## Lo que v0 no hace
+## Lo que Exchange v0 no hace
 
 Exchange v0 no:
 
+- genera IDs;
+- valida IDs;
+- define templates;
+- define tipos de artefacto;
+- define estados;
+- decide qué archivo ejecutar;
 - observa carpetas automáticamente;
 - dispara ejecuciones;
-- sincroniza Google Drive;
 - hace polling;
+- sincroniza Google Drive por sí mismo;
 - crea tareas al detectar archivos;
 - decide el siguiente trabajo;
 - consolida memoria durable;
 - reemplaza Issues u otro backlog;
 - resuelve la política de conversaciones de Planning.
 
-Estas capacidades pueden evaluarse en evoluciones posteriores únicamente después de validar el flujo manual.
+Una futura sincronización o automatización puede facilitar el **transporte físico** sin transferir a Exchange responsabilidad sobre identidad, contenido o decisiones.
 
 ## Verificación
 
-Antes de considerar Exchange adoptado, confirma:
+Antes de considerar Exchange disponible, confirma:
 
-- [ ] existe una razón operacional concreta para conservar TASK/REPORT;
+- [ ] existe una razón operacional concreta para usar una pasarela de archivos;
 - [ ] la ubicación real está identificada;
-- [ ] existen `inbox/`, `outbox/`, `archive/` y `templates/` o equivalentes claros;
-- [ ] `templates/TASK.md` y `templates/REPORT.md` corresponden a la versión adoptada;
-- [ ] el Task ID sigue el esquema elegido por el proyecto;
-- [ ] no existe un segundo backlog accidental dentro de Exchange;
+- [ ] existen `inbox/`, `outbox/` y `archive/` o equivalentes claros;
+- [ ] los agentes responsables siguen construyendo sus propios artefactos;
+- [ ] Exchange no genera ni interpreta IDs;
+- [ ] no existe un segundo backlog accidental;
 - [ ] no se usa Exchange como memoria vigente;
 - [ ] no hay secretos;
 - [ ] ningún proceso automático fue asumido como existente.
 
 ## Resultado esperado
 
-Exchange está correctamente adoptado cuando el proyecto puede conservar un TASK y su REPORT fuera de la conversación sin alterar el contrato de ejecución, duplicar la memoria durable ni convertir el almacén en un sistema de workflow que v0 todavía no define.
+Exchange está correctamente adoptado cuando un archivo `.md` construido por un agente puede pasar al otro lado y volver como otro `.md` sin que la pasarela necesite comprender, redefinir o enriquecer el artefacto.
