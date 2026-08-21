@@ -77,16 +77,16 @@ Cuando una fuente durable no sea accesible, usa solo el extracto indispensable c
 CONTRATO DE RETORNO
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: Aprobar y cerrar | Corregir | Revertir | Escalar | Revisar memoria | Ninguna
-Forbidden Output: iniciar automáticamente el siguiente ciclo o tarea
+Expected Output: revisión y decisión del Cycle Owner
+Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [EXEC-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
 Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Decisión requerida: APROBAR Y CERRAR | CORREGIR | REVERTIR | ESCALAR | REVISAR MEMORIA | NINGUNA
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
-Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, pruebas y evidencia, límites respetados, desviaciones, conocimiento durable potencial cuando exista y una sola siguiente acción. No apruebes tu propio trabajo ni inicies otra unidad.
+Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera el Cycle Owner. No elijas por él la decisión de gobierno posterior, no consolides memoria durable y no inicies otra unidad.
 ```
 
 ## Regla de continuidad
