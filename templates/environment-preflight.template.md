@@ -56,13 +56,19 @@ Acción mínima requerida: [ACCIÓN O NINGUNA]
 Cambios al entorno: Ninguno
 ```
 
-Si `Caveman Return: Sí`, materializa primero el Environment Readiness Report completo y responde en conversación únicamente:
+Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
+1. el Preflight declara `Caveman Return: Sí`;
+2. el Environment Readiness Report completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas se cumplen, responde en conversación únicamente:
 
 ```text
 PREFLIGHT: LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 Atención: [DEPENDENCIA/ACCIÓN O NINGUNA]
 Reporte: [NOMBRE/PATH]
 ```
+
+Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Environment Readiness Report completo según el contrato y canal del Preflight y declara la limitación de entrega cuando corresponda.
 
 Un identificador de sesión de preflight es opcional y no impone una política universal de conversaciones de Planning.
 
