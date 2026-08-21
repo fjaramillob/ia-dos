@@ -6,29 +6,86 @@ El objetivo no es moverlo ni renombrarlo automáticamente. Primero se inspeccion
 
 ## Antes de comenzar
 
-Debes contar con acceso al proyecto existente, una ruta local conocida o remote confirmado, autorización para inspeccionar su estructura, un workspace elegido cuando corresponda e IA-DOS disponible por referencia remota o local.
+Debes contar con:
+
+- acceso al proyecto existente;
+- una ruta local conocida o un remote confirmado;
+- autorización para inspeccionar su estructura;
+- un workspace elegido, cuando corresponda;
+- IA-DOS disponible por referencia remota o local.
 
 La primera fase debe realizarse en modo lectura.
 
 ## Paso 1 — Identificar la realidad actual
 
-Registra nombre, rutas, remotes, rama principal, working tree, repositorios relacionados, memoria existente, backlog, Exchange si existe, pipelines, despliegues, integraciones y dependencias de rutas relevantes.
+Registra:
+
+- nombre del proyecto;
+- ruta local, cuando exista;
+- remote o remotes Git;
+- rama principal;
+- estado del working tree;
+- repositorios relacionados;
+- documentación o memoria existente;
+- backlog o mecanismo de seguimiento existente;
+- Exchange existente, si lo hay;
+- pipelines, despliegues e integraciones relevantes;
+- dependencias de rutas que podrían romperse al mover recursos.
 
 No supongas que una carpeta equivale a un solo repositorio ni expongas secretos para describir su ubicación.
 
 ## Paso 2 — Clasificar la estructura existente
 
-Mantén la estructura real cuando funcione. No separes automáticamente implementación y documentación, no muevas proyectos por estética y evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) antes de crear memoria adicional.
+Identifica cuál situación describe mejor el proyecto.
 
-Si existen varios repositorios o fuentes cuya relación no puede determinarse, detente antes de escribir y devuelve la ambigüedad al Cycle Owner.
+### Implementación y memoria ya separadas
+
+Verifica que ambas sigan siendo fuentes útiles y que la memoria represente estado vigente.
+
+### Implementación sin memoria durable estructurada
+
+Mantén la implementación donde está. Antes de crear una Wiki hermana evalúa el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md).
+
+### Implementación y documentación en el mismo repositorio
+
+No separes automáticamente. Evalúa sólo si la estructura actual impide mantener o consumir conocimiento con claridad.
+
+### Proyecto fuera del workspace habitual
+
+No lo muevas por estética. Conserva su ubicación y adopta por referencia cuando moverlo agregue riesgo sin beneficio operacional.
+
+### Monorepo
+
+Mantén el monorepo cuando sea una decisión real del proyecto. Documenta la ubicación de implementación y memoria sin forzar repositorios adicionales.
+
+### Estructura ambigua
+
+Si existen varios repositorios, rutas o fuentes y no puede determinarse su relación, detente antes de escribir y devuelve la ambigüedad al Cycle Owner.
 
 ## Paso 3 — Elegir el modelo de adopción
 
-IA-DOS acepta repositorios separados, monorepos, rutas independientes u otras topologías claras.
+IA-DOS acepta, entre otros:
+
+```text
+proyecto/
+├── proyecto-app/
+└── proyecto-wiki/
+```
+
+```text
+repositorio-monorepo/
+├── app/
+└── docs/
+```
+
+```text
+ruta-existente/proyecto-app/
+otra-ruta/proyecto-wiki/
+```
 
 Exchange puede vivir como recurso hermano, subdirectorio, carpeta sincronizada, repositorio independiente o no existir.
 
-La topología elegida debe preservar historia, accesos y rutas reales. No necesita coincidir con un ejemplo.
+La topología elegida debe preservar historia, accesos y rutas reales. No necesita coincidir con un ejemplo mientras las fuentes de verdad y la forma de acceso sean claras.
 
 ## Paso 4 — Incorporar la implementación sin alterar su historia
 
@@ -41,30 +98,43 @@ Cuando el repositorio ya existe:
 - no muevas archivos para normalizar estructura sin una tarea específica;
 - no elimines documentación antes de comprender su autoridad.
 
+Si debe clonarse, usa una carpeta vacía y confirma el destino antes de ejecutar `git clone`.
+
 ## Paso 5 — Evaluar el Memory Bootstrap Gate
 
-Antes de delegar una unidad que dependa de historia o decisiones previas pregunta si puede ejecutarse correctamente sin reconstruir conocimiento relevante desde conversaciones.
+Antes de delegar una unidad que dependa de historia o decisiones previas pregunta:
 
-- `PASS`: continúa.
-- `BOOTSTRAP REQUIRED`: crea o conecta sólo el checkpoint durable mínimo.
+> ¿La siguiente unidad puede ejecutarse correctamente sin reconstruir conocimiento relevante desde conversaciones?
+
+- `PASS`: continúa sin crear memoria adicional por ceremonia.
+- `BOOTSTRAP REQUIRED`: crea o conecta un checkpoint durable mínimo.
+
+No conviertas esta evaluación en una auditoría integral.
 
 ## Paso 6 — Crear o conectar la memoria, cuando corresponda
 
-Si ya existe memoria durable, conserva sus rutas cuando sean claras y no la renombres sólo para coincidir con el starter actual.
+Si ya existe una Wiki o documentación durable:
+
+- conserva sus rutas cuando sean claras;
+- identifica su home o punto de entrada;
+- registra el estado vigente y las fuentes de verdad;
+- no renombres archivos sólo para coincidir con el starter actual.
 
 Si debe crearse una Wiki Markdown nueva, usa `templates/wiki-starter/` y [Crear o conectar la memoria durable](bootstrap-llm-wiki.md).
 
+No crees un `index.md` provisional ni una carpeta de tareas dentro de la Wiki por defecto.
+
 ## Paso 7 — Evaluar Exchange por separado
 
-La necesidad de Exchange no se deriva de tener una Wiki, varias conversaciones o muchas tareas.
+La necesidad de Exchange no se deriva automáticamente de tener una Wiki, varias conversaciones o muchas tareas.
 
 Úsalo sólo cuando una pasarela de archivos Markdown entre Conversation Agent y Code Agent aporte valor.
 
 Si ya existe un mecanismo equivalente:
 
 - conserva su historia;
-- identifica si es realmente una pasarela, backlog, memoria u otra cosa;
-- no migres o renombres artefactos por estética;
+- determina si es realmente una pasarela, backlog, memoria u otra cosa;
+- no migres ni renombres artefactos por estética;
 - no le atribuyas generación de IDs, templates, estados o decisiones si no la tiene.
 
 Si se decide usar Exchange, consulta [Crear o conectar Exchange](bootstrap-exchange.md).
@@ -90,20 +160,29 @@ Exchange se registra sólo como recurso de transporte; no como fuente de tareas.
 
 Antes de considerar el proyecto incorporado, confirma:
 
-- [ ] la historia Git fue preservada;
-- [ ] los remotes no fueron modificados sin autorización;
-- [ ] no se movieron archivos por normalización estética;
-- [ ] las fuentes de verdad relevantes están identificadas;
-- [ ] el Memory Bootstrap Gate fue evaluado cuando correspondía;
-- [ ] la memoria existente fue preservada o el starter vigente se utilizó para una Wiki nueva;
-- [ ] Exchange, si existe, se mantiene como pasarela pasiva y no como backlog, memoria o generador de identidad;
-- [ ] no se asumió automatización inexistente;
-- [ ] no se expusieron secretos;
-- [ ] las rutas reales fueron reportadas.
+- [ ] La historia Git fue preservada.
+- [ ] Los remotes no fueron modificados sin autorización.
+- [ ] No se movieron archivos por normalización estética.
+- [ ] Las fuentes de verdad relevantes están identificadas.
+- [ ] El modelo de adopción refleja la estructura real.
+- [ ] El Memory Bootstrap Gate fue evaluado cuando la siguiente unidad depende de contexto histórico.
+- [ ] La memoria existente fue preservada o el starter vigente se utilizó para una Wiki nueva.
+- [ ] Exchange, si existe, se mantiene como pasarela pasiva y no como backlog, memoria o generador de identidad.
+- [ ] No se asumió automatización inexistente.
+- [ ] No se expusieron secretos.
+- [ ] Las rutas reales fueron reportadas.
 
 ## Condiciones de detención
 
-Detente cuando exista trabajo no identificado, remotes inesperados, recursos relacionados cuya función no se comprenda, riesgo de romper rutas o despliegues, contradicciones relevantes entre documentación e implementación o falta de autorización para escribir.
+Detente cuando:
+
+- el working tree tenga cambios no identificados;
+- el remote no coincida con lo esperado;
+- existan repositorios relacionados cuya función no se comprenda;
+- mover recursos pueda romper rutas, pipelines o despliegues;
+- la documentación contradiga la implementación de forma relevante;
+- falte autorización para clonar, mover, inicializar Git o crear archivos;
+- no pueda determinarse qué recurso demuestra la implementación actual.
 
 ## Siguiente paso
 
