@@ -16,8 +16,8 @@ Conversation Space = gobierno y decisión dentro de autoridad delegada
 Execution Cell = continuidad de ejecución
 Execution Task = contrato de una unidad
 Execution Report = evidencia de ejecución
-Memoria durable = responsabilidad de conservar conocimiento reusable
-LLM Wiki = memoria durable materializada cuando se adopta
+Memoria durable = responsabilidad funcional de conservar conocimiento reusable
+LLM Wiki = materialización durable, portable y navegable de esa memoria
 Repository = implementación real
 Exchange = pasarela pasiva opcional de archivos .md
 ```
