@@ -198,20 +198,40 @@ No derives una sesión nueva automáticamente desde el nombre del resultado.
 
 Úsalo cuando una futura Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados.
 
-Es de solo lectura y no:
+Contrato tipado:
+
+```text
+Artifact Type: Environment Preflight
+Destination Role: Coding Agent — Planning
+Expected Output: Environment Readiness Report
+```
+
+El mismo rol `Coding Agent — Planning` también recibe Planning Tasks, pero los artefactos no se confunden:
+
+```text
+Planning Task
+→ Coding Agent — Planning
+→ Implementation Plan
+
+Environment Preflight
+→ Coding Agent — Planning
+→ Environment Readiness Report
+```
+
+El Preflight es de solo lectura y no:
 
 - modifica archivos;
 - instala o actualiza;
 - inicia, detiene o configura servicios;
 - ejecuta la Execution Task.
 
-Produce:
+El Environment Readiness Report produce:
 
 ```text
 LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-**Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.**
+**Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.** El reporte informa readiness; no concede por sí mismo autorización de escritura.
 
 ## Execution Task
 
