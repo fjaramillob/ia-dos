@@ -183,7 +183,12 @@ Cambios al proyecto: Ninguno
 
 El Implementation Plan propone. La decisión de aprobar, corregir, rechazar o escalar pertenece al Cycle Owner dentro de la autoridad delegada y a la persona responsable cuando corresponda.
 
-Si `Caveman Return: Sí`, materializa primero el Implementation Plan completo y responde en conversación únicamente con:
+Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
+
+1. la Planning Task declara `Caveman Return: Sí`;
+2. el Implementation Plan completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas se cumplen, responde en conversación únicamente con:
 
 ```text
 PLAN LISTO | BLOQUEADO
@@ -191,6 +196,8 @@ Resultado: [UNA FRASE]
 Atención: [DESCRIPCIÓN O NINGUNA]
 Archivo: [NOMBRE/PATH DEL IMPLEMENTATION PLAN]
 ```
+
+Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Implementation Plan completo según el contrato y canal de la Task.
 
 El Caveman Return no reemplaza el Implementation Plan.
 
