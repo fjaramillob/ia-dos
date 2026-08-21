@@ -156,8 +156,8 @@ Devuelve un `Execution Report` canónico con:
 - autorizaciones utilizadas;
 - validaciones y evidencia;
 - desviaciones o contradicciones;
-- fuera de alcance respetado;
-- conocimiento potencialmente durable adicional detectado;
-- una sola decisión requerida del Cycle Owner.
+- fuera de alcance preservado;
+- pendientes del alcance original, si existen;
+- atención concreta requerida del Cycle Owner o `Ninguna`.
 
-No apruebes tu propio trabajo ni inicies otra unidad.
+El reporte describe la ejecución documental. No propone por defecto nuevo conocimiento durable adicional ni elige la decisión de gobierno posterior. No apruebes tu propio trabajo ni inicies otra unidad.
