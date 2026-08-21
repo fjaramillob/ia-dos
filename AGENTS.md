@@ -69,8 +69,8 @@ Además:
 - el `Task ID` lo asigna el Conversation Agent que construye la tarea;
 - Exchange no define IDs, artefactos, filenames, templates, estados, permisos, backlog, memoria, decisiones o workflow;
 - `Execution Report` no aprueba su propio resultado ni elige la decisión de gobierno posterior;
-- la evaluación de memoria durable ocurre después de revisar evidencia, salvo que una tarea autorice explícitamente una actualización documental concreta;
-- `Memory Bootstrap Gate` sólo bloquea cuando la siguiente unidad depende de conocimiento relevante que vive únicamente en conversaciones efímeras;
+- antes de emitir una Planning Task o Execution Task que dependa de historia previa, `Memory Bootstrap Gate` evalúa si existe conocimiento relevante únicamente en conversaciones efímeras y exige persistir el checkpoint mínimo cuando corresponda;
+- después de revisar un Execution Report, el Cycle Owner evalúa qué hechos nuevos de esa ejecución merecen consolidarse en memoria durable, salvo que la propia tarea ya autorice una actualización documental concreta;
 - el coding agent no lee una LLM Wiki completa por defecto;
 - la política universal de persistencia o renovación de conversaciones de Planning permanece abierta.
 
