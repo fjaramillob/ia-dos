@@ -1,37 +1,40 @@
 # Execution Cells y Exchange
 
-Este documento define cómo IA-DOS organiza conversaciones persistentes de coding agents y cómo puede utilizar una pasarela pasiva de archivos Markdown entre Conversation Agents y Code Agents.
+Este documento define cómo IA-DOS organiza continuidad de ejecución en coding agents y cómo puede utilizar una pasarela pasiva de archivos Markdown entre Conversation Agents y Code Agents.
 
 ## Principio
 
 Una conversación de coding agent no representa una tarea, una especialidad profesional ni un Conversation Space de gobierno.
 
-Representa una instancia activa de una **Execution Cell** cuando el proyecto adopta ese modelo.
+Puede representar una instancia activa de una **Execution Cell** cuando el proyecto adopta ese modelo.
 
 ```text
-Conversation Space
-    gobierna y decide
+Persona responsable
+    conserva dirección y aprobación final aplicable
+
+Conversation Space / Cycle Owner
+    gobierna dentro de autoridad delegada
 
 Execution Cell
     mantiene continuidad de ejecución
 
 Execution Task
-    delimita una unidad concreta
+    delimita una unidad concreta y sus permisos
 
 Execution Report
     devuelve evidencia
 
 Exchange
-    sólo transporta/almacena archivos .md entre ambos lados
+    sólo transporta o almacena archivos .md
 ```
 
 ## Execution Cell
 
-Una `Execution Cell` es un contexto durable de ejecución definido por proyecto porque separar ese flujo mejora la continuidad del trabajo.
+Una `Execution Cell` es un contexto durable de ejecución definido por proyecto porque separar ese flujo mejora continuidad operacional.
 
 Las células se descubren según el proyecto. IA-DOS no impone una lista universal de `Frontend`, `Backend`, `QA`, `DevOps` u otros especialistas.
 
-Ejemplos genéricos válidos:
+Ejemplos genéricos:
 
 ```text
 Proyecto de aplicación
@@ -50,16 +53,17 @@ Una competencia técnica distinta no justifica por sí sola una conversación nu
 
 ## Política de conversaciones
 
-Mantén una sola conversación activa por `Execution Cell` mientras siga respondiendo bien.
+Mantén una sola conversación activa por Execution Cell mientras siga respondiendo bien.
 
 No existe un límite artificial por:
 
 - cantidad de tareas;
 - antigüedad;
 - ciclo;
-- número de mensajes.
+- número de mensajes;
+- tiempo transcurrido.
 
-Renueva la conversación únicamente cuando exista evidencia de degradación, por ejemplo:
+Renueva únicamente ante evidencia de degradación, por ejemplo:
 
 - mezcla decisiones antiguas con vigentes;
 - arrastra instrucciones obsoletas;
@@ -67,11 +71,11 @@ Renueva la conversación únicamente cuando exista evidencia de degradación, po
 - pierde precisión por contaminación de contexto;
 - se requiere deliberadamente un contexto limpio.
 
-La renovación crea una nueva instancia de la misma célula, no una célula nueva.
+La renovación crea una nueva instancia de la misma célula:
 
 ```text
-App · 01  → cerrada
-App · 02  → activa
+App · 01 → cerrada
+App · 02 → activa
 ```
 
 La continuidad del proyecto no debe depender de conservar la conversación anterior.
@@ -80,73 +84,90 @@ La continuidad del proyecto no debe depender de conservar la conversación anter
 
 Reutilizar una conversación no acumula permisos.
 
-Cada `Execution Task` vuelve a declarar objetivo, alcance, fuera de alcance, autoridad, restricciones, capacidades autorizadas, criterios de aceptación, verificaciones y condiciones de detención suficientes para esa unidad. Una autorización anterior no se hereda automáticamente.
+Cada Execution Task vuelve a declarar:
+
+- objetivo;
+- alcance y fuera de alcance;
+- autoridad y acceso;
+- capacidades autorizadas;
+- acciones externas;
+- criterios de aceptación;
+- verificaciones;
+- condiciones de detención;
+- destino del reporte.
 
 El coding agent no inicia la siguiente tarea por sí mismo.
 
+## Relación con Planning
+
+Execution Cells no definen una política para conversaciones de Planning.
+
+Un identificador lógico `PLAN — ...` puede utilizarse cuando aporte, pero IA-DOS mantiene abierta la política universal sobre persistencia o renovación de conversaciones de Planning.
+
+La separación entre Planning y Execution es de rol y autoridad. Una futura Execution Task puede reutilizar una Execution Cell activa y debe volver a declarar permisos completos.
+
 # Exchange
 
-Exchange es una **pasarela pasiva de archivos Markdown**.
+Exchange es una **pasarela pasiva y opcional de archivos Markdown**.
 
-No es un protocolo que defina artefactos, IDs, estados, contratos, workflow o decisiones.
-
-No crea otro tipo de Execution Task ni otro tipo de Execution Report.
-
-La responsabilidad se distribuye así:
+No es un protocolo semántico y no define artefactos, IDs, estados, contratos, workflow o decisiones.
 
 ```text
 Conversation Agent
 → construye la Execution Task completa
 → asigna Task ID
-→ decide el nombre del archivo .md cuando se materializa
+→ decide el filename si materializa el artefacto
 
 Exchange
 → almacena / pone a disposición ese .md
 
-Code Agent
+Code Agent / Execution Cell
 → ejecuta la tarea
-→ devuelve el Execution Report con el mismo Task ID
+→ construye Execution Report con el mismo Task ID
 
 Exchange
 → almacena / pone a disposición el REPORT .md
 
 Conversation Agent / Cycle Owner
-→ revisa y decide
+→ revisa evidencia dentro de autoridad delegada
+
+Persona responsable
+→ aprueba cuando corresponde
 ```
 
 ## Qué hace Exchange
 
-Exchange hace únicamente esto:
+Únicamente:
 
 - recibe archivos `.md` ya construidos;
 - los mantiene disponibles para el otro lado;
-- conserva el historial cuando el proyecto decide archivarlo.
+- puede conservar historial cuando el proyecto decide archivarlo.
 
-Exchange no interpreta el contenido del archivo.
+Exchange no interpreta el contenido.
 
 ## Qué NO hace Exchange
 
 Exchange no:
 
-- genera `Task ID`;
-- valida `Task ID`;
-- define el formato del ID;
-- crea `Execution Task`;
-- crea `Execution Report`;
+- genera o valida Task IDs;
+- define formato de IDs;
+- crea Execution Tasks o Execution Reports;
+- define filenames;
+- define templates;
 - define estados;
+- concede permisos;
 - aprueba resultados;
-- decide el siguiente trabajo;
+- decide siguiente trabajo;
 - mantiene backlog;
 - consolida memoria durable;
-- impone nombres de archivo;
 - define versionado de correcciones;
-- observa carpetas automáticamente en v0;
+- observa carpetas automáticamente;
 - dispara ejecuciones;
 - hace polling;
 - define watchers o triggers;
 - sincroniza servicios externos por sí mismo.
 
-El esquema de identidad pertenece al artefacto construido por el agente conversacional y al contrato de IA-DOS, no a Exchange.
+La identidad pertenece al artefacto construido por el Conversation Agent y al contrato de IA-DOS.
 
 ## Topología mínima
 
@@ -159,34 +180,32 @@ proyecto-exch/
 └── archive/
 ```
 
-La ubicación es opcional. Puede ser carpeta local, repositorio, carpeta sincronizada u otro almacenamiento durable equivalente.
+La ubicación es opcional. Puede ser carpeta local, repositorio, carpeta sincronizada u otro almacenamiento adecuado.
 
-No es obligatorio que exista un recurso hermano `proyecto-exch`.
+No es obligatorio un recurso hermano `proyecto-exch`.
 
-## Semántica operacional de carpetas
+## Semántica de carpetas
 
-Estas carpetas son **ubicaciones de paso**, no estados del método.
+Son ubicaciones físicas, no estados del método.
 
 ```text
 inbox/
-→ archivos .md que van desde Conversation Agent hacia Code Agent
+→ archivos .md hacia Code Agent
 
 outbox/
-→ archivos .md que vuelven desde Code Agent hacia Conversation Agent
+→ archivos .md hacia Conversation Agent
 
 archive/
-→ archivos retirados del intercambio activo y conservados como historial
+→ archivos retirados del intercambio activo y conservados como historia
 ```
 
 Nada ocurre automáticamente por mover un archivo.
 
-`archive/` tampoco significa `APROBADO`; sólo significa que el archivo ya no está en el intercambio activo.
+`archive/` no significa `APROBADO` ni `COMPLETADO`.
 
 ## Artefactos
 
-El archivo enviado por Exchange debe ser exactamente el artefacto que IA-DOS ya habría entregado por chat u otro medio.
-
-Por ejemplo:
+El archivo enviado por Exchange es exactamente el artefacto que IA-DOS habría entregado por otro medio.
 
 ```text
 Execution Task
@@ -195,93 +214,84 @@ Execution Task
 → mismo contrato
 ```
 
-Si se guarda como `.md`, el nombre de archivo lo determina el agente o flujo que materializa el artefacto.
+El filename lo decide el agente o flujo que materializa el archivo. IA-DOS puede recomendar relacionarlo con Task ID, pero Exchange no lo define ni valida.
 
-IA-DOS recomienda que el nombre permita relacionarlo fácilmente con su `Task ID`, pero Exchange no lo define ni lo valida.
+El Execution Report reutiliza el Task ID de la Execution Task original por contrato del artefacto.
 
-El `Execution Report` devuelve el `Task ID` de la Execution Task original. Esa regla pertenece al contrato del artefacto, no a Exchange.
-
-## Flujo manual v0
+## Flujo manual actual
 
 ```text
 Conversation Agent
-        ↓ genera Execution Task.md
+        ↓ construye TASK.md
 inbox/
-        ↓ transferencia manual
+        ↓ transferencia
 Code Agent / Execution Cell
-        ↓ genera Execution Report.md
+        ↓ construye REPORT.md
 outbox/
-        ↓ transferencia manual
+        ↓ transferencia
 Conversation Agent / Cycle Owner
         ↓ revisión
 archive/ cuando corresponda
 ```
 
-La transferencia manual es intencional en v0.
-
-Una futura sincronización de carpetas puede automatizar la **entrega física** del archivo sin cambiar esta frontera: Exchange seguiría sin definir el contenido o la identidad del artefacto.
+La transferencia puede ser manual. Una futura sincronización física no cambia la naturaleza pasiva de Exchange y no autoriza watchers, triggers o ejecución automática por sí misma.
 
 ## Inmutabilidad histórica
 
-Una vez que un artefacto fue entregado al otro lado, no debe sobrescribirse silenciosamente para alterar qué se pidió o qué se respondió.
+Una vez entregado un artefacto, no debe sobrescribirse silenciosamente para alterar qué se pidió o respondió.
 
-Si una corrección requiere un nuevo artefacto, el agente conversacional decide cómo identificarlo según el contrato vigente del proyecto.
+Si una corrección requiere un nuevo artefacto, el agente responsable decide su identidad según las reglas vigentes del proyecto. Exchange sólo conserva el archivo resultante.
 
-Exchange sólo conserva los archivos resultantes.
+## Relación con memoria, backlog e implementación
 
-## Relación con la memoria durable
+```text
+Exchange
+→ ¿qué archivos intercambiamos?
 
-Exchange responde únicamente:
+LLM Wiki / memoria durable
+→ ¿qué conocimiento vigente y reusable conservamos?
 
-> ¿Qué archivos intercambiamos?
+Repository
+→ ¿qué está materializado?
 
-La Wiki o memoria durable responde:
+Backlog
+→ ¿qué trabajo queda?
 
-> ¿Qué conocimiento vigente y confirmado debe reutilizar el proyecto?
-
-La implementación responde:
-
-> ¿Qué está realmente materializado?
-
-El backlog responde:
-
-> ¿Qué trabajo queda por hacer?
-
-Las conversaciones responden:
-
-> ¿Qué estamos razonando o ejecutando ahora?
+Conversations
+→ ¿qué estamos razonando o gobernando ahora?
+```
 
 Exchange no debe convertirse en ninguna de esas fuentes.
 
+`memoria durable` es la responsabilidad funcional. `LLM Wiki` es una posible materialización portable de esa memoria.
+
 ## Wiki Sync
 
-Una célula `Wiki Sync` puede existir cuando la Wiki tenga repositorio propio y el trabajo físico de sincronización sea recurrente.
+Una célula `Wiki Sync` puede existir cuando el mantenimiento físico de una LLM Wiki sea un flujo durable que justifique continuidad separada.
 
-Su función debe ser principalmente mecánica:
+Su función puede ser principalmente mecánica:
 
-- alinear archivos locales y remotos;
+- alinear archivos locales/remotos;
 - revisar Git;
-- realizar commit o push cuando esté autorizado;
+- commit o push cuando esté autorizado;
 - validar estructura, Markdown o enlaces.
 
-La síntesis de conocimiento durable permanece bajo el Project Orchestrator y, cuando aporta, `90 — Wiki y memoria`.
+La síntesis de conocimiento permanece en el plano conversacional y puede involucrar `90 — Wiki y memoria` cuando aporta.
 
-## Planificación
-
-Este documento no define una política universal sobre persistencia o renovación de conversaciones de planificación.
-
-Exchange tampoco decide qué tipos de artefactos puede producir IA-DOS. Si en el futuro se decide transportar otros `.md`, eso no cambia su naturaleza pasiva.
+No crees `Wiki Sync` automáticamente por usar una LLM Wiki.
 
 ## Regla principal
 
 ```text
 Conversation ≠ Task
-Conversation ≠ Specialist
+Conversation ≠ Execution Cell
+Execution Cell ≠ Specialist
 
 Execution Cell = continuidad de ejecución
-Execution Task = contrato semántico de una unidad
-Execution Report = evidencia de retorno
+Execution Task = contrato de una unidad
+Execution Report = evidencia
+LLM Wiki = memoria durable materializada
+Repository = implementación
 Exchange = pasarela pasiva de archivos .md
-Wiki = memoria durable
-Repositorio = implementación
+Persona responsable = aprobación final aplicable
 ```
