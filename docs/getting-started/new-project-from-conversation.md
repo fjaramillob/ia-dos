@@ -84,7 +84,7 @@ Una `Execution Task` no implica una conversación nueva. Si el proyecto utiliza 
 
 Cada Execution Task vuelve a declarar permisos, alcance, criterios y condiciones de detención. La conversación puede persistir; la autorización no.
 
-Exchange Protocol v0 puede utilizarse para conservar el par `TASK/REPORT` fuera del chat, pero es opcional y no cambia el contrato de ejecución.
+Exchange puede utilizarse como pasarela pasiva opcional para trasladar los archivos `.md` de `Execution Task` y `Execution Report` entre agentes. No cambia el contrato de esos artefactos ni define sus IDs, estados o permisos.
 
 Solo vuelve a `00` cuando exista una reorientación real: cambio de objetivo, conflicto entre dominios, expansión importante de alcance o decisión humana estratégica.
 
