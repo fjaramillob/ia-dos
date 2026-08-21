@@ -89,7 +89,7 @@ Objetivo: dejar que el método siga evolucionando a partir de uso real, no de ar
 
 - aplicar la versión consolidada de IA-DOS en proyectos activos;
 - validar el modelo de `Execution Cell` durante múltiples tareas sucesivas;
-- comprobar que una conversación nueva pueda rehidratarse desde LLM Wiki + estado técnico + delta actual;
+- comprobar que una conversación nueva pueda rehidratarse desde LLM Wiki + estado técnico + Execution Task o contrato operativo actual + delta vigente;
 - medir cuánto contexto durable necesita realmente una `Execution Task`;
 - validar Exchange manual como pasarela sin convertirlo en workflow o backlog;
 - detectar fricción real de onboarding antes de introducir nuevas abstracciones;
@@ -184,7 +184,7 @@ No son prioridad de la etapa alpha:
 - watchers, polling o triggers sobre Exchange;
 - `REGISTRY.md`, contadores centrales o coordinación automática de Task IDs;
 - dashboards operativos de IA-DOS;
-- CLI obligatoria;
+- CLI;
 - sincronización automática con Google Drive u otros proveedores;
 - RAG o retrieval automático sobre toda la LLM Wiki;
 - orquestación multiagente autónoma;
