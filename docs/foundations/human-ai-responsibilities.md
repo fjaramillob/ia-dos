@@ -2,99 +2,155 @@
 
 IA-DOS parte de una regla simple:
 
-> La IA puede proponer, organizar y ejecutar dentro de límites. La responsabilidad final sigue siendo humana.
+> La IA puede proponer, organizar, inspeccionar y ejecutar dentro de límites. La responsabilidad final sigue siendo humana.
 
 ## Persona responsable
 
-La persona que dirige el proyecto debe:
+Debe:
 
 - definir propósito, prioridades y restricciones;
 - confirmar decisiones importantes;
 - autorizar accesos y cambios sensibles;
 - decidir qué herramientas pueden leer o modificar cada fuente;
-- aprobar el uso de conectores, MCP y capacidades de escritura cuando corresponda;
+- aprobar conectores, MCP y capacidades de escritura cuando corresponda;
 - revisar evidencia y aceptar o rechazar resultados;
-- decidir cuándo una tarea está terminada;
 - proteger secretos, datos y recursos;
 - pedir ayuda especializada cuando el riesgo lo exige.
 
-La supervisión humana no requiere realizar manualmente cada cambio. Requiere conservar autoridad sobre dirección, riesgo, acceso y aprobación.
+La supervisión humana no requiere ejecutar manualmente cada cambio. Requiere conservar autoridad sobre dirección, riesgo, acceso y aprobación.
 
 ## Project Orchestrator
 
-El asistente conversacional que coordina el proyecto debe:
+Debe:
 
-- comprender la estructura IA-DOS adoptada;
-- consultar la wiki, repositorios y fuentes canónicas disponibles;
-- capturar y mantener la dirección transversal;
-- separar Conversation Spaces cuando exista mezcla de contexto o una especialización desbloquee trabajo;
+- comprender el método IA-DOS adoptado;
+- consultar sólo las fuentes necesarias;
+- mantener dirección transversal;
+- abrir Conversation Spaces sólo cuando aporten contexto persistente real;
 - distinguir hechos, preferencias, supuestos, propuestas, decisiones y preguntas abiertas;
-- ayudar a confirmar decisiones pequeñas, reversibles y útiles;
-- transformar necesidades en `Execution Tasks`;
-- seleccionar el contexto mínimo necesario;
-- identificar las capacidades requeridas por cada tarea;
-- verificar qué capacidades están disponibles realmente en la sesión o herramienta actual;
-- distinguir capacidad técnica, permiso, autorización, ejecución y verificación;
-- definir qué debe cambiar, por qué y bajo qué límites;
-- preparar handoffs claros para coding agents;
-- revisar el `Execution Report`, el diff y la evidencia disponible;
-- señalar qué conocimiento confirmado debe regresar a la memoria durable;
-- evitar que una conversación se convierta en una fuente de verdad paralela.
+- seleccionar contexto mínimo;
+- aplicar Memory Bootstrap Gate antes de depender de historia chat-only;
+- identificar readiness indispensable;
+- decidir entre `Environment Preflight`, `Planning Task` y `Execution Task` según el caso;
+- preparar handoffs claros;
+- revisar readiness reports, plans, Execution Reports, diffs y evidencia;
+- evaluar después qué conocimiento confirmado merece persistirse;
+- evitar que una conversación se convierta en fuente de verdad paralela.
 
-El Project Orchestrator piensa, organiza y delega. No debe afirmar que modificó un repositorio, ejecutó pruebas o creó un pull request cuando no dispone de la capacidad y evidencia para hacerlo.
+No debe afirmar que modificó, probó o desplegó algo sin capacidad y evidencia para hacerlo.
+
+## Cycle Owner
+
+Es el Conversation Space que gobierna un resultado dentro de su dominio.
+
+Debe:
+
+- mantener objetivo y límites;
+- preparar o validar artefactos;
+- revisar retornos;
+- tomar decisiones operativas sólo dentro de la autoridad delegada;
+- obtener aprobación humana cuando una decisión excede esa autoridad;
+- escalar únicamente cuando corresponde.
+
+Cycle Owner no sustituye a la persona responsable.
 
 ## Conversation Spaces
 
-Los espacios especializados razonan sobre un dominio concreto, por ejemplo producto, arquitectura, ejecución o memoria.
+Razonan y gobiernan dominios concretos cuando separarlos aporta valor.
 
 Deben:
 
-- trabajar con una misión y un entregable explícitos;
-- recibir un handoff autosuficiente y ligero;
+- trabajar con una misión explícita;
+- recibir contexto autosuficiente y ligero;
 - mantener separado lo confirmado de lo exploratorio;
-- producir decisiones, recomendaciones, tareas o síntesis utilizables;
-- devolver un handoff de salida cuando otro espacio depende de su resultado.
+- producir decisiones, handoffs o tareas utilizables;
+- evitar convertirse en fases obligatorias.
 
-No son fases obligatorias ni fuentes de verdad durables.
+No son fuentes de verdad durables.
 
-## Coding agent
+## Coding Agent — Planning
 
-El agente que trabaja sobre archivos, repositorios o entornos debe:
+Debe:
 
-- leer las instrucciones y fuentes autorizadas;
-- confirmar repositorio, branch y alcance antes de modificar;
-- verificar las capacidades y permisos reales antes de ejecutar;
-- distinguir hechos de supuestos;
+- trabajar en solo lectura;
+- inspeccionar únicamente fuentes autorizadas;
+- registrar evidencia y límites;
+- producir un Implementation Plan proporcional;
+- preparar una sola Execution Task candidata cuando exista evidencia suficiente;
+- no escribir, aprobar su plan o ejecutar.
+
+Un identificador `PLAN — ...` puede ser lógico. IA-DOS no exige una conversación nueva por Planning Task.
+
+## Coding Agent — Execution
+
+Debe:
+
+- leer instrucciones y fuentes autorizadas;
+- confirmar recurso, branch, Execution Cell o sesión cuando corresponda y alcance antes de modificar;
+- verificar capacidades y permisos reales;
 - inspeccionar antes de actuar;
-- leer solamente el contexto necesario;
-- crear o modificar los artefactos autorizados;
-- preservar el comportamiento fuera de alcance;
-- evitar dependencias, refactors o cambios adicionales no solicitados;
-- detenerse cuando falta acceso, existe una contradicción o se requiere una decisión;
-- ejecutar las verificaciones aplicables;
-- revisar el diff completo;
-- reportar archivos, cambios, pruebas, errores, riesgos y pendientes;
-- devolver un `Execution Report` compatible con la tarea.
+- leer sólo contexto necesario;
+- modificar únicamente artefactos autorizados;
+- preservar fuera de alcance;
+- detenerse ante contradicción, falta de acceso o decisión no resuelta;
+- ejecutar verificaciones aplicables;
+- revisar el diff;
+- devolver un Execution Report canónico.
 
-La materialización puede afectar código, documentación o LLM Wiki. Que una tarea sea documental no elimina la necesidad de autorización, alcance, diff y evidencia.
+Una Execution Cell puede reutilizar conversación, pero cada tarea vuelve a declarar permisos.
 
-## Frontera entre organización y materialización
+## Execution Report
+
+El reporte es evidencia, no aprobación ni memoria durable.
 
 ```text
-Project Orchestrator
-    comprende, decide, delimita y revisa
-
-Coding agent
-    inspecciona, materializa, prueba y reporta
+Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 ```
 
-El Orchestrator define qué debe cambiar y por qué. El coding agent realiza el cambio físico.
+El coding agent no selecciona la acción de gobierno posterior, no recomienda por defecto una actualización durable y no inicia otra unidad.
 
-Ninguna de estas funciones reemplaza la aprobación humana cuando existe impacto relevante en seguridad, costes, producción, datos, arquitectura o alcance.
+## Readiness
+
+Cuando una futura Execution Task depende de una precondición indispensable no comprobada, corresponde `Environment Preflight` en solo lectura.
+
+Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de escritura.
+
+## Memoria durable y LLM Wiki
+
+`memoria durable` es la responsabilidad de conservar conocimiento reusable fuera de conversaciones efímeras.
+
+`LLM Wiki` es una posible materialización portable y navegable.
+
+El coding agent no decide unilateralmente qué entra en memoria. Después de revisar evidencia, el Cycle Owner y la persona responsable, según autoridad, evalúan qué hechos nuevos merecen persistirse.
+
+Una tarea documental explícitamente autorizada sí puede materializar conocimiento ya confirmado.
+
+## Exchange
+
+Exchange es una pasarela pasiva opcional de Markdown.
+
+No es backlog, memoria, workflow, sistema de permisos ni generador de IDs.
+
+## Frontera general
+
+```text
+Persona responsable
+    dirige y conserva aprobación final aplicable
+
+Project Orchestrator / Cycle Owner
+    gobierna y delimita dentro de autoridad delegada
+
+Coding Agent — Planning
+    inspecciona y propone
+
+Coding Agent — Execution
+    materializa y reporta evidencia
+```
 
 ## Conectores, MCP y herramientas
 
-Los conectores, servidores MCP, APIs y herramientas nativas son mecanismos de acceso o ejecución. No son autoridades de decisión.
+Son mecanismos de acceso o ejecución, no autoridades de decisión.
 
 ```text
 capacidad disponible
@@ -104,25 +160,24 @@ capacidad disponible
 ≠ acción verificada
 ```
 
-Una integración debe utilizarse con el mínimo alcance necesario. La persona responsable autoriza; el Project Orchestrator delimita; la herramienta ejecuta; la evidencia demuestra.
+Usa mínimo privilegio y mínimo contexto.
 
 ## Límites comunes
 
 Ningún asistente o agente debe:
 
 - ampliar alcance silenciosamente;
-- convertir una propuesta en decisión aprobada;
+- convertir propuesta en decisión;
 - presentar como implementado algo sin evidencia;
 - modificar producción como primera opción;
 - crear costes sin autorización;
 - exponer secretos o datos sensibles;
-- debilitar seguridad para completar una tarea;
+- debilitar seguridad;
 - ocultar errores o pruebas fallidas;
 - inventar decisiones históricas;
-- tratar su propia conversación o sesión como memoria durable;
-- asumir acceso a repositorios o archivos que no fueron entregados;
-- asumir que una capacidad existe porque estuvo disponible en otra sesión o plataforma;
-- utilizar permisos más amplios de los necesarios;
-- fusionar cambios sin la autorización correspondiente.
+- tratar su conversación como memoria durable;
+- asumir acceso o capacidades no verificadas;
+- fusionar o desplegar sin autorización correspondiente;
+- iniciar otra unidad por cuenta propia.
 
 Consulta [Método de trabajo](working-method.md), [Coding agents](../execution/coding-agents.md) y [Modelo de capacidades](../integrations/capability-model.md).
