@@ -33,6 +33,8 @@ Una tarea transferida mediante Exchange sigue siendo la misma Execution Task. Ex
 
 Una `Execution Cell` identifica continuidad de ejecución cuando el proyecto usa ese modelo, pero no reemplaza `Destination Role`, Cycle Owner ni autoridad por tarea.
 
+`Manual Artifact Launcher`, `Output Delivery` y `Caveman Return` son convenciones de entrega. **No son Artifact Types** y no cambian el tipo ni la autoridad del artefacto.
+
 ## Identificadores
 
 El Conversation Agent que construye una Execution Task asigna el `Task ID` antes del handoff o materialización como archivo.
@@ -42,6 +44,22 @@ Cuando el proyecto no usa otro esquema, IA-DOS recomienda:
 ```text
 {PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
 ```
+
+Ejemplo:
+
+```text
+PROPACTO-10-APP-20260821-130700
+```
+
+El timestamp usa orden `año-mes-día` seguido por `hora-minuto-segundo` para ordenar cronológicamente por texto y reducir colisiones en uso manual.
+
+Una Execution Task candidata producida por Planning no recibe ese ID. Debe declarar:
+
+```text
+Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
+```
+
+El Conversation Agent / Cycle Owner asigna la identidad sólo cuando adopta la candidata y construye la Execution Task real.
 
 Si se materializa como Markdown, puede usarse:
 
@@ -53,6 +71,33 @@ Si se materializa como Markdown, puede usarse:
 El Execution Report reutiliza exactamente el Task ID de su Execution Task.
 
 `Cycle ID` puede ser `NO APLICA`; no inventes un ciclo para satisfacer el encabezado.
+
+El esquema temporal anterior es una recomendación para `Execution Task ID` cuando el proyecto no tiene otra convención. No convierte automáticamente los IDs de Planning u otros artefactos en timestamps obligatorios.
+
+## Entrega manual opcional
+
+Cuando un proyecto usa Exchange manual, el artefacto puede declarar una entrega semántica:
+
+```text
+Output Delivery:
+Channel: Exchange
+Location: outbox
+Filename: [NOMBRE.md]
+```
+
+Una instrucción efímera puede resolver `inbox/` y `outbox/` a paths absolutos mediante un `Manual Artifact Launcher`.
+
+El launcher:
+
+- localiza el artefacto;
+- puede localizar físicamente el destino de output;
+- no modifica el artefacto;
+- no agrega permisos;
+- no reemplaza `Destination Role`, `Expected Output` ni `Forbidden Output`.
+
+Cuando el output completo ya fue materializado, la conversación puede usar un `Caveman Return` con estado, atención requerida y ubicación del archivo. El artefacto completo continúa siendo la salida autoritativa.
+
+Consulta `docs/execution/manual-artifact-delivery.md`.
 
 ## Tipos permitidos
 
@@ -76,6 +121,8 @@ Forbidden Output: cambios | commits | despliegues | Execution Report
 
 La sesión de Planning, cuando se declara, puede ser un identificador lógico. No impone una política universal de conversación por tarea.
 
+Si la Planning Task autoriza `Output Delivery`, el Code Agent puede materializar únicamente el Implementation Plan declarado sin dejar de ser solo lectura respecto del proyecto inspeccionado.
+
 ### Environment Preflight
 
 ```text
@@ -84,6 +131,8 @@ Destination Role: Coding Agent — Planning
 Expected Output: Environment Readiness Report
 Forbidden Output: cambios | instalaciones | inicio de servicios | ejecución
 ```
+
+La materialización explícitamente autorizada del Environment Readiness Report no cuenta como modificación del entorno inspeccionado.
 
 ### Environment Readiness Report
 
@@ -111,7 +160,7 @@ Expected Output: revisión del plan bajo la autoridad aplicable
 Forbidden Output: ejecución automática
 ```
 
-El plan propone. No aprueba su propia Execution Task candidata.
+El plan propone. No aprueba su propia Execution Task candidata ni asigna su Task ID.
 
 ### Execution Task
 
@@ -135,6 +184,8 @@ Toda Execution Task mantiene explícitos:
 - condiciones de detención.
 
 El contexto durable puede compactarse, pero estos controles no desaparecen por compresión.
+
+Si la tarea autoriza `Output Delivery`, materializar el Execution Report en el destino declarado no concede escritura adicional sobre el producto.
 
 ### Execution Resume
 
