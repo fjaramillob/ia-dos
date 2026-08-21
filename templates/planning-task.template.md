@@ -113,7 +113,9 @@ Devuelve un `Implementation Plan` proporcional que permita:
 - entregar una `Execution Task` candidata cuando sea segura;
 - declarar decisiones humanas o de otro dominio sin resolverlas silenciosamente.
 
-La Execution Task candidata debe indicar `Execution Cell o sesión: [NOMBRE O NO APLICA]`. Reutiliza una célula existente cuando corresponda; no derives el nombre de la sesión desde el resultado por defecto.
+La Execution Task candidata debe indicar `Execution Cell o sesión: [NOMBRE O NO APLICA]` y reutilizar una célula existente cuando corresponda; no derives el nombre de la sesión desde el resultado por defecto.
+
+**No asignes el Task ID de la candidata.** Declara `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`. El Conversation Agent/Cycle Owner asigna la identidad cuando revisa y adopta la candidata como Execution Task real.
 
 ## Fuera de alcance
 
@@ -126,6 +128,7 @@ La Execution Task candidata debe indicar `Execution Cell o sesión: [NOMBRE O NO
 - resolver decisiones de otro dominio;
 - abrir otro Conversation Space sólo para ejecutar esta Planning Task;
 - aprobar o ejecutar la Execution Task candidata;
+- asignar el Task ID de una futura Execution Task;
 - cambiar el Cycle Owner;
 - clonar IA-DOS sin autorización.
 
@@ -164,5 +167,6 @@ No se realizaron cambios remotos ni despliegues.
 El plan no constituye autorización de ejecución.
 El Implementation Plan vuelve al Cycle Owner indicado.
 La primera Execution Task candidata fue incluida cuando existió evidencia suficiente.
+El Task ID de la candidata quedó pendiente para el Conversation Agent/Cycle Owner.
 La futura ejecución conserva una autorización separada, pero no exige una conversación nueva si existe una Execution Cell válida.
 ```
