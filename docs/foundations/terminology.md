@@ -73,9 +73,9 @@ Documentos concretos que el receptor debe consumir antes de actuar.
 
 ## `Planning Task`
 
-Artefacto dirigido a `Coding Agent — Planning` para inspección y diseño técnico en solo lectura.
+Artefacto dirigido a `Coding Agent — Planning` para inspección y diseño técnico en solo lectura respecto del proyecto, entorno y fuentes inspeccionadas.
 
-Produce `Implementation Plan` y no autoriza escritura.
+Produce `Implementation Plan` y no autoriza escritura sobre esos recursos ni ejecución. Puede autorizar mediante `Output Delivery` la materialización exclusiva de su propio `Implementation Plan`; esa excepción no concede permisos laterales ni convierte Planning en Execution.
 
 ## `Implementation Plan`
 
@@ -83,7 +83,9 @@ Propuesta técnica verificable resultante de una Planning Task. No equivale a im
 
 ## `Environment Preflight`
 
-Artefacto de solo lectura usado cuando una Execution Task depende de una precondición indispensable del entorno que no está comprobada.
+Artefacto de solo lectura respecto del proyecto y entorno inspeccionados usado cuando una Execution Task depende de una precondición indispensable que no está comprobada.
+
+Puede materializar exclusivamente su propio `Environment Readiness Report` cuando `Output Delivery` lo autoriza, sin adquirir permiso para modificar el entorno.
 
 ## `Environment Readiness Report`
 
@@ -93,7 +95,7 @@ Retorno del preflight con estados canónicos:
 LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.
+Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura sobre el proyecto o entorno. La materialización del propio reporte autorizado no constituye esa autorización posterior.
 
 ## `Execution Task`
 
@@ -131,6 +133,24 @@ No define artefactos, IDs, nombres de archivo, templates, estados, permisos, wor
 
 Una topología posible es `inbox/`, `outbox/` y `archive/`; esas carpetas no son estados del método.
 
+## `Output Delivery`
+
+Declaración opcional dentro de una Task que autoriza la materialización de su artefacto de salida expresamente indicado y sólo en el destino declarado.
+
+No amplía alcance, zonas modificables, acciones externas ni autoridad sobre otros recursos.
+
+## `Manual Artifact Launcher`
+
+Prompt efímero y no autoritativo que localiza un artefacto ya construido y, cuando corresponda, el destino físico de su output.
+
+No es un Artifact Type, no modifica la Task y no elige permisos ni modo de retorno.
+
+## `Caveman Return`
+
+Representación conversacional mínima de un artefacto de salida completo ya materializado.
+
+Sólo se usa cuando la Task autoritativa declara `Caveman Return: Sí` y el output completo fue materializado correctamente. No es un Artifact Type ni reemplaza el artefacto canónico.
+
 ## `Task ID`
 
 Identificador asignado por el Conversation Agent que construye una Execution Task. El Execution Report reutiliza ese ID por contrato.
@@ -143,7 +163,7 @@ Identificador opcional de un ciclo más amplio. Puede ser `NO APLICA` cuando el 
 
 ## `Coding Agent — Planning`
 
-Rol técnico de solo lectura que inspecciona fuentes autorizadas y produce un Implementation Plan.
+Rol técnico de solo lectura respecto del proyecto, entorno y fuentes inspeccionadas que produce un Implementation Plan o comprueba readiness. Puede materializar únicamente su propio output cuando la Task lo autoriza expresamente mediante `Output Delivery`.
 
 ## `Coding Agent — Execution`
 
