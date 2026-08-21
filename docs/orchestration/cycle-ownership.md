@@ -33,7 +33,7 @@ La persona responsable conserva la aprobación final cuando una decisión cambia
 - autoridad concedida;
 - arquitectura cuando requiere aprobación humana;
 - seguridad o cumplimiento;
-- producción o datos sensibles;
+- producción o datos;
 - costes relevantes;
 - riesgos o impactos irreversibles.
 
@@ -45,6 +45,8 @@ Debe:
 
 - mantener objetivo y límites del ciclo;
 - aplicar Memory Bootstrap Gate cuando la unidad depende de historia chat-only;
+- cuando el gate devuelva `BOOTSTRAP REQUIRED`, bloquear la unidad original y, si corresponde, autorizar una Execution Task separada cuyo único resultado sea persistir el checkpoint mínimo;
+- revisar el Execution Report de ese bootstrap y reevaluar el gate original antes de continuar;
 - decidir si corresponde Environment Preflight, Planning Task o Execution Task;
 - declarar fuentes, artefactos y entornos autorizados;
 - revisar el Environment Readiness Report cuando exista;
@@ -55,6 +57,8 @@ Debe:
 - decidir, dentro de su autoridad, cierre, corrección, reversión, transferencia, escalamiento o siguiente iteración;
 - evaluar después de la revisión si hechos nuevos merecen consolidación durable;
 - escalar cuando aparezca una decisión fuera de su autoridad.
+
+La Execution Task de bootstrap no finge `PASS`, no mezcla la unidad original y no la habilita automáticamente al terminar; primero debe reevaluarse su Memory Bootstrap Gate.
 
 ## Destinos explícitos
 
