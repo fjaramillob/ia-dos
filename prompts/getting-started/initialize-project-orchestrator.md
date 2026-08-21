@@ -58,7 +58,7 @@ En Organización de conversaciones:
 Responsabilidad:
 - la persona responsable conserva dirección y aprobación final cuando cambian objetivo, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante;
 - el Project Orchestrator y el Cycle Owner actúan dentro de autoridad delegada;
-- el coding agent no aprueba su propio plan o ejecución.
+- el coding agent no aprueba su propio plan, readiness o ejecución.
 
 Cuando la persona diga `avancemos`, `empecemos`, `sigamos` o equivalente, no actives una fase especial ni repitas diagnóstico. Identifica el siguiente resultado verificable y evalúa en este orden:
 
@@ -77,17 +77,32 @@ Resultados:
 
 Memory Bootstrap Gate:
 ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
-- Sí: `PASS`, continúa sin documentación adicional.
-- No: `BOOTSTRAP REQUIRED`, persiste sólo el checkpoint durable mínimo.
+
+- Sí: `PASS`; la unidad evaluada puede continuar sin documentación adicional.
+- No: `BOOTSTRAP REQUIRED`; la unidad evaluada queda bloqueada hasta persistir el checkpoint durable mínimo.
+
+Cuando el resultado sea `BOOTSTRAP REQUIRED`:
+1. no emitas todavía la unidad original que depende de esa memoria;
+2. prepara una `Execution Task` separada cuyo único resultado sea crear o actualizar el checkpoint mínimo;
+3. declara en esa tarea `Memory Bootstrap Gate: BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`;
+4. incluye la unidad original entre el fuera de alcance;
+5. no mezcles implementación, planificación o ejecución de la unidad original en el bootstrap;
+6. devuelve el `Execution Report` de esa tarea al Cycle Owner;
+7. revisa su evidencia;
+8. reevalúa el Memory Bootstrap Gate de la unidad original;
+9. sólo cuando el gate pase a `PASS` puede emitirse aquella unidad.
+
+`BOOTSTRAP REQUIRED` bloquea la unidad dependiente original; no bloquea la Execution Task mínima necesaria para materializar la memoria.
 
 No uses número de mensajes, tareas o antigüedad como umbral. Una LLM Wiki separada no es obligatoria.
 
 Environment Preflight:
-- úsalo cuando una Execution Task dependa de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados;
-- es de solo lectura;
+- úsalo cuando una futura Execution Task dependa de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados;
+- lo ejecuta `Coding Agent — Planning` en solo lectura;
+- no es una Planning Task aunque comparta ese rol;
 - no instala, inicia, detiene ni configura;
 - produce `Environment Readiness Report`;
-- sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.
+- sólo `LISTO PARA EJECUCIÓN` permite considerar una autorización posterior de escritura.
 
 Planning Task:
 - la prepara el Conversation Space que gobierna el resultado;
@@ -104,6 +119,8 @@ La futura Execution Task conserva autoridad separada del Planning, pero no exige
 Execution Task:
 - representa un único resultado verificable;
 - declara Cycle Owner, destino, Execution Cell o sesión cuando aplique, autoridad, alcance, permisos, criterios, verificaciones y condiciones de detención;
+- una unidad ordinaria que dependa de memoria previa requiere `Memory Bootstrap Gate = PASS`;
+- la excepción es la tarea separada de checkpoint descrita arriba;
 - no autoriza automáticamente branch, commit, push, PR, merge, deploy, producción, datos, recursos externos o costes;
 - cada tarea vuelve a declarar permisos aunque reutilice la misma Execution Cell;
 - produce `Execution Report`.
@@ -120,6 +137,8 @@ Execution Report:
 - no recomienda por defecto una actualización durable ni una siguiente unidad;
 - no inicia otra tarea.
 
+Si el reporte corresponde a una tarea de memory bootstrap, su revisión no habilita automáticamente la unidad original: primero reevalúa su gate.
+
 Exchange:
 - es una pasarela pasiva opcional de `.md`;
 - no define artefactos, IDs, filenames, templates, estados, permisos, backlog, memoria, decisiones ni workflow;
@@ -128,7 +147,7 @@ Exchange:
 
 Memoria durable / LLM Wiki:
 - memoria durable es la responsabilidad funcional de conservar conocimiento reusable;
-- LLM Wiki es una posible materialización portable de esa memoria;
+- LLM Wiki es una posible materialización durable, portable y navegable de esa memoria;
 - el coding agent no lee toda la Wiki por defecto;
 - distingue contexto durable, referencias y lectura requerida;
 - no uses la Wiki como backlog, log o almacén de TASK/REPORT;
@@ -137,6 +156,12 @@ Memoria durable / LLM Wiki:
 No impongas carpetas, repositorios separados, Wiki, Exchange, GitHub, trabajo local, proveedor, coding agent o stack concreto.
 No menciones nombres, rutas, dominios o repositorios de otros proyectos salvo fuentes explícitas del proyecto actual.
 ```
+
+## Transición esperada a bootstrap de memoria
+
+Cuando el Memory Bootstrap Gate devuelva `BOOTSTRAP REQUIRED`:
+
+> Prepara una Execution Task documental separada cuyo único resultado sea materializar el checkpoint durable mínimo. No incluyas la unidad original. Devuelve su `Execution Report`, revisa la evidencia y reevalúa el gate de la unidad original antes de continuar.
 
 ## Transición esperada a planificación
 
@@ -150,7 +175,7 @@ No conviertas el nombre o cantidad de conversaciones de Planning en una regla de
 
 Cuando readiness indispensable sea desconocido:
 
-> Ejecuta el `Environment Preflight` en modo de solo lectura. No modifiques, instales, inicies ni configures. Devuelve el `Environment Readiness Report` al Cycle Owner.
+> Ejecuta el `Environment Preflight` con `Coding Agent — Planning` en modo de solo lectura. No modifiques, instales, inicies ni configures. Devuelve el `Environment Readiness Report` al Cycle Owner.
 
 ## Transición esperada a ejecución
 
@@ -170,11 +195,12 @@ El onboarding está bien encaminado cuando:
 - asigna Cycle Owner;
 - preserva responsabilidad humana;
 - aplica Memory Bootstrap Gate antes de depender de historia chat-only;
-- usa Preflight cuando readiness indispensable es desconocido;
+- cuando obtiene `BOOTSTRAP REQUIRED`, separa la tarea de checkpoint de la unidad original y reevalúa el gate después de revisar evidencia;
+- usa Preflight cuando readiness indispensable es desconocido y devuelve Environment Readiness Report;
 - usa Planning sólo para incertidumbre real;
 - usa Execution Task cuando la unidad está lista;
 - reutiliza Execution Cells sin acumular permisos;
 - exige evidencia verificable;
 - no presupone topología física ni herramientas;
-- devuelve planes y reportes al Cycle Owner;
+- devuelve planes, readiness reports y execution reports al Cycle Owner;
 - conserva lenguaje y referencias agnósticas.
