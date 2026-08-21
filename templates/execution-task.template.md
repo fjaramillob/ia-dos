@@ -25,13 +25,22 @@ El mecanismo de transporte o almacenamiento no cambia este contrato. Si el proye
 Antes de emitir la tarea confirma:
 
 - [ ] el resultado está definido, es pequeño y verificable;
-- [ ] `Memory Bootstrap Gate = PASS | NO APLICA`;
+- [ ] Memory Bootstrap Gate = `PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT | NO APLICA`;
 - [ ] readiness indispensable = `LISTO PARA EJECUCIÓN | NO APLICA`;
 - [ ] Planning previo = `[REFERENCIA REVISADA | NO APLICA]`;
 - [ ] las decisiones humanas indispensables para esta unidad están resueltas;
 - [ ] la tarea puede completarse, verificarse y reportarse como una sola unidad.
 
-Si alguna precondición necesaria no se cumple, no autorices escritura.
+Para una unidad ordinaria que dependa de memoria previa, `BOOTSTRAP REQUIRED` bloquea la emisión. La única excepción es una Execution Task cuyo resultado principal sea persistir el checkpoint mínimo requerido por el gate.
+
+Cuando se use esa excepción:
+
+- declara literalmente `BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`;
+- limita el alcance al checkpoint durable;
+- no incluyas la unidad original que quedó bloqueada;
+- después del Execution Report y su revisión, reevalúa el Memory Bootstrap Gate de la unidad original.
+
+Si cualquier otra precondición necesaria no se cumple, no autorices escritura.
 
 ## Identificación
 
@@ -73,6 +82,8 @@ Describe un único resultado concreto, terminable y verificable.
 Incluye únicamente decisiones, restricciones y estado no obvio que el coding agent necesita directamente.
 
 No copies toda la historia del proyecto.
+
+En una tarea que materializa el checkpoint de `BOOTSTRAP REQUIRED`, este bloque puede contener el conocimiento confirmado que debe persistirse porque todavía no existe de forma durable. Declara su procedencia y no lo presentes como una fuente durable previa.
 
 ## Referencias Wiki
 
@@ -137,6 +148,8 @@ Describe qué ocurre hoy y qué evidencia lo confirma.
 
 - `[CAMBIO NO AUTORIZADO]`
 
+Si esta tarea responde a `BOOTSTRAP REQUIRED`, incluye explícitamente la unidad original entre el fuera de alcance.
+
 ## Zonas autorizadas
 
 - recursos o artefactos modificables: `[LISTA]`
@@ -178,6 +191,8 @@ Describe qué ocurre hoy y qué evidencia lo confirma.
 
 - [ ] `[RESULTADO OBSERVABLE]`
 
+En una tarea de memory bootstrap, un criterio obligatorio es que el checkpoint pueda ser revisado como fuente durable sin afirmar más conocimiento del que fue autorizado a registrar.
+
 ## Pruebas y verificaciones
 
 - `[COMANDO, REVISIÓN O PROCEDIMIENTO]`
@@ -197,7 +212,9 @@ Detente y reporta cuando:
 - sea necesaria una decisión no confirmada;
 - el tipo declarado ya no represente el trabajo;
 - aparezcan varios resultados independientes;
-- una precondición de memoria o readiness deje de cumplirse.
+- una precondición de memoria o readiness deje de cumplirse;
+- en una tarea de memory bootstrap sea necesario inventar, resolver o ampliar conocimiento no confirmado;
+- una tarea de bootstrap intente continuar con la unidad original antes de revisar el checkpoint.
 
 ## Documentación y memoria
 
@@ -237,8 +254,10 @@ Devuelve:
 - condiciones de detención activadas;
 - atención concreta requerida o `Ninguna`.
 
-El coding agent no determina la decisión de gobierno posterior, no consolida memoria durable salvo autorización explícita de la propia tarea y no inicia otra unidad.
+El coding agent no determina la decisión de gobierno posterior, no consolida memoria durable fuera de lo autorizado por la propia tarea y no inicia otra unidad.
 
 ## Autoridad posterior
 
 El Cycle Owner revisa dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+
+Si esta tarea materializó un checkpoint requerido por Memory Bootstrap, la revisión del reporte no autoriza por sí sola la unidad original: primero reevalúa su gate con la nueva fuente durable.
