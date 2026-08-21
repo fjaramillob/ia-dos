@@ -118,11 +118,17 @@ Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera revisión. No elijas la decisión de gobierno posterior, no consolides memoria durable fuera de lo autorizado y no inicies otra unidad.
 
-Si `Caveman Return: Sí`, materializa primero el Execution Report completo y responde en conversación únicamente:
+Usa `Caveman Return` únicamente cuando:
+1. la Task declara `Caveman Return: Sí`;
+2. el Execution Report completo fue materializado correctamente en el destino declarado.
+
+Cuando ambas condiciones se cumplen, responde en conversación únicamente:
 
 EJECUCIÓN COMPLETADA | PARCIAL | BLOQUEADO | FALLIDO
 Atención: [DESCRIPCIÓN O NINGUNA]
 Reporte: [NOMBRE/PATH]
+
+Si falla la materialización o falta cualquiera de las dos condiciones, devuelve el Execution Report completo según el contrato y canal de la Task.
 ```
 
 ## Regla de continuidad
