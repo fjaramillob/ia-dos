@@ -65,6 +65,7 @@ Conversation Space → Coding Agent
 - `docs/orchestration/topic-routing-registry.md`
 - `docs/orchestration/typed-artifact-routing.md`
 - `docs/foundations/conversational-guidance.md`
+- `docs/foundations/orchestration-layer.md`
 - `docs/execution/execution-cells-and-exchange.md`
 - `ORCHESTRATOR.md`
 - `AGENTS.md`
@@ -79,6 +80,8 @@ Ambas superficies fueron corregidas antes de una nueva revisión.
 La segunda revisión detectó que `prompts/getting-started/initialize-project-orchestrator.md` puede operar como bloque autocontenido cuando la plataforma no usa instrucciones persistentes y todavía no enseñaba la frontera inline. También fue corregido para incluir `Specialist Handoff` en el gate, separar explícitamente ambos transportes y prohibir Exchange/launcher para routing conversacional.
 
 La tercera revisión detectó que `README.md`, por ser una entrada operativa principal, todavía presentaba `Specialist Handoff` y Exchange sin la frontera de transporte explícita. Se corrigió para declarar el handoff inline en tipos de artefacto, Exchange y quick start.
+
+La cuarta revisión detectó que `docs/foundations/orchestration-layer.md`, enlazado desde las foundations y consumible como superficie autónoma, todavía podía combinar `Specialist Handoff` con una definición genérica de Exchange. Se corrigió para declarar explícitamente el handoff inline y limitar Exchange al intercambio opcional de artefactos con Coding Agents.
 
 Estos hallazgos confirman que la frontera de transporte debe existir tanto en contratos canónicos como en todas las superficies que un Orchestrator puede consumir de forma autónoma.
 
