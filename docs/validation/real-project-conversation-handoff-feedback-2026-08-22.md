@@ -58,6 +58,7 @@ Conversation Space → Coding Agent
 
 ## Superficies alineadas
 
+- `README.md`
 - `templates/conversation-space-handoff.template.md`
 - `templates/project-instructions.template.md`
 - `prompts/getting-started/initialize-project-orchestrator.md`
@@ -77,7 +78,9 @@ Ambas superficies fueron corregidas antes de una nueva revisión.
 
 La segunda revisión detectó que `prompts/getting-started/initialize-project-orchestrator.md` puede operar como bloque autocontenido cuando la plataforma no usa instrucciones persistentes y todavía no enseñaba la frontera inline. También fue corregido para incluir `Specialist Handoff` en el gate, separar explícitamente ambos transportes y prohibir Exchange/launcher para routing conversacional.
 
-Estos hallazgos confirman que la frontera de transporte debe existir tanto en contratos canónicos como en las plantillas y prompts que un Orchestrator puede consumir de forma autónoma.
+La tercera revisión detectó que `README.md`, por ser una entrada operativa principal, todavía presentaba `Specialist Handoff` y Exchange sin la frontera de transporte explícita. Se corrigió para declarar el handoff inline en tipos de artefacto, Exchange y quick start.
+
+Estos hallazgos confirman que la frontera de transporte debe existir tanto en contratos canónicos como en todas las superficies que un Orchestrator puede consumir de forma autónoma.
 
 ## Criterio de validación
 
