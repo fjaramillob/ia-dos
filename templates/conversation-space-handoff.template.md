@@ -4,6 +4,28 @@ Usa esta plantilla cuando un Conversation Space transfiera una decisión o el go
 
 El handoff debe ser autosuficiente, breve y orientado a una sola brecha dominante.
 
+## Entrega obligatoria
+
+Un `Specialist Handoff` nuevo se entrega **inline como texto copiable** en la conversación de origen.
+
+```text
+Conversation Space origen
+→ produce bloque autocontenido y copiable
+→ persona copia/pega el bloque
+→ Conversation Space destino lo recibe como mensaje
+```
+
+No requieras para esta transferencia:
+
+- crear o descargar un archivo `.md`;
+- guardar el handoff en `Exchange`;
+- indicar un path de `inbox/`;
+- usar `Manual Artifact Launcher`.
+
+`Exchange` no es el mecanismo de routing entre Conversation Spaces. Una copia documental del handoff puede materializarse sólo cuando la persona la pida explícitamente o exista una convención local separada de archivo; esa copia no sustituye ni condiciona la transferencia inline.
+
+Entrega el siguiente bloque directamente listo para copiar y pegar:
+
 ```text
 Artifact Type: Specialist Handoff
 Destination Role: Conversation Space — [TÓPICO]
@@ -69,3 +91,14 @@ Acción esperada del especialista:
 El receptor debe ser un Conversation Space. Si el bloque se pega en un coding agent, debe detenerse e indicar el rol esperado.
 
 Un Specialist Handoff nunca debe presentarse como Planning Task, Environment Preflight o Execution Task.
+
+La condición de transporte también forma parte de la compatibilidad:
+
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline y copiable
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ puede usar chat o `.md`/Exchange según el contrato de entrega
+```
