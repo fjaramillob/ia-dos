@@ -27,6 +27,32 @@ y requiere contexto persistente propio?
 
 Si no, continúa en el espacio actual.
 
+## Transporte entre Conversation Spaces
+
+Cuando la brecha pertenece a otro dominio, el `Specialist Handoff` se entrega **inline como texto autocontenido y copiable** en la conversación de origen.
+
+```text
+Conversation Space origen
+→ Specialist Handoff inline
+→ persona copia/pega
+→ Conversation Space destino
+```
+
+No uses Exchange por defecto para este routing y no exijas crear, descargar o guardar un `.md`, indicar un path de `inbox/` ni usar `Manual Artifact Launcher`.
+
+Una copia documental puede existir sólo si la persona la solicita explícitamente o una convención local separada requiere archivo; esa copia no condiciona ni sustituye el handoff inline.
+
+La frontera de transporte es:
+
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline y copiable
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ chat o `.md`/Exchange según el contrato de entrega
+```
+
 ## Propiedad del ciclo y responsabilidad
 
 El espacio que confirma el resultado esperado se convierte en Cycle Owner mientras permanezca dentro de su dominio.
@@ -132,7 +158,7 @@ Cada espacio evalúa en este orden:
 - falta inspección/diseño → `Planning Task`;
 - unidad lista → `Execution Task`;
 - falta decisión del mismo dominio → continúa sólo hasta resolverla;
-- falta decisión de otro dominio → `Specialist Handoff`;
+- falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
 
