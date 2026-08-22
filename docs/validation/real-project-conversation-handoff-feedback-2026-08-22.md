@@ -60,6 +60,7 @@ Conversation Space → Coding Agent
 
 - `templates/conversation-space-handoff.template.md`
 - `templates/project-instructions.template.md`
+- `prompts/getting-started/initialize-project-orchestrator.md`
 - `docs/orchestration/topic-routing-registry.md`
 - `docs/orchestration/typed-artifact-routing.md`
 - `docs/foundations/conversational-guidance.md`
@@ -68,11 +69,15 @@ Conversation Space → Coding Agent
 - `AGENTS.md`
 - `bundles/ia-dos-current-offline-pack.md`
 
-## Hallazgo durante review
+## Hallazgos durante review
 
 La primera revisión de la PR detectó que la plantilla operativa de `Specialist Handoff` no había recibido efectivamente el cambio pese a que otras superficies ya asumían esa alineación, y que `templates/project-instructions.template.md` seguía dejando Exchange demasiado genérico.
 
-Ambas superficies fueron corregidas antes de una nueva revisión. Esto confirma que la frontera de transporte debe existir tanto en contratos canónicos como en las plantillas que un Orchestrator consume directamente.
+Ambas superficies fueron corregidas antes de una nueva revisión.
+
+La segunda revisión detectó que `prompts/getting-started/initialize-project-orchestrator.md` puede operar como bloque autocontenido cuando la plataforma no usa instrucciones persistentes y todavía no enseñaba la frontera inline. También fue corregido para incluir `Specialist Handoff` en el gate, separar explícitamente ambos transportes y prohibir Exchange/launcher para routing conversacional.
+
+Estos hallazgos confirman que la frontera de transporte debe existir tanto en contratos canónicos como en las plantillas y prompts que un Orchestrator puede consumir de forma autónoma.
 
 ## Criterio de validación
 
