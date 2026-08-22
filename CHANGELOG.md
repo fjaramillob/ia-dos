@@ -8,6 +8,8 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- fijada la frontera de transporte entre Conversation Spaces: `Specialist Handoff` se entrega inline, autocontenido y copiable; no requiere `.md`, Exchange, path ni `Manual Artifact Launcher`;
+- aclarado que Exchange permanece como pasarela pasiva y opcional hacia/desde Coding Agents y no participa en routing entre Conversation Spaces;
 - ejecutada una auditoría integral del repositorio vigente para alinear contratos, onboarding, prompts, templates, discoverability, validaciones y distribución offline con el modelo consolidado;
 - reforzada la frontera entre responsabilidad humana y `Cycle Owner`: el Conversation Space gobierna dentro de autoridad delegada y no sustituye aprobación humana cuando cambian dirección, autoridad, riesgo o impacto relevante;
 - eliminado de superficies vigentes cualquier requisito residual para que `Execution Report` recomiende memoria durable, elija la decisión de gobierno posterior o proponga automáticamente la siguiente unidad;
