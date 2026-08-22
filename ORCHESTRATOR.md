@@ -108,6 +108,7 @@ Evalúa en este orden:
 - falta inspección o diseño → Planning Task;
 - todo listo → Execution Task;
 - dependencia local no lista → resolverla sin autorizar escritura;
+- decisión de otro dominio → Specialist Handoff inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
 
@@ -168,11 +169,24 @@ Tipos vigentes:
 - Execution Resume;
 - Execution Report.
 
-El transporte no crea tipos adicionales. El Conversation Agent asigna la identidad de la tarea antes del handoff. Exchange sólo almacena o pone a disposición `.md` ya construidos y no genera ni valida IDs, contratos o estados.
+El transporte no crea tipos adicionales. El Conversation Agent asigna la identidad de la tarea antes del handoff. Exchange sólo almacena o pone a disposición `.md` ya construidos destinados a intercambio con Coding Agents y no genera ni valida IDs, contratos o estados.
 
 ## Specialist Handoff
 
 Transfiere gobierno o una decisión a otro Conversation Space. No autoriza inspección ni ejecución técnica.
+
+Su entrega normativa es:
+
+```text
+Conversation Space origen
+→ Specialist Handoff inline, autocontenido y copiable
+→ persona copia/pega
+→ Conversation Space destino
+```
+
+No generes un `.md` como requisito del handoff, no lo envíes a Exchange por defecto y no pidas path o `Manual Artifact Launcher` para transferir entre Conversation Spaces.
+
+Una copia documental sólo puede ser un auxiliar solicitado explícitamente; no sustituye la transferencia inline.
 
 ## Planning Task
 
@@ -304,16 +318,18 @@ Renueva únicamente ante degradación, contaminación o necesidad real de contex
 
 ## Exchange
 
-Exchange es una pasarela pasiva y opcional de archivos Markdown.
+Exchange es una pasarela pasiva y opcional de archivos Markdown para intercambio con Coding Agents.
 
 ```text
 Conversation Agent
-→ construye artefacto y asigna Task ID cuando aplica
+→ construye artefacto destinado al Coding Agent y asigna Task ID cuando aplica
 → Exchange almacena / expone
 → Code Agent consume y produce retorno
 → Exchange almacena / expone
 → Conversation Agent / Cycle Owner revisa
 ```
+
+Exchange **no enruta entre Conversation Spaces**. Los Specialist Handoffs entre espacios se entregan inline.
 
 Exchange no define artefactos, IDs, nombres de archivo, templates, estados, permisos, workflow, backlog, memoria o decisiones.
 
@@ -343,11 +359,12 @@ Usa Embedded Contract, Remote Repository o Local Reference cuando aporte. No clo
 ```text
 Persona responsable = dirección y aprobación final aplicable
 Conversation Space   = gobierno dentro de autoridad delegada
+Specialist Handoff   = transferencia inline y copiable entre Conversation Spaces
 Execution Cell       = continuidad de ejecución
 Execution Task       = contrato de una unidad
 Execution Report     = evidencia de ejecución
 Memoria durable      = responsabilidad funcional
-LLM Wiki              = materialización durable, portable y navegable
-Repository            = implementación
-Exchange              = pasarela pasiva de archivos
+LLM Wiki             = materialización durable, portable y navegable
+Repository           = implementación
+Exchange             = pasarela pasiva de archivos hacia/desde Coding Agents
 ```
