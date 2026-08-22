@@ -59,6 +59,7 @@ Conversation Space → Coding Agent
 ## Superficies alineadas
 
 - `templates/conversation-space-handoff.template.md`
+- `templates/project-instructions.template.md`
 - `docs/orchestration/topic-routing-registry.md`
 - `docs/orchestration/typed-artifact-routing.md`
 - `docs/foundations/conversational-guidance.md`
@@ -66,6 +67,12 @@ Conversation Space → Coding Agent
 - `ORCHESTRATOR.md`
 - `AGENTS.md`
 - `bundles/ia-dos-current-offline-pack.md`
+
+## Hallazgo durante review
+
+La primera revisión de la PR detectó que la plantilla operativa de `Specialist Handoff` no había recibido efectivamente el cambio pese a que otras superficies ya asumían esa alineación, y que `templates/project-instructions.template.md` seguía dejando Exchange demasiado genérico.
+
+Ambas superficies fueron corregidas antes de una nueva revisión. Esto confirma que la frontera de transporte debe existir tanto en contratos canónicos como en las plantillas que un Orchestrator consume directamente.
 
 ## Criterio de validación
 
