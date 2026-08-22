@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — adopción real / entrega manual 2026-08-21`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — adopción real / handoff conversacional 2026-08-22`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -13,13 +13,14 @@ Este es el único bundle vigente para nuevos onboardings offline. No lo combines
 ```text
 Persona responsable = dirección y aprobación final aplicable
 Conversation Space = gobierno y decisión dentro de autoridad delegada
+Specialist Handoff = transferencia inline y copiable entre Conversation Spaces
 Execution Cell = continuidad de ejecución
 Execution Task = contrato de una unidad
 Execution Report = evidencia de ejecución
 Memoria durable = responsabilidad funcional de conservar conocimiento reusable
 LLM Wiki = materialización durable, portable y navegable de esa memoria
 Repository = implementación real
-Exchange = pasarela pasiva opcional de archivos .md
+Exchange = pasarela pasiva opcional de archivos hacia/desde Coding Agents
 ```
 
 ## Responsabilidad humana
@@ -41,6 +42,37 @@ Los Conversation Spaces no son etapas. Abre otro espacio sólo cuando una brecha
 
 `00` no es un dispatcher obligatorio y `30` no debe abrirse sólo porque exista trabajo para un coding agent.
 
+## Handoff entre Conversation Spaces
+
+Cuando una brecha pertenece realmente a otro dominio, usa un `Specialist Handoff` y entrégalo **inline como texto autocontenido y copiable** en la conversación de origen.
+
+```text
+Conversation Space origen
+→ Specialist Handoff inline
+→ persona copia/pega
+→ Conversation Space destino
+```
+
+No requieras para esta transferencia:
+
+- crear o descargar un archivo `.md`;
+- guardar el handoff en Exchange;
+- indicar un path de `inbox/`;
+- usar `Manual Artifact Launcher`.
+
+Una copia documental puede existir sólo si la persona la solicita explícitamente o una convención local separada requiere archivarla; no sustituye ni condiciona la transferencia inline.
+
+La frontera de transporte es:
+
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline y copiable
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ chat o `.md`/Exchange según el contrato de entrega
+```
+
 ## Gate de avance
 
 Evalúa en este orden:
@@ -56,6 +88,7 @@ Evalúa en este orden:
 - readiness indispensable desconocido → `Environment Preflight`;
 - falta inspección/diseño → `Planning Task`;
 - todo listo → `Execution Task`;
+- falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → resolver sólo esa decisión;
 - reorientación real → escalar a `00`.
 
@@ -144,6 +177,8 @@ Tipos vigentes:
 El mecanismo de transporte no crea tipos adicionales.
 
 `Manual Artifact Launcher`, `Output Delivery` y `Caveman Return` son convenciones de entrega, no Artifact Types.
+
+`Specialist Handoff` tiene como receptor un Conversation Space y su transporte normativo es inline. Los artefactos hacia Coding Agents pueden usar Exchange cuando el proyecto adopta ese canal.
 
 ## Identidad
 
@@ -387,7 +422,7 @@ Si el reporte corresponde a una tarea de memory bootstrap, su revisión no autor
 
 ## Exchange
 
-Exchange es sólo una pasarela opcional de archivos Markdown.
+Exchange es sólo una pasarela opcional de archivos Markdown hacia/desde Coding Agents.
 
 Una topología posible:
 
@@ -400,6 +435,7 @@ proyecto-exch/
 
 Exchange no define:
 
+- routing entre Conversation Spaces;
 - artefactos;
 - IDs;
 - filenames;
@@ -413,9 +449,11 @@ Exchange no define:
 
 Nada ocurre automáticamente por mover un archivo. `archive/` no significa aprobado o completado.
 
+No uses Exchange ni Manual Artifact Launcher para efectuar un `Specialist Handoff` entre Conversation Spaces.
+
 ## Entrega manual con Exchange
 
-Cuando Exchange funciona manualmente:
+Cuando Exchange funciona manualmente con un Coding Agent:
 
 ```text
 Conversation Agent
@@ -444,7 +482,7 @@ Archivo autoritativo: [PATH]
 Directorio físico de salida: [PATH | NO APLICA]
 ```
 
-El launcher sólo localiza input/output. No amplía objetivo, alcance, permisos, salida ni condiciones de detención. La presencia de un `outbox` o de una ruta física no autoriza por sí misma a escribir allí.
+El launcher sólo localiza input/output para un Coding Agent. No amplía objetivo, alcance, permisos, salida ni condiciones de detención. La presencia de un `outbox` o de una ruta física no autoriza por sí misma a escribir allí.
 
 ### Output Delivery
 
@@ -495,7 +533,7 @@ Cada recurso declara rol, autoridad, acceso y límites. Reutilizar conversación
 
 ## Handoffs y escalamiento
 
-Transfiere directamente cuando la brecha pertenece claramente a otro dominio.
+Transfiere directamente cuando la brecha pertenece claramente a otro dominio. Esa transferencia se entrega inline como `Specialist Handoff` copiable.
 
 Escala a `00` sólo ante cambio de objetivo/prioridad, conflicto transversal, expansión importante de alcance, decisión estratégica o riesgo fuera de autoridad.
 
@@ -521,17 +559,19 @@ Conversation ≠ Execution Cell
 Execution Cell ≠ Specialist
 Exchange ≠ Contract
 Exchange ≠ Memory
+Specialist Handoff ≠ Exchange file
 Manual Artifact Launcher ≠ autoridad
 Caveman Return ≠ artefacto completo
 Execution Report ≠ decisión del Cycle Owner
 Execution Report ≠ memoria durable
 
-TASK carries the delta.
+Conversation Space handoffs are inline and copyable.
+TASK carries the delta toward Coding Agents.
 REPORT carries execution evidence.
 Durable memory carries current knowledge.
 Repository carries implementation.
-Exchange only carries files.
-Launcher only locates artifacts.
+Exchange only carries files toward/from Coding Agents.
+Launcher only locates coding artifacts.
 Caveman Return only summarizes delivery after Task opt-in and successful full-output materialization.
 Human authority remains explicit.
 ```
