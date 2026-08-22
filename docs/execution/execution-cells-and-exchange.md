@@ -25,7 +25,7 @@ Execution Report
     devuelve evidencia
 
 Exchange
-    sólo transporta o almacena archivos .md
+    sólo transporta o almacena archivos .md entre Conversation Agent y Coding Agent cuando se adopta ese transporte
 ```
 
 ## Execution Cell
@@ -108,9 +108,33 @@ La separación entre Planning y Execution es de rol y autoridad. Una futura Exec
 
 # Exchange
 
-Exchange es una **pasarela pasiva y opcional de archivos Markdown**.
+Exchange es una **pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Coding Agents**.
 
 No es un protocolo semántico y no define artefactos, IDs, estados, contratos, workflow o decisiones.
+
+## Exchange no enruta Conversation Spaces
+
+El routing entre Conversation Spaces no usa Exchange por defecto.
+
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline, autocontenido y copiable
+→ la persona lo pega como mensaje en el espacio destino
+
+Conversation Space → Coding Agent
+→ Task / Preflight / Resume
+→ puede usar `.md` y Exchange cuando el proyecto adopta ese transporte
+```
+
+Por tanto, un `Specialist Handoff` no requiere:
+
+- `.md`;
+- `inbox/`;
+- `outbox/`;
+- path absoluto;
+- `Manual Artifact Launcher`.
+
+Una copia documental del handoff sólo puede considerarse archivo auxiliar solicitado explícitamente o convención local separada; no es la transferencia normativa entre espacios.
 
 ```text
 Conversation Agent
@@ -139,7 +163,7 @@ Persona responsable
 
 Únicamente:
 
-- recibe archivos `.md` ya construidos;
+- recibe archivos `.md` ya construidos destinados a intercambio con Coding Agents;
 - los mantiene disponibles para el otro lado;
 - puede conservar historial cuando el proyecto decide archivarlo.
 
@@ -149,6 +173,8 @@ Exchange no interpreta el contenido.
 
 Exchange no:
 
+- enruta entre Conversation Spaces;
+- materializa por defecto Specialist Handoffs;
 - genera o valida Task IDs;
 - define formato de IDs;
 - crea Execution Tasks o Execution Reports;
@@ -205,7 +231,7 @@ Nada ocurre automáticamente por mover un archivo.
 
 ## Artefactos
 
-El archivo enviado por Exchange es exactamente el artefacto que IA-DOS habría entregado por otro medio.
+El archivo enviado por Exchange es exactamente el artefacto que IA-DOS habría entregado por otro medio al Coding Agent.
 
 ```text
 Execution Task
@@ -248,10 +274,12 @@ Cuando la persona necesita iniciar manualmente al Code Agent, puede usar un `Man
 El launcher **no es un Artifact Type** y no agrega autoridad ni elige el modo de retorno.
 
 ```text
-Launcher = localización manual
+Launcher = localización manual para Coding Agent
 Artifact = contrato autoritativo
 Exchange = almacenamiento pasivo
 ```
+
+No uses Manual Artifact Launcher para un Specialist Handoff entre Conversation Spaces.
 
 Consulta [Entrega manual de artefactos](manual-artifact-delivery.md) y el [prompt reusable](../../prompts/execution/manual-artifact-launcher.md).
 
@@ -297,7 +325,7 @@ Si una corrección requiere un nuevo artefacto, el agente responsable decide su 
 
 ```text
 Exchange
-→ ¿qué archivos intercambiamos?
+→ ¿qué archivos intercambiamos con Coding Agents?
 
 LLM Wiki / memoria durable
 → ¿qué conocimiento vigente y reusable conservamos?
@@ -338,13 +366,14 @@ Conversation ≠ Task
 Conversation ≠ Execution Cell
 Execution Cell ≠ Specialist
 
+Conversation Space Handoff = inline y copiable
 Execution Cell = continuidad de ejecución
 Execution Task = contrato de una unidad
 Execution Report = evidencia
 LLM Wiki = memoria durable materializada
 Repository = implementación
-Exchange = pasarela pasiva de archivos .md
-Manual Artifact Launcher = localización efímera, no autoridad
+Exchange = pasarela pasiva de archivos .md hacia/desde Coding Agents
+Manual Artifact Launcher = localización efímera para Coding Agent, no autoridad
 Caveman Return = presentación conversacional mínima sólo por opt-in de la Task
 Persona responsable = aprobación final aplicable
 ```

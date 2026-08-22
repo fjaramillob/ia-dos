@@ -26,7 +26,7 @@ Execution Task
 = contrato de ejecución
 
 Exchange
-= pasarela pasiva de archivos Markdown
+= pasarela pasiva de archivos Markdown entre Conversation Agent y Coding Agent cuando el proyecto adopta ese transporte
 ```
 
 Una tarea transferida mediante Exchange sigue siendo la misma Execution Task. Exchange no genera, modifica, valida o coordina IDs, contratos, estados o permisos.
@@ -34,6 +34,23 @@ Una tarea transferida mediante Exchange sigue siendo la misma Execution Task. Ex
 Una `Execution Cell` identifica continuidad de ejecución cuando el proyecto usa ese modelo, pero no reemplaza `Destination Role`, Cycle Owner ni autoridad por tarea.
 
 `Manual Artifact Launcher`, `Output Delivery` y `Caveman Return` son convenciones de entrega. **No son Artifact Types** y no cambian el tipo ni la autoridad del artefacto.
+
+## Frontera de transporte por receptor
+
+El tipo de receptor determina el transporte por defecto:
+
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline, autocontenido y copiable
+→ la persona lo pega como mensaje en el Conversation Space destino
+→ no requiere `.md`, Exchange, path ni Manual Artifact Launcher
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ puede entregarse por chat o materializarse como `.md`/Exchange según el contrato de entrega
+```
+
+Una copia documental de un `Specialist Handoff` puede existir sólo si la persona la solicita explícitamente o una convención local separada requiere archivarla. Esa copia no sustituye ni condiciona el handoff inline.
 
 ## Identificadores
 
@@ -76,7 +93,7 @@ El esquema temporal anterior es una recomendación para `Execution Task ID` cuan
 
 ## Entrega manual opcional
 
-Cuando un proyecto usa Exchange manual, el artefacto puede declarar una entrega semántica:
+Cuando un proyecto usa Exchange manual para un artefacto dirigido a un Coding Agent, el artefacto puede declarar una entrega semántica:
 
 ```text
 Output Delivery:
@@ -114,6 +131,8 @@ Destination Role: Conversation Space — [TÓPICO]
 Expected Output: decisión de dominio | Planning Task | Environment Preflight | Execution Task
 Forbidden Output: Implementation Plan | Execution Report | cambios técnicos
 ```
+
+Su transporte normativo es inline y copiable entre Conversation Spaces. No se entrega por Exchange por defecto y no requiere launcher.
 
 ### Planning Task
 
@@ -238,6 +257,7 @@ Antes de responder, valida:
 2. ¿El artefacto solicitado coincide con `Expected Output`?
 3. ¿La acción requerida está autorizada?
 4. ¿Existe contradicción entre encabezado y cuerpo?
+5. ¿El transporte usado corresponde al receptor?
 
 Cuando el rol no coincida, no ejecutes. Ante contradicción prevalece la opción más restrictiva.
 
@@ -255,4 +275,4 @@ Ningún coding agent asume identidad de Conversation Space, Cycle Owner o Projec
 
 ## Cierre
 
-El encabezado funciona como un tipo fuerte: declara quién puede actuar, qué salida se espera y qué está prohibido. El mecanismo usado para mover o conservar el artefacto no modifica ese contrato.
+El encabezado funciona como un tipo fuerte: declara quién puede actuar, qué salida se espera y qué está prohibido. El mecanismo usado para mover o conservar el artefacto no modifica ese contrato, pero IA-DOS sí distingue el transporte conversacional inline del transporte opcional hacia coding agents.

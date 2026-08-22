@@ -31,6 +31,7 @@ No leas toda la documentación por defecto. Amplía la lectura sólo cuando el c
 Si modificas alguno de estos conceptos, comprueba sus representaciones relacionadas antes de cerrar:
 
 - responsabilidad humana, `Conversation Space` y `Cycle Owner`;
+- `Specialist Handoff` y routing entre Conversation Spaces;
 - `Planning Task` e `Implementation Plan`;
 - `Environment Preflight` y `Execution Resume`;
 - `Execution Task`;
@@ -52,26 +53,30 @@ Mantén estas fronteras salvo decisión explícita que las cambie:
 ```text
 Persona responsable = dirección y aprobación final aplicable
 Conversation Space   = gobierno dentro de autoridad delegada
+Specialist Handoff   = transferencia inline y copiable entre Conversation Spaces
 Execution Cell       = continuidad de ejecución
 Execution Task       = contrato de una unidad
 Execution Report     = evidencia de ejecución
 Memoria durable      = responsabilidad funcional
-LLM Wiki              = materialización durable, portable y navegable
-Repository            = implementación
-Exchange              = pasarela pasiva de archivos
+LLM Wiki             = materialización durable, portable y navegable
+Repository           = implementación
+Exchange             = pasarela pasiva de archivos hacia/desde Coding Agents
 ```
 
 Además:
 
 - `00 — Dirección y orquestación` es el Conversation Space inicial canónico;
 - los Conversation Spaces se abren bajo demanda, no como fases obligatorias;
+- un `Specialist Handoff` nuevo se entrega inline como texto autocontenido y copiable; no requiere `.md`, Exchange, path ni `Manual Artifact Launcher`;
+- una copia documental del handoff sólo puede ser auxiliar solicitado explícitamente o convención local separada; no sustituye el routing conversacional;
 - `50` no es un dispatcher obligatorio;
 - una tarea no implica una conversación nueva del coding agent;
 - una Execution Cell puede reutilizarse entre tareas sin heredar permisos;
 - la autorización de una Execution Task es explícita y no acumulativa;
 - el `Task ID` lo asigna el Conversation Agent que construye la tarea;
 - Exchange no define IDs, artefactos, filenames, templates, estados, permisos, backlog, memoria, decisiones o workflow;
-- `Manual Artifact Launcher` es efímero y no autoritativo: sólo localiza input y, cuando aplica, destino físico del output;
+- Exchange no enruta entre Conversation Spaces;
+- `Manual Artifact Launcher` es efímero y no autoritativo: sólo localiza input y, cuando aplica, destino físico del output para un Coding Agent;
 - `Output Delivery` sólo autoriza materializar el artefacto de salida expresamente declarado; no amplía permisos sobre proyecto, entorno o recursos inspeccionados;
 - `Caveman Return` sólo puede compactar la conversación cuando la Task lo declara y el output completo ya fue materializado; nunca sustituye el artefacto canónico;
 - `Coding Agent — Planning` y `Environment Preflight` son de solo lectura respecto del proyecto/entorno, aunque puedan materializar su propio output cuando exista autorización explícita de `Output Delivery`;

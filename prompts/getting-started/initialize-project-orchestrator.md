@@ -72,8 +72,26 @@ Resultados:
 - readiness indispensable desconocido → `Environment Preflight`;
 - falta inspección o diseño → `Planning Task` de solo lectura respecto del proyecto/entorno;
 - resultado definido + memoria suficiente + entorno listo → `Execution Task`;
+- decisión de otro dominio → `Specialist Handoff` inline, autocontenido y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación real → escala a 00.
+
+Specialist Handoff entre Conversation Spaces:
+- se entrega inline como texto copiable en la conversación de origen;
+- la persona copia/pega el bloque directamente en el Conversation Space destino;
+- no requiere crear o descargar un `.md`;
+- no usa Exchange por defecto;
+- no requiere `inbox/`, path absoluto ni `Manual Artifact Launcher`;
+- una copia documental sólo puede ser auxiliar solicitado explícitamente o convención local separada y no sustituye ni condiciona el routing.
+
+Frontera de transporte:
+
+Conversation Space → Conversation Space
+→ Specialist Handoff inline y copiable
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ chat o `.md`/Exchange según el contrato de entrega
 
 Memory Bootstrap Gate:
 ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
@@ -144,17 +162,21 @@ Execution Report:
 Si el reporte corresponde a una tarea de memory bootstrap, su revisión no habilita automáticamente la unidad original: primero reevalúa su gate.
 
 Exchange:
-- es una pasarela pasiva opcional de `.md`;
+- es una pasarela pasiva opcional de `.md` hacia/desde Coding Agents;
+- no enruta entre Conversation Spaces;
+- no materializa Specialist Handoffs por defecto;
 - no define artefactos, IDs, filenames, templates, estados, permisos, backlog, memoria, decisiones ni workflow;
 - el Conversation Agent construye la Execution Task y asigna Task ID;
 - el Code Agent construye el Execution Report y reutiliza ese Task ID.
 
-Entrega manual cuando el proyecto usa Exchange:
+Entrega manual cuando el proyecto usa Exchange con un Coding Agent:
 - el `Manual Artifact Launcher` sólo localiza el `.md` autoritativo y, cuando aplica, el directorio físico de salida;
 - el launcher nunca amplía la autoridad declarada por la Task;
 - `Output Delivery` puede autorizar la materialización del artefacto de salida declarado;
 - `Caveman Return` sólo se usa cuando la Task declara `Caveman Return: Sí` y el output completo fue materializado correctamente;
 - si no existe esa declaración, devuelve el artefacto completo según el contrato y canal de la Task.
+
+No uses `Manual Artifact Launcher` para un Specialist Handoff entre Conversation Spaces.
 
 Memoria durable / LLM Wiki:
 - memoria durable es la responsabilidad funcional de conservar conocimiento reusable;
@@ -167,6 +189,12 @@ Memoria durable / LLM Wiki:
 No impongas carpetas, repositorios separados, Wiki, Exchange, GitHub, trabajo local, proveedor, coding agent o stack concreto.
 No menciones nombres, rutas, dominios o repositorios de otros proyectos salvo fuentes explícitas del proyecto actual.
 ```
+
+## Transición esperada a otro Conversation Space
+
+Cuando una brecha dominante pertenezca realmente a otro dominio:
+
+> Entrega directamente en esta conversación un `Specialist Handoff` autocontenido y copiable. La persona lo pegará como mensaje en el Conversation Space destino. No generes ni requieras `.md`, Exchange, inbox/path o Manual Artifact Launcher para efectuar esta transferencia.
 
 ## Transición esperada a bootstrap de memoria
 
@@ -203,6 +231,7 @@ El onboarding está bien encaminado cuando:
 - comprende propósito y prioridad suficientes;
 - identifica `00 — Dirección y orquestación` y el modo de entrada correcto;
 - abre sólo el Conversation Space que desbloquea trabajo;
+- entrega los Specialist Handoffs entre Conversation Spaces inline y copiables, sin exigir Exchange o `.md`;
 - asigna Cycle Owner;
 - preserva responsabilidad humana;
 - aplica Memory Bootstrap Gate antes de depender de historia chat-only;

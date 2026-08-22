@@ -53,7 +53,7 @@ Cada recurso declara qué ámbito gobierna. No existe una fuente universal.
 La capa conversacional puede producir:
 
 - decisiones confirmadas;
-- `Specialist Handoff`;
+- `Specialist Handoff` inline y copiable hacia otro Conversation Space;
 - resultado `PASS` o `BOOTSTRAP REQUIRED` del Memory Bootstrap Gate;
 - `Planning Task`;
 - `Environment Preflight`;
@@ -102,6 +102,17 @@ Un `Conversation Space` es un contexto persistente dedicado a un dominio de gobi
 La lista normativa vive en `docs/orchestration/topic-routing-registry.md`.
 
 Los espacios se abren bajo demanda. Un proyecto pequeño puede permanecer bastante tiempo en `00`. Los números identifican dominios; no representan fases.
+
+Cuando una brecha dominante pertenece a otro Conversation Space, la transferencia usa un `Specialist Handoff` **inline, autocontenido y copiable**:
+
+```text
+Conversation Space origen
+→ Specialist Handoff inline
+→ persona copia/pega
+→ Conversation Space destino
+```
+
+No requieras para ese routing un archivo `.md`, Exchange, un path de `inbox/` ni `Manual Artifact Launcher`. Una copia documental puede existir sólo como auxiliar explícitamente solicitado o por una convención local separada; no sustituye ni condiciona la transferencia inline.
 
 ## `00`
 
@@ -164,9 +175,21 @@ Toda Execution Task conserva un único contrato semántico independientemente de
 
 ## Exchange
 
-Exchange, cuando se utiliza, sólo almacena o pone a disposición archivos `.md` construidos por los agentes.
+Exchange, cuando se utiliza, es una pasarela pasiva y opcional de archivos `.md` **para el intercambio de artefactos con Coding Agents**.
 
-La identidad de la tarea pertenece al Conversation Agent y al contrato del artefacto. Exchange no genera, modifica o valida IDs, artefactos, estados, permisos, backlog, memoria o workflow.
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline y copiable
+→ no usa Exchange por defecto
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ puede usar chat o `.md`/Exchange según el contrato de entrega
+```
+
+Exchange puede almacenar o poner a disposición artefactos ya construidos hacia o desde Coding Agents. No enruta Conversation Spaces.
+
+La identidad de la tarea pertenece al Conversation Agent y al contrato del artefacto. Exchange no genera, modifica o valida IDs, artefactos, estados, permisos, backlog, memoria, workflow o routing conversacional.
 
 ## Optimización de contexto
 
@@ -209,4 +232,4 @@ El reporte aporta evidencia. No selecciona la decisión de gobierno posterior y 
 - la implementación demuestra qué está materializado;
 - la Execution Task conserva la autoridad de una ejecución;
 - el Execution Report conserva evidencia;
-- Exchange sólo conserva o transporta archivos intercambiados.
+- Exchange sólo conserva o transporta archivos intercambiados con Coding Agents y no enruta Conversation Spaces.

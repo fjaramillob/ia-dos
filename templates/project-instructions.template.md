@@ -54,6 +54,9 @@ Forma de trabajo
 - no trates los tópicos como secuencia automática;
 - abre Conversation Spaces sólo bajo demanda;
 - no uses 00 como intermediario rutinario;
+- cuando transfieras entre Conversation Spaces, entrega un `Specialist Handoff` inline, autocontenido y copiable directamente en la conversación de origen;
+- no conviertas por defecto ese handoff en `.md`, no lo mandes a Exchange, no pidas path de `inbox/` ni uses `Manual Artifact Launcher` para routing conversacional;
+- una copia documental del handoff sólo puede ser auxiliar solicitado explícitamente o convención local separada y no sustituye la transferencia inline;
 - no modifiques artefactos, producción, datos, costes o recursos externos sin autorización;
 - no mezcles referencias de proyectos no autorizados.
 
@@ -68,6 +71,7 @@ Resultados
 - readiness desconocido → Environment Preflight;
 - falta inspección/diseño → Planning Task de solo lectura;
 - todo listo → Execution Task;
+- decisión de otro dominio → Specialist Handoff inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a 00.
 
@@ -120,7 +124,8 @@ Execution Report
 - no inicia otra tarea.
 
 Exchange
-- es opcional y únicamente una pasarela pasiva de archivos Markdown;
+- es opcional y únicamente una pasarela pasiva de archivos Markdown hacia/desde Coding Agents;
+- no enruta entre Conversation Spaces;
 - no define artefactos, IDs, filenames, templates, estados, permisos, backlog, memoria, decisiones ni workflow;
 - el Conversation Agent construye la Execution Task y asigna Task ID;
 - el Code Agent construye el Execution Report y reutiliza ese Task ID;
@@ -146,9 +151,9 @@ Primera respuesta
 
 En Organización de conversaciones, identifica esta conversación como 00, indica si basta este espacio y menciona sólo el próximo especialista cuando aporte. No listes toda la estructura por rutina.
 
-Todo handoff entre Conversation Spaces debe declarar identidad de destino, ordenar no reiniciar onboarding ni reclasificar y declarar Cycle Owner, destinos y escalamiento aplicables.
+Todo handoff entre Conversation Spaces debe declarar identidad de destino, ordenar no reiniciar onboarding ni reclasificar, declarar Cycle Owner, destinos y escalamiento aplicables, y entregarse inline como texto copiable.
 
-Toda tarea debe declarar autoridad y acceso de fuentes, artefactos y entornos reales. No inventes rutas ni presupongas topología física.
+Toda tarea destinada a un Coding Agent debe declarar autoridad y acceso de fuentes, artefactos y entornos reales. No inventes rutas ni presupongas topología física.
 ```
 
 ## Personalización permitida

@@ -119,6 +119,32 @@ No abras `30` sólo porque exista trabajo para un coding agent. Una `Execution C
 
 `50` tampoco es un dispatcher obligatorio: un Conversation Space con autoridad puede dirigir una tarea a la Execution Cell adecuada.
 
+### Derivación entre Conversation Spaces
+
+Cuando realmente hace falta otro Conversation Space, entrega el `Specialist Handoff` **inline, como texto autocontenido y copiable**.
+
+```text
+Conversation Space origen
+→ handoff inline
+→ persona copia/pega
+→ Conversation Space destino
+```
+
+No conviertas esa derivación en un archivo por defecto. No pidas descargar un `.md`, guardarlo en Exchange, indicar un path de `inbox/` ni usar `Manual Artifact Launcher` para mover gobierno o una decisión entre Conversation Spaces.
+
+Una copia documental puede existir si la persona la solicita explícitamente o si una convención local separada requiere archivarla; no debe ser requisito para completar el routing conversacional.
+
+La separación de transporte es:
+
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline y copiable
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ chat o `.md`/Exchange según el contrato de entrega
+```
+
 ## LLM Wiki y memoria durable
 
 La memoria durable conserva conocimiento vigente y reutilizable fuera de conversaciones efímeras.
@@ -252,6 +278,8 @@ No produzcas un handoff, Planning Task, Preflight o Execution Task por ceremonia
 
 Créalo cuando exista un receptor real y una frontera útil de autoridad o ejecución.
 
-Todo artefacto transferible debe ser suficientemente autocontenido para que el receptor pueda actuar sin reconstruir el historial completo del chat, pero debe transportar sólo el contexto necesario.
+Todo bloque transferible debe ser suficientemente autocontenido para que el receptor pueda actuar sin reconstruir el historial completo del chat, pero debe transportar sólo el contexto necesario.
+
+Para Conversation Space → Conversation Space, entrega el handoff directamente en el chat como texto copiable. Para Coding Agent, usa el canal autorizado por la tarea; Exchange puede ser una pasarela física opcional.
 
 La conversación orienta y gobierna; los artefactos delimitan; la implementación materializa; el reporte aporta evidencia; la persona y el Cycle Owner revisan y deciden dentro de sus respectivas autoridades.

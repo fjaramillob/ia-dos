@@ -46,7 +46,7 @@ LLM Wiki
 → materialización durable, portable y navegable de memoria cuando se adopta
 
 Exchange
-→ pasarela pasiva opcional de archivos .md
+→ pasarela pasiva opcional de archivos .md entre Conversation Agent y Coding Agent
 
 Repository
 → implementación real
@@ -73,6 +73,7 @@ Según el caso:
 - readiness indispensable desconocido → `Environment Preflight`;
 - falta inspección o diseño → `Planning Task`;
 - unidad definida + memoria suficiente + entorno listo → `Execution Task`;
+- falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
 
@@ -92,6 +93,21 @@ Cada bloque transferible declara su receptor y salida esperada:
 - `Execution Report` → Cycle Owner.
 
 El transporte o almacenamiento no crea tipos adicionales.
+
+La frontera de entrega es explícita:
+
+```text
+Conversation Space → Conversation Space
+→ Specialist Handoff inline, autocontenido y copiable
+→ la persona copia/pega el bloque en la conversación destino
+→ no requiere `.md`, Exchange, path ni Manual Artifact Launcher
+
+Conversation Space → Coding Agent
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ chat o `.md`/Exchange según el contrato de entrega
+```
+
+Una copia documental de un `Specialist Handoff` puede existir sólo si se solicita explícitamente o una convención local separada la conserva como archivo. Esa copia no sustituye ni condiciona la transferencia conversacional.
 
 Consulta [Tipado de artefactos y validación del receptor](docs/orchestration/typed-artifact-routing.md).
 
@@ -267,16 +283,18 @@ Si el reporte corresponde a una tarea de memory bootstrap, su revisión no habil
 
 ## Exchange
 
-Exchange es una **pasarela pasiva y opcional de archivos Markdown**.
+Exchange es una **pasarela pasiva y opcional de archivos Markdown para el intercambio con Coding Agents**.
 
 ```text
 Conversation Agent
-→ construye artefacto y asigna Task ID cuando aplica
+→ construye Task/Preflight/Resume y asigna Task ID cuando aplica
 → Exchange almacena / expone
-→ Code Agent consume y produce retorno
+→ Coding Agent consume y produce output tipado
 → Exchange almacena / expone
 → Conversation Agent / Cycle Owner revisa
 ```
+
+Exchange **no enruta Conversation Spaces**. Un `Specialist Handoff` entre Conversation Spaces se entrega inline y copiable; no necesita `inbox/`, path ni `Manual Artifact Launcher`.
 
 Exchange no define:
 
@@ -289,7 +307,8 @@ Exchange no define:
 - workflow;
 - backlog;
 - memoria durable;
-- decisiones.
+- decisiones;
+- routing conversacional.
 
 Una topología posible es:
 
@@ -310,10 +329,10 @@ Consulta [Crear o conectar Exchange](docs/getting-started/bootstrap-exchange.md)
 2. Sigue [Inicializar el Project Orchestrator](prompts/getting-started/initialize-project-orchestrator.md).
 3. Entrega una descripción breve y las fuentes disponibles.
 4. Comienza en `00 — Dirección y orquestación`.
-5. Abre otros Conversation Spaces sólo cuando una brecha requiera contexto persistente propio.
+5. Abre otros Conversation Spaces sólo cuando una brecha requiera contexto persistente propio; transfiere mediante un `Specialist Handoff` inline y copiable.
 6. Aplica los gates de memoria, readiness, Planning y Execution según corresponda.
 7. Reutiliza Execution Cells cuando aporten continuidad.
-8. Usa Exchange sólo cuando una pasarela de `.md` aporte valor real.
+8. Usa Exchange sólo cuando una pasarela de `.md` hacia/desde Coding Agents aporte valor real.
 
 Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](bundles/ia-dos-current-offline-pack.md) cuando declare `Estado: VIGENTE` y un baseline canónico. No combines bundles históricos.
 
