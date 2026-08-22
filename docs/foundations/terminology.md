@@ -30,6 +30,8 @@ Mantiene objetivo y límites, prepara o valida artefactos y revisa retornos dent
 
 Artefacto que transfiere una decisión o el gobierno de un resultado a otro Conversation Space. No autoriza ejecución técnica.
 
+Su transporte normativo entre Conversation Spaces es **inline, autocontenido y copiable**: la persona copia/pega el bloque en la conversación destino. No requiere `.md`, Exchange, path ni `Manual Artifact Launcher`; una copia documental sólo puede existir como auxiliar solicitado explícitamente o por una convención local separada.
+
 ## memoria durable
 
 Responsabilidad funcional de conservar conocimiento vigente y reusable fuera de conversaciones efímeras.
@@ -128,6 +130,8 @@ Incluye `Atención requerida` cuando existe un bloqueo, riesgo, desviación o de
 ## `Exchange`
 
 Pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Code Agents.
+
+No enruta Conversation Spaces ni sustituye el transporte inline de un `Specialist Handoff`.
 
 No define artefactos, IDs, nombres de archivo, templates, estados, permisos, workflow, backlog, memoria o decisiones.
 
