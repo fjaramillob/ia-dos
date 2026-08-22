@@ -9,7 +9,7 @@ La adopción sigue este orden conceptual, sin convertirse en una pipeline rígid
 1. [Inicializa el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md).
 2. Entrega una descripción breve y las fuentes disponibles.
 3. Comienza en `00 — Dirección y orquestación`; usa `definición inicial` para producto nuevo o `descubrimiento y adopción` para existente.
-4. Abre sólo el Conversation Space que desbloquee el siguiente resultado, usando el [Registro de tópicos](orchestration/topic-routing-registry.md).
+4. Abre sólo el Conversation Space que desbloquee el siguiente resultado, usando el [Registro de tópicos](orchestration/topic-routing-registry.md). Cuando transfieras gobierno entre Conversation Spaces, usa un `Specialist Handoff` inline, autocontenido y copiable; no requiere `.md`, Exchange, path ni `Manual Artifact Launcher`.
 5. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
 6. Si la siguiente unidad depende de historia conversacional, evalúa primero el [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
 7. Si una futura ejecución depende de readiness indispensable no comprobado, usa [Environment Preflight](execution/environment-readiness-and-resume.md).
@@ -19,7 +19,7 @@ La adopción sigue este orden conceptual, sin convertirse en una pipeline rígid
 11. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
 12. Cuando exista ejecución recurrente, define sólo las [Execution Cells](execution/execution-cells-and-exchange.md) que aporten continuidad real.
 13. Reutiliza una Execution Cell mientras siga respondiendo bien; no abras una conversación por tarea.
-14. Usa [Exchange](getting-started/bootstrap-exchange.md) sólo cuando una pasarela pasiva de Markdown aporte valor.
+14. Usa [Exchange](getting-started/bootstrap-exchange.md) sólo cuando una pasarela pasiva de Markdown hacia o desde Coding Agents aporte valor. Exchange no enruta Conversation Spaces.
 15. Devuelve planes, readiness reports y Execution Reports al Cycle Owner declarado.
 16. La persona responsable conserva la aprobación final cuando la decisión excede la autoridad delegada.
 17. Escala a `00` sólo ante reorientación real.
