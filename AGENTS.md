@@ -4,7 +4,7 @@
 
 Este repositorio contiene **IA-DOS**, un framework abierto para dirigir proyectos de software asistidos por IA mediante orquestación conversacional, planificación técnica, ejecución acotada, memoria durable y verificación basada en evidencia.
 
-Estas instrucciones gobiernan a los agentes que modifican **el repositorio IA-DOS**. No sustituyen los contratos operativos de los proyectos que adopten el método.
+Estas instrucciones gobiernan a los agentes que modifican **el repositorio IA-DOS**.
 
 ## Principio de trabajo
 
@@ -19,9 +19,9 @@ Antes de actuar, consulta sólo las fuentes necesarias para el alcance actual.
 Prioridad general:
 
 1. `AGENTS.md` para reglas de trabajo del repositorio.
-2. El documento o template directamente afectado por la tarea.
+2. El documento o template directamente afectado.
 3. Contratos canónicos relacionados cuando el cambio altere semántica compartida.
-4. `README.md`, `ORCHESTRATOR.md`, `docs/index.md` o `ROADMAP.md` cuando el cambio afecte presentación, onboarding, operación o dirección del método.
+4. `README.md`, `ORCHESTRATOR.md`, `docs/index.md` o `ROADMAP.md` cuando afecte presentación, onboarding, operación o dirección.
 5. `research/` como contexto e influencia, nunca como autoridad normativa por sí sola.
 
 No leas toda la documentación por defecto. Amplía la lectura sólo cuando el cambio pueda afectar contratos transversales.
@@ -33,126 +33,110 @@ Si modificas alguno de estos conceptos, comprueba sus representaciones relaciona
 - responsabilidad humana, `Conversation Space` y `Cycle Owner`;
 - `Specialist Handoff` y routing entre Conversation Spaces;
 - `Planning Task` e `Implementation Plan`;
+- granularidad de `Execution Task`;
+- `Authority Envelope`;
 - `Environment Preflight` y `Execution Resume`;
-- `Execution Task`;
-- `Execution Cell`;
+- `Execution Cell` y checkpoints operacionales;
 - `Execution Report`;
 - `Memory Bootstrap Gate`;
 - memoria durable / `LLM Wiki`;
 - Exchange;
-- tipado de artefactos;
-- `Output Delivery`, `Manual Artifact Launcher` y `Caveman Return` cuando se adopten;
-- Current Offline Pack.
+- `Output Delivery`, `Manual Artifact Launcher` y `Caveman Return`;
+- Current Offline Pack;
+- instalación y actualización de la referencia local.
 
 Una modificación de un contrato canónico no debe dejar una variante incompatible en templates, onboarding, `ORCHESTRATOR.md` o distribución offline.
 
-## Invariantes consolidados
+No reescribas evidencia histórica sólo porque conserve wording antiguo. Distingue superficies normativas vigentes de evidencia fechada.
 
-Mantén estas fronteras salvo decisión explícita que las cambie:
+## Invariantes consolidados
 
 ```text
 Persona responsable = dirección y aprobación final aplicable
 Conversation Space   = gobierno dentro de autoridad delegada
 Specialist Handoff   = transferencia inline y copiable entre Conversation Spaces
 Execution Cell       = continuidad de ejecución
-Execution Task       = contrato de una unidad
-Execution Report     = evidencia de ejecución
+Execution Task       = outcome cohesivo bajo una frontera estable de autoridad
+Authority Envelope   = permisos explícitos dentro de la Execution Task
+Execution Checkpoint = continuidad operacional, no autoridad
+Execution Report     = evidencia de lo ocurrido
 Memoria durable      = responsabilidad funcional
 LLM Wiki             = materialización durable, portable y navegable
 Repository           = implementación
-Exchange             = pasarela pasiva de archivos hacia/desde Coding Agents
+Exchange             = pasarela pasiva opcional hacia/desde Coding Agents
 ```
 
 Además:
 
-- `00 — Dirección y orquestación` es el Conversation Space inicial canónico;
-- los Conversation Spaces se abren bajo demanda, no como fases obligatorias;
-- un `Specialist Handoff` nuevo se entrega inline como texto autocontenido y copiable; no requiere `.md`, Exchange, path ni `Manual Artifact Launcher`;
-- una copia documental del handoff sólo puede ser auxiliar solicitado explícitamente o convención local separada; no sustituye el routing conversacional;
-- `50` no es un dispatcher obligatorio;
-- una tarea no implica una conversación nueva del coding agent;
-- una Execution Cell puede reutilizarse entre tareas sin heredar permisos;
-- la autorización de una Execution Task es explícita y no acumulativa;
-- el `Task ID` lo asigna el Conversation Agent que construye la tarea;
-- Exchange no define IDs, artefactos, filenames, templates, estados, permisos, backlog, memoria, decisiones o workflow;
-- Exchange no enruta entre Conversation Spaces;
-- `Manual Artifact Launcher` es efímero y no autoritativo: sólo localiza input y, cuando aplica, destino físico del output para un Coding Agent;
-- `Output Delivery` sólo autoriza materializar el artefacto de salida expresamente declarado; no amplía permisos sobre proyecto, entorno o recursos inspeccionados;
-- `Caveman Return` sólo puede compactar la conversación cuando la Task lo declara y el output completo ya fue materializado; nunca sustituye el artefacto canónico;
-- `Coding Agent — Planning` y `Environment Preflight` son de solo lectura respecto del proyecto/entorno, aunque puedan materializar su propio output cuando exista autorización explícita de `Output Delivery`;
-- `Execution Report` no aprueba su propio resultado ni elige la decisión de gobierno posterior;
-- el Cycle Owner revisa y gobierna dentro de la autoridad delegada; no sustituye la aprobación humana cuando una decisión cambia dirección, autoridad, riesgo o impacto reservado a la persona responsable;
-- antes de emitir una Planning Task o Execution Task que dependa de historia previa, `Memory Bootstrap Gate` evalúa si existe conocimiento relevante únicamente en conversaciones efímeras y exige persistir el checkpoint mínimo cuando corresponda;
-- después de revisar un Execution Report, el gobierno conversacional evalúa qué hechos nuevos merecen consolidarse en memoria durable; el coding agent no incorpora ni recomienda memoria adicional por defecto salvo que la propia tarea autorice una actualización documental concreta;
-- el coding agent no lee una LLM Wiki completa por defecto;
-- la política universal de persistencia o renovación de conversaciones de Planning permanece abierta.
+- `00 — Dirección y orquestación` es el Conversation Space inicial canónico y no un dispatcher obligatorio;
+- los Conversation Spaces se abren bajo demanda;
+- `Specialist Handoff` se entrega inline; no requiere `.md`, Exchange, path ni launcher;
+- si un Space es nuevo, se retoma después de un cambio relevante de IA-DOS o muestra reglas obsoletas, consulta sólo los contratos vigentes necesarios sin reiniciar onboarding;
+- una Task no implica una conversación nueva del coding agent;
+- una Execution Cell puede reutilizarse entre Tasks sin heredar permisos;
+- IA-DOS no maximiza cantidad de Tasks: maximiza el outcome seguro y verificable por Task;
+- no dividas sólo por duración, archivos, comandos, implementación, tests, commit, push, deploy o smoke;
+- divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
+- una acción sensible no declarada en la Task no está autorizada;
+- una acción explícitamente declarada, con gates cumplidos y frontera estable, no requiere otra ida y vuelta humana por rutina;
+- el coding agent nunca aprueba su propio plan o ejecución;
+- `Authority Envelope` y `<TASK-ID>-CHECKPOINT.md` no son Artifact Types;
+- `Execution Resume = Task original + delta del bloqueo resuelto` y conserva Task ID mientras objetivo, scope, autoridad, seguridad y arquitectura no cambien;
+- `Execution Report` es evidence-first y no vuelve a narrar la Task;
+- `Manual Artifact Launcher` es efímero y no autoritativo;
+- `Caveman Return` compacta sólo después de materialización completa autorizada;
+- Exchange es opcional, provider-agnostic, filesystem-first y pasivo;
+- Exchange no depende de Google Drive; Drive, OneDrive, Dropbox, Syncthing, NAS o carpeta local/manual son sólo mecanismos posibles de transporte;
+- `inbox/` contiene artifacts operativamente activos destinados a Coding Agents;
+- `outbox/` contiene outputs pendientes de consumo o aún requeridos por trabajo activo;
+- `archive/` es cold storage operacional por trazabilidad;
+- `folder ≠ workflow state` y `archive ≠ aprobado/completado/memoria durable/repositorio de documentos vivos`;
+- Exchange no enruta Conversation Spaces, no define IDs, templates, permisos, backlog, memoria o workflow;
+- una Task es suficientemente autocontenida cuando `Task + Required Reading` permiten ejecutarla sin conversaciones previas;
+- distingue `Embedded Contract`, `Required Reading` y `Reference`;
+- Planning sigue siendo de solo lectura y el plan sigue siendo propuesta;
+- el Cycle Owner puede adoptar un Implementation Plan dentro de autoridad delegada; la persona interviene ante cambios materiales de dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 ## LLM Wiki y memoria durable
-
-Usa los términos de forma consistente:
-
-```text
-memoria durable
-= responsabilidad funcional de conservar conocimiento vigente y reutilizable
-
-LLM Wiki
-= materialización durable, portable y navegable de esa memoria
-  para humanos y agentes
-```
 
 Una LLM Wiki:
 
 - normalmente usa Markdown estándar y enlaces relativos;
-- debe poder navegarse con herramientas como GitHub, editores u Obsidian sin depender de ellas para su semántica;
-- no es obligatoria para toda tarea ni requiere un repositorio separado;
+- debe poder navegarse con GitHub, editores u Obsidian sin depender de ellos para su semántica;
+- no es obligatoria para toda tarea ni requiere repositorio separado;
 - no debe convertirse por defecto en backlog, archivo de TASK/REPORT, log de chats o transcripciones.
 
 ## Reglas para agentes
 
-1. No agregues conceptos, herramientas, carpetas o procesos no solicitados ni justificados por una contradicción real.
-2. No presentes como implementado algo que sólo está propuesto, decidido o pendiente.
+1. No agregues conceptos, herramientas, carpetas o procesos no solicitados ni justificados por contradicción real.
+2. No presentes como implementado algo sólo propuesto o pendiente.
 3. Mantén el contenido principal en español.
-4. Conserva nombres técnicos establecidos cuando corresponda, por ejemplo `README.md`, `AGENTS.md`, `issue`, `pull request`, `branch`, `commit`, `Conversation Space`, `Project Orchestrator`, `Execution Task`, `Execution Cell`, `Execution Report` y `LLM Wiki`.
-5. Explica términos nuevos cuando no sean autoexplicativos en contexto.
-6. Evita lenguaje promocional, promesas futuras y complejidad no validada.
-7. Mantén IA-DOS independiente de una herramienta específica.
-8. No introduzcas referencias a proyectos particulares en contratos genéricos salvo que estén claramente marcadas como ejemplos.
-9. Distingue conversación, memoria, implementación, evidencia y transporte.
-10. No trates conversaciones o Exchange como fuente de verdad durable.
-11. No reintroduzcas `Context Packs` como requisito operativo vigente salvo decisión explícita.
-12. No introduzcas CLI, agentes autónomos propios, watchers, polling, triggers, RAG automático, registries o automatización compleja durante la etapa alpha sin una decisión explícita de alcance.
+4. Conserva nombres técnicos establecidos.
+5. Evita lenguaje promocional y complejidad no validada.
+6. Mantén IA-DOS independiente de herramientas y proveedores.
+7. No introduzcas referencias a proyectos particulares en contratos genéricos salvo ejemplos explícitos.
+8. Distingue conversación, memoria, implementación, evidencia y transporte.
+9. No trates conversaciones o Exchange como fuente de verdad durable.
+10. No reintroduzcas `Context Packs` como requisito vigente.
+11. No introduzcas CLI, agentes autónomos propios, watchers, polling, triggers, RAG automático, registries o automatización compleja durante alpha sin decisión explícita.
+12. Archify u otra visualización técnica puede evaluarse como capacidad opcional y Supporting Artifact; no la conviertas en dependencia del core ni Artifact Type sin una decisión explícita.
 
 ## Estado actual
 
-IA-DOS está en etapa **alpha de adopción en proyectos reales**.
-
-Los fundamentos y la consolidación operacional ya fueron completados. El foco actual es validar los contratos mediante uso real antes de añadir nuevas abstracciones.
-
-Consulta `ROADMAP.md` para el estado y horizonte vigentes.
-
-## Criterios de calidad
-
-Todo cambio debe:
-
-- resolver una necesidad clara o una contradicción verificable;
-- ser comprensible para personas que no sean programadoras expertas;
-- evitar duplicar contratos sin necesidad;
-- mantener terminología y enlaces consistentes;
-- distinguir hechos, decisiones, propuestas, opciones y excepciones;
-- preservar independencia de herramienta;
-- considerar consumo de contexto y tokens;
-- mantener equivalencia entre documentación canónica, templates, onboarding y distribución offline cuando comparten un contrato.
+IA-DOS está en etapa **alpha de adopción en proyectos reales**. El foco es validar contratos mediante uso real antes de añadir nuevas abstracciones.
 
 ## Verificación mínima
 
 Antes de cerrar una tarea:
 
 - revisa el diff completo;
-- confirma que el alcance declarado coincide con los archivos modificados;
+- confirma que el alcance coincide con los archivos modificados;
 - verifica enlaces relativos afectados;
 - busca contradicciones con contratos relacionados;
-- comprueba que no se reintroduzcan términos o modelos reemplazados;
-- distingue claramente evidencia de ejecución, decisión de gobierno y aprobación humana aplicable;
+- busca residuos normativos de heurísticas reemplazadas;
+- distingue evidencia histórica de contratos vigentes;
+- confirma que no se reintroduzcan aprobaciones rutinarias no exigidas por la frontera de autoridad;
+- confirma que Exchange no se confunda con un proveedor de sincronización;
 - reporta supuestos, limitaciones y pendientes reales.
 
-Si una revisión automática detecta una contradicción válida, corrígela antes de considerar el trabajo listo.
+Si una revisión detecta una contradicción válida, corrígela antes de considerar el trabajo listo.
