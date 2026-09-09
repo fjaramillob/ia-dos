@@ -59,15 +59,34 @@ Exchange no enruta Conversation Spaces.
 
 El Conversation Agent que construye una Execution Task asigna el `Task ID` antes del handoff o materialización.
 
+Cuando el proyecto no usa otra convención, IA-DOS recomienda:
+
+```text
+{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
+```
+
+Ejemplo:
+
+```text
+PROYECTO-10-APP-20260821-130700
+```
+
 Una candidata de Planning declara:
 
 ```text
 Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
 ```
 
-El Execution Report reutiliza exactamente el Task ID de su Task.
+Si la Execution Task se materializa como Markdown, pueden usarse:
 
-`Cycle ID` puede ser `NO APLICA`.
+```text
+{TASK-ID}-TASK.md
+{TASK-ID}-REPORT.md
+```
+
+El Execution Report reutiliza exactamente el Task ID de su Task. Exchange no genera ni valida esos IDs o filenames.
+
+`Cycle ID` puede ser `NO APLICA`; no inventes un ciclo sólo para completar el encabezado.
 
 ## Specialist Handoff
 
