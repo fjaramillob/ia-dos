@@ -2,20 +2,11 @@
 
 Este flujo convierte una necesidad confirmada en inspección, planificación o ejecución acotada, verificable y trazable.
 
-Consulta según corresponda:
-
-- [Registro de tópicos conversacionales](../orchestration/topic-routing-registry.md);
-- [Propiedad y retorno del ciclo](../orchestration/cycle-ownership.md);
-- [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md);
-- [Readiness del entorno y reanudación](../execution/environment-readiness-and-resume.md);
-- [Tipado de artefactos](../orchestration/typed-artifact-routing.md);
-- [Autoridad de fuentes, artefactos y entornos](../execution/source-and-artifact-authority.md).
-
 ## Flujo
 
 ```text
 Conversation Space
-→ resultado esperado + Cycle Owner
+→ outcome esperado + Cycle Owner
 → Memory Bootstrap Gate cuando depende de historia
 → Environment Preflight cuando readiness es desconocido
 → Planning Task cuando falta inspección/diseño
@@ -30,60 +21,29 @@ Conversation Space
 
 ## 1. Confirmar propiedad y destinos
 
-Antes de delegar, declara:
+Declara outcome, Cycle Owner, destino del retorno y escalamiento cuando corresponda.
 
-- resultado esperado;
-- Cycle Owner;
-- destino del artefacto de retorno;
-- espacio de escalamiento cuando corresponda.
-
-El Cycle Owner actúa dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando la decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+El Cycle Owner actúa dentro de autoridad delegada. La persona responsable interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 ## 2. Evaluar memoria
 
-Antes de una Planning Task o Execution Task que dependa de historia previa, aplica:
+Antes de una Planning Task o Execution Task que dependa de historia previa, aplica Memory Bootstrap Gate.
 
-> ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
-
-```text
-PASS
-→ continúa con la unidad evaluada
-
-BOOTSTRAP REQUIRED
-→ bloquea la unidad evaluada
-→ emite una Execution Task separada cuyo único resultado sea persistir el checkpoint durable mínimo
-→ deja la unidad original fuera de alcance
-→ revisa el Execution Report del bootstrap
-→ reevalúa el gate de la unidad original
-```
-
-La tarea de bootstrap declara explícitamente que responde a `BOOTSTRAP REQUIRED`; no finge `PASS` ni ejecuta la unidad que busca desbloquear.
-
-No crees una LLM Wiki completa por ceremonia.
+`BOOTSTRAP REQUIRED` bloquea la unidad dependiente original y permite una Execution Task separada cuyo único outcome sea materializar el checkpoint durable mínimo. Después de revisar su Report, reevalúa el gate original.
 
 ## 3. Evaluar readiness
 
-Si una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, prepara `Environment Preflight` en solo lectura respecto del entorno inspeccionado.
+Si una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, prepara `Environment Preflight` en solo lectura.
 
-Contrato tipado:
-
-```text
-Environment Preflight
-→ Coding Agent — Planning
-→ Environment Readiness Report
-```
-
-Si el Preflight declara `Output Delivery`, el coding agent puede materializar únicamente ese `Environment Readiness Report`; esto no autoriza cambios sobre el entorno.
-
-Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura. El readiness report no concede escritura por sí mismo.
+Sólo `LISTO PARA EJECUCIÓN` habilita considerar escritura.
 
 ## 4. Decidir Planning o Execution
 
 Pregunta:
 
 ```text
-¿El resultado está suficientemente definido, es pequeño y puede ejecutarse
-con seguridad sin inspección o diseño técnico adicional?
+¿El outcome está suficientemente definido, es cohesivo, acotado y verificable
+bajo una frontera estable de autoridad sin inspección o diseño adicional?
 ```
 
 - sí → Execution Task;
@@ -91,101 +51,147 @@ con seguridad sin inspección o diseño técnico adicional?
 - no por decisión humana indispensable → deriva sólo esa decisión;
 - no por reorientación → escala a `00`.
 
-Una unidad ordinaria dependiente de memoria previa sólo llega a este gate después de `Memory Bootstrap Gate = PASS`. La unidad separada de checkpoint es la excepción explícita descrita arriba.
-
 ## 5. Planning Task
 
 La Planning Task:
 
 - es de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
-- puede autorizar únicamente la materialización de su propio `Implementation Plan` mediante `Output Delivery`;
+- puede materializar únicamente su propio Implementation Plan cuando Output Delivery lo autoriza;
 - resuelve una incertidumbre técnica dominante;
-- declara fuentes, autoridad y límites;
-- devuelve un `Implementation Plan` al Cycle Owner;
-- no autoriza escritura sobre el proyecto ni ejecución.
+- devuelve Implementation Plan al Cycle Owner;
+- no autoriza ejecución.
 
-Un identificador lógico de planning no obliga a crear una conversación nueva por tarea.
+El plan propone, no ejecuta. El Cycle Owner puede adoptarlo dentro de autoridad delegada. No exijas automáticamente una nueva aprobación humana si el plan no cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
-## 6. Revisar el Implementation Plan
+## 6. Execution Task
 
-El Cycle Owner compara evidencia, hechos, inferencias, riesgos, dependencias y tamaño de la primera unidad propuesta.
+La Task debe declarar:
 
-Cuando la primera unidad sea segura, prepara o valida una `Execution Task` candidata y obtiene la autorización humana aplicable.
-
-Plan producido no equivale a plan aprobado ni a ejecución autorizada.
-
-## 7. Execution Task
-
-Usa la plantilla compacta o completa según la complejidad.
-
-Debe declarar:
-
-- objetivo único;
+- outcome cohesivo;
 - Cycle Owner y destino;
-- Execution Cell o sesión cuando corresponda;
-- contexto durable estrictamente necesario;
-- fuentes y autoridad;
+- fuentes de autoridad;
+- Embedded Contract;
+- Required Reading;
+- References;
 - alcance y fuera de alcance;
-- zonas autorizadas;
-- capacidades y acciones externas autorizadas;
+- Authority Envelope;
 - criterios de aceptación;
 - verificaciones;
 - condiciones de detención.
 
-Antes de ejecutar, confirma que pueda completarse, verificarse y reportarse como una sola unidad.
+No dividas la Task sólo por duración, cantidad de archivos/comandos o por contener fases de implementación, tests, commit, push, deploy o smoke.
 
-Una Execution Cell activa se reutiliza mientras siga respondiendo bien. No abras una conversación nueva sólo porque cambia la tarea. Cada tarea vuelve a declarar sus permisos.
+Puede contener:
 
-## 8. Ejecutar
+```text
+Revalidate
+→ Implement
+→ Verify
+→ Commit
+→ Push
+→ Deploy
+→ Production Smoke
+→ Final State
+```
+
+si todas las fases sirven al mismo outcome y están autorizadas dentro de una frontera estable.
+
+Divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
+
+## 7. Authority Envelope
+
+Una acción sensible no declarada está prohibida.
+
+Una acción explícitamente declarada en la Task, con gates previos cumplidos y frontera estable, puede ejecutarse sin otra ida y vuelta humana por rutina.
+
+Branch, commit, push, PR, merge, deploy, producción, datos, servicios externos y costes siguen siendo capacidades separadas aunque puedan formar parte de la misma Task.
+
+## 8. Ejecutar y mantener continuidad
 
 El coding agent:
 
-1. valida rol y tarea;
-2. lee instrucciones locales aplicables;
-3. inspecciona el estado real antes de escribir;
-4. modifica sólo lo autorizado;
-5. ejecuta verificaciones;
+1. valida rol y Task;
+2. lee Required Reading e instrucciones locales;
+3. inspecciona el estado real;
+4. ejecuta sólo lo autorizado;
+5. verifica;
 6. revisa el diff;
-7. devuelve un `Execution Report` al destino indicado.
+7. devuelve Execution Report.
 
-Cuando la Task usa `Output Delivery`, materializa únicamente el output declarado en el destino autorizado. Si además declara `Caveman Return: Sí`, la conversación puede limitarse al estado/resultado esencial, atención requerida y referencia al archivo completo ya materializado.
+Una Execution Cell activa se reutiliza mientras siga respondiendo bien.
 
-## 9. Revisar el Execution Report
+Para una Task larga puede existir `<TASK-ID>-CHECKPOINT.md` con avance, HEAD/worktree, fases completadas, pendiente y bloqueos. El checkpoint no agrega autoridad.
 
-El reporte utiliza:
+## 9. Execution Resume
+
+Reanuda la misma Task cuando se resolvió un bloqueo sin cambiar objetivo, alcance, autoridad, seguridad o arquitectura.
 
 ```text
-Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+Execution Resume
+= Task original
++ delta del bloqueo resuelto
 ```
 
-El Cycle Owner revisa objetivo, alcance, evidencia, verificaciones, autorizaciones, desviaciones y pendientes del alcance original.
+Conserva Task ID.
 
-El coding agent no aprueba su propio resultado, no selecciona la siguiente acción y no consolida memoria durable por defecto.
+## 10. Execution Report
 
-Después de revisar la evidencia, la autoridad correspondiente decide cierre, corrección, reversión, transferencia, escalamiento o siguiente unidad. Separadamente se evalúa si hechos nuevos merecen consolidación durable.
+```text
+Task
+→ qué estaba autorizado
 
-Si el reporte corresponde a un memory bootstrap, primero reevalúa el gate de la unidad original; no la autoriza automáticamente.
+Report
+→ qué ocurrió realmente
+```
 
-## 10. Cerrar o continuar
+El Report debe ser evidence-first y proporcional:
 
-Al cerrar:
+- Outcome;
+- Evidence;
+- Actual Scope;
+- Acceptance;
+- Deviations;
+- Final State.
 
-- la implementación permanece en el artefacto técnico real;
-- la evidencia permanece en Report/diff/PR u otro mecanismo;
-- la memoria durable se actualiza sólo con conocimiento confirmado y mediante una acción autorizada;
-- Exchange, si existe, sólo conserva o transporta los `.md` intercambiados;
-- `00` recibe únicamente reorientación real.
+No vuelva a narrar la Task ni seleccione la siguiente acción de gobierno.
+
+## 11. Output Delivery y Caveman Return
+
+Cuando la Task usa Exchange y declara `Caveman Return: Sí`, el coding agent materializa primero el output completo.
+
+Sólo entonces la conversación puede reducirse a:
+
+```text
+EJECUCIÓN: COMPLETADO
+Atención requerida: Ninguna
+Reporte: <PATH>
+```
+
+No repitas tests, commits, deploy, smoke o paths que ya viven en el Report.
+
+## 12. Exchange
+
+Exchange es opcional, provider-agnostic, filesystem-first y pasivo.
+
+No enruta Conversation Spaces, no es backlog, no es memoria durable y no depende de Google Drive.
+
+Semántica mínima:
+
+```text
+inbox = artifacts operativamente activos destinados a Coding Agents
+outbox = outputs pendientes de consumo o aún requeridos por trabajo activo
+archive = cold storage operacional por trazabilidad
+```
+
+`folder ≠ workflow state` y `archive ≠ aprobado/completado/memoria durable/repositorio de documentos vivos`.
 
 ## Rechaza el cierre cuando
 
 - falta autoridad o destino;
-- una Planning Task modificó el proyecto o entorno fuera de la materialización de su propio output expresamente autorizado;
-- un plan se presenta como implementación;
-- readiness indispensable sigue `NO LISTO` o `DESCONOCIDO`;
-- una unidad ordinaria depende de memoria chat-only sin haber resuelto `BOOTSTRAP REQUIRED`;
-- la Execution Task mezcla resultados independientes;
-- faltan verificaciones requeridas sin explicación;
-- aparecen cambios fuera de alcance;
-- se tomaron acciones no autorizadas;
-- el reporte pretende aprobar su propio resultado o decidir la memoria posterior.
+- readiness indispensable sigue no listo/desconocido;
+- una Task ordinaria depende de memoria chat-only no resuelta;
+- cambió materialmente la frontera sin nueva decisión;
+- aparecen acciones no autorizadas;
+- faltan verificaciones críticas sin explicación;
+- existen cambios fuera de alcance;
+- el Report pretende aprobar su propio resultado o decidir memoria posterior.
