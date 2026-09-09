@@ -1,12 +1,8 @@
 # Execution Cells y Exchange
 
-Este documento define cómo IA-DOS organiza continuidad de ejecución en coding agents y cómo puede utilizar una pasarela pasiva de archivos Markdown entre Conversation Agents y Code Agents.
+Este documento define continuidad de ejecución en coding agents y la pasarela opcional de artefactos Markdown que un proyecto puede usar para desacoplar Conversation Agents y Coding Agents.
 
 ## Principio
-
-Una conversación de coding agent no representa una tarea, una especialidad profesional ni un Conversation Space de gobierno.
-
-Puede representar una instancia activa de una **Execution Cell** cuando el proyecto adopta ese modelo.
 
 ```text
 Persona responsable
@@ -19,313 +15,232 @@ Execution Cell
     mantiene continuidad de ejecución
 
 Execution Task
-    delimita una unidad concreta y sus permisos
+    delimita un outcome cohesivo y su Authority Envelope
 
 Execution Report
-    devuelve evidencia
+    devuelve evidencia de lo ocurrido
 
 Exchange
-    sólo transporta o almacena archivos .md entre Conversation Agent y Coding Agent cuando se adopta ese transporte
+    transporta o almacena artefactos .md hacia/desde Coding Agents cuando el proyecto lo adopta
 ```
 
 ## Execution Cell
 
-Una `Execution Cell` es un contexto durable de ejecución definido por proyecto porque separar ese flujo mejora continuidad operacional.
+Una `Execution Cell` es un contexto de continuidad de ejecución definido por proyecto porque separar ese flujo mejora continuidad operacional.
 
-Las células se descubren según el proyecto. IA-DOS no impone una lista universal de `Frontend`, `Backend`, `QA`, `DevOps` u otros especialistas.
+No representa una tarea, una especialidad profesional ni un Conversation Space.
 
-Ejemplos genéricos:
+Mantén una sola conversación activa por Execution Cell mientras siga respondiendo bien. No existe un límite artificial por cantidad de tareas, antigüedad, ciclo, mensajes o tiempo transcurrido.
 
-```text
-Proyecto de aplicación
-├── App
-└── Wiki Sync
-```
+Renueva únicamente ante evidencia de degradación, contaminación de contexto o necesidad real de un contexto limpio.
 
-```text
-Proyecto editorial
-├── Artículos
-├── Noticias
-└── Monetización
-```
+Reutilizar una conversación no acumula permisos. Cada Execution Task vuelve a declarar su Authority Envelope.
 
-Una competencia técnica distinta no justifica por sí sola una conversación nueva. Ante la duda, reutiliza una célula existente.
+## Tareas largas y checkpoints
 
-## Política de conversaciones
+Una Task puede durar lo necesario para completar un outcome cohesivo bajo una frontera estable de autoridad.
 
-Mantén una sola conversación activa por Execution Cell mientras siga respondiendo bien.
-
-No existe un límite artificial por:
-
-- cantidad de tareas;
-- antigüedad;
-- ciclo;
-- número de mensajes;
-- tiempo transcurrido.
-
-Renueva únicamente ante evidencia de degradación, por ejemplo:
-
-- mezcla decisiones antiguas con vigentes;
-- arrastra instrucciones obsoletas;
-- confunde tareas cerradas con trabajo activo;
-- pierde precisión por contaminación de contexto;
-- se requiere deliberadamente un contexto limpio.
-
-La renovación crea una nueva instancia de la misma célula:
+Cuando la continuidad operacional lo justifique puede existir un sidecar opcional:
 
 ```text
-App · 01 → cerrada
-App · 02 → activa
+<TASK-ID>-CHECKPOINT.md
 ```
 
-La continuidad del proyecto no debe depender de conservar la conversación anterior.
+Puede registrar:
 
-## Autorización por tarea
+- avance;
+- HEAD o referencia técnica equivalente;
+- estado del worktree;
+- fases completadas;
+- pendiente;
+- bloqueos;
+- evidencia de continuidad útil para otro Coding Agent.
 
-Reutilizar una conversación no acumula permisos.
+```text
+Checkpoint ≠ autorización
+Checkpoint ≠ Execution Resume
+Checkpoint ≠ Artifact Type
+```
 
-Cada Execution Task vuelve a declarar:
-
-- objetivo;
-- alcance y fuera de alcance;
-- autoridad y acceso;
-- capacidades autorizadas;
-- acciones externas;
-- criterios de aceptación;
-- verificaciones;
-- condiciones de detención;
-- destino del reporte.
-
-El coding agent no inicia la siguiente tarea por sí mismo.
-
-## Relación con Planning
-
-Execution Cells no definen una política para conversaciones de Planning.
-
-Un identificador lógico `PLAN — ...` puede utilizarse cuando aporte, pero IA-DOS mantiene abierta la política universal sobre persistencia o renovación de conversaciones de Planning.
-
-La separación entre Planning y Execution es de rol y autoridad. Una futura Execution Task puede reutilizar una Execution Cell activa y debe volver a declarar permisos completos.
+La autoridad sigue estando en la Execution Task y, cuando corresponde, en Execution Resume. Un nuevo Coding Agent debe leer Task + Checkpoint, verificar el estado real y continuar sólo dentro de la autoridad vigente.
 
 # Exchange
 
-Exchange es una **pasarela pasiva y opcional de archivos Markdown entre Conversation Agents y Coding Agents**.
+Exchange es una **pasarela opcional, provider-agnostic, filesystem-first y pasiva de artefactos Markdown hacia/desde Coding Agents**.
 
-No es un protocolo semántico y no define artefactos, IDs, estados, contratos, workflow o decisiones.
+No es un protocolo semántico, workflow engine, backlog, memoria durable ni router conversacional.
+
+```text
+Exchange ≠ Google Drive
+Exchange ≠ workflow engine
+Exchange ≠ backlog
+Exchange ≠ memoria durable
+Exchange ≠ router entre Conversation Spaces
+```
+
+Google Drive puede ser un adaptador de sincronización opcional. También pueden usarse OneDrive, Dropbox, Syncthing, NAS, una carpeta local/manual u otro mecanismo equivalente. Ninguno de esos proveedores cambia la semántica de Exchange.
 
 ## Exchange no enruta Conversation Spaces
-
-El routing entre Conversation Spaces no usa Exchange por defecto.
 
 ```text
 Conversation Space → Conversation Space
 → Specialist Handoff inline, autocontenido y copiable
-→ la persona lo pega como mensaje en el espacio destino
 
 Conversation Space → Coding Agent
-→ Task / Preflight / Resume
-→ puede usar `.md` y Exchange cuando el proyecto adopta ese transporte
+→ Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ chat o `.md`/Exchange según el contrato de entrega
 ```
 
-Por tanto, un `Specialist Handoff` no requiere:
-
-- `.md`;
-- `inbox/`;
-- `outbox/`;
-- path absoluto;
-- `Manual Artifact Launcher`.
-
-Una copia documental del handoff sólo puede considerarse archivo auxiliar solicitado explícitamente o convención local separada; no es la transferencia normativa entre espacios.
-
-```text
-Conversation Agent
-→ construye la Execution Task completa
-→ asigna Task ID
-→ decide el filename si materializa el artefacto
-
-Exchange
-→ almacena / pone a disposición ese .md
-
-Code Agent / Execution Cell
-→ ejecuta la tarea
-→ construye Execution Report con el mismo Task ID
-
-Exchange
-→ almacena / pone a disposición el REPORT .md
-
-Conversation Agent / Cycle Owner
-→ revisa evidencia dentro de autoridad delegada
-
-Persona responsable
-→ aprueba cuando corresponde
-```
+Un `Specialist Handoff` no requiere `.md`, `inbox/`, `outbox/`, path absoluto ni `Manual Artifact Launcher`.
 
 ## Qué hace Exchange
 
 Únicamente:
 
-- recibe archivos `.md` ya construidos destinados a intercambio con Coding Agents;
-- los mantiene disponibles para el otro lado;
-- puede conservar historial cuando el proyecto decide archivarlo.
+- mantiene artefactos Markdown disponibles para el otro lado;
+- permite desacoplar el intercambio del historial conversacional;
+- puede conservar artifacts retirados de circulación activa por trazabilidad.
 
-Exchange no interpreta el contenido.
+Exchange no interpreta contenido ni decide qué ejecutar.
 
 ## Qué NO hace Exchange
 
 Exchange no:
 
 - enruta entre Conversation Spaces;
-- materializa por defecto Specialist Handoffs;
 - genera o valida Task IDs;
-- define formato de IDs;
-- crea Execution Tasks o Execution Reports;
-- define filenames;
-- define templates;
-- define estados;
+- define filenames o templates;
+- define Artifact Types;
+- define estados de workflow;
 - concede permisos;
 - aprueba resultados;
 - decide siguiente trabajo;
 - mantiene backlog;
 - consolida memoria durable;
-- define versionado de correcciones;
 - observa carpetas automáticamente;
 - dispara ejecuciones;
 - hace polling;
 - define watchers o triggers;
 - sincroniza servicios externos por sí mismo.
 
-La identidad pertenece al artefacto construido por el Conversation Agent y al contrato de IA-DOS.
-
 ## Topología mínima
 
-Una estructura posible es:
-
 ```text
-proyecto-exch/
+project-exch/
 ├── inbox/
 ├── outbox/
 └── archive/
 ```
 
-La ubicación es opcional. Puede ser carpeta local, repositorio, carpeta sincronizada u otro almacenamiento adecuado.
-
-No es obligatorio un recurso hermano `proyecto-exch`.
+La ubicación es opcional. No es obligatorio un repositorio hermano `project-exch`.
 
 ## Semántica de carpetas
 
-Son ubicaciones físicas, no estados del método.
-
 ```text
 inbox/
-→ archivos .md hacia Code Agent
+→ artifacts operativamente activos destinados a Coding Agents
 
 outbox/
-→ archivos .md hacia Conversation Agent
+→ outputs pendientes de consumo o todavía requeridos por trabajo activo
 
 archive/
-→ archivos retirados del intercambio activo y conservados como historia
+→ cold storage operacional de artifacts retirados de circulación activa pero conservados por trazabilidad
 ```
 
-Nada ocurre automáticamente por mover un archivo.
-
-`archive/` no significa `APROBADO` ni `COMPLETADO`.
-
-## Artefactos
-
-El archivo enviado por Exchange es exactamente el artefacto que IA-DOS habría entregado por otro medio al Coding Agent.
+Reglas:
 
 ```text
-Execution Task
-→ mismo contenido
-→ mismo Task ID
-→ mismo contrato
+folder ≠ workflow state
+archive ≠ aprobado
+archive ≠ completado
+archive ≠ memoria durable
+archive ≠ repositorio de documentos vivos
 ```
 
-El filename lo decide el agente o flujo que materializa el archivo. IA-DOS puede recomendar relacionarlo con Task ID, pero Exchange no lo define ni valida.
+Mover un archivo no cambia estado, autoridad ni aprobación.
 
-El Execution Report reutiliza el Task ID de la Execution Task original por contrato del artefacto.
+Un documento vivo —por ejemplo un documento jurídico en construcción— no debe usar `archive/` como repositorio documental por defecto.
 
-## Flujo manual actual
+## Flujo manual
 
 ```text
 Conversation Agent
-        ↓ construye TASK.md
-inbox/
-        ↓ transferencia
+→ construye artefacto autoritativo
+→ lo materializa en inbox cuando la Task/flujo lo requiere
+
+Persona
+→ puede entregar un Manual Artifact Launcher
+
 Code Agent / Execution Cell
-        ↓ construye REPORT.md
-outbox/
-        ↓ transferencia
+→ consume el artefacto
+→ ejecuta dentro de autoridad
+→ materializa el output autorizado en outbox
+
 Conversation Agent / Cycle Owner
-        ↓ revisión
-archive/ cuando corresponda
+→ consume y revisa el output completo
+
+archive/
+→ sólo cuando el artifact deja la circulación activa y se conserva por trazabilidad
 ```
 
-La transferencia puede ser manual. Una futura sincronización física no cambia la naturaleza pasiva de Exchange y no autoriza watchers, triggers o ejecución automática por sí misma.
+Nada ocurre automáticamente por la existencia o movimiento de un archivo.
 
-### Manual Artifact Launcher
+## Manual Artifact Launcher
 
-Cuando la persona necesita iniciar manualmente al Code Agent, puede usar un `Manual Artifact Launcher` efímero que indique:
-
-- tipo esperado;
-- ruta física del artefacto autoritativo en `inbox/`;
-- ruta física de `outbox/` cuando la tarea autorice materializar la salida;
-- instrucción de leer el artefacto completo.
-
-El launcher **no es un Artifact Type** y no agrega autoridad ni elige el modo de retorno.
+El launcher es efímero y no autoritativo. Patrón preferido:
 
 ```text
-Launcher = localización manual para Coding Agent
-Artifact = contrato autoritativo
-Exchange = almacenamiento pasivo
+Ejecuta exactamente la tarea definida en:
+<PATH-AL-TASK>
+
+Lee el archivo completo antes de actuar y respeta estrictamente su contrato.
+Al finalizar materializa el output indicado dentro de la propia tarea y reutiliza exactamente el mismo Task ID.
 ```
-
-No uses Manual Artifact Launcher para un Specialist Handoff entre Conversation Spaces.
-
-Consulta [Entrega manual de artefactos](manual-artifact-delivery.md) y el [prompt reusable](../../prompts/execution/manual-artifact-launcher.md).
-
-### Materialización del output
-
-Una tarea puede autorizar explícitamente que su output completo se escriba como `.md` en `outbox/`.
-
-Esto no convierte Exchange en un sistema activo ni amplía escritura sobre el proyecto.
-
-En Planning y Preflight:
 
 ```text
-solo lectura del proyecto/entorno
-≠ prohibición de materializar el propio output autorizado
+Launcher ≠ Task
+Launcher ≠ autorización
+Launcher ≠ memoria
+Launcher ≠ Exchange
 ```
 
-El Code Agent puede escribir únicamente el artefacto de salida declarado y sólo en el destino autorizado.
+## Output Delivery y Caveman Return
 
-### Caveman Return
-
-La respuesta conversacional del Code Agent puede reducirse a un `Caveman Return` **sólo cuando**:
-
-1. la Task autoritativa declara `Caveman Return: Sí`;
-2. el output completo fue materializado correctamente en el destino declarado.
+Una Task puede autorizar:
 
 ```text
-estado o resultado esencial
-+ atención requerida
-+ nombre/path del artefacto completo
+Output Delivery:
+Channel: Exchange
+Location: outbox
+Filename: <TASK-ID>-REPORT.md
+Caveman Return: Sí
 ```
 
-Si cualquiera de esas condiciones falta, el Code Agent devuelve el artefacto completo según el canal y contrato de la Task.
+Sólo esa declaración autoriza materializar el output indicado.
 
-El Caveman Return es una representación conversacional mínima, **no un nuevo artefacto** y no reemplaza el Implementation Plan, Environment Readiness Report o Execution Report completo.
+Si el output completo fue materializado correctamente y la Task declara `Caveman Return: Sí`, la conversación debe ser mínima:
+
+```text
+EJECUCIÓN: COMPLETADO
+Atención requerida: Ninguna
+Reporte: <PATH>
+```
+
+No repitas tests, commits, deploy, smoke ni detalle que ya vive en el Report.
+
+Caveman Return no es un Artifact Type y nunca sustituye un output completo que no haya sido materializado correctamente.
 
 ## Inmutabilidad histórica
 
 Una vez entregado un artefacto, no debe sobrescribirse silenciosamente para alterar qué se pidió o respondió.
 
-Si una corrección requiere un nuevo artefacto, el agente responsable decide su identidad según las reglas vigentes del proyecto. Exchange sólo conserva el archivo resultante.
+Si una corrección requiere un nuevo artefacto, su identidad se decide según las reglas vigentes del proyecto. Exchange sólo conserva el archivo resultante.
 
-## Relación con memoria, backlog e implementación
+## Relación con otras fuentes
 
 ```text
 Exchange
-→ ¿qué archivos intercambiamos con Coding Agents?
+→ ¿qué artifacts operativos intercambiamos con Coding Agents?
 
 LLM Wiki / memoria durable
 → ¿qué conocimiento vigente y reusable conservamos?
@@ -342,38 +257,14 @@ Conversations
 
 Exchange no debe convertirse en ninguna de esas fuentes.
 
-`memoria durable` es la responsabilidad funcional. `LLM Wiki` es una posible materialización portable de esa memoria.
-
-## Wiki Sync
-
-Una célula `Wiki Sync` puede existir cuando el mantenimiento físico de una LLM Wiki sea un flujo durable que justifique continuidad separada.
-
-Su función puede ser principalmente mecánica:
-
-- alinear archivos locales/remotos;
-- revisar Git;
-- commit o push cuando esté autorizado;
-- validar estructura, Markdown o enlaces.
-
-La síntesis de conocimiento permanece en el plano conversacional y puede involucrar `90 — Wiki y memoria` cuando aporta.
-
-No crees `Wiki Sync` automáticamente por usar una LLM Wiki.
-
 ## Regla principal
 
 ```text
-Conversation ≠ Task
-Conversation ≠ Execution Cell
-Execution Cell ≠ Specialist
-
-Conversation Space Handoff = inline y copiable
 Execution Cell = continuidad de ejecución
-Execution Task = contrato de una unidad
+Execution Task = outcome cohesivo + Authority Envelope
+Execution Checkpoint = continuidad operacional, no autoridad
 Execution Report = evidencia
-LLM Wiki = memoria durable materializada
-Repository = implementación
-Exchange = pasarela pasiva de archivos .md hacia/desde Coding Agents
-Manual Artifact Launcher = localización efímera para Coding Agent, no autoridad
-Caveman Return = presentación conversacional mínima sólo por opt-in de la Task
-Persona responsable = aprobación final aplicable
+Exchange = pasarela pasiva opcional de artifacts .md hacia/desde Coding Agents
+Manual Artifact Launcher = localización efímera
+Caveman Return = presentación mínima después de materialización completa autorizada
 ```
