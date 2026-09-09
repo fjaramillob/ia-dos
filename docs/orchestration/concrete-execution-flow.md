@@ -6,7 +6,7 @@ IA-DOS debe producir avances verificables sin depender de una plataforma, provee
 
 ```text
 dirección suficiente
-→ siguiente resultado verificable
+→ siguiente resultado definido y cohesivo
 → asignar Cycle Owner
 → Memory Bootstrap Gate cuando dependa de historia conversacional
 → Environment Preflight cuando readiness indispensable sea desconocido
@@ -14,7 +14,7 @@ dirección suficiente
 → Execution Task cuando la unidad está lista
 → artefacto vuelve al Cycle Owner
 → revisión y decisión dentro de la autoridad aplicable
-→ persona responsable aprueba cuando corresponde
+→ persona responsable interviene cuando corresponde
 → escalar a 00 sólo ante reorientación real
 ```
 
@@ -25,10 +25,10 @@ dirección suficiente
 Evalúa en este orden:
 
 ```text
-1. ¿El resultado está suficientemente definido, es pequeño y verificable?
+1. ¿El resultado está suficientemente definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
 2. Si depende de historia, ¿el conocimiento necesario ya es durable?
 3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿el coding agent puede proponer una primera unidad segura?
+4. Si falta inspección o diseño, ¿el coding agent puede proponer una unidad segura?
 ```
 
 - memoria necesaria sólo en conversaciones → `Memory Bootstrap Gate`;
@@ -54,7 +54,7 @@ Execution Task de bootstrap
 → reevaluar gate original
 ```
 
-La tarea de bootstrap no finge `PASS` ni ejecuta el resultado original. Una unidad ordinaria dependiente de esa memoria sólo continúa después de reevaluar el gate y obtener `PASS`.
+La tarea de bootstrap no finge `PASS` ni ejecuta el resultado original.
 
 ## Planning Task
 
@@ -65,28 +65,65 @@ Planning Task
 → Coding Agent — Planning
 → Implementation Plan
 → revisión del Cycle Owner
-→ aprobación humana cuando corresponda
+→ adopción dentro de autoridad delegada
+→ aprobación humana sólo cuando corresponda
 → Execution Task autorizada
 ```
 
 No autoriza escritura, commits, cambios remotos, despliegues, recursos externos ni costes.
 
-## Gate de tamaño
+Un Implementation Plan sigue siendo propuesta, pero no exige por sí mismo una nueva aprobación humana. El Cycle Owner puede adoptarlo cuando no cambie materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
+
+## Gate de granularidad
 
 Antes de aprobar una Execution Task pregunta:
 
 ```text
-¿Puede completarse, verificarse y reportarse como una sola unidad
-sin mezclar resultados independientes ni tomar decisiones mayores nuevas?
+¿Existe un outcome definido, cohesivo, acotado y verificable
+que pueda completarse bajo una frontera estable de autoridad?
 ```
 
-Si no, divide y autoriza sólo la primera unidad segura.
+No dividas una Task sólo por duración, archivos, comandos o por contener fases internas como implementación, tests, commit, push, deploy o smoke.
+
+Una misma Task puede ejecutar:
+
+```text
+Revalidate
+→ Implement
+→ Verify
+→ Commit
+→ Push
+→ Deploy
+→ Production Smoke
+→ Final State
+```
+
+cuando todas las fases sirven al mismo outcome y están explícitamente autorizadas.
+
+Divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
+
+## Authority Envelope
+
+Cada Execution Task puede agrupar las capacidades explícitamente autorizadas para el outcome completo.
+
+```text
+acción sensible no declarada
+→ no autorizada
+
+declarada en la Task + gates cumplidos + frontera estable
+→ puede ejecutarse sin otra ida y vuelta humana por rutina
+
+cambio material de frontera
+→ STOP y nueva decisión
+```
+
+Branch, commit, push, PR, merge, deploy, producción, datos, servicios externos y costes siguen siendo capacidades separadas; ninguna se presume autorizada.
 
 ## Propiedad y responsabilidad
 
 Todo handoff técnico declara Cycle Owner y destino del artefacto de retorno.
 
-El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable conserva la aprobación final cuando el cambio afecta dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 Planes y reportes no vuelven automáticamente a `00`.
 
@@ -102,15 +139,7 @@ Environment Preflight
 
 en vez de inferir que el entorno está listo.
 
-Sólo:
-
-```text
-LISTO PARA EJECUCIÓN
-```
-
-permite considerar aprobación o reanudación de escritura. El readiness report no concede escritura por sí mismo.
-
-No impongas carpeta, repositorio, proveedor, Wiki, plataforma o herramienta específica.
+Sólo `LISTO PARA EJECUCIÓN` permite considerar aprobación o reanudación de escritura. El readiness report no concede escritura por sí mismo.
 
 ## Transición visible
 
@@ -120,6 +149,8 @@ Cuando corresponda preflight, entrega un `Environment Preflight` al mismo rol de
 
 Cuando corresponda ejecución, entrega una `Execution Task` completa a la Execution Cell adecuada o al entorno disponible. Reutiliza una célula activa cuando siga respondiendo bien; no abras una conversación por tarea.
 
+Una Task es suficientemente autocontenida cuando su `Embedded Contract` más el `Required Reading` declarado permiten ejecutarla correctamente sin depender de conversaciones previas. `Reference` aporta trazabilidad y no implica lectura por defecto.
+
 ## Revisión del Implementation Plan
 
 El Cycle Owner debe:
@@ -127,29 +158,33 @@ El Cycle Owner debe:
 1. comprobar fuentes y evidencia;
 2. separar hechos, inferencias y propuestas;
 3. revisar dependencias, riesgos y condiciones de detención;
-4. aplicar el gate de tamaño;
-5. identificar decisiones humanas pendientes;
-6. autorizar, o solicitar autorización para, una sola primera unidad ejecutable.
+4. aplicar el gate de granularidad;
+5. identificar cambios materiales de autoridad o riesgo;
+6. adoptar dentro de autoridad delegada o derivar sólo la aprobación humana necesaria.
 
-Plan producido no equivale a plan aprobado ni a ejecución autorizada.
+Plan producido no equivale a ejecución autorizada.
 
 ## Revisión del Execution Report
 
 El destino declarado revisa:
 
-1. objetivo versus resultado;
-2. alcance versus cambios reales;
+1. outcome versus resultado;
+2. alcance real versus alcance autorizado;
 3. criterios versus evidencia;
 4. verificaciones solicitadas versus ejecutadas;
 5. autorizaciones versus acciones realizadas;
 6. fuera de alcance preservado;
-7. bloqueos, desviaciones y pendientes del alcance original.
+7. desviaciones, bloqueos y estado final.
 
-El reporte no selecciona la siguiente acción de gobierno ni propone por defecto qué memoria consolidar.
+El reporte es evidence-first: la Task dice qué estaba autorizado y el Report qué ocurrió realmente. No debe volver a narrar la Task.
 
-Después de revisar la evidencia, el Cycle Owner y la persona responsable, según la autoridad aplicable, deciden cierre, corrección, reversión, transferencia, escalamiento o siguiente unidad. Separadamente evalúan si hechos nuevos merecen memoria durable.
+## Tareas largas y continuidad
 
-Si el reporte corresponde a un memory bootstrap, primero se reevalúa el gate de la unidad original; no se autoriza automáticamente.
+Una tarea larga puede materializar opcionalmente `<TASK-ID>-CHECKPOINT.md` para registrar avance, HEAD, worktree, fases completadas, pendiente y bloqueos.
+
+El checkpoint no agrega autoridad. Un nuevo Coding Agent debe leer la Task, leer el checkpoint, verificar el estado real y continuar sólo dentro de la autoridad vigente.
+
+`Execution Resume` conserva el mismo Task ID y equivale a `Task original + delta del bloqueo resuelto` cuando objetivo, alcance, autoridad, seguridad y arquitectura no cambiaron.
 
 ## Memoria en la misma ejecución
 
@@ -162,14 +197,14 @@ No conviertas toda ejecución de producto en una actualización automática de m
 - no enviar una intención vaga al coding agent;
 - no ejecutar antes de resolver decisiones indispensables;
 - no omitir Memory Bootstrap Gate cuando existe dependencia chat-only;
-- no confundir `BOOTSTRAP REQUIRED` con prohibición de la unidad mínima de checkpoint;
 - no omitir Environment Preflight cuando readiness indispensable es desconocido;
-- no usar planificación para autorizar escritura implícita;
+- no usar Planning para autorizar escritura implícita;
+- no dividir por ceremonia una Task que conserva outcome y frontera estables;
 - no abrir una conversación por cada tarea cuando existe una Execution Cell válida;
 - no regresar a `00` por rutina;
 - no asumir acceso, permisos o herramientas;
 - no declarar completado algo sin evidencia;
-- no mezclar objetivos independientes en una sola tarea.
+- no mezclar outcomes independientes ni cruzar una frontera material sin nueva decisión.
 
 ## Regla principal
 
@@ -178,7 +213,7 @@ Conversar sólo lo indispensable.
 Persistir memoria sólo cuando haga falta.
 Comprobar readiness antes de escribir.
 Planificar cuando reduzca incertidumbre real.
-Ejecutar unidades pequeñas.
+Ejecutar el mayor outcome seguro y verificable que conserve una frontera estable de autoridad.
 Devolver evidencia al responsable declarado.
-Escalar únicamente para reorientar.
+Escalar únicamente para reorientar o resolver un cambio material de frontera.
 ```
