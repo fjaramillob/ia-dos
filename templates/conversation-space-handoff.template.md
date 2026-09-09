@@ -2,7 +2,7 @@
 
 Usa esta plantilla cuando un Conversation Space transfiera una decisión o el gobierno de un resultado a otro Conversation Space.
 
-El handoff debe ser autosuficiente, breve y orientado a una sola brecha dominante.
+El handoff debe ser autocontenido, breve y orientado a una sola brecha dominante.
 
 ## Entrega obligatoria
 
@@ -22,9 +22,26 @@ No requieras para esta transferencia:
 - indicar un path de `inbox/`;
 - usar `Manual Artifact Launcher`.
 
-`Exchange` no es el mecanismo de routing entre Conversation Spaces. Una copia documental del handoff puede materializarse sólo cuando la persona la pida explícitamente o exista una convención local separada de archivo; esa copia no sustituye ni condiciona la transferencia inline.
+`Exchange` no es el mecanismo de routing entre Conversation Spaces.
 
-Entrega el siguiente bloque directamente listo para copiar y pegar:
+## IA-DOS Alignment condicional
+
+El handoff puede instruir al destino a consultar la referencia vigente de IA-DOS **sólo cuando**:
+
+- el Conversation Space es nuevo;
+- se retoma después de un cambio relevante de IA-DOS; o
+- muestra reglas obsoletas o contradictorias.
+
+Esto no es un gate nuevo, no reinicia onboarding y no exige releer todo IA-DOS. El destino carga únicamente los contratos necesarios para la decisión actual.
+
+Si el proyecto adopta Exchange, el handoff puede declarar:
+
+```text
+Este proyecto adopta Exchange para artifacts hacia/desde Coding Agents.
+No lo uses para routing entre Conversation Spaces.
+```
+
+## Bloque listo para copiar
 
 ```text
 Artifact Type: Specialist Handoff
@@ -35,10 +52,18 @@ Cycle ID: [CYCLE-ID O NO APLICA]
 Task ID: No aplica
 
 Esta conversación es [TÓPICO — NOMBRE DEL ESPACIO DE DESTINO].
-No reinicies el onboarding.
+No reinicies onboarding.
 No reclasifiques el proyecto.
 No repitas la configuración inicial de IA-DOS.
 No te presentes como 00 cuando el destino sea un especialista.
+
+IA-DOS Alignment:
+- si este Conversation Space es nuevo, fue retomado después de un cambio relevante de IA-DOS o muestra reglas obsoletas, consulta la referencia vigente antes de decidir;
+- no releas todo el framework por defecto;
+- carga sólo los contratos necesarios para este resultado.
+
+Exchange del proyecto: [ADOPTADO | NO ADOPTADO | DESCONOCIDO]
+Si está adoptado, úsalo únicamente para artifacts hacia/desde Coding Agents; nunca para routing entre Conversation Spaces.
 
 Proyecto: [NOMBRE]
 
@@ -55,7 +80,7 @@ Cycle Owner:
 [CONVERSATION SPACE DE DESTINO]
 
 Autoridad humana relevante:
-[DECISIONES QUE EL CYCLE OWNER PUEDE TOMAR | DECISIONES QUE REQUIEREN APROBACIÓN DE LA PERSONA]
+[DECISIONES QUE EL CYCLE OWNER PUEDE TOMAR | CAMBIOS MATERIALES QUE REQUIEREN INTERVENCIÓN DE LA PERSONA]
 
 Destinos:
 - resultado de dominio: [CONVERSATION SPACE]
@@ -76,23 +101,20 @@ Recursos y autoridad:
 | [RECURSO] | [ROL] | [ÁMBITO] | [ACCESO] | [LÍMITE] |
 
 Acción esperada del especialista:
-1. confirma el resultado y asume Cycle Owner dentro de la autoridad delegada;
+1. asume Cycle Owner dentro de autoridad delegada;
 2. si la siguiente unidad depende de historia chat-only, aplica Memory Bootstrap Gate;
 3. si readiness indispensable es desconocido, prepara Environment Preflight;
 4. si falta inspección o diseño, prepara Planning Task;
-5. si la unidad ya está definida, memoria suficiente y entorno listo, prepara Execution Task;
-6. deriva sólo la decisión humana indispensable cuando exceda su autoridad;
-7. no ejecutes una tarea destinada al coding agent;
-8. no produzcas Implementation Plan ni Execution Report desde este handoff.
+5. si existe un outcome definido, cohesivo y verificable bajo una frontera estable, prepara Execution Task;
+6. adopta un Implementation Plan dentro de autoridad delegada cuando no cambie materialmente la frontera;
+7. deriva sólo la decisión humana indispensable cuando exceda su autoridad;
+8. no ejecutes una tarea destinada al coding agent;
+9. no produzcas Implementation Plan ni Execution Report desde este handoff.
 ```
 
 ## Regla de compatibilidad
 
 El receptor debe ser un Conversation Space. Si el bloque se pega en un coding agent, debe detenerse e indicar el rol esperado.
-
-Un Specialist Handoff nunca debe presentarse como Planning Task, Environment Preflight o Execution Task.
-
-La condición de transporte también forma parte de la compatibilidad:
 
 ```text
 Conversation Space → Conversation Space
@@ -100,5 +122,7 @@ Conversation Space → Conversation Space
 
 Conversation Space → Coding Agent
 → Planning Task | Environment Preflight | Execution Task | Execution Resume
-→ puede usar chat o `.md`/Exchange según el contrato de entrega
+→ chat o `.md`/Exchange según el contrato de entrega
 ```
+
+Una copia documental del handoff puede existir sólo como auxiliar explícitamente solicitado. No sustituye la transferencia inline.
