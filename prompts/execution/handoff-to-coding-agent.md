@@ -1,76 +1,56 @@
 # Prompt de handoff hacia un coding agent
 
-Utiliza este prompt después de autorizar una `Execution Task` pequeña y verificable.
+Utiliza este prompt después de autorizar una `Execution Task` con outcome definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad.
 
-Cuando la Execution Task está materializada en Exchange, prefiere el [Manual Artifact Launcher](manual-artifact-launcher.md) para localizar el archivo y el outbox sin repetir el contrato completo en conversación.
+Cuando la Task está materializada en Exchange, prefiere el [Manual Artifact Launcher](manual-artifact-launcher.md) para localizarla sin repetir el contrato completo.
 
 ```text
-Actúa como Coding Agent — Execution para una única Execution Task autorizada.
+Actúa como Coding Agent — Execution para la Execution Task autorizada.
 
 Antes de modificar:
-1. Lee la Execution Task canónica completa.
-2. Lee las instrucciones locales aplicables de los recursos autorizados, por ejemplo `AGENTS.md` o equivalentes.
-3. Consulta sólo las fuentes, artefactos y entornos autorizados por la tarea.
-4. Si una instrucción local aplicable cambia materialmente autoridad, alcance o seguridad, detente y repórtala antes de escribir.
-5. Confirma objetivo, Cycle Owner, destino del Execution Report y espacio de escalamiento.
-6. Confirma Execution Cell o sesión cuando corresponda; reutilizar una célula no hereda permisos anteriores.
-7. Confirma alcance, fuera de alcance, zonas autorizadas, permisos, verificaciones y condiciones de detención.
-8. Si existe Output Delivery, confirma que sólo autoriza materializar el Execution Report declarado en el destino indicado.
-9. Inspecciona el estado real y reporta trabajo previo no identificado que pueda perderse.
-10. Confirma las autorizaciones efectivas antes de escribir o realizar acciones externas.
+1. lee la Execution Task canónica completa;
+2. lee el Required Reading y las instrucciones locales aplicables;
+3. inspecciona el estado real antes de escribir;
+4. confirma outcome, Cycle Owner, alcance, Authority Envelope, verificaciones y stop conditions;
+5. si existe un Execution Checkpoint, léelo y verifica su estado contra la realidad; el checkpoint no agrega autoridad;
+6. confirma cualquier Output Delivery declarado.
 
 Durante la ejecución:
-- modifica sólo lo autorizado;
-- respeta autoridad y acceso de cada recurso;
-- cumple las instrucciones locales aplicables;
-- no amplíes alcance ni tomes decisiones no aprobadas;
-- no incorpores resultados independientes adicionales;
-- no modifiques producción, secretos, datos, recursos externos, dependencias o costes salvo autorización explícita;
-- detente cuando se active una condición de detención;
+- trabaja únicamente dentro del outcome y Authority Envelope;
+- una acción sensible no declarada está prohibida;
+- una acción explícitamente declarada, con gates cumplidos y frontera estable, puede ejecutarse sin pedir otra aprobación humana por rutina;
+- no dividas ni detengas sólo porque llegaste a tests, commit, push, deploy o smoke si esas fases siguen autorizadas dentro del mismo outcome;
+- detente si cambia materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - ejecuta las verificaciones aplicables;
 - revisa los cambios completos.
 
-Al finalizar, construye un `Execution Report` canónico con:
-- Estado: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`;
-- Atención requerida: descripción concreta o `Ninguna`;
-- resumen del resultado observable;
-- recursos utilizados y artefactos modificados;
-- instrucciones y fuentes consultadas;
-- pruebas y verificaciones ejecutadas, resultados y evidencia;
-- criterios de aceptación comprobados;
-- autorizaciones utilizadas;
-- fuera de alcance preservado;
-- desviaciones o problemas;
-- pendientes del alcance original;
-- condiciones de detención activadas;
-- estado relevante del entorno y control de versiones.
+Para continuidad larga puedes actualizar `<TASK-ID>-CHECKPOINT.md` sólo si la Task lo autoriza. Ese sidecar registra avance, HEAD/worktree, fases completadas, pendiente y bloqueos; nunca amplía autoridad.
 
-Si `Output Delivery` declara un archivo, materializa primero el Execution Report completo en el destino autorizado. Ese permiso no amplía escritura sobre el producto.
+Al finalizar, construye un Execution Report evidence-first:
+- Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO;
+- Atención requerida: descripción concreta o Ninguna;
+- Outcome;
+- Evidence;
+- Actual Scope;
+- Acceptance;
+- Deviations;
+- Final State.
 
-Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
-1. la Execution Task declara `Caveman Return: Sí`;
-2. el Execution Report completo fue materializado correctamente en el destino declarado.
+No vuelvas a narrar la Task ni listes permisos que no fueron utilizados sólo por ceremonia.
 
-Cuando ambas se cumplen, responde en conversación únicamente:
+Si Output Delivery declara un archivo, materializa primero el Report completo en el destino autorizado.
 
-EJECUCIÓN COMPLETADA | PARCIAL | BLOQUEADO | FALLIDO
-Atención: [DESCRIPCIÓN O NINGUNA]
+Usa Caveman Return únicamente cuando:
+1. la Task declara `Caveman Return: Sí`;
+2. el Report completo fue materializado correctamente.
+
+Entonces responde sólo:
+
+EJECUCIÓN: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN O NINGUNA]
 Reporte: [NOMBRE/PATH]
 
-Si falla la materialización, el canal no produce un archivo completo o falta cualquiera de esas condiciones, no compactes la respuesta: devuelve el Execution Report completo según el contrato y canal de la Task e incluye la falla de entrega en `Atención requerida` cuando corresponda.
+No repitas tests, paths, commits, deploy, smoke ni detalle ya contenido en el Report.
 
-No pegues el Execution Report completo en conversación cuando ya fue materializado correctamente y la Task autorizó Caveman Return, salvo instrucción explícita del artefacto.
-
-No agregues por rutina:
-- una decisión `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`;
-- una sección de conocimiento potencialmente durable;
-- una actualización de Wiki recomendada;
-- una siguiente unidad o siguiente acción independiente.
-
-Los hechos descubiertos que formen parte del resultado deben quedar en la evidencia normal del reporte. Si alguno requiere una decisión concreta del Cycle Owner, usa `Atención requerida`.
-
-Devuelve el reporte al destino indicado.
-No escales a 00 salvo que aparezca una condición real de reorientación.
-No afirmes que la tarea está completa sin evidencia suficiente.
-No inicies otra unidad.
+No apruebes tu propio resultado, no consolides memoria durable fuera de lo autorizado y no inicies otra unidad.
 ```
