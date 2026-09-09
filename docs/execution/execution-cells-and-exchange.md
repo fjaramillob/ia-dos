@@ -64,6 +64,21 @@ Checkpoint ≠ Artifact Type
 
 La autoridad sigue estando en la Execution Task y, cuando corresponde, en Execution Resume. Un nuevo Coding Agent debe leer Task + Checkpoint, verificar el estado real y continuar sólo dentro de la autoridad vigente.
 
+## Wiki Sync
+
+Una célula `Wiki Sync` puede existir cuando el mantenimiento físico de una LLM Wiki sea un flujo durable que justifique continuidad separada.
+
+Su función puede ser principalmente mecánica:
+
+- alinear archivos locales/remotos;
+- revisar Git;
+- commit o push cuando estén explícitamente autorizados en la Task;
+- validar estructura, Markdown o enlaces.
+
+La síntesis de conocimiento permanece en el plano conversacional y puede involucrar `90 — Wiki y memoria` cuando aporta.
+
+No crees `Wiki Sync` automáticamente por usar una LLM Wiki y no confundas esa célula con memoria durable o autoridad adicional.
+
 # Exchange
 
 Exchange es una **pasarela opcional, provider-agnostic, filesystem-first y pasiva de artefactos Markdown hacia/desde Coding Agents**.
