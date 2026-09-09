@@ -168,7 +168,7 @@ Representación conversacional mínima de un output completo ya materializado. S
 
 ## `Task ID`
 
-Identificador asignado por el Conversation Agent que construye una Execution Task. El Report reutiliza ese ID.
+Identificador asignado por el Conversation Agent que construye una Execution Task. El Report reutiliza ese ID. Cuando el proyecto no tiene otra convención, IA-DOS recomienda `{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}`.
 
 ## `Cycle ID`
 
@@ -189,6 +189,32 @@ Perfil documental de una `Execution Task` canónica. No es un Artifact Type inde
 ## `Current Offline Pack`
 
 Artefacto de distribución vigente para operar IA-DOS cuando el repositorio canónico no puede navegarse. Debe mantenerse sincronizado con los contratos actuales.
+
+## fuente de verdad
+
+Recurso que tiene autoridad para un tipo de información dentro de un ámbito declarado.
+
+No existe una fuente universal: implementación, memoria, evidencia, backlog y método pueden tener autoridades distintas.
+
+## `AGENTS.md`
+
+Archivo de instrucciones persistentes aplicables al recurso donde vive. No sustituye la LLM Wiki.
+
+## handoff
+
+Traspaso estructurado entre roles o espacios. Puede transferir una decisión de dominio, una tarea o un artefacto de retorno.
+
+## guardrail
+
+Límite que impide acciones inseguras, fuera de alcance o no autorizadas.
+
+## `Definition of Done`
+
+Conjunto de condiciones que deben cumplirse antes de considerar terminado un trabajo.
+
+## workspace
+
+Entorno local o lógico que agrupa recursos de uno o más proyectos. IA-DOS no exige una topología universal.
 
 ## Términos históricos o de compatibilidad
 
