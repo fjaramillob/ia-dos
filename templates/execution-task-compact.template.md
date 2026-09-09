@@ -1,24 +1,12 @@
 # Execution Task compacta
 
-Usa este bloque como salida operativa por defecto cuando el resultado está definido, la precondición de memoria permite esta unidad, el entorno está `LISTO PARA EJECUCIÓN` cuando requiere readiness y existe la autorización aplicable.
-
-Una unidad ordinaria que dependa de memoria chat-only requiere `Memory Bootstrap Gate = PASS`. La excepción es una Execution Task cuyo **único resultado** sea materializar el checkpoint mínimo exigido por `BOOTSTRAP REQUIRED`.
-
-Antes de emitir una Execution Task real, el Conversation Agent asigna su `Task ID`. Si el proyecto no tiene otra convención, usa:
-
-```text
-{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
-```
-
-Ejemplo: `PROPACTO-10-APP-20260821-130700`.
-
-Una candidata de Planning mantiene `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR` hasta ese momento.
+Usa este bloque por defecto cuando el outcome está definido, es cohesivo y verificable bajo una frontera estable de autoridad, la precondición de memoria permite la unidad, el entorno está listo cuando corresponde y existe autoridad aplicable.
 
 ```text
 Artifact Type: Execution Task
 Destination Role: Coding Agent — Execution
 Expected Output: Execution Report
-Forbidden Output: trabajo fuera de alcance | autoaprobación | siguiente unidad
+Forbidden Output: ampliar outcome o frontera | autoaprobación | siguiente unidad
 
 Método: IA-DOS
 Cycle ID: [CYCLE-ID O NO APLICA]
@@ -28,24 +16,19 @@ Cycle Owner: [CONVERSATION SPACE]
 Destino: [CONVERSATION SPACE]
 Tipo: [INSPECT | BOOTSTRAP | BUILD | FIX | REFACTOR | MIGRATE | TEST | HARDEN | DOCUMENT | WIKI | RELEASE | OPERATE]
 
-OBJETIVO ÚNICO
-[RESULTADO CONCRETO, TERMINABLE Y VERIFICABLE]
+OUTCOME
+[RESULTADO DEFINIDO, COHESIVO, ACOTADO Y VERIFICABLE]
 
 PRECONDICIONES
-- Memory Bootstrap Gate: [PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT | NO APLICA]
+- Memory Bootstrap Gate: [PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT DURABLE | NO APLICA]
 - Readiness indispensable: [LISTO PARA EJECUCIÓN | NO APLICA]
 - Planning previo: [REFERENCIA REVISADA | NO APLICA]
 - autorización humana adicional requerida: [RESUELTA | NO APLICA]
 
-Si se declara `BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`, esta tarea no puede incluir la unidad original que quedó bloqueada. Tras revisar el reporte del bootstrap, reevalúa el gate antes de emitir aquella unidad.
-
 FUENTES DE AUTORIDAD
 | Recurso o documento | Rol | Autoridad para | Acceso | Vigencia o referencia |
 |---|---|---|---|---|
-| [RECURSO] | [MEMORIA DURABLE / IMPLEMENTACIÓN / EVIDENCIA / REFERENCIA] | [ÁMBITO] | [LECTURA / ESCRITURA / ACCIÓN] | [RUTA, VERSIÓN, COMMIT O FECHA] |
-
-ARTEFACTO PREVIO VÁLIDO
-- [IMPLEMENTATION PLAN REVISADO, READINESS REPORT, EXECUTION REPORT O NO APLICA]
+| [RECURSO] | [ROL] | [ÁMBITO] | [LECTURA / ESCRITURA / ACCIÓN] | [RUTA, VERSIÓN, COMMIT O FECHA] |
 
 DELTA DEL CICLO
 - [DECISIÓN O CAMBIO QUE HABILITA ESTA EJECUCIÓN]
@@ -53,38 +36,69 @@ DELTA DEL CICLO
 - [BLOQUEO RESUELTO]
 - [TRABAJO QUE DEBE PRESERVARSE]
 
-No vuelvas a narrar el proyecto. Lee las fuentes declaradas y usa este delta como contexto activo.
-
-ALCANCE AUTORIZADO
+EMBEDDED CONTRACT
 Incluido:
 - [CAMBIO AUTORIZADO]
 
 Fuera de alcance:
 - [CAMBIO NO AUTORIZADO]
 
-ZONAS
+Zonas:
 - modificables: [RECURSOS O RUTAS]
 - prohibidas: [RECURSOS O RUTAS]
 - rama o modo: [RAMA / MODIFICACIÓN LOCAL / OTRO]
 
-CAPACIDADES Y AUTORIZACIONES
+REQUIRED READING
+- [DOCUMENTO CONCRETO O NINGUNO]
+
+REFERENCES
+- [TRAZABILIDAD/NAVEGACIÓN O NINGUNA]
+
+Task + Required Reading deben bastar para ejecutar sin depender de conversaciones previas.
+
+AUTHORITY ENVELOPE
+Code:
 - lectura: [AUTORIZADA / NO AUTORIZADA]
 - escritura: [AUTORIZADA / NO AUTORIZADA]
+
+Git:
 - branch: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
+- stage selectivo: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
 - commit: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
 - push: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
 - pull request: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
 - merge: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
-- despliegue o producción: [AUTORIZADO / NO AUTORIZADO / NO APLICA]
-- datos, servicios externos o costes: [AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]
+- force push: [AUTORIZADO / NO AUTORIZADO]
+
+Delivery:
+- [AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]
+
+Production:
+- [AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]
+
+Data / External / Cost:
+- [AUTORIZACIÓN EXPLÍCITA O NO AUTORIZADO]
+
+No autorizado:
+- [LÍMITES]
+
+Regla: acción sensible no declarada → no autorizada. Acción declarada + gates cumplidos + frontera estable → puede ejecutarse dentro de esta Task sin otra ida y vuelta humana por rutina.
+
+FASES INTERNAS, SI APORTA
+[Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Final State]
+
+No dividas sólo por duración, archivos, comandos o fases internas. Detente si cambia materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
+
+EXECUTION CHECKPOINT OPCIONAL
+- archivo: [<EXEC-ID>-CHECKPOINT.md | NO APLICA]
+- uso: continuidad operacional o cambio de Coding Agent
+- autoridad: ninguna; la Task sigue gobernando
 
 OUTPUT DELIVERY
 - Channel: [Exchange | Conversation | Otro]
 - Location: [outbox | destino lógico | NO APLICA]
 - Filename: [{EXEC-ID}-REPORT.md | OTRO | NO APLICA]
 - Caveman Return: [Sí | No]
-
-Si Output Delivery autoriza un archivo, ese permiso cubre únicamente el Execution Report declarado y no amplía ninguna zona modificable. Un Manual Artifact Launcher puede resolver el path físico sin modificar autoridad.
 
 CRITERIOS DE ACEPTACIÓN
 - [ ] [RESULTADO OBSERVABLE]
@@ -93,56 +107,38 @@ VERIFICACIONES
 - [COMANDO, REVISIÓN O PROCEDIMIENTO]
 - evidencia esperada: [SALIDA O PRUEBA]
 
-INSTRUCCIONES LOCALES
-- [AGENTS.md, ARCHIVO EQUIVALENTE O NO EXISTEN]
-
 CONDICIONES DE DETENCIÓN
-Detente cuando falte información crítica, una fuente contradiga el estado real, una referencia no sea accesible o vigente, aparezca trabajo previo que pueda perderse, sea necesario tocar una zona o usar una capacidad no autorizada, falle una verificación crítica, exista riesgo de seguridad, datos o coste, o la tarea revele resultados independientes.
-
-Para una tarea de memory bootstrap, detente también si sería necesario resolver contenido no confirmado o ejecutar la unidad original antes de revisar el checkpoint.
-
-FALLBACK DE CONTEXTO
-Cuando una fuente durable no sea accesible, usa sólo el extracto indispensable contenido en la tarea, conserva la referencia original y reporta la limitación. No compenses el acceso faltante ampliando alcance.
+Detente ante información crítica faltante, trabajo previo en riesgo, instrucciones incompatibles, capacidad no autorizada, verificación crítica fallida, riesgo de seguridad/datos/coste no cubierto o cualquier cambio material de la frontera declarada.
 
 CONTRATO DE RETORNO
 Artifact Type: Execution Report
 Destination Role: Cycle Owner — Conversation Space
-Expected Output: revisión de evidencia bajo la autoridad aplicable
-Forbidden Output: aprobar el propio resultado | iniciar automáticamente el siguiente ciclo o tarea
 Execution Task ID: [EXEC-ID]
 Cycle ID: [CYCLE-ID O NO APLICA]
-Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
-Devuelve resultado observable, recursos modificados, fuentes consultadas, permisos utilizados, validaciones y evidencia, límites respetados, desviaciones, pendientes del alcance original y cualquier atención concreta que requiera revisión. No elijas la decisión de gobierno posterior, no consolides memoria durable fuera de lo autorizado y no inicies otra unidad.
+Reporta proporcionalmente:
+Outcome
+Evidence
+Actual Scope
+Acceptance
+Deviations
+Final State
 
-Usa `Caveman Return` únicamente cuando:
-1. la Task declara `Caveman Return: Sí`;
-2. el Execution Report completo fue materializado correctamente en el destino declarado.
+No vuelvas a narrar la Task.
 
-Cuando ambas condiciones se cumplen, responde en conversación únicamente:
+Si `Caveman Return: Sí` y el Report completo fue materializado correctamente, responde únicamente:
 
-EJECUCIÓN COMPLETADA | PARCIAL | BLOQUEADO | FALLIDO
-Atención: [DESCRIPCIÓN O NINGUNA]
+EJECUCIÓN: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+Atención requerida: [DESCRIPCIÓN O NINGUNA]
 Reporte: [NOMBRE/PATH]
-
-Si falla la materialización o falta cualquiera de las dos condiciones, devuelve el Execution Report completo según el contrato y canal de la Task.
 ```
 
-## Regla de continuidad
+## Reglas
 
-Cuando el proyecto use una Execution Cell, reutiliza su conversación activa mientras siga respondiendo bien. No cambies el nombre de la célula ni abras una conversación nueva sólo porque cambia el resultado.
-
-Los permisos no se heredan: cada Execution Task vuelve a declararlos aunque use la misma célula.
-
-## Regla de autoridad
-
-El Cycle Owner prepara o valida la tarea dentro de autoridad delegada. La persona responsable conserva la aprobación final cuando cambian dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
-
-## Regla de compresión
-
-Aplica `docs/orchestration/context-compression-by-authority.md`.
-
-La memoria durable contiene contexto estable. La tarea transporta referencias precisas, delta vigente y contrato operativo completo. Permisos, límites y condiciones de detención nunca se omiten por compresión.
+- `Authority Envelope`, `Execution Checkpoint`, `Output Delivery` y `Caveman Return` no son Artifact Types.
+- Cada Task vuelve a declarar permisos aunque reutilice la misma Execution Cell.
+- Un Checkpoint registra continuidad, no autoridad.
+- Exchange, cuando se adopta, sigue siendo opcional, pasivo y provider-agnostic.

@@ -8,18 +8,7 @@ Este recorrido configura IA-DOS dentro de un espacio conversacional persistente 
 https://github.com/fjaramillob/ia-dos
 ```
 
-El repositorio es la fuente canónica.
-
-Si la plataforma no puede navegarlo, usa `bundles/ia-dos-current-offline-pack.md` cuando su encabezado declare `Estado: VIGENTE` y un baseline canónico. Ese archivo es el único bundle vigente para nuevos onboardings offline.
-
-No combines bundles históricos para reconstruir el método actual. Si el Current Offline Pack no está disponible, usa como fallback mínimo `ORCHESTRATOR.md` junto con `templates/project-instructions.template.md`.
-
-## Configuración
-
-1. Usa el nombre del proyecto como nombre del espacio principal.
-2. Copia [Instrucciones persistentes](../../templates/project-instructions.template.md) cuando la plataforma permita instrucciones estables.
-3. Carga una descripción breve y las fuentes disponibles.
-4. Envía el primer mensaje siguiente.
+Si la plataforma no puede navegarlo, usa `bundles/ia-dos-current-offline-pack.md` cuando declare `Estado: VIGENTE`.
 
 ## Primer mensaje
 
@@ -29,219 +18,117 @@ Inicia este proyecto aplicando IA-DOS.
 Proyecto: [NOMBRE DEL PROYECTO]
 
 Descripción inicial:
-[RESUMEN BREVE O REFERENCIA A UN ARCHIVO]
+[RESUMEN BREVE O REFERENCIA]
 
 Fuentes disponibles:
-- [REPOSITORIO, WIKI, DOCUMENTOS, SERVICIO, URL O NINGUNA]
+- [RECURSOS O NINGUNA]
 
 Lee primero las fuentes necesarias y no repitas preguntas respondidas.
-Clasifica el producto objetivo como nuevo o existente.
-
-Primera respuesta:
-1. Lo que entendí.
-2. Prioridad propuesta.
-3. Qué falta resolver ahora.
-4. Organización de conversaciones sólo si aporta.
-5. Cómo trabajaremos.
-6. Tu siguiente acción.
-
-En Organización de conversaciones:
-- usa `00 — Dirección y orquestación` como Conversation Space inicial canónico;
-- para producto nuevo usa modo `definición inicial`;
-- para producto existente usa modo `descubrimiento y adopción`;
-- indica si por ahora basta trabajar en 00;
-- consulta `docs/orchestration/topic-routing-registry.md` como lista normativa;
-- menciona sólo el próximo Conversation Space cuando una brecha dominante requiera contexto persistente propio;
-- no listes todos los espacios ni presentes una secuencia fija;
-- no abras 30 sólo porque exista trabajo para un coding agent.
+Usa `00 — Dirección y orquestación` como Conversation Space inicial canónico.
+No presentes los Conversation Spaces como secuencia fija.
 
 Responsabilidad:
-- la persona responsable conserva dirección y aprobación final cuando cambian objetivo, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante;
-- el Project Orchestrator y el Cycle Owner actúan dentro de autoridad delegada;
-- el coding agent no aprueba su propio plan, readiness o ejecución.
+- la persona responsable conserva dirección y autoridad final aplicable;
+- Project Orchestrator y Cycle Owner actúan dentro de autoridad delegada;
+- el coding agent no aprueba su propio plan o ejecución.
 
-Cuando la persona diga `avancemos`, `empecemos`, `sigamos` o equivalente, no actives una fase especial ni repitas diagnóstico. Identifica el siguiente resultado verificable y evalúa en este orden:
+Cuando la persona diga `avancemos`, `sigamos` o equivalente, evalúa directamente:
 
-1. ¿El resultado está suficientemente definido, es pequeño y verificable?
+1. ¿El resultado está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
 2. Si depende de historia previa, ¿el conocimiento necesario ya es durable?
 3. ¿Las precondiciones indispensables del entorno están comprobadas?
 4. Si falta inspección o diseño, ¿corresponde Planning?
 
 Resultados:
-- conocimiento necesario sólo en conversaciones → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección o diseño → `Planning Task` de solo lectura respecto del proyecto/entorno;
-- resultado definido + memoria suficiente + entorno listo → `Execution Task`;
-- decisión de otro dominio → `Specialist Handoff` inline, autocontenido y copiable;
-- decisión humana indispensable → deriva sólo esa decisión;
+- historia chat-only indispensable → Memory Bootstrap Gate;
+- readiness desconocido → Environment Preflight;
+- falta inspección/diseño → Planning Task de solo lectura;
+- outcome listo + memoria suficiente + entorno listo → Execution Task;
+- brecha de otro dominio → Specialist Handoff inline y copiable;
+- cambio material fuera de autoridad → deriva sólo esa decisión;
 - reorientación real → escala a 00.
 
-Specialist Handoff entre Conversation Spaces:
-- se entrega inline como texto copiable en la conversación de origen;
-- la persona copia/pega el bloque directamente en el Conversation Space destino;
-- no requiere crear o descargar un `.md`;
-- no usa Exchange por defecto;
-- no requiere `inbox/`, path absoluto ni `Manual Artifact Launcher`;
-- una copia documental sólo puede ser auxiliar solicitado explícitamente o convención local separada y no sustituye ni condiciona el routing.
+IA-DOS Alignment condicional:
+- si un Conversation Space es nuevo, se retoma después de un cambio relevante de IA-DOS o muestra reglas obsoletas, consulta la referencia vigente antes de decidir;
+- no reinicies onboarding;
+- no releas todo el framework por defecto;
+- carga sólo los contratos necesarios.
 
-Frontera de transporte:
-
-Conversation Space → Conversation Space
-→ Specialist Handoff inline y copiable
-
-Conversation Space → Coding Agent
-→ Planning Task | Environment Preflight | Execution Task | Execution Resume
-→ chat o `.md`/Exchange según el contrato de entrega
+Specialist Handoff:
+- Conversation Space → Conversation Space = inline, autocontenido y copiable;
+- no requiere `.md`, Exchange, inbox/path ni Manual Artifact Launcher;
+- si el proyecto usa Exchange, declara que aplica sólo a artifacts hacia/desde Coding Agents.
 
 Memory Bootstrap Gate:
-¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
-
-- Sí: `PASS`; la unidad evaluada puede continuar sin documentación adicional.
-- No: `BOOTSTRAP REQUIRED`; la unidad evaluada queda bloqueada hasta persistir el checkpoint durable mínimo.
-
-Cuando el resultado sea `BOOTSTRAP REQUIRED`:
-1. no emitas todavía la unidad original que depende de esa memoria;
-2. prepara una `Execution Task` separada cuyo único resultado sea crear o actualizar el checkpoint mínimo;
-3. declara en esa tarea `Memory Bootstrap Gate: BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`;
-4. incluye la unidad original entre el fuera de alcance;
-5. no mezcles implementación, planificación o ejecución de la unidad original en el bootstrap;
-6. devuelve el `Execution Report` de esa tarea al Cycle Owner;
-7. revisa su evidencia;
-8. reevalúa el Memory Bootstrap Gate de la unidad original;
-9. sólo cuando el gate pase a `PASS` puede emitirse aquella unidad.
-
-`BOOTSTRAP REQUIRED` bloquea la unidad dependiente original; no bloquea la Execution Task mínima necesaria para materializar la memoria.
-
-No uses número de mensajes, tareas o antigüedad como umbral. Una LLM Wiki separada no es obligatoria.
-
-Environment Preflight:
-- úsalo cuando una futura Execution Task dependa de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados;
-- lo ejecuta `Coding Agent — Planning` en solo lectura respecto del entorno inspeccionado;
-- no es una Planning Task aunque comparta ese rol;
-- no instala, inicia, detiene ni configura el entorno;
-- si declara `Output Delivery`, puede materializar únicamente su propio `Environment Readiness Report`;
-- produce `Environment Readiness Report`;
-- sólo `LISTO PARA EJECUCIÓN` permite considerar una autorización posterior de escritura.
+- PASS permite continuar;
+- BOOTSTRAP REQUIRED bloquea la unidad dependiente original;
+- puede emitirse una Execution Task separada cuyo único outcome sea materializar el checkpoint durable mínimo;
+- después de revisar ese Report, reevalúa el gate original.
 
 Planning Task:
-- la prepara el Conversation Space que gobierna el resultado;
-- la ejecuta `Coding Agent — Planning`;
-- es de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
-- si declara `Output Delivery`, puede materializar únicamente su propio `Implementation Plan`;
-- resuelve una sola incertidumbre técnica dominante;
-- produce `Implementation Plan`;
-- vuelve al Cycle Owner;
-- puede usar un identificador lógico PLAN, pero no exige conversación nueva por tarea;
-- cuando haya evidencia suficiente, propone una sola Execution Task candidata.
+- es sólo lectura respecto del proyecto/entorno inspeccionado;
+- produce Implementation Plan;
+- el plan propone, no ejecuta;
+- no todo Implementation Plan requiere nueva aprobación humana;
+- el Cycle Owner puede adoptarlo dentro de autoridad delegada;
+- la persona interviene cuando el plan cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
-La escritura del output expresamente autorizado no convierte Planning/Preflight en Execution ni amplía permiso sobre código, datos, Git, Wiki, configuración, servicios o recursos externos.
-
-La futura Execution Task conserva autoridad separada del Planning, pero no exige abrir una conversación nueva: reutiliza una Execution Cell activa cuando corresponda.
+Environment Preflight:
+- comprueba sólo readiness indispensable;
+- es de solo lectura;
+- produce Environment Readiness Report;
+- sólo LISTO PARA EJECUCIÓN habilita considerar escritura.
 
 Execution Task:
-- representa un único resultado verificable;
-- declara Cycle Owner, destino, Execution Cell o sesión cuando aplique, autoridad, alcance, permisos, criterios, verificaciones y condiciones de detención;
-- una unidad ordinaria que dependa de memoria previa requiere `Memory Bootstrap Gate = PASS`;
-- la excepción es la tarea separada de checkpoint descrita arriba;
-- no autoriza automáticamente branch, commit, push, PR, merge, deploy, producción, datos, recursos externos o costes;
-- cada tarea vuelve a declarar permisos aunque reutilice la misma Execution Cell;
-- produce `Execution Report`.
+- persigue un outcome definido, cohesivo, acotado y verificable bajo una frontera estable;
+- no la dividas sólo por duración, cantidad de archivos/comandos, implementación, tests, commit, push, deploy o smoke;
+- puede incluir Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Final State si todo sirve al mismo outcome;
+- divide o detente cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
+- declara Embedded Contract, Required Reading y References;
+- declara Authority Envelope con todas las acciones sensibles autorizadas;
+- acción sensible no declarada = no autorizada;
+- acción explícitamente declarada + gates cumplidos + frontera estable = no requiere otra ida y vuelta humana por rutina;
+- produce Execution Report.
+
+Execution Checkpoint:
+- `<TASK-ID>-CHECKPOINT.md` es un sidecar opcional para continuidad de tareas largas o cambio de Coding Agent;
+- registra avance/HEAD/worktree/fases/pendiente/bloqueos;
+- no es Artifact Type ni autorización.
 
 Execution Resume:
-- reanuda la misma Execution Task sólo si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios;
-- conserva Task ID y no amplía permisos.
+- misma Task ID;
+- Task original + delta del bloqueo resuelto;
+- sólo si objetivo, scope, autoridad, seguridad y arquitectura siguen sin cambios.
 
 Execution Report:
-- usa `Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`;
-- usa `Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]`;
-- aporta evidencia, no aprobación;
-- no selecciona `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`;
-- no recomienda por defecto una actualización durable ni una siguiente unidad;
-- no inicia otra tarea.
-
-Si el reporte corresponde a una tarea de memory bootstrap, su revisión no habilita automáticamente la unidad original: primero reevalúa su gate.
+- Task = qué estaba autorizado;
+- Report = qué ocurrió realmente;
+- prioriza Outcome, Evidence, Actual Scope, Acceptance, Deviations y Final State;
+- no vuelva a narrar la Task;
+- no aprueba su propio resultado ni inicia otra unidad.
 
 Exchange:
-- es una pasarela pasiva opcional de `.md` hacia/desde Coding Agents;
-- no enruta entre Conversation Spaces;
-- no materializa Specialist Handoffs por defecto;
-- no define artefactos, IDs, filenames, templates, estados, permisos, backlog, memoria, decisiones ni workflow;
-- el Conversation Agent construye la Execution Task y asigna Task ID;
-- el Code Agent construye el Execution Report y reutiliza ese Task ID.
+- opcional, provider-agnostic, filesystem-first y pasivo;
+- Exchange ≠ Google Drive ≠ workflow engine ≠ backlog ≠ memoria durable ≠ router conversacional;
+- Google Drive, OneDrive, Dropbox, Syncthing, NAS o carpeta local/manual pueden ser mecanismos de transporte;
+- inbox = artifacts activos destinados a Coding Agents;
+- outbox = outputs pendientes de consumo o aún requeridos por trabajo activo;
+- archive = cold storage operacional para trazabilidad;
+- folder ≠ workflow state;
+- archive ≠ aprobado/completado/memoria durable/repositorio de documentos vivos.
 
-Entrega manual cuando el proyecto usa Exchange con un Coding Agent:
-- el `Manual Artifact Launcher` sólo localiza el `.md` autoritativo y, cuando aplica, el directorio físico de salida;
-- el launcher nunca amplía la autoridad declarada por la Task;
-- `Output Delivery` puede autorizar la materialización del artefacto de salida declarado;
-- `Caveman Return` sólo se usa cuando la Task declara `Caveman Return: Sí` y el output completo fue materializado correctamente;
-- si no existe esa declaración, devuelve el artefacto completo según el contrato y canal de la Task.
+Manual Artifact Launcher:
+- efímero y no autoritativo;
+- sólo localiza la Task y, cuando hace falta, el path físico de output.
 
-No uses `Manual Artifact Launcher` para un Specialist Handoff entre Conversation Spaces.
+Caveman Return:
+- sólo cuando la Task lo autoriza y el output completo fue materializado;
+- devuelve únicamente estado, atención requerida y path;
+- no repitas evidencia que ya vive en el Report.
 
-Memoria durable / LLM Wiki:
-- memoria durable es la responsabilidad funcional de conservar conocimiento reusable;
-- LLM Wiki es una posible materialización durable, portable y navegable de esa memoria;
-- el coding agent no lee toda la Wiki por defecto;
-- distingue contexto durable, referencias y lectura requerida;
-- no uses la Wiki como backlog, log o almacén de TASK/REPORT;
-- evalúa hechos nuevos para memoria después de revisar el reporte, salvo actualización documental explícitamente autorizada en la propia tarea.
-
-No impongas carpetas, repositorios separados, Wiki, Exchange, GitHub, trabajo local, proveedor, coding agent o stack concreto.
-No menciones nombres, rutas, dominios o repositorios de otros proyectos salvo fuentes explícitas del proyecto actual.
+No impongas carpetas, repositorios, Wiki, Exchange, GitHub, proveedor, coding agent o stack concreto.
 ```
-
-## Transición esperada a otro Conversation Space
-
-Cuando una brecha dominante pertenezca realmente a otro dominio:
-
-> Entrega directamente en esta conversación un `Specialist Handoff` autocontenido y copiable. La persona lo pegará como mensaje en el Conversation Space destino. No generes ni requieras `.md`, Exchange, inbox/path o Manual Artifact Launcher para efectuar esta transferencia.
-
-## Transición esperada a bootstrap de memoria
-
-Cuando el Memory Bootstrap Gate devuelva `BOOTSTRAP REQUIRED`:
-
-> Prepara una Execution Task documental separada cuyo único resultado sea materializar el checkpoint durable mínimo. No incluyas la unidad original. Devuelve su `Execution Report`, revisa la evidencia y reevalúa el gate de la unidad original antes de continuar.
-
-## Transición esperada a planificación
-
-Cuando corresponda:
-
-> Abre el coding agent disponible sobre el entorno técnico autorizado. Ejecuta la Planning Task en modo de solo lectura respecto del proyecto/entorno y devuelve el `Implementation Plan` al mismo Cycle Owner. Si la Task autoriza `Output Delivery`, puedes materializar únicamente ese plan en el destino declarado. No ejecutes cambios del proyecto.
-
-No conviertas el nombre o cantidad de conversaciones de Planning en una regla del método.
-
-## Transición esperada a preflight
-
-Cuando readiness indispensable sea desconocido:
-
-> Ejecuta el `Environment Preflight` con `Coding Agent — Planning` en modo de solo lectura respecto del entorno. No modifiques, instales, inicies ni configures el entorno. Si el Preflight autoriza `Output Delivery`, materializa únicamente el `Environment Readiness Report` declarado. Devuélvelo al Cycle Owner.
-
-## Transición esperada a ejecución
-
-Cuando corresponda:
-
-> Abre la Execution Cell adecuada del coding agent o el entorno de ejecución disponible. Pega la Execution Task completa. No amplíes alcance. Devuelve el `Execution Report` al Cycle Owner indicado.
-
-Si ya existe una conversación activa para esa Execution Cell y continúa respondiendo correctamente, reutilízala. No abras una conversación nueva por cada tarea.
 
 ## Resultado esperado
 
-El onboarding está bien encaminado cuando:
-
-- comprende propósito y prioridad suficientes;
-- identifica `00 — Dirección y orquestación` y el modo de entrada correcto;
-- abre sólo el Conversation Space que desbloquea trabajo;
-- entrega los Specialist Handoffs entre Conversation Spaces inline y copiables, sin exigir Exchange o `.md`;
-- asigna Cycle Owner;
-- preserva responsabilidad humana;
-- aplica Memory Bootstrap Gate antes de depender de historia chat-only;
-- cuando obtiene `BOOTSTRAP REQUIRED`, separa la tarea de checkpoint de la unidad original y reevalúa el gate después de revisar evidencia;
-- usa Preflight cuando readiness indispensable es desconocido y devuelve Environment Readiness Report;
-- usa Planning sólo para incertidumbre real;
-- usa Execution Task cuando la unidad está lista;
-- reutiliza Execution Cells sin acumular permisos;
-- permite materializar únicamente el output explícitamente autorizado sin debilitar las fronteras de rol;
-- exige evidencia verificable;
-- no presupone topología física ni herramientas;
-- devuelve planes, readiness reports y execution reports al Cycle Owner;
-- conserva lenguaje y referencias agnósticas.
+El onboarding está bien encaminado cuando comprende propósito y prioridad suficientes, abre sólo los Conversation Spaces necesarios, conserva autoridad humana explícita, usa Planning/Preflight sólo cuando aportan, produce Execution Tasks con outcomes cohesivos y Authority Envelopes claros, reutiliza Execution Cells sin acumular permisos y mantiene Exchange como capacidad opcional de transporte.

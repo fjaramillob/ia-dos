@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — adopción real / handoff conversacional 2026-08-22`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — adopción real / ejecución cohesiva 2026-09-09`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -12,566 +12,431 @@ Este es el único bundle vigente para nuevos onboardings offline. No lo combines
 
 ```text
 Persona responsable = dirección y aprobación final aplicable
-Conversation Space = gobierno y decisión dentro de autoridad delegada
+Conversation Space = gobierno dentro de autoridad delegada
 Specialist Handoff = transferencia inline y copiable entre Conversation Spaces
 Execution Cell = continuidad de ejecución
-Execution Task = contrato de una unidad
-Execution Report = evidencia de ejecución
-Memoria durable = responsabilidad funcional de conservar conocimiento reusable
-LLM Wiki = materialización durable, portable y navegable de esa memoria
+Execution Task = outcome cohesivo bajo frontera estable de autoridad
+Authority Envelope = permisos explícitos dentro de Execution Task
+Execution Checkpoint = continuidad operacional, no autoridad
+Execution Report = evidencia de lo ocurrido
+Memoria durable = responsabilidad funcional
+LLM Wiki = materialización durable, portable y navegable
 Repository = implementación real
-Exchange = pasarela pasiva opcional de archivos hacia/desde Coding Agents
+Exchange = pasarela pasiva opcional hacia/desde Coding Agents
 ```
+
+`Authority Envelope` y `Execution Checkpoint` no son Artifact Types.
 
 ## Responsabilidad humana
 
 La persona responsable define propósito, prioridad, restricciones y autoridad.
 
-El Project Orchestrator y el Cycle Owner pueden orientar y decidir dentro de autoridad delegada, pero no sustituyen la aprobación humana cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+Project Orchestrator y Cycle Owner gobiernan dentro de autoridad delegada. La persona responsable interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 El coding agent no aprueba su propio plan o ejecución.
 
-## Inicio
+## Inicio y continuidad
 
-Usa siempre `00 — Dirección y orquestación` como Conversation Space inicial.
+Usa `00 — Dirección y orquestación` como Conversation Space inicial canónico.
 
-- producto nuevo → modo `definición inicial`;
-- producto existente → modo `descubrimiento y adopción`.
+- producto nuevo → `definición inicial`;
+- producto existente → `descubrimiento y adopción`.
 
-Los Conversation Spaces no son etapas. Abre otro espacio sólo cuando una brecha de dominio requiera contexto persistente propio.
+Los Conversation Spaces no son etapas. Abre otro sólo cuando una brecha de dominio requiera contexto persistente propio.
 
-`00` no es un dispatcher obligatorio y `30` no debe abrirse sólo porque exista trabajo para un coding agent.
+Si un Conversation Space es nuevo, se retoma después de un cambio relevante de IA-DOS o muestra reglas obsoletas, consulta la referencia vigente antes de decidir. No reinicies onboarding ni releas todo el framework por defecto; carga sólo los contratos necesarios.
 
 ## Handoff entre Conversation Spaces
 
-Cuando una brecha pertenece realmente a otro dominio, usa un `Specialist Handoff` y entrégalo **inline como texto autocontenido y copiable** en la conversación de origen.
-
 ```text
 Conversation Space origen
-→ Specialist Handoff inline
+→ Specialist Handoff inline, autocontenido y copiable
 → persona copia/pega
 → Conversation Space destino
 ```
 
-No requieras para esta transferencia:
+No requiere `.md`, Exchange, inbox/path ni Manual Artifact Launcher.
 
-- crear o descargar un archivo `.md`;
-- guardar el handoff en Exchange;
-- indicar un path de `inbox/`;
-- usar `Manual Artifact Launcher`.
-
-Una copia documental puede existir sólo si la persona la solicita explícitamente o una convención local separada requiere archivarla; no sustituye ni condiciona la transferencia inline.
-
-La frontera de transporte es:
+Si el proyecto usa Exchange, el handoff puede declarar:
 
 ```text
-Conversation Space → Conversation Space
-→ Specialist Handoff inline y copiable
-
-Conversation Space → Coding Agent
-→ Planning Task | Environment Preflight | Execution Task | Execution Resume
-→ chat o `.md`/Exchange según el contrato de entrega
+Este proyecto adopta Exchange para artifacts hacia/desde Coding Agents.
+No lo uses para routing entre Conversation Spaces.
 ```
 
 ## Gate de avance
 
-Evalúa en este orden:
-
 ```text
-1. ¿El resultado está definido, es pequeño y verificable?
+1. ¿El resultado está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
 2. Si depende de historia, ¿la memoria necesaria ya es durable?
 3. ¿Las precondiciones indispensables del entorno están comprobadas?
 4. Si falta inspección o diseño, ¿corresponde Planning?
 ```
 
-- conocimiento necesario sólo en chats → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección/diseño → `Planning Task`;
-- todo listo → `Execution Task`;
-- falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
-- decisión humana indispensable → resolver sólo esa decisión;
-- reorientación real → escalar a `00`.
-
-No actives una fase especial cuando la persona diga `avancemos`; aplica directamente este gate.
+- historia indispensable sólo en chats → Memory Bootstrap Gate;
+- readiness desconocido → Environment Preflight;
+- falta inspección/diseño → Planning Task;
+- outcome listo → Execution Task;
+- brecha de otro dominio → Specialist Handoff;
+- decisión material fuera de autoridad → deriva sólo esa decisión;
+- reorientación → escala a `00`.
 
 ## Memory Bootstrap Gate
 
-Pregunta:
-
-> ¿La siguiente unidad puede ejecutarse correctamente sin depender de conocimiento relevante que exista sólo en conversaciones efímeras?
-
 ```text
 PASS
-→ la unidad evaluada puede continuar sin documentación adicional
+→ continúa
 
 BOOTSTRAP REQUIRED
-→ la unidad evaluada queda bloqueada
-→ materializa primero el checkpoint durable mínimo mediante una Execution Task separada
-→ revisa su Execution Report
-→ reevalúa el gate de la unidad original
+→ bloquea la unidad dependiente original
+→ materializa checkpoint durable mínimo mediante Execution Task separada
+→ revisa Report
+→ reevalúa gate original
 ```
-
-`BOOTSTRAP REQUIRED` no bloquea la unidad mínima necesaria para crear la memoria. Esa tarea declara explícitamente que materializa el checkpoint y no puede mezclar la unidad original que busca desbloquear.
 
 No uses edad, número de mensajes, tareas o porcentajes como umbral.
 
-Una LLM Wiki separada no es obligatoria.
+## Planning Task e Implementation Plan
 
-Cuando se usa Markdown, un starter mínimo puede ser:
+Planning es de solo lectura respecto del proyecto/entorno inspeccionado y produce Implementation Plan.
 
-```text
-00-home.md
-project-brief.md
-status/current-state.md
-decisions/
-sources/
-AGENTS.md
-```
+El plan propone, no ejecuta ni se autoaprueba.
 
-No crees por defecto `tasks/`, `context-packs/`, `CORE`, `log.md` o páginas vacías de arquitectura.
-
-## Memoria durable y LLM Wiki
-
-```text
-memoria durable
-= responsabilidad funcional de conservar conocimiento vigente y reusable
-
-LLM Wiki
-= materialización durable, portable y navegable de esa memoria
-```
-
-El coding agent no lee toda la LLM Wiki por defecto. Distingue:
-
-- `Contexto durable necesario`;
-- `Referencias Wiki`;
-- `Lectura requerida`.
-
-No guardes TASK/REPORT completos, logs, diffs, prompts o transcripciones como memoria por defecto.
-
-La implementación demuestra estado técnico real; la memoria no lo demuestra por sí sola.
-
-## Tipado
-
-Todo bloque transferible declara:
-
-```text
-Artifact Type: [TIPO]
-Destination Role: [ROL]
-Expected Output: [ARTEFACTO O REVISIÓN]
-Forbidden Output: [ACCIÓN O ARTEFACTO]
-Cycle ID: [CYCLE-ID O NO APLICA]
-Task ID: [TASK-ID O NO APLICA]
-```
-
-Tipos vigentes:
-
-- Specialist Handoff;
-- Planning Task;
-- Environment Preflight;
-- Environment Readiness Report;
-- Implementation Plan;
-- Execution Task;
-- Execution Resume;
-- Execution Report.
-
-El mecanismo de transporte no crea tipos adicionales.
-
-`Manual Artifact Launcher`, `Output Delivery` y `Caveman Return` son convenciones de entrega, no Artifact Types.
-
-`Specialist Handoff` tiene como receptor un Conversation Space y su transporte normativo es inline. Los artefactos hacia Coding Agents pueden usar Exchange cuando el proyecto adopta ese canal.
-
-## Identidad
-
-El Conversation Agent que construye una Execution Task asigna el Task ID. Exchange no participa.
-
-Una `Execution Task` candidata producida dentro de Planning **no recibe Task ID del coding agent**. Debe declarar:
-
-```text
-Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
-```
-
-El Conversation Agent / Cycle Owner asigna la identidad únicamente cuando revisa y adopta esa candidata como Execution Task real.
-
-Esquema recomendado cuando no existe otro:
-
-```text
-{PROJECT}-{ORIGIN}-{CELL}-{YYYYMMDD}-{HHMMSS}
-```
-
-Ejemplo:
-
-```text
-PROPACTO-10-APP-20260821-130700
-```
-
-`YYYYMMDD-HHMMSS` significa año-mes-día y hora-minuto-segundo. Se asigna al adoptar y construir la Execution Task real; no desde Planning.
-
-Si se materializa como archivo:
-
-```text
-{TASK-ID}-TASK.md
-{TASK-ID}-REPORT.md
-```
-
-El Execution Report reutiliza exactamente el Task ID de su tarea.
-
-`Cycle ID` puede ser `NO APLICA`; no inventes un ciclo sólo para completar el encabezado.
-
-El esquema temporal anterior no obliga a usar timestamps como ID de Planning.
-
-## Planning Task
-
-Es de solo lectura respecto del proyecto, resuelve una incertidumbre técnica dominante y produce Implementation Plan.
-
-Puede usar un identificador lógico:
-
-```text
-PLAN — [RESULTADO]
-```
-
-pero IA-DOS no impone una política universal de conversación por Planning Task.
-
-Cuando exista evidencia suficiente, el plan puede proponer una sola Execution Task candidata.
-La candidata mantiene:
-
-```text
-Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
-Execution Cell o sesión: [NOMBRE O NO APLICA]
-```
-
-El coding agent no inventa ni reserva el Task ID. La futura ejecución requiere autorización separada, pero **no exige** una conversación de ejecución nueva: puede reutilizar una Execution Cell existente.
-
-Una Planning Task puede autorizar explícitamente materializar su propio Implementation Plan como archivo sin dejar de ser solo lectura respecto del proyecto:
-
-```text
-Output Delivery:
-Channel: Exchange
-Location: outbox
-Filename: [PLAN-ID-IMPLEMENTATION-PLAN.md]
-Caveman Return: Sí | No
-```
-
-Ese permiso cubre únicamente el output declarado.
-
-## Implementation Plan
-
-El plan propone; no autoriza ni ejecuta.
-
-Debe ser proporcional y contener evidencia, decisión recomendada, estrategia mínima, dependencias, riesgos y una primera unidad candidata cuando sea segura.
-
-La candidata declara:
-
-```text
-Task ID: PENDIENTE — ASIGNAR AL ADOPTAR
-Execution Cell o sesión: [NOMBRE O NO APLICA]
-```
-
-No derives una sesión nueva automáticamente desde el nombre del resultado ni asignes identidad de Execution Task desde Planning.
+No todo Implementation Plan requiere automáticamente una nueva aprobación humana. El Cycle Owner puede adoptarlo dentro de autoridad ya delegada. La persona responsable interviene cuando cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 ## Environment Preflight
 
-Úsalo cuando una futura Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados.
+Se usa cuando una futura Execution Task depende de una precondición indispensable no comprobada.
 
-Contrato tipado:
-
-```text
-Artifact Type: Environment Preflight
-Destination Role: Coding Agent — Planning
-Expected Output: Environment Readiness Report
-```
-
-El mismo rol `Coding Agent — Planning` también recibe Planning Tasks, pero los artefactos no se confunden:
-
-```text
-Planning Task
-→ Coding Agent — Planning
-→ Implementation Plan
-
-Environment Preflight
-→ Coding Agent — Planning
-→ Environment Readiness Report
-```
-
-El Preflight es de solo lectura respecto del entorno y no:
-
-- modifica fuentes inspeccionadas;
-- instala o actualiza;
-- inicia, detiene o configura servicios;
-- ejecuta la Execution Task.
-
-Puede materializar su Environment Readiness Report cuando la tarea lo autoriza explícitamente.
-
-El Environment Readiness Report produce:
+Produce:
 
 ```text
 LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-**Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.** El reporte informa readiness; no concede por sí mismo autorización de escritura.
+Sólo `LISTO PARA EJECUCIÓN` permite considerar escritura.
 
-## Execution Task
+## Granularidad de Execution Task
 
-Existe un único contrato semántico, independientemente de su transporte.
+IA-DOS no maximiza cantidad de Tasks; maximiza el resultado seguro y verificable por Task.
 
-Toda tarea declara en forma proporcional:
+Una Execution Task persigue un **outcome definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad**.
 
-- objetivo único;
-- Cycle Owner y destino;
-- Execution Cell o sesión cuando corresponda;
-- fuentes y autoridad;
-- contexto necesario;
-- alcance y fuera de alcance;
-- zonas modificables y prohibidas;
-- capacidades y acciones externas autorizadas;
-- criterios de aceptación;
-- verificaciones;
-- condiciones de detención;
-- Output Delivery cuando corresponda.
+No dividas sólo por:
 
-Precondición de memoria:
+- duración;
+- cantidad de archivos o comandos;
+- implementación;
+- tests;
+- commit;
+- push;
+- deploy;
+- smoke.
+
+Puede contener:
 
 ```text
-unidad ordinaria que depende de memoria previa
-→ Memory Bootstrap Gate = PASS
-
-unidad cuyo único resultado es crear el checkpoint requerido
-→ BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT
+Revalidate
+→ Implement
+→ Verify
+→ Commit
+→ Push
+→ Deploy
+→ Production Smoke
+→ Final State
 ```
 
-La segunda no puede ejecutar la unidad original. Después de revisar el bootstrap se reevalúa el gate original.
+si todas las fases sirven al mismo outcome y están autorizadas.
 
-Por defecto no autorices commit, push, PR, merge, deploy, producción, datos, servicios externos o costes sin declaración explícita.
+Divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
-Antes de ejecutarla, confirma que puede completarse, verificarse y reportarse como una sola unidad.
+## Authority Envelope
 
-## Execution Cell
+La propia Execution Task agrupa permisos explícitos para el outcome completo.
 
-Una Execution Cell es continuidad de ejecución, no tarea, especialidad o Conversation Space.
-
-Mantén una conversación activa por célula mientras responda bien. No renueves por edad, mensajes, tiempo o cantidad de tareas.
-
-Renueva sólo ante degradación, contaminación o necesidad real de contexto limpio:
+Ejemplo:
 
 ```text
-App · 01 → cerrada
-App · 02 → activa
+Code:
+- escritura autorizada en scope
+
+Git:
+- stage selectivo
+- commit
+- push fast-forward
+
+Delivery:
+- deployment mediante mecanismo existente
+
+Production:
+- smoke autorizado
+
+No autorizado:
+- schema
+- nuevos servicios
+- costes
+- force push
+- cambios fuera del scope
 ```
 
-La célula sigue siendo `App`.
+Regla:
 
-Cada nueva Task vuelve a declarar todos sus permisos.
+```text
+acción sensible no declarada
+→ no autorizada
+
+acción declarada + gates cumplidos + frontera estable
+→ no requiere otra ida y vuelta humana por rutina
+
+cambio material de frontera
+→ STOP y nueva decisión
+```
+
+El coding agent no aprueba su propio plan o ejecución.
+
+## Compresión de contexto
+
+```text
+referencias de autoridad
++ delta del ciclo
++ contrato operativo explícito
+```
+
+Distingue:
+
+```text
+Embedded Contract
+→ debe viajar dentro de la Task
+
+Required Reading
+→ documentos concretos que el Coding Agent debe leer
+
+Reference
+→ trazabilidad/navegación; no implica lectura por defecto
+```
+
+Una Task es suficientemente autocontenida cuando:
+
+```text
+Task + Required Reading
+→ permiten ejecutar correctamente sin conversaciones previas
+```
+
+No repitas por rutina Implementation Plan completo, Wiki completa, reportes previos, contrato factual completo o historia del proyecto.
+
+Permisos, límites, seguridad, criterios y stop conditions permanecen explícitos.
+
+## Execution Cell y Checkpoint
+
+Una Execution Cell conserva continuidad, no permisos.
+
+Una Task larga o un cambio de Coding Agent puede usar opcionalmente:
+
+```text
+<TASK-ID>-CHECKPOINT.md
+```
+
+Puede registrar avance, HEAD, worktree, fases completadas, pendiente y bloqueos.
+
+```text
+Checkpoint ≠ autorización
+Checkpoint ≠ Artifact Type
+```
+
+Un nuevo Coding Agent lee Task + Checkpoint, verifica estado real y continúa dentro de la autoridad vigente.
 
 ## Execution Resume
 
-Sólo reanuda la misma Task después de resolver un bloqueo sin cambiar:
+```text
+Execution Resume
+= Task original
++ delta del bloqueo resuelto
+```
 
-- objetivo;
-- alcance;
-- autoridad;
-- seguridad;
-- arquitectura.
-
-Conserva Task ID y permisos originales.
-
-Si cambia una frontera, prepara nueva Execution Task o vuelve a Planning.
+Conserva Task ID y sólo aplica si objetivo, scope, autoridad, seguridad y arquitectura siguen sin cambios.
 
 ## Execution Report
 
-El Execution Report es **evidencia de ejecución**. No aprueba su propio trabajo, no elige la decisión posterior y no es memoria durable.
-
 ```text
-Artifact Type: Execution Report
-Destination Role: Cycle Owner — Conversation Space
-Execution Task ID: [TASK-ID]
-Cycle ID: [CYCLE-ID O NO APLICA]
-Execution Cell o sesión: [NOMBRE O NO APLICA]
-Cycle Owner: [CONVERSATION SPACE]
-Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
-Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+Task
+→ qué estaba autorizado
+
+Report
+→ qué ocurrió realmente
 ```
 
-Reporta proporcionalmente:
+El Report es evidence-first y proporcional.
 
-- resultado observable;
-- recursos/artefactos modificados;
-- fuentes e instrucciones consultadas;
-- autorizaciones utilizadas;
-- validaciones y evidencia;
-- criterios de aceptación;
-- fuera de alcance preservado;
-- desviaciones/problemas;
-- pendientes del alcance original;
-- condiciones de detención;
-- atención concreta requerida.
+Estructura preferente:
 
-`Atención requerida` no selecciona:
+```text
+Artifact Type
+Task ID
+Estado
+Atención requerida
 
-- `APROBAR`;
-- `CORREGIR`;
-- `REVERTIR`;
-- `ESCALAR`;
-- `REVISAR MEMORIA`.
+Outcome
+Evidence
+Actual Scope
+Acceptance
+Deviations
+Final State
+```
 
-El coding agent no crea por defecto una sección de conocimiento potencialmente durable, una actualización recomendada de Wiki o una siguiente unidad.
+Agrega otras secciones sólo cuando aporten evidencia real. No vuelvas a narrar la Task.
 
-Después de revisar evidencia, el Cycle Owner decide dentro de autoridad delegada y la persona responsable interviene cuando corresponda.
+Estados:
 
-La evaluación de memoria durable ocurre después de la revisión, salvo que la Task ya haya autorizado una actualización documental concreta.
+```text
+COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
+```
 
-Si el reporte corresponde a una tarea de memory bootstrap, su revisión no autoriza automáticamente la unidad original; primero se reevalúa su Memory Bootstrap Gate.
+El Report no aprueba su propio resultado, no elige la siguiente unidad y no consolida memoria durable por defecto.
 
 ## Exchange
 
-Exchange es sólo una pasarela opcional de archivos Markdown hacia/desde Coding Agents.
-
-Una topología posible:
+Exchange es **opcional, provider-agnostic, filesystem-first y pasivo**.
 
 ```text
-proyecto-exch/
+Exchange ≠ Google Drive
+Exchange ≠ workflow engine
+Exchange ≠ backlog
+Exchange ≠ memoria durable
+Exchange ≠ router entre Conversation Spaces
+```
+
+Puede usar Google Drive, OneDrive, Dropbox, Syncthing, NAS, carpeta local/manual u otro mecanismo equivalente como transporte físico.
+
+Topología mínima:
+
+```text
+project-exch/
 ├── inbox/
 ├── outbox/
 └── archive/
 ```
 
-Exchange no define:
-
-- routing entre Conversation Spaces;
-- artefactos;
-- IDs;
-- filenames;
-- templates;
-- estados;
-- permisos;
-- backlog;
-- memoria;
-- decisiones;
-- workflow.
-
-Nada ocurre automáticamente por mover un archivo. `archive/` no significa aprobado o completado.
-
-No uses Exchange ni Manual Artifact Launcher para efectuar un `Specialist Handoff` entre Conversation Spaces.
-
-## Entrega manual con Exchange
-
-Cuando Exchange funciona manualmente con un Coding Agent:
+Semántica:
 
 ```text
-Conversation Agent
-→ materializa artefacto completo en inbox
+inbox/
+→ artifacts operativamente activos destinados a Coding Agents
 
-Persona
-→ pega Manual Artifact Launcher
+outbox/
+→ outputs pendientes de consumo o todavía requeridos por trabajo activo
 
-Code Agent
-→ lee artefacto completo
-→ trabaja dentro de autoridad
-→ materializa el output completo únicamente cuando la Task lo autoriza mediante Output Delivery
-→ usa Caveman Return sólo si la Task declara Caveman Return: Sí y el output completo fue materializado correctamente
-
-Conversation Agent / Cycle Owner
-→ consume el artefacto completo
+archive/
+→ cold storage operacional de artifacts retirados de circulación activa pero conservados por trazabilidad
 ```
-
-### Manual Artifact Launcher
-
-Es un prompt efímero y no autoritativo que puede declarar:
 
 ```text
-Tipo esperado: [ARTIFACT TYPE]
-Archivo autoritativo: [PATH]
-Directorio físico de salida: [PATH | NO APLICA]
+folder ≠ workflow state
+archive ≠ aprobado
+archive ≠ completado
+archive ≠ memoria durable
+archive ≠ repositorio de documentos vivos
 ```
 
-El launcher sólo localiza input/output para un Coding Agent. No amplía objetivo, alcance, permisos, salida ni condiciones de detención. La presencia de un `outbox` o de una ruta física no autoriza por sí misma a escribir allí.
+Un documento vivo no usa `archive/` como repositorio por defecto.
 
-### Output Delivery
+## Manual Artifact Launcher
 
-Una tarea puede declarar:
+Es efímero y no autoritativo. Patrón preferido:
+
+```text
+Ejecuta exactamente la tarea definida en:
+<PATH-AL-TASK>
+
+Lee el archivo completo antes de actuar y respeta estrictamente su contrato.
+Al finalizar materializa el output indicado dentro de la propia tarea y reutiliza exactamente el mismo Task ID.
+```
+
+```text
+Launcher ≠ Task
+Launcher ≠ autorización
+Launcher ≠ memoria
+Launcher ≠ Exchange
+```
+
+## Caveman Return
+
+Cuando la Task declara:
 
 ```text
 Output Delivery:
 Channel: Exchange
 Location: outbox
-Filename: [NOMBRE.md]
-Caveman Return: Sí | No
+Filename: <TASK-ID>-REPORT.md
+Caveman Return: Sí
 ```
 
-Sólo esta declaración autoriza materializar el output indicado en el destino declarado. El mero uso de Exchange o del Manual Artifact Launcher no crea esa autorización.
-
-Para Planning o Preflight, materializar **únicamente** su output declarado no modifica las fuentes inspeccionadas y no convierte la tarea en escritura sobre el proyecto.
-
-### Caveman Return
-
-Sólo puede usarse cuando se cumplen conjuntamente estas condiciones:
-
-1. la Task autoritativa declara `Caveman Return: Sí`;
-2. el output completo fue materializado correctamente en el destino declarado.
-
-Es una representación conversacional mínima del artefacto completo ya materializado:
+y el output completo fue materializado correctamente, responde sólo:
 
 ```text
-estado o resultado esencial
-+ atención requerida
-+ nombre/path del output
+EJECUCIÓN: COMPLETADO
+Atención requerida: Ninguna
+Reporte: <PATH>
 ```
 
-Si la Task declara `Caveman Return: No`, usa `Channel: Conversation`, no declara `Output Delivery` o la materialización falla, no compactes la salida por esta convención: devuelve el artefacto completo según el contrato y canal de la Task.
+No repitas tests, commits, deploy, smoke ni detalle que ya vive en el Report.
 
-No es un Artifact Type y no reemplaza Implementation Plan, Environment Readiness Report o Execution Report.
+Caveman Return es convención de entrega, no Artifact Type.
 
-## Autoridad
+## Memoria durable y LLM Wiki
+
+Memoria durable conserva conocimiento vigente y reusable. LLM Wiki es una posible materialización portable y navegable.
+
+No uses Wiki como backlog, archivo de TASK/REPORT, log de chats o transcripciones. No obligues al coding agent a leerla completa.
+
+## Actualizar la referencia local de IA-DOS
+
+Instalación inicial y actualización son operaciones distintas.
+
+Para una instalación existente:
 
 ```text
-capacidad disponible
-≠ permiso concedido
-≠ acción autorizada
-≠ acción ejecutada
-≠ acción verificada
+working tree limpio
+→ verificar origin
+→ git fetch origin
+→ git switch main
+→ comprobar divergencia
+→ git pull --ff-only origin main
+→ git rev-parse HEAD
+→ git status
 ```
 
-Cada recurso declara rol, autoridad, acceso y límites. Reutilizar conversación no reutiliza autorización.
+`git status` antes de `git fetch` NO demuestra que GitHub no tenga commits nuevos.
 
-## Handoffs y escalamiento
+En Windows, cuando aplica la convención habitual:
 
-Transfiere directamente cuando la brecha pertenece claramente a otro dominio. Esa transferencia se entrega inline como `Specialist Handoff` copiable.
-
-Escala a `00` sólo ante cambio de objetivo/prioridad, conflicto transversal, expansión importante de alcance, decisión estratégica o riesgo fuera de autoridad.
-
-## Cierre
-
-```text
-TASK
-→ Coding Agent
-→ REPORT
-→ Cycle Owner revisa evidencia
-→ persona responsable aprueba cuando corresponde
-→ cierre, corrección, reversión, transferencia, escalamiento o siguiente unidad
+```powershell
+Set-Location (Join-Path $HOME "Proyectos\00-ia-dos")
 ```
 
-El coding agent no inicia automáticamente trabajo posterior.
+No uses por rutina `git reset --hard`, `git clean`, merge/rebase implícitos o force push. Si existen cambios locales o divergencia, detente y revisa.
+
+## Visualización opcional
+
+Capacidades como Archify pueden evaluarse como visualización técnica opcional y Supporting Artifact. No son dependencia del core, fuente de verdad independiente ni Artifact Type.
 
 ## Regla final
 
 ```text
 Conversation ≠ Task
-Conversation ≠ Memory
-Conversation ≠ Execution Cell
-Execution Cell ≠ Specialist
-Exchange ≠ Contract
-Exchange ≠ Memory
+Execution Cell ≠ Task
+Authority Envelope ≠ Artifact Type
+Execution Checkpoint ≠ autorización
+Execution Report ≠ decisión
+Exchange ≠ Google Drive
+Exchange ≠ memoria
 Specialist Handoff ≠ Exchange file
 Manual Artifact Launcher ≠ autoridad
-Caveman Return ≠ artefacto completo
-Execution Report ≠ decisión del Cycle Owner
-Execution Report ≠ memoria durable
+Caveman Return ≠ output completo
 
-Conversation Space handoffs are inline and copyable.
-TASK carries the delta toward Coding Agents.
-REPORT carries execution evidence.
-Durable memory carries current knowledge.
+Task carries authority and the active delta.
+Report carries evidence of what actually happened.
+Durable memory carries current reusable knowledge.
 Repository carries implementation.
-Exchange only carries files toward/from Coding Agents.
-Launcher only locates coding artifacts.
-Caveman Return only summarizes delivery after Task opt-in and successful full-output materialization.
+Exchange only carries operational artifacts toward/from Coding Agents.
 Human authority remains explicit.
 ```

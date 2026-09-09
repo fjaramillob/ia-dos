@@ -23,7 +23,7 @@ Entender
 → verificar y aprender
 ```
 
-No son fases rígidas. Se repiten en ciclos pequeños.
+No son fases rígidas. Se repiten tantas veces como haga falta, sin optimizar por cantidad de Tasks.
 
 ## 1. Entender
 
@@ -35,7 +35,7 @@ El objetivo no es una auditoría exhaustiva, sino reducir supuestos que afecten 
 
 ## 2. Decidir
 
-Confirma una decisión pequeña, reversible y útil.
+Confirma una decisión acotada, reversible cuando sea posible y útil para el outcome actual.
 
 Distingue:
 
@@ -46,7 +46,7 @@ Distingue:
 - decisión;
 - pregunta abierta.
 
-El Cycle Owner actúa dentro de autoridad delegada. La persona responsable conserva aprobación final cuando cambian dirección, autoridad, riesgo o impacto relevante.
+El Cycle Owner actúa dentro de autoridad delegada. La persona responsable interviene cuando cambian materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 Las decisiones que deban reutilizarse se registran en memoria durable cuando corresponda.
 
@@ -57,7 +57,7 @@ Transforma la decisión en la **siguiente unidad segura**, no necesariamente en 
 Evalúa en este orden:
 
 ```text
-1. ¿El resultado está definido, es pequeño y verificable?
+1. ¿El resultado está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
 2. Si depende de historia, ¿la memoria necesaria ya es durable?
 3. ¿Las precondiciones indispensables del entorno están comprobadas?
 4. Si falta inspección o diseño, ¿corresponde Planning?
@@ -72,16 +72,18 @@ Resultados:
 
 Una Execution Task declara proporcionalmente:
 
-- objetivo;
+- outcome;
 - Cycle Owner y destino;
 - Execution Cell o sesión cuando corresponda;
-- contexto durable necesario;
+- Embedded Contract;
+- Required Reading y References cuando aporten;
 - alcance y fuera de alcance;
-- autoridad y acceso;
-- permisos y acciones externas;
+- Authority Envelope;
 - criterios de aceptación;
 - verificaciones;
 - condiciones de detención.
+
+No dividas una Task sólo por duración, cantidad de archivos/comandos o porque internamente incluya implementación, tests, commit, push, deploy o smoke. Divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
 ## 4. Materializar
 
@@ -89,15 +91,19 @@ La modificación física se delega a `Coding Agent — Execution` con acceso ade
 
 El coding agent inspecciona, modifica, prueba y reporta únicamente dentro de esa tarea.
 
+Una misma Task puede contener fases internas de revalidación, implementación, verificación, Git, delivery y smoke si sirven al mismo outcome y están explícitamente autorizadas bajo una frontera estable.
+
 Una Execution Cell puede preservar continuidad entre tareas, pero no hereda permisos.
 
-Cuando una tarea se bloquea, `Execution Resume` sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios.
+Cuando una tarea se bloquea, `Execution Resume` sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios. Su semántica es `Task original + delta del bloqueo resuelto`.
+
+Para una tarea larga puede existir un sidecar operacional `<TASK-ID>-CHECKPOINT.md`. Registra continuidad, no autorización.
 
 ## 5. Verificar y aprender
 
 Revisa el resultado contra la tarea, no contra la confianza que inspire el agente.
 
-La verificación puede incluir diff, lint, typecheck, build, pruebas, revisión visual, seguridad, logs o pasos manuales reproducibles.
+La verificación puede incluir diff, lint, typecheck, build, pruebas, revisión visual, seguridad, logs, deployment checks o pasos manuales reproducibles.
 
 El Execution Report utiliza:
 
@@ -106,7 +112,17 @@ Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 ```
 
-Es evidencia. No aprueba su propio resultado, no elige la siguiente unidad y no consolida memoria durable.
+Es evidence-first y proporcional:
+
+```text
+Task
+→ qué estaba autorizado
+
+Report
+→ qué ocurrió realmente
+```
+
+No debe volver a narrar la Task. Prioriza `Outcome`, `Evidence`, `Actual Scope`, `Acceptance`, `Deviations` y `Final State`.
 
 Después de revisar:
 
@@ -126,7 +142,7 @@ Project Orchestrator
         ↓
 Conversation Space / Cycle Owner
         ↓
-resultado claro
+resultado definido y cohesivo
         ↓
 Memory Bootstrap Gate, cuando aplica
         ↓
@@ -144,7 +160,7 @@ Execution Report
         ↓
 Cycle Owner revisa
         ↓
-Persona responsable aprueba cuando corresponde
+Persona responsable interviene cuando corresponde
         ↓
 Fuentes de verdad actualizadas cuando aplica
 ```
@@ -164,10 +180,12 @@ Coding Agent — Execution
 
 El Orchestrator no presenta una propuesta como implementada. El coding agent no convierte una instrucción acotada en una decisión de producto, arquitectura o gobierno.
 
+Una acción sensible no declarada en el Authority Envelope no está autorizada. Una acción declarada, con gates previos cumplidos y dentro de la misma frontera, no requiere otra ida y vuelta humana por rutina.
+
 ## Trabajo progresivo
 
-IA-DOS favorece ciclos simples que funcionan y evolucionan.
+IA-DOS favorece outcomes seguros y verificables que funcionan y evolucionan.
 
-No exige completar toda la definición, documentación o arquitectura antes de construir. Exige claridad suficiente para el siguiente avance seguro.
+No exige completar toda la definición, documentación o arquitectura antes de construir. Exige claridad suficiente y una frontera estable para el siguiente avance seguro.
 
 La memoria durable aparece cuando hace falta para preservar conocimiento reusable, no como ceremonia previa a cada avance. Una LLM Wiki es una posible materialización de esa memoria, no una topología obligatoria.

@@ -1,82 +1,71 @@
 # Manual Artifact Launcher
 
-Usa este prompt únicamente cuando un artefacto IA-DOS ya fue construido y materializado como archivo, y la persona necesita indicarle manualmente al Code Agent qué archivo consumir.
+Usa este prompt únicamente cuando un artefacto IA-DOS ya fue construido y materializado como archivo, y la persona necesita indicar manualmente al Coding Agent qué Task consumir.
 
-No es un artefacto IA-DOS y no agrega autoridad.
+No es un Artifact Type y no agrega autoridad.
 
-```text
-Ejecuta el artefacto IA-DOS indicado.
-
-Tipo esperado: [ARTIFACT TYPE]
-
-Archivo autoritativo:
-[PATH COMPLETO AL ARCHIVO]
-
-Directorio físico de salida, cuando el artefacto autorice materialización:
-[PATH COMPLETO A OUTBOX | NO APLICA]
-
-Lee completamente el archivo autoritativo antes de actuar.
-
-El contenido del artefacto define objetivo, alcance, autoridad, restricciones, salida esperada y condiciones de detención. Este launcher sólo localiza el input y, cuando aplica, el destino físico del output; no amplía ni modifica autoridad.
-
-Si el artefacto declara `Output Delivery` autorizado, materializa únicamente la salida declarada en el directorio indicado. No uses ese permiso para modificar otros archivos o recursos.
-
-Usa `Caveman Return` únicamente cuando se cumplan ambas condiciones:
-1. el artefacto autoritativo declara `Caveman Return: Sí`;
-2. el artefacto de salida completo fue materializado correctamente en el destino declarado.
-
-Cuando ambas se cumplen, responde en la conversación sólo con:
-- estado o resultado esencial;
-- atención requerida concreta o `Ninguna`;
-- nombre/path del artefacto completo generado.
-
-Si el artefacto declara `Caveman Return: No`, usa `Channel: Conversation` o no contiene una sección `Output Delivery`, no fuerces Caveman Return. Devuelve el artefacto completo según el contrato y canal declarados por el artefacto autoritativo.
-
-Caveman Return nunca reemplaza un output completo que no haya sido materializado correctamente.
-```
-
-## Ejemplo — Planning Task con Exchange manual
-
-Este ejemplo supone que la Planning Task declara `Output Delivery` a Exchange y `Caveman Return: Sí`.
+## Patrón preferido
 
 ```text
-Ejecuta el artefacto IA-DOS indicado.
+Ejecuta exactamente la tarea definida en:
 
-Tipo esperado: Planning Task
+<PATH-AL-TASK>
 
-Archivo autoritativo:
-C:\Users\usuario\Proyectos\Proyecto\proyecto-exch\inbox\PLAN.md
+Lee el archivo completo antes de actuar y respeta estrictamente su contrato.
 
-Directorio físico de salida:
-C:\Users\usuario\Proyectos\Proyecto\proyecto-exch\outbox\
-
-Lee completamente el archivo autoritativo antes de actuar.
-
-El archivo es la única fuente autoritativa de objetivo, alcance, autoridad, restricciones, salida y condiciones de detención. Este launcher no amplía permisos.
-
-Materializa únicamente el Implementation Plan declarado como `.md` en el outbox.
-
-Como la Task declara `Caveman Return: Sí`, y sólo después de materializar correctamente el plan completo, responde en la conversación con resultado esencial, atención requerida y archivo generado.
+Al finalizar materializa el output indicado dentro de la propia tarea y reutiliza exactamente el mismo Task ID.
 ```
 
-## Ejemplo — Execution Task con Exchange manual
+Eso debe bastar cuando la Task ya declara correctamente `Output Delivery`.
 
-Este ejemplo supone que la Execution Task declara `Output Delivery` a Exchange y `Caveman Return: Sí`.
+## Qué NO debe hacer el launcher
 
 ```text
-Ejecuta el artefacto IA-DOS indicado.
-
-Tipo esperado: Execution Task
-
-Archivo autoritativo:
-C:\Users\usuario\Proyectos\Proyecto\proyecto-exch\inbox\PROYECTO-10-APP-20260821-130700-TASK.md
-
-Directorio físico de salida:
-C:\Users\usuario\Proyectos\Proyecto\proyecto-exch\outbox\
-
-Lee completamente el archivo autoritativo antes de actuar.
-
-El archivo define toda la autoridad. Este launcher no la amplía.
-
-Materializa únicamente el Execution Report autorizado en el outbox. Como la Task declara `Caveman Return: Sí`, responde en la conversación sólo con el retorno mínimo después de confirmar que el reporte completo existe.
+Launcher ≠ Task
+Launcher ≠ autorización
+Launcher ≠ memoria
+Launcher ≠ Exchange
 ```
+
+No repitas en el launcher:
+
+- objetivo;
+- scope;
+- Authority Envelope;
+- criterios;
+- verificaciones;
+- condiciones de detención;
+- contenido completo del output.
+
+Esos elementos pertenecen a la Task autoritativa.
+
+## Path físico opcional de output
+
+Sólo cuando el path lógico de la Task deba resolverse a una ubicación local concreta, puede agregarse:
+
+```text
+Directorio físico correspondiente al output declarado por la Task:
+<PATH-A-OUTBOX>
+```
+
+Esto no autoriza escribir ningún output que la Task no haya declarado.
+
+## Caveman Return
+
+Si la Task declara `Caveman Return: Sí` y el output completo fue materializado correctamente, responde únicamente con el retorno mínimo definido por la Task, por ejemplo:
+
+```text
+EJECUCIÓN: COMPLETADO
+Atención requerida: Ninguna
+Reporte: <PATH>
+```
+
+No repitas tests, commits, deploy, smoke ni detalle que ya vive en el Report.
+
+Si falta la declaración o falla la materialización, devuelve el output completo según el contrato de la Task.
+
+## Exchange
+
+Este launcher puede usarse con Exchange manual, pero Exchange sigue siendo opcional, provider-agnostic, filesystem-first y pasivo.
+
+No uses Manual Artifact Launcher para routing entre Conversation Spaces.
