@@ -8,6 +8,19 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- evolucionada la granularidad de `Execution Task` hacia un resultado definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad; implementación, tests, commit, push, deploy y smoke pueden permanecer dentro de una misma Task cuando sirven al mismo outcome y están explícitamente autorizados;
+- incorporado `Authority Envelope` como semántica dentro de `Execution Task`, sin crear un Artifact Type: una acción sensible no declarada permanece no autorizada y una acción declarada, con gates cumplidos y frontera estable, no requiere otra ida y vuelta humana por rutina;
+- aclarado que `Implementation Plan` sigue siendo propuesta y que el Cycle Owner puede adoptarlo dentro de autoridad delegada; la persona responsable interviene ante cambios materiales de dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante;
+- formalizada la compresión mediante `Embedded Contract`, `Required Reading` y `Reference`; `Task + Required Reading` debe permitir ejecutar sin depender de conversaciones previas;
+- agregado `<TASK-ID>-CHECKPOINT.md` como sidecar operacional opcional para continuidad de tareas largas o cambio de Coding Agent, sin autoridad propia ni nuevo Artifact Type;
+- simplificado `Execution Report` hacia evidencia proporcional de lo ocurrido (`Outcome`, `Evidence`, `Actual Scope`, `Acceptance`, `Deviations`, `Final State`) y `Execution Resume` hacia `Task original + delta del bloqueo resuelto`;
+- reforzado Exchange como capacidad opcional, provider-agnostic, filesystem-first y pasiva; Google Drive, OneDrive, Dropbox, Syncthing, NAS o carpeta local/manual son sólo mecanismos posibles de transporte;
+- redefinida la semántica de `inbox/`, `outbox/` y `archive/` como circulación operacional: `folder ≠ workflow state` y `archive ≠ aprobado/completado/memoria durable/repositorio de documentos vivos`;
+- añadido IA-DOS Alignment condicional para Conversation Spaces nuevos, retomados después de cambios relevantes del método o con reglas obsoletas, sin reiniciar onboarding ni releer el framework completo;
+- documentada la actualización segura de una instalación local existente mediante `git fetch`, comprobación de divergencia y `git pull --ff-only`; `git status` previo al fetch no demuestra que GitHub no tenga commits nuevos;
+- mantenido Archify fuera del core como posible capacidad opcional de visualización técnica / Supporting Artifact, sin convertirlo en dependencia ni Artifact Type;
+- preservada la convención recomendada de `Task ID` y las definiciones normativas no afectadas por esta actualización.
+
 - fijada la frontera de transporte entre Conversation Spaces: `Specialist Handoff` se entrega inline, autocontenido y copiable; no requiere `.md`, Exchange, path ni `Manual Artifact Launcher`;
 - aclarado que Exchange permanece como pasarela pasiva y opcional hacia/desde Coding Agents y no participa en routing entre Conversation Spaces;
 - ejecutada una auditoría integral del repositorio vigente para alinear contratos, onboarding, prompts, templates, discoverability, validaciones y distribución offline con el modelo consolidado;
