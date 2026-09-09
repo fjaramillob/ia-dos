@@ -2,7 +2,7 @@
 
 Este registro clasifica cómo debe materializar trabajo un coding agent. No define herramientas concretas ni conversaciones permanentes.
 
-Toda `Execution Task` debe declarar un tipo principal. Puede incluir un tipo secundario solo cuando sea inseparable del mismo resultado.
+Toda `Execution Task` debe declarar un tipo principal. Puede incluir un tipo secundario sólo cuando sea inseparable del mismo outcome.
 
 ## Planificación versus ejecución
 
@@ -16,25 +16,27 @@ Planning Task
 
 Execution Task
 → tipo de ejecución
-→ resultado verificable
+→ outcome verificable
 → Execution Report
 → revisión del destino declarado
 ```
 
 Usa una Planning Task cuando todavía sea necesario inspeccionar o diseñar cómo implementar.
 
-Usa una Execution Task solo cuando exista una unidad aprobada, pequeña y verificable.
+Usa una Execution Task cuando exista un resultado definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad.
 
 ## Regla general
 
 ```text
 1 Execution Task
-→ 1 tipo principal
-→ 1 resultado verificable
+→ 1 outcome cohesivo
+→ 1 frontera estable de autoridad
 → 1 Execution Report
 ```
 
-El tipo no concede permisos. Escritura, control de versiones, cambios remotos, despliegue, datos, recursos externos, costes y producción requieren autorización explícita.
+El tipo no concede permisos. Escritura, control de versiones, cambios remotos, despliegue, datos, recursos externos, costes y producción requieren autorización explícita dentro de la Execution Task.
+
+Una Task no debe dividirse sólo por duración, cantidad de archivos o comandos, ni porque contenga fases internas de implementación, tests, commit, push, deploy o smoke. IA-DOS busca maximizar el resultado seguro y verificable por Task, no la cantidad de Tasks.
 
 ## Tipos base
 
@@ -45,8 +47,6 @@ Inspección, auditoría o levantamiento cuyo resultado principal es conocimiento
 - modo predeterminado: solo lectura;
 - evidencia: fuentes, hallazgos y límites;
 - detenerse si la verificación exige acciones no autorizadas.
-
-Una inspección puede informar una Planning Task posterior, pero no la sustituye cuando aún falta diseñar la secuencia de implementación.
 
 ### `BOOTSTRAP`
 
@@ -69,7 +69,7 @@ Construcción de una capacidad nueva o incremento funcional.
 Corrección de un defecto reproducible.
 
 - exige síntoma, evidencia inicial y resultado esperado;
-- no autoriza refactors amplios;
+- no autoriza refactors amplios por defecto;
 - evidencia: reproducción previa, corrección y regresión cuando aplique.
 
 ### `REFACTOR`
@@ -93,7 +93,7 @@ Traslado selectivo de código, datos, estructura, proveedor o arquitectura.
 Creación, reparación o fortalecimiento de verificaciones.
 
 - exige qué riesgo o comportamiento debe comprobarse;
-- no debe alterar comportamiento solo para hacer pasar una prueba sin autorización;
+- no debe alterar comportamiento sólo para hacer pasar una prueba sin autorización;
 - evidencia: pruebas agregadas y resultado.
 
 ### `HARDEN`
@@ -126,7 +126,7 @@ Actualización autorizada de memoria durable del proyecto.
 Preparación o ejecución autorizada de una entrega.
 
 - exige versión, artefacto, entorno, verificaciones y reversión cuando corresponda;
-- producción e integración final no se presumen autorizadas;
+- integración, despliegue y producción no se presumen autorizados, pero pueden formar parte del mismo Authority Envelope cuando sirven al mismo outcome;
 - evidencia: checks y estado de entrega.
 
 ### `OPERATE`
@@ -155,17 +155,44 @@ Trabajo sobre infraestructura, observabilidad, continuidad o mantenimiento opera
 | Entregar una versión | `RELEASE` |
 | Operar un entorno | `OPERATE` |
 
-## Gate de tamaño
+## Gate de granularidad
 
 Antes de aprobar una Execution Task, verifica:
 
 ```text
-¿Tiene un solo resultado terminable y no mezcla fases independientes?
+¿El trabajo persigue un outcome cohesivo y verificable
+bajo una frontera de autoridad que puede mantenerse estable hasta el Final State?
 ```
 
-Si el trabajo contiene varias unidades, usa o revisa un Implementation Plan y aprueba solo la primera.
+Puede incluir múltiples fases internas si todas son inseparables del mismo resultado.
 
-Un tipo principal compartido no convierte varios resultados en una sola tarea.
+Divide o detén cuando cambie materialmente:
+
+- outcome;
+- scope;
+- autoridad;
+- arquitectura;
+- seguridad;
+- datos;
+- riesgo;
+- coste;
+- entorno.
+
+Un tipo principal compartido no convierte outcomes independientes en una sola tarea.
+
+## Authority Envelope
+
+La Task puede agrupar permisos explícitos de Code, Git, Delivery, Production, datos o servicios externos.
+
+```text
+acción sensible no declarada
+→ no autorizada
+
+acción declarada + gates previos cumplidos + frontera estable
+→ puede ejecutarse dentro de la misma Task
+```
+
+El Authority Envelope no es un Artifact Type y el coding agent no aprueba su propio plan o ejecución.
 
 ## Campos que hereda la tarea
 
@@ -178,8 +205,6 @@ El tipo elegido influye en:
 - autorizaciones;
 - condiciones de detención;
 - formato proporcional del Execution Report;
-- documentación o memoria que la propia Execution Task autorice modificar como parte de su resultado.
-
-El tipo no autoriza por sí mismo una actualización de memoria ni convierte el Execution Report en mecanismo de consolidación durable.
+- documentación o memoria que la propia Execution Task autorice modificar como parte de su outcome.
 
 La `Execution Task` sigue siendo la autoridad concreta. Este registro aporta valores predeterminados y evita que cada coding agent improvise el modo de trabajo.
