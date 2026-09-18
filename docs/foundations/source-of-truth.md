@@ -10,6 +10,7 @@ Cada tipo de información debe tener una ubicación principal definida por el pr
 |---|---|
 | Propósito, usuarios y alcance | memoria durable del proyecto |
 | Estado actual conocido | memoria durable actualizada con evidencia |
+| Último baseline publicado verificado | Operational Baseline en memoria durable, revalidado contra implementación/delivery |
 | Arquitectura vigente | registro arquitectónico o memoria durable |
 | Decisiones durables | registro de decisiones adoptado por el proyecto |
 | Organización conversacional | configuración documentada del entorno conversacional |
@@ -32,7 +33,7 @@ Una fuente no es canónica para todo.
 
 Ejemplos:
 
-- la memoria durable puede gobernar decisiones aceptadas, pero no demostrar que el código existe;
+- la memoria durable puede gobernar decisiones aceptadas y conservar el último baseline publicado verificado, pero no demostrar por sí sola que el código o deployment siguen iguales ahora;
 - la implementación demuestra estado real, pero no necesariamente explica por qué se tomó una decisión;
 - un reporte aporta evidencia de acciones y verificaciones, pero no reemplaza el artefacto modificado;
 - Exchange conserva qué archivos fueron enviados y recibidos, pero no reemplaza estado vigente, backlog, implementación o decisiones;
@@ -58,7 +59,9 @@ Puede conservar los archivos que se intercambiaron para responder preguntas como
 
 Exchange no define el significado de esos archivos, no crea artefactos, no genera IDs, no mantiene backlog y no consolida memoria durable.
 
-Cuando un hecho observado en un `Execution Report` merece persistirse, esa evaluación ocurre después de revisar la evidencia. Si corresponde actualizar memoria durable, se hace mediante una acción o tarea documental explícitamente autorizada.
+La política de memoria se define en la Execution Task cuando corresponde. Un hecho puede materializarse dentro del mismo outcome si `Memory Policy`, triggers y Authority Envelope lo autorizan.
+
+Si cambia un estado publicado, el Operational Baseline durable puede requerir actualización incluso cuando `Memory Policy = NONE`. Una Task documental separada se reserva para bootstrap, consolidación, reparación/migración o una frontera distinta.
 
 ## Planificación
 
@@ -77,7 +80,7 @@ Una `Execution Task` conserva el alcance autorizado aunque se transporte por con
 
 El mecanismo de almacenamiento no cambia la autoridad del artefacto ni permite omitir permisos, límites o criterios necesarios para ejecutar de forma segura.
 
-El `Execution Report` conserva evidencia de ejecución. No aprueba su propio resultado, no selecciona la decisión de gobierno posterior y no funciona como mecanismo de consolidación de memoria.
+El `Execution Report` conserva evidencia de ejecución. No aprueba su propio resultado ni selecciona la decisión de gobierno posterior. Cuando la Task incluye contrato de memoria, registra `Durable Memory Impact` y estado del `Operational Baseline`; la Wiki sigue siendo la fuente durable, no el Report.
 
 ## Contradicciones
 
