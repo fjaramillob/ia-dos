@@ -50,7 +50,7 @@ No es una pipeline rígida: cada gate se usa sólo cuando aplica.
 
 Una Execution Cell puede conservar continuidad entre múltiples tareas, pero cada tarea vuelve a declarar permisos.
 
-El Execution Report es evidencia; no aprueba su propio resultado, no elige la siguiente unidad y no recomienda memoria durable por defecto.
+El Execution Report es evidencia; no aprueba su propio resultado ni elige la siguiente unidad. Puede reportar `Durable Memory Impact` y `Operational Baseline` cuando la Task ya definió esa política.
 
 ## Exchange manual
 
@@ -88,16 +88,11 @@ El esquema temporal no es una obligación universal para IDs de Planning.
 
 ## Memoria durable Markdown
 
-Cuando el conocimiento ya está confirmado y la actualización documental está autorizada:
+La memoria semántica se gobierna con `Memory Policy: NONE | CONDITIONAL | REQUIRED`. Si el mismo outcome ya autoriza Wiki/Git, puede materializarse dentro de esa Execution Task.
 
-```text
-conocimiento confirmado
-→ Execution Task / perfil Wiki Update Task
-→ Coding Agent — Execution
-→ diff + validaciones + Execution Report
-→ revisión
-→ integración sólo cuando esté autorizada
-```
+Una Task WIKI separada se reserva para bootstrap, consolidación, reparación o una frontera documental distinta.
+
+Cuando cambia un baseline publicado en un proyecto con LLM Wiki, el mismo outcome debe mantener continuidad operacional durable aunque la memoria semántica sea `NONE`.
 
 `memoria durable` es la responsabilidad funcional; `LLM Wiki` es una posible materialización.
 
