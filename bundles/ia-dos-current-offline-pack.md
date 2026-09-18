@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — adopción real / ejecución cohesiva 2026-09-09`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.3 — adopción real / memoria durable selectiva 2026-09-17`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -19,6 +19,8 @@ Execution Task = outcome cohesivo bajo frontera estable de autoridad
 Authority Envelope = permisos explícitos dentro de Execution Task
 Execution Checkpoint = continuidad operacional, no autoridad
 Execution Report = evidencia de lo ocurrido
+Memory Policy = criterio semántico dentro de Execution Task
+Operational Baseline = checkpoint durable del último estado publicado verificado
 Memoria durable = responsabilidad funcional
 LLM Wiki = materialización durable, portable y navegable
 Repository = implementación real
@@ -143,6 +145,7 @@ Revalidate
 → Push
 → Deploy
 → Production Smoke
+→ Durable Memory / Operational Baseline, cuando corresponda
 → Final State
 ```
 
@@ -193,6 +196,38 @@ cambio material de frontera
 ```
 
 El coding agent no aprueba su propio plan o ejecución.
+
+## Memoria dentro del outcome
+
+Cuando el proyecto usa memoria durable, la Execution Task declara:
+
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Triggers: [cuando CONDITIONAL]
+Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
+```
+
+`Memory Policy` gobierna memoria semántica:
+
+- `NONE`: no corresponde cambio semántico;
+- `CONDITIONAL`: actualiza sólo ante triggers explícitos;
+- `REQUIRED`: la actualización durable forma parte del outcome.
+
+`Operational Baseline` gobierna continuidad y es independiente de la memoria semántica. Si cambia un estado publicado en un proyecto con LLM Wiki, conserva cuando aplique:
+
+- repositorio y branch productiva;
+- último HEAD remoto verificado;
+- commit/versión realmente publicada;
+- deployment/release;
+- entorno o URL;
+- estado;
+- fecha de verificación.
+
+`Repository HEAD` puede diferir de `Production Commit`; no los colapses. El baseline orienta, pero el siguiente agente revalida las fuentes reales.
+
+Una Task WIKI separada se reserva para bootstrap, consolidación de varios outcomes, reparación o una frontera de autoridad distinta.
+
+El Cycle Owner define política y triggers. El Coding Agent materializa dentro de autoridad; no decide roadmap, prioridades o dirección.
 
 ## Compresión de contexto
 
@@ -281,6 +316,8 @@ Actual Scope
 Acceptance
 Deviations
 Final State
+Durable Memory Impact
+Operational Baseline
 ```
 
 Agrega otras secciones sólo cuando aporten evidencia real. No vuelvas a narrar la Task.
@@ -386,7 +423,21 @@ Caveman Return es convención de entrega, no Artifact Type.
 
 Memoria durable conserva conocimiento vigente y reusable. LLM Wiki es una posible materialización portable y navegable.
 
-No uses Wiki como backlog, archivo de TASK/REPORT, log de chats o transcripciones. No obligues al coding agent a leerla completa.
+Prueba de suficiencia:
+
+```text
+repositorio real
++ Wiki relevante
++ Task vigente
+→ un Coding Agent nuevo puede ponerse al día
+→ revalida el estado real antes de modificar
+```
+
+No actualices semánticamente la Wiki por cada ejecución. Usa `NONE | CONDITIONAL | REQUIRED` y consolida varios outcomes cuando juntos produzcan un cambio durable.
+
+Cuando cambia publicación, actualiza el Operational Baseline aunque `Memory Policy = NONE`. Puede existir un historial compacto de baselines publicados significativos, pero Git y la plataforma de delivery conservan el detalle exhaustivo.
+
+No uses Wiki como backlog, archivo de TASK/REPORT, log de chats, diffs o transcripciones. No obligues al coding agent a leerla completa.
 
 ## Actualizar la referencia local de IA-DOS
 
@@ -427,6 +478,8 @@ Execution Cell ≠ Task
 Authority Envelope ≠ Artifact Type
 Execution Checkpoint ≠ autorización
 Execution Report ≠ decisión
+Memory Policy ≠ Artifact Type
+Operational Baseline ≠ fuente técnica actual
 Exchange ≠ Google Drive
 Exchange ≠ memoria
 Specialist Handoff ≠ Exchange file
@@ -435,7 +488,7 @@ Caveman Return ≠ output completo
 
 Task carries authority and the active delta.
 Report carries evidence of what actually happened.
-Durable memory carries current reusable knowledge.
+Durable memory carries current reusable knowledge and the last verified published baseline when applicable.
 Repository carries implementation.
 Exchange only carries operational artifacts toward/from Coding Agents.
 Human authority remains explicit.
