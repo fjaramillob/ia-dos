@@ -14,11 +14,14 @@ Este repositorio o directorio contiene la memoria durable de `[NOMBRE DEL PROYEC
 6. Mantén la base comprensible fuera de Obsidian; no dependas de plugins, wikilinks o formatos propietarios para su significado.
 7. Evita duplicar documentos completos o repetir la misma verdad en varias páginas.
 8. Mantén `status/current-state.md` alineado con la realidad comprobada.
-9. Registra en `decisions/` sólo decisiones durables que necesiten una página propia.
-10. Registra en `sources/` referencias que realmente deban conservarse; una fuente no equivale a una decisión.
-11. No conviertas TASK, REPORT, logs, diffs o transcripciones en memoria durable por defecto.
-12. No guardes secretos ni credenciales.
-13. No modifiques implementación, Exchange u otros repositorios salvo autorización explícita.
+9. Si el proyecto tiene estado publicado, conserva un Operational Baseline que distinga último HEAD remoto verificado de commit/versión realmente publicada, más deployment/release, entorno y fecha cuando apliquen.
+10. El Operational Baseline orienta continuidad; no sustituye revalidar Git, runtime o producción.
+11. Registra en `decisions/` sólo decisiones durables que necesiten una página propia.
+12. Registra en `sources/` referencias que realmente deban conservarse; una fuente no equivale a una decisión.
+13. No conviertas TASK, REPORT, logs, diffs o transcripciones en memoria durable por defecto.
+14. No registres cada commit o deployment como narrativa: conserva sólo baselines publicados significativos cuando el proyecto mantenga historia de releases.
+15. No guardes secretos ni credenciales.
+16. No modifiques implementación, Exchange u otros repositorios salvo autorización explícita.
 
 ## Modulación
 
