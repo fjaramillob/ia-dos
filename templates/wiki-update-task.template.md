@@ -1,6 +1,8 @@
 # Wiki Update Task — perfil de Execution Task
 
-Usa este perfil cuando una `Execution Task` tenga como resultado principal actualizar memoria durable Markdown.
+Usa este perfil cuando una `Execution Task` tenga como resultado principal actualizar memoria durable Markdown: bootstrap, consolidación de varios outcomes, reparación documental, migración de memoria o una frontera de autoridad separada.
+
+No lo uses como paso rutinario después de cada ejecución si la Task original ya podía actualizar la memoria dentro del mismo outcome.
 
 No crea un tipo de artefacto nuevo. Conserva el contrato canónico de ejecución.
 
@@ -21,8 +23,16 @@ Task ID: [TASK-ID]
 - Destino del Execution Report: `[CONVERSATION SPACE]`
 - Memory Bootstrap Gate: `[PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT | NO APLICA]`
 - Readiness indispensable: `[LISTO PARA EJECUCIÓN | NO APLICA]`
+- Memory Policy: `REQUIRED`
+- Operational Baseline: `[UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA]`
 
 Si esta tarea responde a `BOOTSTRAP REQUIRED`, su único resultado es persistir el checkpoint durable mínimo necesario para desbloquear otra unidad. Esa unidad original queda fuera de alcance y su gate se reevalúa después de revisar el Execution Report del bootstrap.
+
+## Motivo de separación
+
+- `[BOOTSTRAP | CONSOLIDACIÓN DE OUTCOMES | REPARACIÓN | MIGRACIÓN | FRONTERA DE AUTORIDAD DISTINTA]`
+
+Declara por qué este conocimiento no se materializó dentro de la Execution Task que produjo el cambio original. No aceptes “porque siempre hacemos una Task de Wiki” como razón suficiente.
 
 ## Objetivo documental
 
@@ -131,6 +141,8 @@ No leas toda la Wiki por defecto.
 - [ ] No se modificaron rutas fuera del alcance.
 - [ ] El diff es revisable y no contiene secretos.
 - [ ] Si es bootstrap, el checkpoint permite reevaluar la unidad original sin depender del chat para el conocimiento persistido.
+- [ ] Si consolida outcomes, la síntesis registra el estado durable resultante sin copiar cronología operacional innecesaria.
+- [ ] Si actualiza un baseline publicado, distingue HEAD remoto verificado de commit/versión productiva y registra deployment/release, entorno y fecha según aplique.
 - [ ] `[CRITERIO ESPECÍFICO]`.
 
 ## Validaciones requeridas
