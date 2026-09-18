@@ -144,7 +144,8 @@ El coding agent debe:
 6. detenerse ante contradicciones, falta de acceso o decisiones importantes no resueltas;
 7. ejecutar las verificaciones aplicables;
 8. revisar el diff completo;
-9. devolver evidencia suficiente al destino declarado.
+9. aplicar la Memory Policy y el Operational Baseline declarados sin inventar dirección;
+10. devolver evidencia suficiente al destino declarado.
 
 ## Perfiles de materialización
 
@@ -154,13 +155,21 @@ La naturaleza documental de una tarea no elimina la necesidad de alcance, autori
 
 ## Actualización de LLM Wiki
 
-Cuando una tarea afecta memoria durable, el coding agent no decide unilateralmente qué conocimiento debe convertirse en estado oficial.
+La Task, no el Coding Agent, define el contrato de memoria:
 
-La tarea debe especificar el conocimiento confirmado y las rutas autorizadas. El agente materializa ese cambio, preserva Markdown portable, valida navegación y devuelve evidencia.
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Triggers: [cuando aplique]
+Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
+```
 
-Si la tarea responde a `BOOTSTRAP REQUIRED`, puede materializar el checkpoint durable mínimo autorizado, pero no continuar con la unidad original que ese checkpoint busca desbloquear.
+El agente puede materializar memoria dentro de la misma ejecución cuando esas reglas y el Authority Envelope lo autorizan. No necesita una Task WIKI posterior por rutina.
 
-Si durante la ejecución descubre hechos adicionales, los reporta como parte del resultado observable o como `Atención requerida` cuando necesiten revisión. No crea por defecto una sección de `Conocimiento potencialmente durable` ni recomienda automáticamente qué debe incorporarse a la LLM Wiki.
+Si la Task responde a `BOOTSTRAP REQUIRED`, puede materializar el checkpoint mínimo autorizado, pero no continuar con la unidad original que busca desbloquear.
+
+Si el outcome cambia un estado publicado y el proyecto usa Wiki, actualiza el Operational Baseline autorizado con repositorio/branch, HEAD remoto verificado, commit productivo, deployment/release, entorno/URL, estado y fecha de verificación.
+
+El agente no usa `CONDITIONAL` para inventar roadmap o prioridades: sólo evalúa triggers explícitos. Hechos fuera de esos triggers permanecen en evidencia o `Atención requerida`.
 
 Consulta [Actualizar la memoria durable](updating-the-llm-wiki.md).
 
@@ -188,7 +197,7 @@ Debe incluir, según corresponda:
 - condiciones de detención activadas;
 - evidencia verificable.
 
-El `Execution Report` no aprueba su propio resultado, no elige la siguiente unidad y no consolida memoria durable fuera de lo explícitamente autorizado por la tarea.
+El `Execution Report` no aprueba su propio resultado ni elige la siguiente unidad. Registra `Durable Memory Impact` y estado del `Operational Baseline` cuando corresponda; sólo consolida memoria dentro de la política y autoridad explícitas de la Task.
 
 ## Git y acciones externas
 
@@ -200,6 +209,8 @@ El coding agent sólo realiza cada una cuando la tarea la autoriza explícitamen
 
 Las sesiones del coding agent no son memoria durable.
 
-Después de revisar la evidencia, el Cycle Owner y la persona responsable, según la autoridad aplicable, evalúan qué conocimiento confirmado merece persistirse en LLM Wiki, ADR, documentación u otra fuente de verdad mediante una acción autorizada.
+El Cycle Owner define qué conocimiento merece persistirse y puede delegar esa materialización dentro de la misma Execution Task. La persona responsable conserva dirección y criterio cuando la decisión es material.
+
+La Wiki debe permitir que un Coding Agent nuevo se ponga al día junto con el repositorio y la Task vigente; la sesión anterior del agente nunca es requisito de continuidad.
 
 Exchange, cuando se adopta, sólo conserva o transporta archivos `.md`; no sustituye memoria durable, backlog ni implementación.
