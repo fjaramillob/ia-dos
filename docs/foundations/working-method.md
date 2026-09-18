@@ -79,6 +79,7 @@ Una Execution Task declara proporcionalmente:
 - Required Reading y References cuando aporten;
 - alcance y fuera de alcance;
 - Authority Envelope;
+- Memory Policy y regla de Operational Baseline cuando aplica;
 - criterios de aceptación;
 - verificaciones;
 - condiciones de detención.
@@ -91,7 +92,7 @@ La modificación física se delega a `Coding Agent — Execution` con acceso ade
 
 El coding agent inspecciona, modifica, prueba y reporta únicamente dentro de esa tarea.
 
-Una misma Task puede contener fases internas de revalidación, implementación, verificación, Git, delivery y smoke si sirven al mismo outcome y están explícitamente autorizadas bajo una frontera estable.
+Una misma Task puede contener fases internas de revalidación, implementación, verificación, Git, delivery, smoke y actualización de memoria durable cuando corresponde, si sirven al mismo outcome y están explícitamente autorizadas bajo una frontera estable.
 
 Una Execution Cell puede preservar continuidad entre tareas, pero no hereda permisos.
 
@@ -129,9 +130,11 @@ Después de revisar:
 - la implementación queda en su fuente técnica;
 - la evidencia queda en Report, diff, PR u otro mecanismo;
 - el trabajo pendiente queda en el sistema de seguimiento;
-- el conocimiento confirmado que deba reutilizarse puede regresar a memoria durable mediante una acción autorizada.
+- la memoria semántica se actualiza sólo según `Memory Policy`;
+- si cambió un baseline publicado, el checkpoint operacional durable debe reflejar el estado final verificado;
+- varios outcomes menores pueden consolidarse más adelante en una sola actualización semántica cuando juntos cambien la comprensión vigente.
 
-No copies conversaciones completas ni conviertas cada hallazgo en memoria permanente.
+No copies conversaciones completas ni conviertas cada hallazgo en memoria permanente. Tampoco uses esta selectividad para dejar a un futuro agente sin saber qué versión está publicada.
 
 ## Arquitectura operativa
 
@@ -189,3 +192,5 @@ IA-DOS favorece outcomes seguros y verificables que funcionan y evolucionan.
 No exige completar toda la definición, documentación o arquitectura antes de construir. Exige claridad suficiente y una frontera estable para el siguiente avance seguro.
 
 La memoria durable aparece cuando hace falta para preservar conocimiento reusable, no como ceremonia previa a cada avance. Una LLM Wiki es una posible materialización de esa memoria, no una topología obligatoria.
+
+Cuando existe, debe superar una prueba práctica: un Coding Agent nuevo puede ponerse al día con `repositorio + Wiki relevante + Task vigente`, reconocer el último baseline publicado y revalidar la realidad antes de aportar.
