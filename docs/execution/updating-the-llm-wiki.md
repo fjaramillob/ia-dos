@@ -1,131 +1,227 @@
 # Actualización de la memoria durable
 
-Cuando el proyecto utiliza una Wiki Markdown, su contenido se gobierna desde el Project Orchestrator y, cuando aporta, desde `90 — Wiki y memoria`. La modificación física corresponde a un coding agent o a otro mecanismo autorizado con acceso real al recurso.
+Cuando un proyecto utiliza una LLM Wiki, IA-DOS la trata como memoria durable de alta señal: conocimiento vigente para humanos y agentes, no como diario de ejecución.
 
-La Wiki conserva conocimiento vigente y reusable. No es un backlog, un log operacional ni un repositorio de TASK/REPORT.
-
-## Separación de responsabilidades
+La Wiki debe permitir que un Coding Agent competente se incorpore en cualquier punto del desarrollo usando:
 
 ```text
-Project Orchestrator / Cycle Owner
-    identifica conocimiento durable
-    distingue estado, decisiones y desconocidos
-    define qué debe cambiar y por qué
-    prepara una Execution Task documental
-
-90 — Wiki y memoria, cuando aporta
-    sintetiza conocimiento
-    detecta contradicciones y obsolescencia
-    propone contenido y rutas
-    no afirma cambios sin evidencia
-
-Coding agent
-    inspecciona la Wiki real
-    modifica sólo rutas autorizadas
-    mantiene Markdown portable
-    revisa enlaces y diff
-    entrega Execution Report
+repositorio real
++ Wiki relevante
++ Execution Task vigente
+→ comprensión suficiente para contribuir
+→ revalidación del estado real antes de modificar
 ```
 
-## Cuándo crear una actualización documental
+La implementación, Git y producción siguen siendo autoridad para demostrar qué existe realmente. La Wiki conserva comprensión durable y el último baseline operacional verificado.
 
-Créala cuando:
+## Dos responsabilidades distintas
 
-- una decisión confirmada debe persistirse;
-- cambia el estado real del proyecto;
-- una implementación invalida información vigente;
-- una restricción o arquitectura confirmada cambia;
-- aparece una contradicción que debe resolverse en la memoria;
-- el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) devuelve `BOOTSTRAP REQUIRED`;
-- la estructura actual dificulta recuperar selectivamente conocimiento que ya existe.
+### Memoria semántica
 
-No es necesaria para cada conversación, commit menor o ajuste editorial sin impacto durable.
+Conserva aquello que cambia cómo debe entenderse o desarrollarse el proyecto:
 
-## Contrato de ejecución
+- capacidades relevantes;
+- contratos funcionales;
+- arquitectura;
+- modelos de datos;
+- seguridad y autoridad;
+- fuentes de verdad;
+- decisiones durables;
+- restricciones;
+- estado significativo del roadmap.
 
-Una actualización física de la Wiki sigue siendo una `Execution Task` canónica.
+No todo outcome merece una actualización semántica.
 
-Puede utilizar el perfil [Wiki Update Task](../../templates/wiki-update-task.template.md), pero ese perfil no crea un tipo de artefacto independiente ni debilita alcance, autoridad, permisos, criterios, verificaciones o condiciones de detención.
+La Execution Task declara:
 
-## Entrada mínima para el coding agent
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+```
 
-La tarea debe incluir:
+- `NONE`: no corresponde cambio semántico de Wiki;
+- `CONDITIONAL`: actualiza sólo si ocurre uno de los `Memory Triggers` explícitos;
+- `REQUIRED`: la actualización durable forma parte confirmada del outcome.
 
-- objetivo documental;
-- conocimiento confirmado que debe reflejarse;
-- fuentes o evidencia autorizadas;
-- páginas que deben leerse;
+Varios outcomes menores pueden quedar `DEFERRED` y consolidarse más adelante cuando juntos formen un cambio durable.
+
+### Operational Baseline
+
+En un proyecto con LLM Wiki, todo cambio de estado publicado debe dejar actualizado el baseline operacional durable aunque `Memory Policy = NONE`.
+
+Debe permitir identificar, cuando aplique:
+
+- repositorio de implementación;
+- branch productiva;
+- último HEAD remoto verificado;
+- commit o versión realmente publicada;
+- deployment, release o identificador equivalente;
+- entorno y URL/endpoint canónico;
+- estado observado;
+- fecha de verificación.
+
+```text
+Repository HEAD
+puede ser distinto de
+Production Commit
+```
+
+Esa diferencia debe ser visible.
+
+El Operational Baseline es un checkpoint para continuidad. No autoriza a confiar ciegamente en él: el siguiente Coding Agent debe revalidar remoto, worktree, runtime y producción antes de escribir.
+
+No registres dentro de la propia Wiki un `Wiki HEAD` autorreferente que obligue a otro commit sólo para almacenar su SHA. El HEAD actual de la Wiki se obtiene desde su repositorio.
+
+## Historial de publicación
+
+Cuando el proyecto tiene releases o deployments, la Wiki puede mantener un historial compacto de baselines publicados significativos.
+
+Cada entrada debe ser proporcional, por ejemplo:
+
+```text
+Fecha / outcome
+App commit
+Production commit
+Deployment o release
+Estado
+Verificación relevante
+```
+
+No copies cada commit, cada Task, cada Report ni cada deployment intermedio. Git y la plataforma de delivery conservan el historial exhaustivo.
+
+Si el proyecto ya tiene una página equivalente, reutilízala. No impongas `status/release-history.md` por nombre.
+
+## Gobierno
+
+```text
+Persona responsable
+→ conserva criterio y dirección
+
+Project Orchestrator / Cycle Owner
+→ define qué outcome perseguir
+→ define Memory Policy
+→ define Memory Triggers cuando corresponda
+→ define si el baseline publicado debe actualizarse
+→ decide cuándo consolidar varios outcomes
+
+Coding Agent — Execution
+→ materializa sólo dentro de la Task y Authority Envelope
+→ actualiza memoria si la política y los triggers lo habilitan
+→ actualiza Operational Baseline cuando cambia publicación y está autorizado
+→ reporta evidencia
+```
+
+La capacidad de actualizar memoria no transfiere al Coding Agent autoridad para decidir roadmap, prioridades, producto o arquitectura fuera de la frontera delegada.
+
+## Actualización dentro del mismo outcome
+
+Cuando implementación, Git, delivery y Wiki comparten una frontera estable de autoridad, la actualización durable debe ocurrir dentro de la misma Execution Task.
+
+Ejemplo:
+
+```text
+Revalidate
+→ Implement
+→ Verify
+→ Commit
+→ Push
+→ Deploy
+→ Production Smoke
+→ Semantic Memory, si Memory Policy lo exige
+→ Operational Baseline, si cambió publicación
+→ Execution Report
+```
+
+No abras una Task de Wiki sólo porque terminó una ejecución.
+
+## Cuándo sí usar una Wiki Update Task separada
+
+Usa una Execution Task documental separada cuando el resultado principal sea:
+
+- materializar un checkpoint por `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`;
+- consolidar varios outcomes menores en una síntesis durable;
+- reparar contradicciones u obsolescencia de la memoria;
+- migrar o reorganizar estructura documental;
+- actualizar memoria bajo una frontera de autoridad distinta de la ejecución original.
+
+El perfil [Wiki Update Task](../../templates/wiki-update-task.template.md) sigue siendo una Execution Task canónica; no es un Artifact Type nuevo.
+
+## Entrada mínima para una actualización autorizada
+
+La Task debe indicar:
+
+- `Memory Policy`;
+- `Memory Triggers` cuando sea `CONDITIONAL`;
+- regla de `Operational Baseline`;
+- conocimiento confirmado que puede persistirse;
+- fuentes de autoridad;
+- Required Reading;
 - rutas modificables y prohibidas;
 - contenido que debe preservarse;
-- alcance y fuera de alcance;
-- autorizaciones de branch, commit, push o PR;
+- Authority Envelope para Wiki/Git;
 - criterios de aceptación;
-- validaciones requeridas;
-- condiciones de detención;
-- destino del Execution Report.
+- verificaciones;
+- condiciones de detención.
 
-No envíes toda la historia del proyecto si la actualización necesita sólo unas pocas páginas y hechos vigentes.
+No envíes la historia completa del proyecto.
 
-## Conducta del coding agent
+## Conducta del Coding Agent
 
-El coding agent debe:
+Debe:
 
-1. confirmar recurso, branch o modo de trabajo y rutas autorizadas;
-2. leer `AGENTS.md`, `.ia-dos.yaml` cuando exista, `00-home.md` o el home equivalente y sólo las páginas requeridas;
-3. inspeccionar antes de modificar;
-4. preservar información vigente fuera del alcance;
+1. confirmar recurso, branch y rutas autorizadas;
+2. leer instrucciones locales y sólo el Required Reading;
+3. inspeccionar memoria y fuentes reales antes de escribir;
+4. preservar conocimiento vigente fuera de alcance;
 5. no inventar decisiones ni completar vacíos por simetría;
-6. no convertir propuestas en hechos ni decisiones aceptadas en implementación;
-7. mantener enlaces Markdown relativos y navegación coherente;
-8. no introducir dependencia de Obsidian, plugins o wikilinks para semántica crítica;
-9. ejecutar las validaciones aplicables;
-10. revisar el diff completo;
-11. devolver un Execution Report.
+6. distinguir implementado, decidido/no implementado, pendiente, fuera de alcance y desconocido;
+7. mantener Markdown portable y enlaces relativos;
+8. actualizar semantic memory sólo conforme a la política de la Task;
+9. actualizar el Operational Baseline cuando el outcome cambie publicación y esa autoridad esté incluida;
+10. revisar el diff y validar navegación;
+11. devolver un Execution Report evidence-first.
 
-Una Wiki existente puede usar nombres de archivos distintos del starter. La tarea debe declarar las rutas reales; no renombres archivos sólo para normalizar nombres.
+Si aparece una decisión nueva de dirección, producto, arquitectura, seguridad, datos o riesgo fuera de la autoridad recibida, debe detenerse.
+
+## Resultado en Execution Report
+
+El Report debe indicar de forma compacta:
+
+```text
+Durable Memory Impact:
+NONE | UPDATED | DEFERRED | ATTENTION REQUIRED
+
+Operational Baseline:
+UNCHANGED | UPDATED | NO APLICA | BLOQUEADO
+```
+
+- `NONE`: no hubo impacto semántico durable;
+- `UPDATED`: la memoria autorizada fue actualizada;
+- `DEFERRED`: el cambio individual no justificó consolidación todavía;
+- `ATTENTION REQUIRED`: existe una decisión o contradicción que requiere gobierno.
+
+Si un outcome publicó una nueva versión y la Task exigía actualizar el Operational Baseline pero no pudo hacerlo, no debe declararse completamente cerrado sin explicar la limitación.
 
 ## Validaciones mínimas
 
-Según la estructura de cada proyecto, verifica:
+Verifica según corresponda:
 
 - Markdown legible;
-- enlaces relativos afectados sin roturas conocidas;
+- enlaces relativos afectados;
 - YAML válido cuando exista;
-- rutas y nombres coherentes;
-- navegación desde el home vigente;
-- ausencia de secretos o datos no permitidos;
-- separación explícita entre implementado, decidido/no implementado, pendiente y desconocido;
-- ausencia de duplicación innecesaria;
-- preservación del contenido fuera de alcance;
-- diff limitado a rutas autorizadas.
-
-Cuando exista tooling de validación, la tarea debe indicar los comandos exactos. Cuando no exista, realiza una revisión manual reproducible y repórtala.
-
-## Git y pull request
-
-Branch, commit, push, pull request y merge son capacidades separadas y deben estar autorizadas explícitamente por la tarea.
-
-No asumas que una actualización documental puede fusionarse automáticamente por ser de bajo riesgo.
-
-## Revisión
-
-El Cycle Owner y la persona responsable deben revisar:
-
-- si el contenido corresponde a decisiones o evidencia reales;
-- si el estado técnico está respaldado;
-- si hipótesis y desconocidos siguen identificados;
-- si se modificaron únicamente las rutas autorizadas;
-- si el diff preserva conocimiento vigente;
-- si las validaciones son suficientes;
-- si aparece conocimiento nuevo que requiera otra decisión.
-
-Una afirmación del coding agent no reemplaza la revisión del artefacto.
+- navegación desde el home;
+- ausencia de secretos;
+- separación de estados;
+- preservación fuera de alcance;
+- baseline operacional coherente con evidencia real;
+- diff limitado a rutas autorizadas;
+- historial de publicación compacto, sin duplicar Git.
 
 ## Regla principal
 
 ```text
-Conversation Space gobierna el conocimiento
-Coding agent materializa cuando está autorizado
-Wiki conserva estado durable
-Execution Report aporta evidencia del cambio
+Orchestrator gobierna dirección y memoria
+Coding Agent materializa dentro de autoridad
+Wiki conserva comprensión durable + continuidad operacional
+Repository y Production demuestran realidad técnica
+Execution Report conserva evidencia del outcome
 ```
