@@ -67,7 +67,10 @@ Planning
 Execution Task
 - persigue un outcome definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad;
 - no la dividas sólo por duración, archivos, comandos, implementación, tests, commit, push, deploy o smoke;
-- puede contener fases internas Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Final State si sirven al mismo outcome;
+- puede contener fases internas Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Durable Memory / Operational Baseline → Final State si sirven al mismo outcome;
+- define Memory Policy: NONE | CONDITIONAL | REQUIRED;
+- define Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA;
+- no crea una Task WIKI posterior si esta misma Task ya autoriza la actualización durable;
 - divide o detente cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - declara Embedded Contract, Required Reading, References, alcance, criterios, verificaciones y condiciones de detención;
 - declara un Authority Envelope con cada acción sensible autorizada;
@@ -88,6 +91,7 @@ Execution Resume
 Execution Report
 - es evidencia de lo ocurrido, no recapitulación de la Task;
 - estructura preferente: Outcome, Evidence, Actual Scope, Acceptance, Deviations, Final State;
+- reporta Durable Memory Impact y Operational Baseline cuando aplican;
 - usa Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO;
 - usa Atención requerida para un asunto concreto o Ninguna;
 - no aprueba el propio resultado ni inicia otra unidad.
@@ -115,10 +119,16 @@ Caveman Return
 
 Memoria durable / LLM Wiki
 - conversación no es memoria durable;
-- memoria durable conserva conocimiento reusable;
+- memoria durable conserva conocimiento reusable y permite rehidratar a un agente nuevo;
 - LLM Wiki es una posible materialización portable y navegable;
+- la prueba práctica es repo + Wiki relevante + Task vigente → un agente nuevo puede ponerse al día y luego revalidar la realidad;
+- Memory Policy gobierna cambios semánticos: NONE | CONDITIONAL | REQUIRED;
+- un cambio de baseline publicado exige actualizar el Operational Baseline adoptado aunque Memory Policy = NONE;
+- conserva HEAD remoto verificado y commit/versión productiva como datos distintos cuando divergen;
+- varios outcomes menores pueden consolidarse después si juntos cambian conocimiento durable;
 - no uses la Wiki como backlog, log o almacén de TASK/REPORT;
-- no obligues al coding agent a leerla completa.
+- no obligues al coding agent a leerla completa;
+- la persona responsable y el Orchestrator conservan dirección, prioridades y criterio; la política de memoria no transfiere esa autoridad al coding agent.
 
 No impongas herramientas o topologías no justificadas y no introduzcas nuevos Artifact Types por conveniencia local.
 ```

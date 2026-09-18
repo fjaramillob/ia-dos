@@ -1,6 +1,6 @@
 # Execution Report
 
-El `Execution Report` registra **qué ocurrió realmente** durante una Execution Task. No vuelve a narrar qué estaba autorizado, no decide por el Cycle Owner, no sustituye la aprobación humana aplicable y no consolida memoria durable por defecto.
+El `Execution Report` registra **qué ocurrió realmente** durante una Execution Task. No vuelve a narrar qué estaba autorizado, no decide por el Cycle Owner ni sustituye la aprobación humana aplicable. Cuando la Task incluye contrato de memoria, reporta qué se materializó sin convertir evidencia en dirección del proyecto.
 
 ```text
 Task
@@ -87,6 +87,37 @@ Registra sólo el estado final necesario para continuar o cerrar con seguridad, 
 - bloqueo restante del alcance original;
 - `Ninguno` cuando no exista estado adicional relevante.
 
+## Durable Memory Impact
+
+Declara siempre que la Task incluya Memory Policy:
+
+```text
+Durable Memory Impact:
+NONE | UPDATED | DEFERRED | ATTENTION REQUIRED
+```
+
+- `NONE`: no hubo cambio semántico durable;
+- `UPDATED`: la memoria autorizada quedó actualizada;
+- `DEFERRED`: el outcome individual no justificó consolidación semántica todavía;
+- `ATTENTION REQUIRED`: existe una decisión, contradicción o cambio material que requiere gobierno.
+
+Explica brevemente las rutas afectadas cuando sea `UPDATED`. No inventes una recomendación de roadmap.
+
+## Operational Baseline
+
+Declara cuando el proyecto tenga estado publicado o la Task lo exija:
+
+```text
+Operational Baseline:
+UNCHANGED | UPDATED | NO APLICA | BLOQUEADO
+```
+
+Si fue `UPDATED`, registra la evidencia necesaria para continuar con seguridad: repositorio/branch, último HEAD remoto verificado, commit o versión publicada, deployment/release, entorno/URL, estado y fecha de verificación, según aplique.
+
+Si `Repository HEAD != Production Commit`, conserva ambos valores.
+
+Si una nueva publicación requería baseline durable y no pudo actualizarse, usa `BLOQUEADO` o explica la limitación; no ocultes la brecha bajo `COMPLETADO`.
+
 ## Secciones opcionales
 
 Agrega otras secciones únicamente cuando aporten evidencia real a esta ejecución. Ejemplos:
@@ -100,9 +131,11 @@ No uses el Report como checklist ceremonial de permisos que no se utilizaron.
 
 ## Frontera con memoria durable
 
-Los hechos descubiertos pueden aparecer como evidencia del outcome. El Report no crea por defecto una sección de “conocimiento durable” ni recomienda automáticamente qué incorporar a una LLM Wiki.
+Los hechos descubiertos pueden aparecer como evidencia del outcome. El Report no convierte hallazgos en memoria semántica por iniciativa propia.
 
-La evaluación de memoria ocurre después de revisar evidencia, salvo actualización documental concreta ya autorizada dentro de la Task.
+Cuando la Task declara `Memory Policy`, el Report registra el resultado de esa política. La decisión sobre triggers y dirección sigue perteneciendo al Cycle Owner/persona responsable.
+
+Una Task separada de Wiki se usa sólo cuando bootstrap, consolidación, reparación o una frontera de autoridad distinta lo justifican.
 
 ## Caveman Return
 
@@ -136,5 +169,7 @@ Antes de devolver el Report confirma:
 - [ ] las desviaciones no fueron ocultadas;
 - [ ] no se afirma aprobación del propio resultado;
 - [ ] no se inicia otra unidad;
-- [ ] no se recomienda memoria durable por rutina;
+- [ ] Durable Memory Impact coincide con lo realmente materializado cuando aplica;
+- [ ] Operational Baseline refleja la publicación real cuando aplica;
+- [ ] no se inventa dirección o prioridad a partir de la memoria;
 - [ ] el Report vuelve al destino declarado.

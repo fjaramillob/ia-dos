@@ -95,6 +95,7 @@ Revalidate
 → Push
 → Deploy
 → Production Smoke
+→ Durable Memory / Operational Baseline, cuando corresponda
 → Final State
 ```
 
@@ -174,7 +175,8 @@ El destino declarado revisa:
 4. verificaciones solicitadas versus ejecutadas;
 5. autorizaciones versus acciones realizadas;
 6. fuera de alcance preservado;
-7. desviaciones, bloqueos y estado final.
+7. desviaciones, bloqueos y estado final;
+8. Durable Memory Impact y Operational Baseline cuando la Task los declare.
 
 El reporte es evidence-first: la Task dice qué estaba autorizado y el Report qué ocurrió realmente. No debe volver a narrar la Task.
 
@@ -188,9 +190,20 @@ El checkpoint no agrega autoridad. Un nuevo Coding Agent debe leer la Task, leer
 
 ## Memoria en la misma ejecución
 
-Una actualización concreta de LLM Wiki puede formar parte de una Execution Task sólo cuando el conocimiento ya está confirmado, la modificación documental está explícitamente autorizada y no requiere una nueva decisión conceptual.
+Toda Execution Task declara, cuando el proyecto usa memoria durable:
 
-No conviertas toda ejecución de producto en una actualización automática de memoria.
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
+```
+
+La memoria semántica no se actualiza por cada ejecución. `CONDITIONAL` sólo responde a triggers definidos por el Cycle Owner y varios outcomes menores pueden consolidarse después.
+
+La continuidad operacional es independiente: si el outcome cambia un baseline publicado, el mismo outcome debe actualizar el checkpoint durable autorizado con repo/branch, HEAD remoto verificado, commit/versión productiva, deployment/release, entorno y fecha según aplique.
+
+Una Task WIKI separada se usa para bootstrap, consolidación, reparación o una frontera de autoridad distinta; no como paso rutinario posterior.
+
+El Coding Agent materializa memoria, pero no decide roadmap, prioridad o dirección por cuenta propia.
 
 ## Guardrails
 
@@ -210,7 +223,8 @@ No conviertas toda ejecución de producto en una actualización automática de m
 
 ```text
 Conversar sólo lo indispensable.
-Persistir memoria sólo cuando haga falta.
+Persistir memoria semántica sólo cuando haga falta.
+Mantener siempre continuidad del baseline publicado cuando exista Wiki.
 Comprobar readiness antes de escribir.
 Planificar cuando reduzca incertidumbre real.
 Ejecutar el mayor outcome seguro y verificable que conserve una frontera estable de autoridad.

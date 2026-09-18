@@ -31,6 +31,20 @@ IA-DOS como gobierno de la memoria
 
 Obsidian no se convierte en una fuente de verdad separada.
 
+## Prueba de continuidad entre agentes
+
+La memoria es suficiente cuando un Coding Agent competente puede incorporarse en cualquier punto del desarrollo sin depender de conversaciones anteriores:
+
+```text
+repositorio real
++ LLM Wiki relevante
++ Task vigente
+→ comprensión suficiente para contribuir
+→ revalidación del estado real antes de modificar
+```
+
+La Wiki no reemplaza Git, runtime ni producción como evidencia. Debe decirle al nuevo agente qué espera encontrar, qué decisiones condicionan el trabajo y cuál fue el último baseline verificado.
+
 ## Cuándo debe existir
 
 No se crea por cantidad de mensajes ni por ceremonia.
@@ -80,6 +94,56 @@ La Wiki no replica los Conversation Spaces `00–90`.
 Los Conversation Spaces representan gobierno. La LLM Wiki organiza conocimiento reusable.
 
 Crea páginas nuevas sólo cuando el contenido tenga suficiente entidad para mantenerse y consumirse de forma independiente. No anticipes carpetas vacías.
+
+## Memoria semántica y baseline operacional
+
+IA-DOS separa dos necesidades que no deben confundirse.
+
+### Memoria semántica
+
+Conserva conocimiento durable que cambia cómo se comprende o desarrolla el proyecto: capacidades relevantes, contratos funcionales, arquitectura, datos, seguridad, sources of truth, decisiones, restricciones y estado del roadmap cuando corresponda.
+
+Una Execution Task usa:
+
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+```
+
+- `NONE`: no existe cambio semántico que justifique tocar la Wiki;
+- `CONDITIONAL`: sólo se actualiza si ocurre un trigger explícito definido por el Cycle Owner;
+- `REQUIRED`: la actualización semántica forma parte del outcome confirmado.
+
+Pequeños outcomes pueden quedar sin actualización semántica y consolidarse después cuando, en conjunto, formen un cambio durable.
+
+### Operational Baseline
+
+Cuando un proyecto con Wiki publica software o cambia otro estado operacional relevante, la continuidad exige conservar el último baseline verificado aunque el cambio semántico sea `NONE`.
+
+Debe permitir identificar, cuando aplique:
+
+- repositorio y branch productiva;
+- último HEAD remoto verificado;
+- commit o versión realmente publicada;
+- deployment, release o identificador equivalente;
+- entorno y URL o endpoint canónico;
+- estado observado;
+- fecha de verificación.
+
+```text
+Repository HEAD
+puede ser distinto de
+Production Commit
+```
+
+Esa diferencia debe quedar visible. El baseline es un checkpoint durable; cada Coding Agent debe revalidar el remoto y el entorno antes de actuar.
+
+No guardes dentro de la Wiki un `Wiki HEAD` autorreferente que obligue a un commit adicional sólo para registrar su propio SHA. El HEAD actual de la Wiki se obtiene del repositorio que la versiona.
+
+### Historial de publicación
+
+Cuando aporte continuidad, conserva un historial compacto de baselines publicados significativos: outcome, commit productivo, deployment/release, estado y fecha.
+
+No copies cada commit ni cada ejecución. Git y la plataforma de delivery conservan el detalle exhaustivo.
 
 ## Estado vigente primero
 
@@ -166,7 +230,8 @@ Una conversación nueva de una Execution Cell debe poder recuperar contexto sufi
 
 ```text
 LLM Wiki relevante
-+ estado técnico actual
++ Operational Baseline, cuando existe estado publicado
++ estado técnico actual revalidado
 + Execution Task o contrato operativo actual
 + delta vigente
 ```
@@ -177,26 +242,39 @@ Si el conocimiento indispensable sólo existe en un chat anterior, el Memory Boo
 
 ## Gobierno de la memoria
 
-El coding agent puede descubrir hechos durante una ejecución, pero el `Execution Report` sigue siendo evidencia, no un artefacto de consolidación de memoria.
+El Conversation Space y la persona responsable conservan dirección. El Coding Agent no decide roadmap o prioridades por inferir que algo “merece documentación”.
+
+El Cycle Owner define dentro de la Task:
+
+- `Memory Policy`;
+- triggers, si es `CONDITIONAL`;
+- rutas y fuentes autorizadas;
+- si el baseline operacional debe actualizarse por publicación;
+- si corresponde historia compacta de release.
+
+Cuando la misma frontera de autoridad cubre implementación, Git, delivery y Wiki, el Coding Agent puede completar todo dentro del mismo outcome:
 
 ```text
-Coding Agent
-→ Execution Report con hechos y evidencia observados
-
-Cycle Owner + persona responsable, según autoridad
-→ revisan el resultado
-→ evalúan por separado qué hechos nuevos merecen memoria durable
-
-Conversation Space / 90, cuando aporta
-→ sintetiza el cambio documental
-
-Execution Task documental autorizada
-→ materializa la actualización de LLM Wiki
+Implement
+→ Verify
+→ Commit / Push
+→ Deploy / Smoke
+→ actualizar memoria autorizada
+→ actualizar Operational Baseline
+→ Execution Report
 ```
 
-Si la propia Execution Task ya autoriza una actualización durable concreta con conocimiento confirmado, el coding agent puede materializarla dentro de ese alcance. Fuera de ese caso, no crea una sección de `conocimiento potencialmente durable` ni decide qué debe incorporarse.
+Una Task de Wiki separada se usa cuando el resultado principal es:
 
-Una Execution Cell como `Wiki Sync` puede encargarse de la modificación física o sincronización cuando exista un flujo durable que lo justifique. No se crea automáticamente por usar una Wiki.
+- un bootstrap requerido por `Memory Bootstrap Gate`;
+- consolidar varios outcomes menores;
+- reparar memoria inconsistente u obsoleta;
+- realizar una migración/reorganización documental;
+- trabajar bajo una frontera de autoridad distinta.
+
+No la crees como ritual posterior a cada ejecución.
+
+El Execution Report registra qué ocurrió, incluido `Durable Memory Impact` y el estado del `Operational Baseline`. No sustituye la Wiki ni la aprobación del Cycle Owner.
 
 ## Fronteras
 

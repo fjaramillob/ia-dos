@@ -94,6 +94,11 @@ Además:
 - Exchange no enruta Conversation Spaces, no define IDs, templates, permisos, backlog, memoria o workflow;
 - una Task es suficientemente autocontenida cuando `Task + Required Reading` permiten ejecutarla sin conversaciones previas;
 - distingue `Embedded Contract`, `Required Reading` y `Reference`;
+- la memoria durable debe permitir que un Coding Agent competente, sin conversaciones previas, pueda orientarse con `repositorio + Wiki relevante + Task vigente` y contribuir tras revalidar el estado real;
+- `Memory Policy = NONE | CONDITIONAL | REQUIRED` gobierna actualización semántica dentro de una Execution Task y no es un Artifact Type;
+- cuando un proyecto con LLM Wiki cambia un baseline publicado, el mismo outcome debe dejar actualizado un `Operational Baseline` durable con repositorio, branch productiva, último HEAD remoto verificado, commit productivo, deployment o release equivalente, entorno/URL, estado y fecha de verificación;
+- el `Operational Baseline` es un checkpoint de continuidad, no sustituye revalidar Git, runtime o producción antes de escribir;
+- un historial de releases, cuando exista, registra baselines publicados significativos de forma compacta; Git y la plataforma de delivery conservan el detalle exhaustivo;
 - Planning sigue siendo de solo lectura y el plan sigue siendo propuesta;
 - el Cycle Owner puede adoptar un Implementation Plan dentro de autoridad delegada; la persona interviene ante cambios materiales de dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
@@ -104,7 +109,11 @@ Una LLM Wiki:
 - normalmente usa Markdown estándar y enlaces relativos;
 - debe poder navegarse con GitHub, editores u Obsidian sin depender de ellos para su semántica;
 - no es obligatoria para toda tarea ni requiere repositorio separado;
-- no debe convertirse por defecto en backlog, archivo de TASK/REPORT, log de chats o transcripciones.
+- debe privilegiar conocimiento vigente y suficiente para rehidratar a agentes nuevos;
+- separa memoria semántica de baseline operacional;
+- no debe convertirse por defecto en backlog, archivo de TASK/REPORT, log de chats, diffs ni transcripciones;
+- no se actualiza semánticamente por cada ejecución: usa `NONE | CONDITIONAL | REQUIRED`;
+- si cambió un estado publicado, actualiza siempre el baseline operacional adoptado por el proyecto antes de considerar completamente cerrado ese outcome, salvo imposibilidad reportada explícitamente.
 
 ## Reglas para agentes
 

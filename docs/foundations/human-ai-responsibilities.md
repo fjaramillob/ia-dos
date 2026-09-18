@@ -34,7 +34,9 @@ Debe:
 - decidir entre `Environment Preflight`, `Planning Task` y `Execution Task` según el caso;
 - preparar handoffs claros;
 - revisar readiness reports, plans, Execution Reports, diffs y evidencia;
-- evaluar después qué conocimiento confirmado merece persistirse;
+- definir o validar la Memory Policy de cada outcome y los triggers cuando sea condicional;
+- exigir que un cambio de baseline publicado deje continuidad operacional durable cuando el proyecto usa LLM Wiki;
+- decidir cuándo varios outcomes menores ameritan consolidación semántica;
 - evitar que una conversación se convierta en fuente de verdad paralela.
 
 No debe afirmar que modificó, probó o desplegó algo sin capacidad y evidencia para hacerlo.
@@ -48,6 +50,8 @@ Debe:
 - mantener objetivo y límites;
 - preparar o validar artefactos;
 - revisar retornos;
+- gobernar qué conocimiento es durable, qué puede diferirse y qué debe consolidarse;
+- preservar la capacidad de que un agente nuevo se ponga al día sin conversaciones previas;
 - tomar decisiones operativas sólo dentro de la autoridad delegada;
 - obtener aprobación humana cuando una decisión excede esa autoridad;
 - escalar únicamente cuando corresponde.
@@ -98,7 +102,8 @@ Debe:
 - detenerse ante contradicción, falta de acceso o decisión no resuelta;
 - ejecutar verificaciones aplicables;
 - revisar el diff;
-- devolver un Execution Report canónico.
+- aplicar `Memory Policy` y actualizar el `Operational Baseline` sólo cuando la Task lo autoriza y corresponde;
+- devolver un Execution Report canónico con el impacto durable realmente ocurrido.
 
 Una Execution Cell puede reutilizar conversación, pero cada tarea vuelve a declarar permisos.
 
@@ -111,7 +116,7 @@ Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 ```
 
-El coding agent no selecciona la acción de gobierno posterior, no recomienda por defecto una actualización durable y no inicia otra unidad.
+El coding agent no selecciona la acción de gobierno posterior ni inicia otra unidad. Puede reportar `Durable Memory Impact` y materializar memoria cuando la propia Task ya define política, triggers y autoridad; eso no le transfiere dirección del proyecto.
 
 ## Readiness
 
@@ -125,11 +130,13 @@ Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de
 
 `memoria durable` es la responsabilidad de conservar conocimiento reusable fuera de conversaciones efímeras.
 
-`LLM Wiki` es una posible materialización portable y navegable.
+`LLM Wiki` es una posible materialización portable y navegable. Debe sostener continuidad suficiente para que un Coding Agent nuevo comprenda el proyecto junto con el repositorio y la Task vigente.
 
-El coding agent no decide unilateralmente qué entra en memoria. Después de revisar evidencia, el Cycle Owner y la persona responsable, según autoridad, evalúan qué hechos nuevos merecen persistirse.
+El Cycle Owner define `Memory Policy: NONE | CONDITIONAL | REQUIRED` y los triggers cuando corresponda. El coding agent no inventa esos criterios ni transforma evidencia en dirección de proyecto.
 
-Una tarea documental explícitamente autorizada sí puede materializar conocimiento ya confirmado.
+Cuando cambia un baseline publicado y el proyecto usa LLM Wiki, el outcome debe actualizar también el checkpoint operacional autorizado: repositorio/branch, HEAD remoto verificado, commit productivo, deployment/release, entorno/URL, estado y fecha de verificación.
+
+Una Task documental separada se reserva para bootstrap, consolidación, reparación o una frontera de autoridad distinta; no es un paso obligatorio después de cada Execution Report.
 
 ## Exchange
 

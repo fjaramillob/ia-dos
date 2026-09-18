@@ -114,12 +114,14 @@ Creación o actualización de documentación técnica, pública u operativa.
 
 ### `WIKI`
 
-Actualización autorizada de memoria durable del proyecto.
+Actualización cuyo resultado principal es memoria durable del proyecto.
 
-- exige que la propia Execution Task delimite el conocimiento y las rutas que puede modificar;
+- se usa como tipo principal para bootstrap, consolidación, reparación o trabajo documental autónomo;
+- no es obligatorio crear una Task WIKI después de cada ejecución;
+- una Task BUILD/FIX/RELEASE puede actualizar Wiki dentro del mismo outcome cuando `Memory Policy` y Authority Envelope lo autorizan;
 - distingue hechos, decisiones, hipótesis y desconocidos;
 - no copia chats o reportes completos sin síntesis;
-- evidencia: páginas actualizadas y fuentes.
+- evidencia: páginas actualizadas, fuentes y baseline operacional cuando corresponde.
 
 ### `RELEASE`
 
@@ -154,6 +156,19 @@ Trabajo sobre infraestructura, observabilidad, continuidad o mantenimiento opera
 | Mantener memoria durable con autorización explícita | `WIKI` |
 | Entregar una versión | `RELEASE` |
 | Operar un entorno | `OPERATE` |
+
+## Memoria dentro de cualquier tipo
+
+Toda Execution Task puede declarar:
+
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
+```
+
+Esto no cambia el tipo principal.
+
+`Memory Policy` gobierna memoria semántica. `Operational Baseline` gobierna continuidad del estado publicado y puede requerir actualización incluso cuando la memoria semántica es `NONE`.
 
 ## Gate de granularidad
 
@@ -205,6 +220,7 @@ El tipo elegido influye en:
 - autorizaciones;
 - condiciones de detención;
 - formato proporcional del Execution Report;
+- Memory Policy, Memory Triggers y regla de Operational Baseline cuando corresponda;
 - documentación o memoria que la propia Execution Task autorice modificar como parte de su outcome.
 
 La `Execution Task` sigue siendo la autoridad concreta. Este registro aporta valores predeterminados y evita que cada coding agent improvise el modo de trabajo.

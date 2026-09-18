@@ -18,7 +18,9 @@ Define cómo organizar, planificar, ejecutar, verificar y reportar. IA-DOS norma
 
 ### Memoria durable
 
-Conserva decisiones aceptadas, contexto, arquitectura vigente y estado conocido. No demuestra por sí sola que algo esté implementado.
+Conserva decisiones aceptadas, contexto, arquitectura vigente y estado conocido. Cuando existe publicación, puede conservar además el último `Operational Baseline` verificado para continuidad entre agentes.
+
+No demuestra por sí sola que algo esté implementado ni sustituye revalidar Git, runtime o producción. El baseline registrado responde “qué se verificó como vigente”; las fuentes técnicas responden “qué existe ahora”.
 
 ### Implementación
 
@@ -31,6 +33,25 @@ Conserva tareas, diffs, reportes, pruebas, decisiones, revisiones y estados veri
 ### Referencia
 
 Aporta antecedentes, patrones o aprendizaje. No gobierna automáticamente el resultado actual y permanece en solo lectura salvo autorización explícita.
+
+## Continuidad operacional
+
+Cuando un proyecto usa LLM Wiki y un outcome cambia el estado publicado, la Task debe declarar cómo se actualizará el Operational Baseline.
+
+Como mínimo, cuando aplique:
+
+```text
+Implementation repository
+Production branch
+Last verified remote HEAD
+Production commit/version
+Deployment/release
+Environment/URL
+Observed status
+Verification date
+```
+
+`Repository HEAD` y `Production Commit` son campos distintos. No los colapses si divergen.
 
 ## Authority Envelope
 

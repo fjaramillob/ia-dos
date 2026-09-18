@@ -16,6 +16,12 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 - ¿El Memory Bootstrap Gate evita dependencia chat-only sin imponer documentación por ceremonia?
 - ¿Los coding agents reciben sólo contexto durable necesario y lecturas explícitas?
 - ¿TASK/REPORT, logs, diffs y transcripciones permanecen fuera de la memoria vigente por defecto?
+- ¿La Memory Policy separa correctamente `NONE | CONDITIONAL | REQUIRED`?
+- ¿Los triggers condicionales los define el Cycle Owner en vez de inferirlos el Coding Agent?
+- ¿Un cambio de estado publicado mantiene un Operational Baseline durable aunque no amerite cambio semántico?
+- ¿Se distinguen Repository HEAD y Production Commit cuando no coinciden?
+- ¿Un Coding Agent nuevo puede ponerse al día con repo + Wiki relevante + Task vigente sin reconstruir chats?
+- ¿Los outcomes menores pueden diferirse y consolidarse sin perder el baseline operacional?
 
 ## Planificación, readiness y ejecución
 
@@ -30,7 +36,7 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 ## Evidencia y responsabilidad
 
 - ¿El Execution Report describe evidencia mediante estados canónicos y `Atención requerida`?
-- ¿El coding agent evita seleccionar aprobación, corrección, reversión, escalamiento o memoria posterior?
+- ¿El coding agent evita seleccionar aprobación, corrección, reversión o escalamiento y limita la memoria a la política/triggers autorizados?
 - ¿El Cycle Owner actúa sólo dentro de autoridad delegada?
 - ¿La persona responsable conserva la aprobación final en decisiones relevantes?
 - ¿Se distingue claramente plan, autorización, ejecución, verificación y estado durable?

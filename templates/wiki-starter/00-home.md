@@ -10,7 +10,7 @@
 
 [RESUMEN CORTO Y CONFIRMADO]
 
-Consulta [Estado actual](status/current-state.md) para el detalle verificable.
+Consulta [Estado actual](status/current-state.md) para el detalle verificable y, cuando exista publicación, para el último Operational Baseline conocido.
 
 ## Mapa de memoria
 
@@ -30,7 +30,7 @@ Agrega enlaces a nuevas páginas sólo cuando exista conocimiento real que merez
 
 ## Regla de uso
 
-Esta Wiki conserva conocimiento vigente y reusable.
+Esta Wiki conserva conocimiento vigente y reusable y debe permitir que un agente nuevo se oriente sin depender de conversaciones anteriores.
 
 No la uses como copia de conversaciones, TASK/REPORT, logs o diffs. No presentes como implementado algo que sólo esté decidido, planificado o propuesto.
 

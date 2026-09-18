@@ -40,6 +40,32 @@ Responsabilidad funcional de conservar conocimiento vigente y reusable fuera de 
 
 Posible materialización durable, portable y navegable de memoria del proyecto para humanos y agentes.
 
+## `Memory Policy`
+
+Semántica dentro de una Execution Task que gobierna si el outcome modifica memoria semántica durable.
+
+Valores:
+
+- `NONE`: no corresponde actualización semántica;
+- `CONDITIONAL`: se actualiza sólo ante triggers explícitos definidos por el Cycle Owner;
+- `REQUIRED`: la actualización durable forma parte del outcome confirmado.
+
+No es un Artifact Type y no transfiere dirección del proyecto al Coding Agent.
+
+## `Operational Baseline`
+
+Checkpoint durable del último estado operacional verificado de un proyecto publicado.
+
+Puede incluir repositorio, branch productiva, último HEAD remoto verificado, commit realmente publicado, deployment/release equivalente, entorno o URL, estado y fecha de verificación.
+
+`Repository HEAD` y `Production Commit` pueden diferir y esa diferencia debe permanecer visible. El baseline orienta continuidad, pero cada agente revalida las fuentes reales antes de modificar.
+
+## `Durable Memory Impact`
+
+Resultado reportado por una Execution Task respecto de memoria durable: `NONE | UPDATED | DEFERRED | ATTENTION REQUIRED`.
+
+No es una decisión de gobierno ni un Artifact Type.
+
 ## `Memory Bootstrap Gate`
 
 Gate que pregunta si la siguiente unidad depende de conocimiento relevante que sólo existe en conversaciones efímeras. Resultados: `PASS | BOOTSTRAP REQUIRED`.
@@ -126,7 +152,7 @@ Estados: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`.
 
 Estructura preferente: `Outcome`, `Evidence`, `Actual Scope`, `Acceptance`, `Deviations`, `Final State`.
 
-No aprueba su propio resultado, no elige siguiente unidad y no consolida memoria durable por defecto.
+No aprueba su propio resultado ni elige siguiente unidad. Puede reportar `Durable Memory Impact` y estado del `Operational Baseline` cuando la Task lo exige.
 
 ## `Exchange`
 

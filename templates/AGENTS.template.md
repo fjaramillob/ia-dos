@@ -29,6 +29,7 @@ La versión de IA-DOS adoptada, cuando el proyecto use manifiesto, está declara
 - Implementación: este repositorio o la fuente técnica declarada.
 - Memoria durable: `[RUTA O URL O NO APLICA]`.
 - Estado durable, cuando exista starter IA-DOS: `status/current-state.md` o ruta equivalente real.
+- Operational Baseline, cuando exista publicación: sección equivalente dentro del estado durable; orienta continuidad pero debe revalidarse.
 - Decisiones durables: `decisions/` o fuente equivalente declarada.
 - Trabajo pendiente: `[ISSUES, BACKLOG O SISTEMA DE SEGUIMIENTO; NO EXCHANGE]`.
 - Alcance del cambio: `Execution Task` canónica.
@@ -44,6 +45,8 @@ Sólo las que la tarea autorice explícitamente, por ejemplo:
 - inspeccionar el repositorio;
 - modificar archivos dentro del alcance;
 - ejecutar pruebas y verificaciones pertinentes;
+- actualizar memoria durable cuando la Task declare Memory Policy y autoridad explícitas;
+- actualizar el Operational Baseline cuando el outcome cambie publicación y la Task lo exija;
 - actualizar documentación técnica cuando esté incluida;
 - reportar riesgos, contradicciones y pendientes del alcance original.
 
@@ -111,7 +114,7 @@ Antes de cerrar:
 - indica limitaciones, desviaciones y pendientes del alcance original;
 - utiliza `Atención requerida` sólo para un bloqueo, riesgo, desviación o decisión concreta que necesite revisión.
 
-No agregues una sección de `conocimiento potencialmente durable`, una actualización de Wiki recomendada ni una siguiente unidad por rutina. La evaluación de memoria ocurre después de revisar la evidencia, salvo que la propia tarea autorice una actualización documental concreta.
+No inventes una sección de `conocimiento potencialmente durable` ni una siguiente unidad por rutina. Si la Task declara `Memory Policy`, evalúa sólo sus triggers explícitos y reporta `Durable Memory Impact`. Si cambia un baseline publicado, conserva el checkpoint operacional autorizado aunque la memoria semántica sea `NONE`.
 
 ## Formato del reporte final
 
@@ -120,4 +123,6 @@ Devuelve un `Execution Report` canónico al Cycle Owner indicado:
 ```text
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+Durable Memory Impact: [NONE | UPDATED | DEFERRED | ATTENTION REQUIRED | NO APLICA]
+Operational Baseline: [UNCHANGED | UPDATED | NO APLICA | BLOQUEADO]
 ```

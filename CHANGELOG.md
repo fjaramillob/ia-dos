@@ -8,6 +8,17 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- evolucionada la memoria durable hacia un modelo selectivo por outcome mediante `Memory Policy: NONE | CONDITIONAL | REQUIRED`, sin crear nuevos Artifact Types;
+- incorporado `Operational Baseline` como checkpoint durable del último estado publicado verificado, distinguiendo `Repository HEAD` de `Production Commit` y registrando deployment/release, entorno y fecha cuando aplican;
+- establecido que un cambio de baseline publicado en un proyecto con LLM Wiki actualiza continuidad operacional aunque la memoria semántica del outcome sea `NONE`;
+- habilitada la actualización de Wiki dentro de la misma Execution Task cuando comparte outcome y Authority Envelope con implementación, Git, delivery y smoke, evitando una Task documental posterior por rutina;
+- reservado el perfil `Wiki Update Task` para bootstrap, consolidación de múltiples outcomes, reparación/migración documental o una frontera de autoridad distinta;
+- añadido `Durable Memory Impact: NONE | UPDATED | DEFERRED | ATTENTION REQUIRED` y estado de `Operational Baseline` al contrato proporcional de Execution Report;
+- reforzada la prueba de continuidad: un Coding Agent nuevo debe poder incorporarse con `repositorio + Wiki relevante + Task vigente`, sin depender de conversaciones anteriores y revalidando el estado real antes de escribir;
+- preservada la dirección humana: el Cycle Owner define política y triggers de memoria; delegar escritura de Wiki no transfiere roadmap, prioridades ni decisiones materiales al Coding Agent;
+- actualizado el Wiki Starter para incluir Operational Baseline sin introducir un `Wiki HEAD` autorreferente ni convertir la Wiki en historial exhaustivo de Git;
+- alineados Orchestrator, responsabilidades, método, flujo de ejecución, prompts, templates, starter e Offline Pack con el ciclo `IA-DOS-DURABLE-MEMORY-VNEXT-C02`.
+
 - evolucionada la granularidad de `Execution Task` hacia un resultado definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad; implementación, tests, commit, push, deploy y smoke pueden permanecer dentro de una misma Task cuando sirven al mismo outcome y están explícitamente autorizados;
 - incorporado `Authority Envelope` como semántica dentro de `Execution Task`, sin crear un Artifact Type: una acción sensible no declarada permanece no autorizada y una acción declarada, con gates cumplidos y frontera estable, no requiere otra ida y vuelta humana por rutina;
 - aclarado que `Implementation Plan` sigue siendo propuesta y que el Cycle Owner puede adoptarlo dentro de autoridad delegada; la persona responsable interviene ante cambios materiales de dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante;

@@ -34,13 +34,19 @@ Planning Task
 → inspección y diseño en solo lectura cuando hace falta
 
 Execution Task
-→ unidad autorizada y verificable
+→ outcome cohesivo bajo una frontera estable de autoridad
 
 Execution Cell
 → continuidad de ejecución cuando el proyecto la adopta
 
 Execution Report
 → evidencia de ejecución
+
+Memory Policy
+→ decide impacto semántico durable dentro del outcome
+
+Operational Baseline
+→ último estado publicado verificado para continuidad
 
 LLM Wiki
 → materialización durable, portable y navegable de memoria cuando se adopta
@@ -61,7 +67,7 @@ La persona responsable conserva la aprobación final cuando una decisión cambia
 El Project Orchestrator identifica el siguiente resultado verificable y evalúa:
 
 ```text
-1. ¿El resultado está suficientemente definido y acotado?
+1. ¿El resultado está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
 2. Si depende de historia, ¿el conocimiento necesario ya es durable?
 3. ¿Las precondiciones indispensables del entorno están comprobadas?
 4. Si falta inspección o diseño, ¿corresponde Planning?
@@ -156,33 +162,40 @@ Consulta [Memory Bootstrap Gate](docs/foundations/memory-bootstrap-gate.md).
 
 ## Memoria durable y LLM Wiki
 
-IA-DOS mantiene dos términos complementarios:
+IA-DOS mantiene memoria durable para que el proyecto sobreviva al cambio de conversaciones y agentes.
 
 ```text
 memoria durable
 = responsabilidad funcional de conservar conocimiento reusable
 
 LLM Wiki
-= materialización durable, portable y navegable de esa memoria
-  para humanos y agentes
+= materialización durable, portable y navegable
+
+Memory Policy
+= NONE | CONDITIONAL | REQUIRED para memoria semántica
+
+Operational Baseline
+= último estado publicado verificado para continuidad
 ```
 
-Una LLM Wiki no es obligatoria para cada proyecto o tarea y no exige un repositorio separado.
-
-Cuando se usa Markdown, el starter vigente es deliberadamente pequeño:
+Prueba práctica:
 
 ```text
-00-home.md
-project-brief.md
-status/current-state.md
-decisions/
-sources/
-AGENTS.md
+repositorio real
++ Wiki relevante
++ Task vigente
+→ un Coding Agent nuevo puede ponerse al día
+→ revalida el estado real
+→ puede aportar
 ```
 
-No crea por defecto `tasks/`, `context-packs/`, `log.md`, `CORE` ni páginas vacías de arquitectura.
+No toda ejecución merece modificar semánticamente la Wiki. `CONDITIONAL` responde sólo a triggers explícitos del Cycle Owner; varios outcomes menores pueden consolidarse más adelante.
 
-El coding agent no lee toda la Wiki por defecto. La tarea distingue `Contexto durable necesario`, `Referencias Wiki` y `Lectura requerida`.
+La continuidad publicada sí se conserva: cuando cambia producción/release, el Operational Baseline registra repo/branch, último HEAD remoto verificado, commit/versión publicada, deployment/release, entorno y fecha según aplique. `Repository HEAD` y `Production Commit` pueden diferir.
+
+La misma Execution Task puede implementar, publicar y actualizar memoria si todo comparte outcome y Authority Envelope. Una Wiki Update Task separada queda para bootstrap, consolidación, reparación/migración o una frontera de autoridad distinta.
+
+La LLM Wiki no es obligatoria para cada proyecto ni exige repositorio separado. No guarda TASK/REPORT, logs, diffs o transcripciones por defecto y el Coding Agent no la lee completa por rutina.
 
 Consulta [Memoria durable portable y Obsidian](docs/foundations/durable-memory-and-obsidian.md).
 
@@ -262,22 +275,18 @@ Conserva Task ID y no amplía permisos.
 
 ## Execution Report
 
-El Execution Report es **evidencia**, no una decisión del Cycle Owner y no un artefacto de consolidación de memoria.
+El Execution Report es **evidencia**, no una decisión del Cycle Owner.
 
 ```text
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
+Durable Memory Impact: NONE | UPDATED | DEFERRED | ATTENTION REQUIRED
+Operational Baseline: UNCHANGED | UPDATED | NO APLICA | BLOQUEADO
 ```
 
-El coding agent:
+Los dos últimos campos aplican cuando la Task incluye contrato de memoria. El Coding Agent no decide roadmap, prioridades ni la siguiente unidad; sólo materializa y reporta dentro de la Memory Policy, triggers y autoridad recibidos.
 
-- no aprueba su propio resultado;
-- no selecciona `APROBAR`, `CORREGIR`, `REVERTIR`, `ESCALAR` o `REVISAR MEMORIA`;
-- no crea por defecto una sección de conocimiento potencialmente durable;
-- no recomienda automáticamente una actualización de Wiki;
-- no inicia la siguiente unidad.
-
-Después de revisar la evidencia, el Cycle Owner actúa dentro de la autoridad delegada y la persona responsable interviene cuando corresponde. Separadamente se evalúa si hechos nuevos merecen memoria durable.
+El Cycle Owner revisa el resultado y conserva gobierno sobre cierre, reparación, consolidación futura o cambio de dirección.
 
 Si el reporte corresponde a una tarea de memory bootstrap, su revisión no habilita automáticamente la unidad original: primero se reevalúa su gate.
 

@@ -53,6 +53,7 @@ Cuando se usa Markdown, la Wiki debe:
 - distinguir hechos, decisiones, propuestas, pendientes y desconocidos;
 - enlazar fuentes y evidencia relevantes;
 - poder retomarse sin leer chats anteriores;
+- permitir que un Coding Agent nuevo se ponga al día usando Wiki + repositorio + Task vigente;
 - permitir consumo selectivo por agentes;
 - seguir siendo legible fuera de Obsidian.
 
@@ -155,7 +156,9 @@ Desconocido
 
 Puede agregar riesgos, limitaciones y evidencia principal.
 
-La implementación sigue siendo autoridad para demostrar qué está materializado.
+Si el proyecto publica software o estados operacionales, debe incluir un `Operational Baseline` compacto con repositorio/branch, último HEAD remoto verificado, commit o versión productiva, deployment/release, entorno/URL, estado y fecha de verificación. `Repository HEAD` y `Production Commit` pueden diferir.
+
+La implementación y producción siguen siendo autoridad para demostrar qué está materializado; el baseline de Wiki es un checkpoint que debe revalidarse.
 
 ### `decisions/`
 
@@ -271,6 +274,21 @@ Lectura requerida
 
 Si el agente no puede acceder físicamente a la Wiki, el Orchestrator selecciona el extracto indispensable y conserva las referencias cuando aporten trazabilidad.
 
+## Política de actualización
+
+No actualices semánticamente la Wiki por cada Execution Report.
+
+Las Execution Tasks pueden declarar:
+
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
+```
+
+La primera controla conocimiento semántico. La segunda protege continuidad cuando cambia publicación.
+
+Varios outcomes pequeños pueden diferirse y consolidarse en una sola actualización durable cuando juntos cambien la comprensión vigente.
+
 ## TASK y REPORT no son memoria
 
 No guardes TASK/REPORT completos en la Wiki por defecto.
@@ -295,6 +313,7 @@ El checkpoint durable inicial es utilizable cuando:
 - [ ] propósito y límites relevantes están registrados;
 - [ ] el estado distingue implementación de decisiones y pendientes;
 - [ ] las fuentes de verdad necesarias para el siguiente trabajo están identificadas;
+- [ ] si existe estado publicado, el Operational Baseline permite identificar qué commit/release fue verificado como vigente;
 - [ ] las contradicciones o desconocidos relevantes están explícitos;
 - [ ] los agentes pueden navegar por enlaces Markdown relativos;
 - [ ] no contiene secretos;
@@ -304,4 +323,4 @@ No es necesario que toda la Wiki esté completa.
 
 ## Resultado esperado
 
-La memoria durable debe permitir continuar el proyecto con contexto suficiente y selectivo, sin convertir la Wiki en una segunda implementación, un backlog, un historial de chats o un archivo de Exchange.
+La memoria durable debe permitir continuar el proyecto con contexto suficiente y selectivo, incluyendo el baseline publicado cuando exista, sin convertir la Wiki en una segunda implementación, un backlog, un historial de chats o un archivo de Exchange.

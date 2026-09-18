@@ -84,8 +84,21 @@ No autorizado:
 
 Regla: acción sensible no declarada → no autorizada. Acción declarada + gates cumplidos + frontera estable → puede ejecutarse dentro de esta Task sin otra ida y vuelta humana por rutina.
 
+MEMORIA DURABLE
+- Memory Policy: [NONE | CONDITIONAL | REQUIRED]
+- Memory Triggers, si CONDITIONAL: [LISTA O NO APLICA]
+- Operational Baseline: [UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA]
+- recurso/rutas de memoria autorizadas: [LISTA O NO APLICA]
+- release history: [APPEND_IF_PUBLISHED | NO APLICA]
+
+Reglas:
+- memoria semántica y baseline operacional son independientes;
+- publicar puede exigir baseline aunque Memory Policy = NONE;
+- el Coding Agent evalúa sólo triggers explícitos y no decide dirección;
+- una Task WIKI posterior no es necesaria si esta Task ya autoriza el cambio durable.
+
 FASES INTERNAS, SI APORTA
-[Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Final State]
+[Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Durable Memory / Operational Baseline → Final State]
 
 No dividas sólo por duración, archivos, comandos o fases internas. Detente si cambia materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
@@ -126,6 +139,8 @@ Actual Scope
 Acceptance
 Deviations
 Final State
+Durable Memory Impact
+Operational Baseline
 
 No vuelvas a narrar la Task.
 

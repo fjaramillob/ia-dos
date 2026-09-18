@@ -25,6 +25,12 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] `Memory Bootstrap Gate` sólo bloquea cuando la siguiente unidad depende de conocimiento chat-only.
 - [ ] El coding agent consume memoria selectivamente mediante contexto durable, referencias y lectura requerida.
 - [ ] TASK/REPORT, logs, diffs y transcripciones no se convierten en Wiki por defecto.
+- [ ] Una Execution Task declara `Memory Policy: NONE | CONDITIONAL | REQUIRED` cuando el proyecto usa memoria durable.
+- [ ] `CONDITIONAL` depende de triggers explícitos definidos por gobierno y no delega dirección al Coding Agent.
+- [ ] Un cambio de baseline publicado actualiza el `Operational Baseline` aunque la memoria semántica sea `NONE`.
+- [ ] El Operational Baseline distingue último HEAD remoto verificado de commit/versión productiva cuando divergen.
+- [ ] La Wiki permite que un Coding Agent nuevo se oriente con repo + memoria relevante + Task vigente y luego revalide la realidad.
+- [ ] Una Wiki Update Task separada se reserva para bootstrap, consolidación, reparación/migración o frontera distinta; no es ritual posterior a cada ejecución.
 
 ## Planificación y ejecución
 
@@ -41,8 +47,9 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 
 - [ ] El Execution Report usa `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`.
 - [ ] `Atención requerida` describe un asunto concreto y no preselecciona una decisión de gobierno.
-- [ ] El Execution Report es evidencia, no aprobación, backlog ni mecanismo de consolidación de memoria.
-- [ ] La memoria posterior se evalúa después de revisar la evidencia, salvo actualización documental explícitamente autorizada en la propia tarea.
+- [ ] El Execution Report es evidencia, no aprobación ni backlog.
+- [ ] Cuando la Task declara memoria, el Report refleja `Durable Memory Impact` y estado de `Operational Baseline` sin inventar dirección.
+- [ ] La memoria puede materializarse dentro de la misma Execution Task cuando comparte outcome y Authority Envelope.
 
 ## Exchange
 
