@@ -88,7 +88,7 @@ La política de conversaciones de Planning permanece abierta. Un identificador `
 
 Una Execution Cell conserva continuidad, no permisos. Cada Execution Task vuelve a declarar autoridad completa.
 
-El Execution Report es evidencia y no selecciona la decisión de gobierno posterior ni la memoria a consolidar.
+El Execution Report es evidencia y no selecciona la decisión de gobierno posterior. Cuando la Task define Memory Policy, reporta el impacto durable real y el estado del Operational Baseline.
 
 ## Memoria durable
 
@@ -98,6 +98,8 @@ El Execution Report es evidencia y no selecciona la decisión de gobierno poster
 - [Wiki Starter](../templates/wiki-starter/00-home.md)
 
 `memoria durable` describe la función; `LLM Wiki` es una posible materialización portable y navegable.
+
+La memoria semántica es selectiva (`NONE | CONDITIONAL | REQUIRED`). En proyectos publicados con Wiki, el `Operational Baseline` conserva el último estado verificado para que un agente nuevo identifique repo/branch, HEAD remoto, commit productivo, deployment/release y entorno antes de revalidarlos.
 
 ## Fundamentos
 
