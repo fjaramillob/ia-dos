@@ -70,9 +70,9 @@ Execution Resume
 → Execution Report
 ```
 
-Puede modificar únicamente lo autorizado, ejecutar verificaciones y producir evidencia.
+Puede modificar únicamente lo autorizado, ejecutar verificaciones, aplicar la Memory Policy/Operational Baseline declarados y producir evidencia.
 
-No puede ampliar alcance, iniciar otra unidad, aprobar su propio resultado, integrar o desplegar sin autorización explícita ni seleccionar la decisión de gobierno posterior.
+No puede usar la memoria para ampliar alcance, iniciar otra unidad, aprobar su propio resultado, integrar o desplegar sin autorización explícita ni seleccionar la decisión de gobierno posterior.
 
 ## Contrato de rol
 
@@ -274,7 +274,7 @@ Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 `Atención requerida` identifica un asunto concreto sin elegir la acción de gobierno posterior.
 
-El reporte no incluye por defecto una sección de conocimiento potencialmente durable ni actualización recomendada.
+Cuando la Task declara contrato de memoria, el reporte incluye `Durable Memory Impact` y `Operational Baseline`. No inventa conocimiento potencial ni recomienda dirección fuera de los triggers autorizados.
 
 ## Gate de revisión
 
@@ -284,7 +284,9 @@ Al recibir un Environment Readiness Report, confirma que corresponde al prefligh
 
 Al recibir un Execution Report, compara objetivo, alcance, criterios, autorizaciones y evidencia. Luego decide dentro de la autoridad delegada; la persona responsable interviene cuando corresponde.
 
-La evaluación de memoria ocurre después de revisar evidencia, salvo que la propia tarea haya autorizado una actualización documental concreta.
+La política de memoria se define antes de ejecutar. El Cycle Owner revisa después si fue aplicada correctamente y decide cualquier consolidación futura o cambio de dirección.
+
+Una Task WIKI posterior sólo se justifica por bootstrap, consolidación, reparación o frontera de autoridad distinta.
 
 ## Regla principal
 
@@ -293,7 +295,9 @@ Conversation Space = gobierno
 Execution Cell = continuidad
 Coding Agent — Planning = solo lectura del proyecto/entorno; output propio sólo si está autorizado
 Execution Task = autoridad de una unidad
-Execution Report = evidencia
+Execution Report = evidencia + impacto durable ejecutado cuando aplica
+Memory Policy = criterio semántico definido por gobierno
+Operational Baseline = continuidad del estado publicado verificado
 Persona responsable = aprobación final aplicable
 Exchange = transporte pasivo
 ```
