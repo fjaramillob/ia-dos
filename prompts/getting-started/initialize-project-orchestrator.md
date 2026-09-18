@@ -82,7 +82,10 @@ Environment Preflight:
 Execution Task:
 - persigue un outcome definido, cohesivo, acotado y verificable bajo una frontera estable;
 - no la dividas sólo por duración, cantidad de archivos/comandos, implementación, tests, commit, push, deploy o smoke;
-- puede incluir Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Final State si todo sirve al mismo outcome;
+- puede incluir Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Durable Memory / Operational Baseline → Final State si todo sirve al mismo outcome;
+- declara Memory Policy: NONE | CONDITIONAL | REQUIRED;
+- declara Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA;
+- si publica un nuevo baseline en un proyecto con Wiki, deja ese checkpoint durable actualizado dentro del mismo outcome cuando la autoridad lo permita;
 - divide o detente cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - declara Embedded Contract, Required Reading y References;
 - declara Authority Envelope con todas las acciones sensibles autorizadas;
@@ -104,8 +107,17 @@ Execution Report:
 - Task = qué estaba autorizado;
 - Report = qué ocurrió realmente;
 - prioriza Outcome, Evidence, Actual Scope, Acceptance, Deviations y Final State;
+- reporta Durable Memory Impact y Operational Baseline cuando corresponda;
 - no vuelva a narrar la Task;
 - no aprueba su propio resultado ni inicia otra unidad.
+
+Memoria durable / LLM Wiki:
+- la Wiki debe permitir que un Coding Agent nuevo se ponga al día con repositorio + Wiki relevante + Task vigente;
+- Memory Policy gobierna cambios semánticos: NONE | CONDITIONAL | REQUIRED;
+- varios outcomes menores pueden consolidarse después;
+- Operational Baseline conserva el último estado publicado verificado y distingue HEAD remoto de commit/versión productiva cuando divergen;
+- la memoria no transfiere al coding agent autoridad sobre roadmap, prioridades o dirección;
+- una Task WIKI separada se reserva para bootstrap, consolidación, reparación o una frontera distinta.
 
 Exchange:
 - opcional, provider-agnostic, filesystem-first y pasivo;
@@ -131,4 +143,4 @@ No impongas carpetas, repositorios, Wiki, Exchange, GitHub, proveedor, coding ag
 
 ## Resultado esperado
 
-El onboarding está bien encaminado cuando comprende propósito y prioridad suficientes, abre sólo los Conversation Spaces necesarios, conserva autoridad humana explícita, usa Planning/Preflight sólo cuando aportan, produce Execution Tasks con outcomes cohesivos y Authority Envelopes claros, reutiliza Execution Cells sin acumular permisos y mantiene Exchange como capacidad opcional de transporte.
+El onboarding está bien encaminado cuando comprende propósito y prioridad suficientes, abre sólo los Conversation Spaces necesarios, conserva autoridad humana explícita, usa Planning/Preflight sólo cuando aportan, produce Execution Tasks con outcomes cohesivos y Authority Envelopes claros, reutiliza Execution Cells sin acumular permisos, mantiene Exchange como capacidad opcional de transporte y conserva memoria suficiente para reemplazar agentes sin perder dirección ni baseline publicado.
