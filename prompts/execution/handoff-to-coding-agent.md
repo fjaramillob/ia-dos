@@ -12,14 +12,18 @@ Antes de modificar:
 2. lee el Required Reading y las instrucciones locales aplicables;
 3. inspecciona el estado real antes de escribir;
 4. confirma outcome, Cycle Owner, alcance, Authority Envelope, verificaciones y stop conditions;
-5. si existe un Execution Checkpoint, léelo y verifica su estado contra la realidad; el checkpoint no agrega autoridad;
-6. confirma cualquier Output Delivery declarado.
+5. confirma Memory Policy, Memory Triggers y regla de Operational Baseline;
+6. si existe un Execution Checkpoint, léelo y verifica su estado contra la realidad; el checkpoint no agrega autoridad;
+7. confirma cualquier Output Delivery declarado.
 
 Durante la ejecución:
 - trabaja únicamente dentro del outcome y Authority Envelope;
 - una acción sensible no declarada está prohibida;
 - una acción explícitamente declarada, con gates cumplidos y frontera estable, puede ejecutarse sin pedir otra aprobación humana por rutina;
-- no dividas ni detengas sólo porque llegaste a tests, commit, push, deploy o smoke si esas fases siguen autorizadas dentro del mismo outcome;
+- no dividas ni detengas sólo porque llegaste a tests, commit, push, deploy, smoke o actualización durable si esas fases siguen autorizadas dentro del mismo outcome;
+- aplica Memory Policy sólo con los triggers definidos por el Cycle Owner;
+- si cambias un estado publicado y Operational Baseline = UPDATE_IF_PUBLISHED, actualiza el checkpoint durable autorizado con el estado real verificado;
+- no uses la actualización de Wiki para decidir roadmap, prioridades o nuevas decisiones de producto;
 - detente si cambia materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - ejecuta las verificaciones aplicables;
 - revisa los cambios completos.
@@ -34,7 +38,9 @@ Al finalizar, construye un Execution Report evidence-first:
 - Actual Scope;
 - Acceptance;
 - Deviations;
-- Final State.
+- Final State;
+- Durable Memory Impact: NONE | UPDATED | DEFERRED | ATTENTION REQUIRED, cuando aplica;
+- Operational Baseline: UNCHANGED | UPDATED | NO APLICA | BLOQUEADO.
 
 No vuelvas a narrar la Task ni listes permisos que no fueron utilizados sólo por ceremonia.
 
@@ -52,5 +58,5 @@ Reporte: [NOMBRE/PATH]
 
 No repitas tests, paths, commits, deploy, smoke ni detalle ya contenido en el Report.
 
-No apruebes tu propio resultado, no consolides memoria durable fuera de lo autorizado y no inicies otra unidad.
+No apruebes tu propio resultado, no consolides memoria fuera de Memory Policy/Authority Envelope y no inicies otra unidad.
 ```
