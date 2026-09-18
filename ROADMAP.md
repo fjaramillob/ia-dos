@@ -23,6 +23,8 @@ LLM Wiki
 
 Una LLM Wiki no es obligatoria para toda tarea ni exige un repositorio separado. El `Memory Bootstrap Gate` determina cuándo hace falta persistir conocimiento antes de continuar.
 
+Durante la adopción real se incorporó además memoria semántica selectiva (`Memory Policy: NONE | CONDITIONAL | REQUIRED`) y `Operational Baseline` para conservar el último estado publicado verificado sin convertir la Wiki en un log de ejecuciones.
+
 ---
 
 ## `v0.1.0-alpha.1` — Foundation
@@ -73,12 +75,14 @@ Invariantes consolidados actualmente:
 Persona responsable = dirección y aprobación final aplicable
 Conversation Space   = gobierno dentro de autoridad delegada
 Execution Cell       = continuidad de ejecución
-Execution Task       = contrato de una unidad
+Execution Task       = outcome cohesivo bajo frontera estable de autoridad
 Execution Report     = evidencia de ejecución
+Memory Policy        = criterio de memoria semántica dentro de la Task
+Operational Baseline = checkpoint del último estado publicado verificado
 Memoria durable      = responsabilidad funcional
-LLM Wiki              = materialización durable, portable y navegable
-Repository            = implementación
-Exchange              = pasarela pasiva de archivos
+LLM Wiki             = materialización durable, portable y navegable
+Repository           = implementación
+Exchange             = pasarela pasiva de archivos
 ```
 
 ---
@@ -95,7 +99,7 @@ La auditoría integral del repositorio forma parte de la preparación de esta et
 
 - aplicar la versión consolidada de IA-DOS en proyectos activos;
 - validar el modelo de `Execution Cell` durante múltiples tareas sucesivas;
-- comprobar que una conversación nueva pueda rehidratarse desde LLM Wiki + estado técnico + Execution Task o contrato operativo actual + delta vigente;
+- comprobar que un Coding Agent nuevo pueda rehidratarse desde repositorio real + LLM Wiki relevante + Operational Baseline + Execution Task vigente, revalidando la realidad antes de escribir;
 - medir cuánto contexto durable necesita realmente una `Execution Task`;
 - validar Exchange manual como pasarela sin convertirlo en workflow o backlog;
 - detectar fricción real de onboarding antes de introducir nuevas abstracciones;
@@ -109,9 +113,12 @@ Profundizar el patrón de LLM Wiki sin volverlo ceremonial:
 - validar estructura mínima en proyectos pequeños y medianos;
 - mantener Markdown estándar como formato canónico;
 - conservar compatibilidad natural con Obsidian;
-- definir mejores patrones para estado actual, decisiones y fuentes;
+- definir mejores patrones para estado actual, decisiones, fuentes y Operational Baseline;
+- validar Memory Policy `NONE | CONDITIONAL | REQUIRED` y consolidación de outcomes menores;
 - comprobar cuándo conviene separar páginas por producto, arquitectura u operación;
 - evitar copiar TASK/REPORT, logs o transcripciones dentro de la memoria durable;
+- mantener historial compacto de baselines publicados sin duplicar Git o plataformas de delivery;
+- preservar dirección humana aunque el Coding Agent materialice memoria dentro del mismo outcome;
 - documentar patrones de migración desde documentación existente hacia una LLM Wiki IA-DOS.
 
 Criterio de avance: estas mejoras deben surgir de necesidades observadas en proyectos reales y no de completar una estructura teórica.
