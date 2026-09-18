@@ -30,6 +30,8 @@ Evalúalo antes de una nueva `Planning Task` o `Execution Task` cuando ocurra al
 
 No uses cantidad de mensajes, número de tareas, edad del proyecto o tiempo transcurrido como umbrales automáticos.
 
+En un proyecto ya publicado, la ausencia de un baseline operacional recuperable también puede justificar `BOOTSTRAP REQUIRED` cuando la siguiente unidad necesita saber con precisión qué commit o release está realmente vigente.
+
 ## Gate
 
 Antes de continuar pregunta:
@@ -81,6 +83,7 @@ El checkpoint debe cubrir sólo lo que la siguiente unidad necesita compartir o 
 - estado actual suficientemente preciso;
 - decisiones durables que condicionan la siguiente unidad;
 - fuentes de verdad o rutas donde puede comprobarse la implementación;
+- para proyectos con estado publicado, el último Operational Baseline conocido: repositorio/branch, HEAD remoto verificado, commit productivo, deployment/release equivalente, entorno/URL, estado y fecha de verificación;
 - desconocidos o contradicciones que no deben convertirse en hechos.
 
 No requiere por defecto:
@@ -150,7 +153,11 @@ Debe poder rehidratarse con:
 ```text
 memoria durable vigente
 +
+Operational Baseline cuando exista estado publicado
++
 TASK actual
++
+revalidación del repositorio/entorno real
 +
 Exchange específico cuando realmente aporte
 ```
