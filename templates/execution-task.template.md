@@ -28,6 +28,8 @@ Antes de emitir la tarea confirma:
 - [ ] Memory Bootstrap Gate = `PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT DURABLE | NO APLICA`;
 - [ ] readiness indispensable = `LISTO PARA EJECUCIÓN | NO APLICA`;
 - [ ] Planning previo = `[REFERENCIA REVISADA | NO APLICA]`;
+- [ ] Memory Policy = `NONE | CONDITIONAL | REQUIRED` y, si aplica, sus triggers están definidos;
+- [ ] Operational Baseline = `UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA`;
 - [ ] las decisiones humanas indispensables para esta frontera están resueltas;
 - [ ] la Task puede llegar a Final State sin cambiar materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
@@ -46,6 +48,8 @@ No dividas una Task sólo por duración, cantidad de archivos/comandos o porque 
 - Execution Cell o sesión: `[NOMBRE O NO APLICA]`
 - Implementation Plan revisado: `[REFERENCIA O NO APLICA]`
 - Environment Readiness Report: `[REFERENCIA LISTO PARA EJECUCIÓN O NO APLICA]`
+- Memory Policy: `[NONE | CONDITIONAL | REQUIRED]`
+- Operational Baseline: `[UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA]`
 
 El Conversation Agent asigna el Task ID al construir la Task real. Una candidata de Planning mantiene `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`.
 
@@ -79,6 +83,7 @@ Debe viajar dentro de esta Task:
 - outcome;
 - alcance y fuera de alcance;
 - Authority Envelope;
+- Memory Policy, Memory Triggers y regla de Operational Baseline;
 - seguridad y datos;
 - criterios de aceptación;
 - verificaciones;
@@ -171,6 +176,34 @@ cambio material de frontera
 
 El coding agent nunca aprueba su propio plan o ejecución.
 
+## Contrato de memoria durable
+
+```text
+Memory Policy: NONE | CONDITIONAL | REQUIRED
+
+Memory Triggers, si CONDITIONAL:
+- [TRIGGER EXPLÍCITO]
+
+Operational Baseline:
+UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
+
+Recurso de memoria:
+- [WIKI / DOCUMENTACIÓN / NO APLICA]
+
+Release history:
+- [APPEND_IF_PUBLISHED | NO APLICA]
+```
+
+Reglas:
+
+- `NONE` evita actualización semántica, pero no exime actualizar el Operational Baseline si el outcome cambia un estado publicado;
+- `CONDITIONAL` permite escribir memoria sólo cuando se cumple un trigger explícito;
+- `REQUIRED` incorpora la actualización durable al outcome;
+- el Coding Agent no define nuevos triggers ni usa memoria para cambiar dirección, prioridades o roadmap;
+- cuando `UPDATE_IF_PUBLISHED` aplica, el baseline debe distinguir último HEAD remoto verificado de commit/versión realmente publicada;
+- si la Task exige actualizar un baseline publicado y esa actualización no puede completarse, reporta la limitación y no declares cierre total sin justificarla;
+- una Task WIKI separada no es necesaria cuando esta misma frontera autoriza la actualización.
+
 ## Fases internas permitidas
 
 Declara sólo si ayuda a la ejecución. Ejemplo:
@@ -183,6 +216,7 @@ Revalidate
 → Push
 → Deploy
 → Production Smoke
+→ Durable Memory / Operational Baseline, cuando corresponda
 → Final State
 ```
 
@@ -266,6 +300,8 @@ Actual Scope
 Acceptance
 Deviations
 Final State
+Durable Memory Impact
+Operational Baseline
 ```
 
 Agrega otras secciones sólo cuando aporten evidencia real. No vuelvas a narrar la Task.
