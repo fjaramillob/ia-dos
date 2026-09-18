@@ -52,10 +52,12 @@ Debe:
 - revisar el Environment Readiness Report cuando exista;
 - revisar el Implementation Plan cuando exista;
 - preparar o validar una sola unidad ejecutable;
+- definir Memory Policy, triggers cuando sea condicional y regla de Operational Baseline;
+- decidir cuándo varios outcomes menores ameritan consolidación durable;
 - obtener la aprobación humana necesaria antes de conceder autoridad sensible;
 - revisar el Execution Report;
 - decidir, dentro de su autoridad, cierre, corrección, reversión, transferencia, escalamiento o siguiente iteración;
-- evaluar después de la revisión si hechos nuevos merecen consolidación durable;
+- revisar que la memoria semántica y el baseline operacional se hayan actualizado según la política declarada;
 - escalar cuando aparezca una decisión fuera de su autoridad.
 
 La Execution Task de bootstrap no finge `PASS`, no mezcla la unidad original y no la habilita automáticamente al terminar; primero debe reevaluarse su Memory Bootstrap Gate.
@@ -140,4 +142,6 @@ Un ciclo termina cuando:
 4. se activó un escalamiento justificado;
 5. el siguiente resultado pertenece a un ciclo distinto y recibe nuevo Cycle Owner.
 
-Después del cierre, la memoria durable se actualiza sólo cuando exista conocimiento confirmado que deba reutilizarse y mediante una acción autorizada.
+La memoria semántica se actualiza conforme a la Memory Policy de la Execution Task o mediante una consolidación posterior explícita. Si el outcome cambió un estado publicado, el Operational Baseline debe quedar actualizado antes del cierre completo cuando esa memoria forma parte de la frontera autorizada.
+
+El Cycle Owner conserva criterio y dirección; delegar escritura de Wiki al Coding Agent no delega roadmap ni prioridades.
