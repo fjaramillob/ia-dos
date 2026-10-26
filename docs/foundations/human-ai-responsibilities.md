@@ -30,11 +30,14 @@ Debe:
 - distinguir hechos, preferencias, supuestos, propuestas, decisiones y preguntas abiertas;
 - seleccionar contexto mínimo;
 - aplicar Memory Bootstrap Gate antes de depender de historia chat-only;
-- identificar readiness indispensable;
-- decidir entre `Environment Preflight`, `Planning Task` y `Execution Task` según el caso;
+- definir Protected Invariants, Adaptation Authority y Protected Boundaries;
+- usar `Planning Task` sólo ante una decisión material no resuelta;
+- usar `Environment Preflight` sólo cuando readiness deba conocerse antes de conceder autoridad sensible, cuando la capacidad misma sea el objeto de evaluación o cuando requiera otro actor/entorno;
+- preferir `Execution Task` outcome-first con Revalidate interno cuando el outcome ya esté definido;
 - preparar handoffs claros;
 - revisar readiness reports, plans, Execution Reports, diffs y evidencia;
-- definir o validar la Memory Policy de cada outcome y los triggers cuando sea condicional;
+- definir o validar Memory Policy, Memory Stewardship y triggers cuando sean condicionales;
+- derivar a `90 — Documentación y memoria` los cambios durables estructurales cuando el proyecto adopta ese custodio;
 - exigir que un cambio de baseline publicado deje continuidad operacional durable cuando el proyecto usa LLM Wiki;
 - decidir cuándo varios outcomes menores ameritan consolidación semántica;
 - evitar que una conversación se convierta en fuente de verdad paralela.
@@ -47,7 +50,8 @@ Es el Conversation Space que gobierna un resultado dentro de su dominio.
 
 Debe:
 
-- mantener objetivo y límites;
+- mantener outcome, Protected Invariants y Protected Boundaries;
+- definir la Adaptation Authority aplicable;
 - preparar o validar artefactos;
 - revisar retornos;
 - gobernar qué conocimiento es durable, qué puede diferirse y qué debe consolidarse;
@@ -74,6 +78,8 @@ No son fuentes de verdad durables.
 
 ## Coding Agent — Planning
 
+Se usa cuando existe una decisión material todavía no resuelta antes de escribir. No es el mecanismo por defecto para debugging, implementación ordinaria o selección entre mecanismos técnicamente equivalentes.
+
 Debe:
 
 - trabajar en solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
@@ -93,16 +99,18 @@ Un identificador `PLAN — ...` puede ser lógico. IA-DOS no exige una conversac
 Debe:
 
 - leer instrucciones y fuentes autorizadas;
-- confirmar recurso, branch, Execution Cell o sesión cuando corresponda y alcance antes de modificar;
+- confirmar outcome, Protected Invariants, Protected Boundaries, Authority Envelope y Adaptation Authority antes de modificar;
 - verificar capacidades y permisos reales;
-- inspeccionar antes de actuar;
+- revalidar el estado volátil indispensable;
+- planificar internamente el detalle técnico;
 - leer sólo contexto necesario;
 - modificar únicamente artefactos autorizados;
 - preservar fuera de alcance;
-- detenerse ante contradicción, falta de acceso o decisión no resuelta;
+- con `Adaptation Authority: BOUNDED`, diagnosticar, reparar y safe-retry fallos reversibles cuando no hubo side effects materiales;
+- detenerse sólo cuando la reparación exige cambiar un invariante, cruzar una frontera nueva, usar una capacidad no autorizada o resolver una decisión material;
 - ejecutar verificaciones aplicables;
 - revisar el diff;
-- aplicar `Memory Policy` y actualizar el `Operational Baseline` sólo cuando la Task lo autoriza y corresponde;
+- aplicar `Memory Policy`, `Memory Stewardship` y `Operational Baseline` sólo cuando la Task lo autoriza y corresponde;
 - devolver un Execution Report canónico con el impacto durable realmente ocurrido.
 
 Una Execution Cell puede reutilizar conversación, pero cada tarea vuelve a declarar permisos.
@@ -120,11 +128,11 @@ El coding agent no selecciona la acción de gobierno posterior ni inicia otra un
 
 ## Readiness
 
-Cuando una futura Execution Task depende de una precondición indispensable no comprobada, corresponde `Environment Preflight` en solo lectura respecto del entorno inspeccionado.
+Toda Execution Task revalida internamente las precondiciones volátiles indispensables antes de escribir o cruzar una Protected Boundary.
 
-El Preflight puede materializar únicamente su propio `Environment Readiness Report` cuando esa entrega esté expresamente autorizada.
+Usa `Environment Preflight` separado sólo cuando el readiness deba conocerse antes de conceder autoridad sensible, cuando la capacidad/readiness sea ella misma el objeto de evaluación o cuando la inspección requiera otro actor/entorno.
 
-Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de escritura sobre el proyecto/entorno.
+El Preflight puede materializar únicamente su propio `Environment Readiness Report` cuando esa entrega esté expresamente autorizada. `LISTO PARA EJECUCIÓN` habilita considerar la autoridad que dependía específicamente de ese Preflight; no convierte el reporte en autorización por sí mismo.
 
 ## Memoria durable y LLM Wiki
 
@@ -132,11 +140,13 @@ Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de
 
 `LLM Wiki` es una posible materialización portable y navegable. Debe sostener continuidad suficiente para que un Coding Agent nuevo comprenda el proyecto junto con el repositorio y la Task vigente.
 
-El Cycle Owner define `Memory Policy: NONE | CONDITIONAL | REQUIRED` y los triggers cuando corresponda. El coding agent no inventa esos criterios ni transforma evidencia en dirección de proyecto.
+El Cycle Owner define `Memory Policy: NONE | CONDITIONAL | REQUIRED`, `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA` y los triggers cuando corresponda. El coding agent no inventa esos criterios ni transforma evidencia en dirección de proyecto.
 
 Cuando cambia un baseline publicado y el proyecto usa LLM Wiki, el outcome debe actualizar también el checkpoint operacional autorizado: repositorio/branch, HEAD remoto verificado, commit productivo, deployment/release, entorno/URL, estado y fecha de verificación.
 
-Una Task documental separada se reserva para bootstrap, consolidación, reparación o una frontera de autoridad distinta; no es un paso obligatorio después de cada Execution Report.
+Una Task documental separada se reserva para bootstrap, consolidación, custodia estructural de `90`, reparación/migración o una frontera de autoridad distinta; no es un paso obligatorio después de cada Execution Report.
+
+Cuando un outcome técnico produce impacto `90_STRUCTURAL` todavía no custodiado, reporta `ROUTE_TO_90`; el outcome técnico puede estar completado. Una Wiki Update Task ya gobernada por `90` que materializa correctamente reporta `UPDATED`.
 
 ## Exchange
 
