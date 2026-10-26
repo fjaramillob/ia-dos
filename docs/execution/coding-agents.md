@@ -30,7 +30,7 @@ La escritura del output autorizado no transforma Planning en Execution y no conc
 
 ### `Coding Agent — Execution`
 
-Recibe una `Execution Task` autorizada o un `Execution Resume`, modifica únicamente lo permitido y devuelve un `Execution Report`.
+Recibe una `Execution Task` autorizada o un `Execution Resume`, planifica internamente el cómo, modifica únicamente lo permitido y devuelve un `Execution Report`.
 
 ```text
 Execution Task | Execution Resume
@@ -56,7 +56,7 @@ Coding Agent — Execution
 
 La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante. El Cycle Owner actúa dentro de la autoridad delegada.
 
-Un coding agent no debe asumir autoridad para cambiar propósito, prioridades, arquitectura, alcance, costes, seguridad o producción cuando el artefacto recibido no lo autoriza.
+Un coding agent no debe asumir autoridad para cambiar propósito, prioridades, arquitectura, alcance, costes, seguridad o producción cuando el artefacto recibido no lo autoriza. Dentro de `Adaptation Authority: BOUNDED`, sí puede cambiar mecanismos técnicos equivalentes, reparar implementation defects y realizar safe retry sin nueva ida y vuelta cuando Protected Invariants y Protected Boundaries permanecen intactos.
 
 ## Entrada mínima
 
@@ -91,6 +91,8 @@ Cuando la información necesaria sólo vive en conversaciones y debe reutilizars
 
 ## Planning Task
 
+Una `Planning Task` se usa sólo cuando existe una decisión material todavía no resuelta antes de escribir. No se crea para debugging ordinario o selección entre mecanismos equivalentes.
+
 Una `Planning Task`:
 
 - utiliza `Coding Agent — Planning`;
@@ -101,6 +103,8 @@ Una `Planning Task`:
 - no autoriza cambios físicos sobre el proyecto ni una ejecución posterior.
 
 ## Environment Preflight
+
+Un `Environment Preflight` se usa cuando el readiness debe conocerse antes de conceder autoridad sensible, cuando la capacidad misma es el objeto de evaluación o cuando la inspección requiere otro actor/entorno. La revalidación volátil ordinaria ocurre dentro de Execution.
 
 Un `Environment Preflight`:
 
@@ -136,16 +140,17 @@ Consulta [Execution Cells y Exchange](execution-cells-and-exchange.md).
 
 El coding agent debe:
 
-1. inspeccionar antes de modificar;
-2. confirmar recurso, branch o modo de trabajo cuando corresponda;
-3. leer sólo el contexto requerido;
+1. inspeccionar y revalidar antes de modificar;
+2. confirmar outcome, Protected Invariants, Protected Boundaries y Adaptation Authority;
+3. planificar internamente sólo el detalle necesario para ejecutar;
 4. preservar comportamiento y trabajo fuera de alcance;
-5. evitar dependencias o refactors no solicitados;
-6. detenerse ante contradicciones, falta de acceso o decisiones importantes no resueltas;
+5. ante un fallo reversible dentro de `BOUNDED`, diagnosticar, reparar, revalidar y continuar sin cerrar prematuramente la Task;
+6. detenerse cuando una reparación exige cambiar un invariante, cruzar una frontera nueva o usar una capacidad no autorizada;
 7. ejecutar las verificaciones aplicables;
 8. revisar el diff completo;
-9. aplicar la Memory Policy y el Operational Baseline declarados sin inventar dirección;
-10. devolver evidencia suficiente al destino declarado.
+9. aplicar Memory Policy, Memory Stewardship y Operational Baseline sin inventar dirección;
+10. ante `90_STRUCTURAL`, reportar `ROUTE_TO_90` en vez de sintetizar la memoria estructural por iniciativa propia;
+11. devolver evidencia suficiente al destino declarado.
 
 ## Perfiles de materialización
 
@@ -159,11 +164,12 @@ La Task, no el Coding Agent, define el contrato de memoria:
 
 ```text
 Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 Memory Triggers: [cuando aplique]
 Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
 ```
 
-El agente puede materializar memoria dentro de la misma ejecución cuando esas reglas y el Authority Envelope lo autorizan. No necesita una Task WIKI posterior por rutina.
+El agente puede materializar memoria `LOCAL` dentro de la misma ejecución cuando esas reglas y el Authority Envelope lo autorizan. Si la Task declara `90_STRUCTURAL`, reporta el impacto y deja la síntesis estructural para `90 — Documentación y memoria`; no necesita una Task WIKI posterior por rutina para cambios no estructurales.
 
 Si la Task responde a `BOOTSTRAP REQUIRED`, puede materializar el checkpoint mínimo autorizado, pero no continuar con la unidad original que busca desbloquear.
 
