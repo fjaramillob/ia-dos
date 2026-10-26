@@ -8,6 +8,25 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- alineadas todas las superficies normativas y copiables con `v0.1.0-alpha.4`, eliminando rutas activas que todavía enseñaban Planning/Preflight como fases por defecto;
+- incorporados `Protected Invariants`, `Adaptation Authority` y `Protected Boundaries` en `AGENTS.md`, project instructions, onboarding, rutas rápidas, checklists y templates de adopción;
+- reservado `Execution Resume` para bloqueos externos/interrupciones reales y normalizada su semántica como `Task original + delta del bloqueo externo o interrupción real resuelta`;
+- propagado `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA` a contratos de memoria y agentes;
+- redefinido `90 — Documentación y memoria` como custodio de memoria durable estructural, sin convertirlo en dispatcher ni gate de cada ejecución;
+- aclarado que `ROUTE_TO_90` significa impacto estructural pendiente de custodia y que una Wiki Update Task ya gobernada por `90` reporta `UPDATED` al materializar correctamente;
+- actualizado el criterio de `current-state` como snapshot/índice operativo compacto y reforzada la higiene de Exchange activo;
+- corregido el versionado documental: `v0.1.0-alpha.4` representa ejecución adaptativa/custodia estructural y `v0.1.0-alpha.5` queda reservado para portability/adoption quality;
+- publicada una nueva auditoría integral vigente del repositorio posterior a C03/C04.
+
+- incorporados `Protected Invariants`, `Adaptation Authority: NONE | BOUNDED` y `Protected Boundaries` como contrato explícito de ejecución adaptativa;
+- cambiado el default hacia `Execution Task` outcome-first con `Revalidate`, planificación interna, debugging, repair-in-place y safe retry dentro de autoridad;
+- convertido Planning separado en herramienta para decisiones materiales todavía no resueltas y Environment Preflight separado en gate de readiness previo a autoridad sensible/capacidad evaluada/actor distinto;
+- reservado Execution Resume para interrupciones reales o blockers externos, no debugging ordinario;
+- formalizada `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA`;
+- añadido `Durable Memory Impact: ROUTE_TO_90` para impacto estructural pendiente de custodia;
+- establecido `90 — Documentación y memoria` como custodio de memoria estructural y mantenido Operational Baseline/memoria local fuera de ese peaje;
+- reforzada la higiene de `current-state` y de las superficies activas de Exchange.
+
 - evolucionada la memoria durable hacia un modelo selectivo por outcome mediante `Memory Policy: NONE | CONDITIONAL | REQUIRED`, sin crear nuevos Artifact Types;
 - incorporado `Operational Baseline` como checkpoint durable del último estado publicado verificado, distinguiendo `Repository HEAD` de `Production Commit` y registrando deployment/release, entorno y fecha cuando aplican;
 - establecido que un cambio de baseline publicado en un proyecto con LLM Wiki actualiza continuidad operacional aunque la memoria semántica del outcome sea `NONE`;

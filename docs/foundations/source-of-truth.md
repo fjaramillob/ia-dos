@@ -59,9 +59,11 @@ Puede conservar los archivos que se intercambiaron para responder preguntas como
 
 Exchange no define el significado de esos archivos, no crea artefactos, no genera IDs, no mantiene backlog y no consolida memoria durable.
 
-La política de memoria se define en la Execution Task cuando corresponde. Un hecho puede materializarse dentro del mismo outcome si `Memory Policy`, triggers y Authority Envelope lo autorizan.
+La política de memoria se define en la Execution Task cuando corresponde mediante `Memory Policy` y `Memory Stewardship`.
 
-Si cambia un estado publicado, el Operational Baseline durable puede requerir actualización incluso cuando `Memory Policy = NONE`. Una Task documental separada se reserva para bootstrap, consolidación, reparación/migración o una frontera distinta.
+Un hecho `LOCAL` puede materializarse dentro del mismo outcome si la política, triggers y Authority Envelope lo autorizan. Un impacto `90_STRUCTURAL` pendiente de custodia se reporta `ROUTE_TO_90` y se deriva a `90 — Documentación y memoria` cuando el proyecto adopta ese rol.
+
+Si cambia un estado publicado, el Operational Baseline durable puede requerir actualización incluso cuando `Memory Policy = NONE`. Una Task documental separada se reserva para bootstrap, consolidación, custodia estructural, reparación/migración o una frontera distinta.
 
 ## Planificación
 
@@ -76,7 +78,9 @@ No constituye:
 
 ## Ejecución
 
-Una `Execution Task` conserva el alcance autorizado aunque se transporte por conversación, archivo, issue o Exchange.
+Una `Execution Task` conserva outcome, Protected Invariants, Protected Boundaries, Adaptation Authority, alcance y Authority Envelope aunque se transporte por conversación, archivo, issue o Exchange.
+
+El Coding Agent puede adaptar el medio técnico dentro de `BOUNDED`, pero no convertir esa autonomía en cambio de outcome, invariantes o frontera material.
 
 El mecanismo de almacenamiento no cambia la autoridad del artefacto ni permite omitir permisos, límites o criterios necesarios para ejecutar de forma segura.
 

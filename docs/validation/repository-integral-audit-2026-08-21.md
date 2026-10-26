@@ -1,3 +1,6 @@
+> [!WARNING]
+> **EVIDENCIA HISTÓRICA — 2026-08-21.** Esta auditoría corresponde al baseline previo a los cambios #47–#50. No representa la consistencia vigente. Consulta [Auditoría integral del repositorio — 2026-10-26](repository-integral-audit-2026-10-26.md).
+
 # Auditoría integral del repositorio — 2026-08-21
 
 ## Propósito

@@ -17,7 +17,10 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 - ¿Los coding agents reciben sólo contexto durable necesario y lecturas explícitas?
 - ¿TASK/REPORT, logs, diffs y transcripciones permanecen fuera de la memoria vigente por defecto?
 - ¿La Memory Policy separa correctamente `NONE | CONDITIONAL | REQUIRED`?
+- ¿Memory Stewardship distingue `LOCAL | 90_STRUCTURAL | NO APLICA`?
 - ¿Los triggers condicionales los define el Cycle Owner en vez de inferirlos el Coding Agent?
+- ¿Un impacto estructural pendiente usa `ROUTE_TO_90` y una Wiki Task ya custodiada por 90 termina `UPDATED`?
+- ¿current-state sigue siendo snapshot/índice compacto en vez de historial acumulativo?
 - ¿Un cambio de estado publicado mantiene un Operational Baseline durable aunque no amerite cambio semántico?
 - ¿Se distinguen Repository HEAD y Production Commit cuando no coinciden?
 - ¿Un Coding Agent nuevo puede ponerse al día con repo + Wiki relevante + Task vigente sin reconstruir chats?
@@ -25,11 +28,12 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 
 ## Planificación, readiness y ejecución
 
-- ¿Una unidad lista puede ir directamente a Execution Task?
-- ¿Una incertidumbre técnica real puede ir a Planning Task en solo lectura?
-- ¿Readiness indispensable desconocido deriva a Environment Preflight antes de escribir?
-- ¿Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura?
-- ¿Execution Resume se invalida si cambia objetivo, alcance, autoridad, seguridad o arquitectura?
+- ¿Un outcome definido va por defecto a Execution Task con Revalidate y planificación interna?
+- ¿Planning separado aparece sólo ante una decisión material todavía no resuelta?
+- ¿Environment Preflight separado aparece sólo cuando readiness debe conocerse antes de conceder autoridad sensible, la capacidad misma es objeto de evaluación o requiere otro actor/entorno?
+- ¿La Execution Task declara Protected Invariants, Adaptation Authority y Protected Boundaries?
+- ¿Con BOUNDED el Coding Agent puede diagnosticar, reparar y safe-retry fallos reversibles sin una nueva Task?
+- ¿Execution Resume se reserva para bloqueo externo/interrupción real y se invalida si cambian outcome, invariantes, fronteras, alcance, autoridad, seguridad o arquitectura?
 - ¿Una Execution Cell puede reutilizarse sin heredar permisos ni crear una conversación por tarea?
 - ¿La política de conversaciones de Planning permanece abierta sin inferirse de Execution Cells?
 

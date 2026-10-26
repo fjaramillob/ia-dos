@@ -5,11 +5,12 @@ IA-DOS busca materializar avances verificables sin convertir `00 — Dirección 
 ## Camino operativo
 
 ```text
-Conversation Space gobierna un resultado
-→ evalúa Memory Bootstrap cuando la unidad depende de historia
-→ comprueba readiness indispensable
-→ planifica sólo si falta inspección o diseño
-→ Execution Task cuando la unidad está lista
+Conversation Space gobierna un outcome
+→ evalúa Memory Bootstrap sólo si falta memoria durable indispensable
+→ define Protected Invariants + Adaptation Authority + Protected Boundaries
+→ Planning Task sólo si existe decisión material no resuelta
+→ Environment Preflight sólo si readiness debe conocerse antes de autoridad sensible
+→ Execution Task outcome-first + Revalidate
 → coding agent ejecuta
 → Execution Report vuelve al Cycle Owner
 → revisión y decisión dentro de la autoridad delegada
@@ -24,18 +25,20 @@ La persona responsable conserva la aprobación final cuando una decisión cambia
 Antes de emitir una `Execution Task`, el espacio evalúa en este orden:
 
 ```text
-1. ¿El resultado es suficientemente definido, pequeño y verificable?
-2. Si depende de historia previa, ¿el conocimiento necesario ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿corresponde Planning?
+1. ¿El outcome está definido y verificable?
+2. ¿Cuáles son los Protected Invariants?
+3. ¿Qué Adaptation Authority puede delegarse?
+4. ¿Dónde están las Protected Boundaries?
+5. ¿Existe una decisión material todavía no resuelta?
+6. ¿Falta memoria durable indispensable o readiness que deba conocerse antes de autoridad sensible?
 ```
 
 Resultados:
 
-- conocimiento necesario sólo en conversaciones → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección o diseño → `Planning Task`;
-- todo listo → `Execution Task`;
+- conocimiento durable indispensable ausente → `Memory Bootstrap Gate`;
+- decisión material no resuelta → `Planning Task`;
+- readiness que debe conocerse antes de autoridad sensible, capacidad objeto de evaluación o chequeo con otro actor/entorno → `Environment Preflight`;
+- outcome definido → `Execution Task` con Revalidate y planificación interna;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación transversal → escala a `00`.
 
@@ -63,7 +66,9 @@ Una unidad ordinaria dependiente de esa memoria sólo puede continuar después d
 
 ## Readiness
 
-Cuando readiness indispensable sea desconocido, usa el flujo tipado:
+Toda Execution Task revalida internamente estado volátil indispensable.
+
+Usa el flujo tipado separado sólo cuando readiness deba conocerse antes de conceder autoridad sensible, cuando la capacidad sea objeto de evaluación o cuando el chequeo requiera otro actor/entorno:
 
 ```text
 Environment Preflight
@@ -71,7 +76,7 @@ Environment Preflight
 → Environment Readiness Report
 ```
 
-El Preflight es de solo lectura. Sólo `LISTO PARA EJECUCIÓN` permite considerar autorización o reanudación de escritura; el reporte no concede esa autorización por sí mismo.
+El Preflight es de solo lectura. `LISTO PARA EJECUCIÓN` permite considerar la autoridad que dependía específicamente de ese Preflight; el reporte no concede esa autorización por sí mismo. No repitas como Preflight lo que puede resolverse mediante Revalidate interno.
 
 ## Cuándo volver a 00
 

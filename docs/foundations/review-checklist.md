@@ -26,7 +26,10 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] El coding agent consume memoria selectivamente mediante contexto durable, referencias y lectura requerida.
 - [ ] TASK/REPORT, logs, diffs y transcripciones no se convierten en Wiki por defecto.
 - [ ] Una Execution Task declara `Memory Policy: NONE | CONDITIONAL | REQUIRED` cuando el proyecto usa memoria durable.
+- [ ] Declara `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA` cuando corresponda.
 - [ ] `CONDITIONAL` depende de triggers explícitos definidos por gobierno y no delega dirección al Coding Agent.
+- [ ] Impacto estructural pendiente usa `ROUTE_TO_90`; una Wiki Task ya gobernada por 90 que materializa correctamente termina `UPDATED`.
+- [ ] `current-state` permanece como snapshot/índice compacto y no como historial acumulativo.
 - [ ] Un cambio de baseline publicado actualiza el `Operational Baseline` aunque la memoria semántica sea `NONE`.
 - [ ] El Operational Baseline distingue último HEAD remoto verificado de commit/versión productiva cuando divergen.
 - [ ] La Wiki permite que un Coding Agent nuevo se oriente con repo + memoria relevante + Task vigente y luego revalide la realidad.
@@ -34,11 +37,13 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 
 ## Planificación y ejecución
 
-- [ ] Planning y Execution conservan roles y autorizaciones separadas.
+- [ ] Planning separado se usa sólo cuando existe una decisión material todavía no resuelta antes de escribir.
 - [ ] La política de conversaciones de Planning no se infiere desde Execution Cells.
-- [ ] Readiness indispensable desconocido deriva a `Environment Preflight`.
-- [ ] Sólo `LISTO PARA EJECUCIÓN` habilita aprobar o reanudar escritura.
-- [ ] `Execution Resume` sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura permanecen sin cambios.
+- [ ] Environment Preflight separado se usa sólo cuando readiness debe conocerse antes de conceder autoridad sensible, cuando la capacidad es objeto de evaluación o requiere otro actor/entorno.
+- [ ] Toda Execution Task usa Revalidate para estado volátil ordinario.
+- [ ] Una Execution Task declara Protected Invariants, Adaptation Authority y Protected Boundaries.
+- [ ] Con BOUNDED, debugging, repair-in-place y safe retry reversibles permanecen dentro de la misma ejecución.
+- [ ] Execution Resume se reserva para bloqueo externo/interrupción real y conserva outcome, invariantes, fronteras, alcance, autoridad, seguridad y arquitectura.
 - [ ] Una `Execution Task` representa una sola unidad terminable y verificable.
 - [ ] Una `Execution Cell` conserva continuidad, no especialidad ni permisos acumulados.
 - [ ] Una conversación activa de Execution Cell se reutiliza mientras siga respondiendo bien.
@@ -49,7 +54,8 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] `Atención requerida` describe un asunto concreto y no preselecciona una decisión de gobierno.
 - [ ] El Execution Report es evidencia, no aprobación ni backlog.
 - [ ] Cuando la Task declara memoria, el Report refleja `Durable Memory Impact` y estado de `Operational Baseline` sin inventar dirección.
-- [ ] La memoria puede materializarse dentro de la misma Execution Task cuando comparte outcome y Authority Envelope.
+- [ ] La memoria LOCAL puede materializarse dentro de la misma Execution Task cuando comparte outcome y Authority Envelope.
+- [ ] La memoria estructural se deriva a `90 — Documentación y memoria` cuando el proyecto adopta ese custodio.
 
 ## Exchange
 

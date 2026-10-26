@@ -59,8 +59,9 @@ Una LLM Wiki separada no es obligatoria.
 
 Después de satisfacer el gate de memoria —o cuando la unidad actual sea precisamente el checkpoint de bootstrap— identifica qué falta realmente:
 
-- falta inspección o diseño técnico → `Planning Task` de solo lectura respecto del proyecto/entorno;
-- falta comprobar runtime, servicio, acceso, secreto o conectividad indispensable → `Environment Preflight` de solo lectura respecto del entorno;
+- decisión material todavía no resuelta antes de escribir → `Planning Task` de solo lectura respecto del proyecto/entorno;
+- readiness que debe conocerse antes de conceder autoridad sensible, capacidad que es objeto de evaluación o chequeo que requiere otro actor/entorno → `Environment Preflight` de solo lectura;
+- outcome definido con detalles técnicos aún por resolver → `Execution Task` con Revalidate y planificación interna;
 - unidad ya definida y entorno listo → `Execution Task`.
 
 Planning y Preflight no modifican artefactos, datos, configuración ni estado del proyecto o entorno inspeccionado. Cuando la Task declara `Output Delivery`, sí pueden materializar **únicamente su propio artefacto de salida** en el destino autorizado: `Implementation Plan` o `Environment Readiness Report`. Esa excepción no convierte el rol en Execution ni concede escritura adicional.

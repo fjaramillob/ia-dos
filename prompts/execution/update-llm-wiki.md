@@ -1,8 +1,8 @@
 # Prompt para ejecutar una Wiki Update Task
 
-Utiliza este prompt sólo cuando la memoria sea el resultado principal de una Execution Task separada: bootstrap, consolidación de varios outcomes, reparación, migración documental o una frontera de autoridad distinta.
+Utiliza este prompt sólo cuando la memoria sea el resultado principal de una Execution Task separada: bootstrap, consolidación de varios outcomes, custodia estructural de `90 — Documentación y memoria`, reparación, migración documental o una frontera de autoridad distinta.
 
-No lo uses como paso rutinario después de cada ejecución si la Task original ya podía actualizar memoria dentro del mismo outcome.
+No lo uses como paso rutinario después de cada ejecución si la Task original ya podía actualizar memoria `LOCAL` dentro del mismo outcome.
 
 La tarea pegada debe ser una `Execution Task` canónica o el perfil `Wiki Update Task` vigente.
 
@@ -12,7 +12,7 @@ Actúa como Coding Agent — Execution y materializa únicamente la actualizaci�
 Antes de modificar:
 1. valida `Artifact Type`, `Destination Role`, `Task ID`, `Cycle ID` cuando exista y Cycle Owner;
 2. valida la precondición `Memory Bootstrap Gate` declarada por la tarea;
-3. confirma que el motivo de separación sea bootstrap, consolidación, reparación, migración o frontera de autoridad distinta;
+3. confirma que el motivo de separación sea bootstrap, consolidación, custodia `90_STRUCTURAL`, reparación, migración o frontera de autoridad distinta;
 4. si declara `BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT`, confirma que el único resultado sea persistir ese checkpoint y que la unidad original esté fuera de alcance;
 5. confirma el recurso de memoria, branch o modo de trabajo y rutas autorizadas;
 6. lee `AGENTS.md` de la LLM Wiki cuando exista;
@@ -32,6 +32,8 @@ Durante la ejecución:
 - usa Markdown estándar y enlaces relativos como referencias canónicas;
 - no dependas de wikilinks, plugins de Obsidian o formatos propietarios para semántica crítica;
 - si consolidas varios outcomes, sintetiza el estado resultante en lugar de copiar cronología operacional;
+- si esta Task fue gobernada por `90`, respeta la síntesis, ubicación y alcance estructural definidos por ese custodio;
+- mantiene `current-state` como snapshot/índice compacto, no como historial acumulativo;
 - si actualizas un Operational Baseline, distingue HEAD remoto verificado de commit/versión productiva y conserva deployment/release, entorno y fecha cuando apliquen;
 - no crees `log.md`, `tasks/`, `context-packs/` o páginas vacías salvo alcance explícito;
 - no guardes secretos ni datos no permitidos;
@@ -50,7 +52,7 @@ Entrega:
 - devuelve un `Execution Report` canónico al Cycle Owner;
 - usa `Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`;
 - usa `Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]`;
-- registra `Durable Memory Impact: UPDATED` o la desviación real;
+- registra `Durable Memory Impact: UPDATED` cuando la memoria autorizada —incluida una actualización estructural ya gobernada por `90`— quedó materializada; usa `ROUTE_TO_90` sólo cuando existe impacto estructural todavía pendiente de custodia;
 - registra `Operational Baseline: UPDATED | UNCHANGED | NO APLICA | BLOQUEADO`;
 - enumera archivos creados, modificados o eliminados;
 - indica fuentes consultadas;

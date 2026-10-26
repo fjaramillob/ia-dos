@@ -103,9 +103,9 @@ Recursos y autoridad:
 Acción esperada del especialista:
 1. asume Cycle Owner dentro de autoridad delegada;
 2. si la siguiente unidad depende de historia chat-only, aplica Memory Bootstrap Gate;
-3. si readiness indispensable es desconocido, prepara Environment Preflight;
-4. si falta inspección o diseño, prepara Planning Task;
-5. si existe un outcome definido, cohesivo y verificable bajo una frontera estable, prepara Execution Task;
+3. si existe una decisión material todavía no resuelta antes de escribir, prepara Planning Task;
+4. si readiness debe conocerse antes de conceder autoridad sensible, la capacidad misma es el objeto de evaluación o el chequeo requiere otro actor/entorno, prepara Environment Preflight;
+5. si existe un outcome definido y verificable, prepara Execution Task con Protected Invariants, Adaptation Authority y Protected Boundaries; el detalle de implementación se planifica internamente;
 6. adopta un Implementation Plan dentro de autoridad delegada cuando no cambie materialmente la frontera;
 7. deriva sólo la decisión humana indispensable cuando exceda su autoridad;
 8. no ejecutes una tarea destinada al coding agent;

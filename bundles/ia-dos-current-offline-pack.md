@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.4 — ejecución adaptativa / custodia estructural 2026-10-25`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.4 — ejecución adaptativa / custodia estructural 2026-10-26`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 

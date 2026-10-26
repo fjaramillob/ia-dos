@@ -91,16 +91,21 @@ No abras una conversación nueva sólo porque cambia la Execution Task y no here
 
 ## Condiciones de detención
 
+Antes de actuar confirma outcome, Protected Invariants, Protected Boundaries y `Adaptation Authority`.
+
+Con `Adaptation Authority: BOUNDED`, un fallo técnico reversible dentro del scope no es bloqueo por sí mismo: diagnostica, repara, revalida y continúa cuando no hubo side effects materiales y no cambian outcome, invariantes, fronteras ni capacidades sensibles autorizadas.
+
 Detente cuando:
 
-- falta información crítica;
+- falta información crítica que no puedes resolver dentro de la autoridad recibida;
 - una fuente autorizada contradice de forma relevante el contexto entregado;
 - el working tree contiene cambios no identificados que puedan perderse;
 - la tarea requiere tocar recursos fuera del alcance;
-- una prueba crítica falla;
-- aparece un riesgo de seguridad, pérdida de datos o coste;
-- se requiere una decisión de producto o arquitectura no confirmada;
-- una precondición indispensable del entorno no está comprobada.
+- una prueba crítica falla y no existe reparación segura dentro del scope;
+- aparece estado parcial o irreversible no cubierto por recovery;
+- aparece un riesgo de seguridad, pérdida de datos o coste no cubierto;
+- se requiere una decisión material de producto, arquitectura o seguridad no confirmada;
+- para continuar debes cambiar un Protected Invariant o cruzar una Protected Boundary no autorizada.
 
 ## Verificación mínima
 
@@ -114,7 +119,11 @@ Antes de cerrar:
 - indica limitaciones, desviaciones y pendientes del alcance original;
 - utiliza `Atención requerida` sólo para un bloqueo, riesgo, desviación o decisión concreta que necesite revisión.
 
-No inventes una sección de `conocimiento potencialmente durable` ni una siguiente unidad por rutina. Si la Task declara `Memory Policy`, evalúa sólo sus triggers explícitos y reporta `Durable Memory Impact`. Si cambia un baseline publicado, conserva el checkpoint operacional autorizado aunque la memoria semántica sea `NONE`.
+No inventes una sección de `conocimiento potencialmente durable` ni una siguiente unidad por rutina. Si la Task declara `Memory Policy`, evalúa sólo sus triggers explícitos y reporta `Durable Memory Impact`.
+
+Si `Memory Stewardship = LOCAL`, materializa sólo la memoria autorizada. Si `Memory Stewardship = 90_STRUCTURAL` y la custodia todavía no ocurrió, reporta `ROUTE_TO_90` en vez de sintetizar memoria estructural por tu cuenta. Una Wiki Update Task estructural ya gobernada por `90` que termina correctamente reporta `UPDATED`.
+
+Si cambia un baseline publicado, conserva el checkpoint operacional autorizado aunque la memoria semántica sea `NONE`.
 
 ## Formato del reporte final
 
@@ -123,6 +132,6 @@ Devuelve un `Execution Report` canónico al Cycle Owner indicado:
 ```text
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
-Durable Memory Impact: [NONE | UPDATED | DEFERRED | ATTENTION REQUIRED | NO APLICA]
+Durable Memory Impact: [NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED | NO APLICA]
 Operational Baseline: [UNCHANGED | UPDATED | NO APLICA | BLOQUEADO]
 ```
