@@ -54,10 +54,10 @@ El Project Orchestrator identifica el siguiente resultado verificable y evalúa:
 
 Según el caso:
 
-- conocimiento necesario sólo en conversaciones → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección o diseño → `Planning Task` de solo lectura;
-- unidad definida + memoria suficiente + entorno listo → `Execution Task`;
+- conocimiento durable indispensable ausente → `Memory Bootstrap Gate`;
+- decisión material todavía no resuelta → `Planning Task` de solo lectura;
+- readiness que debe conocerse antes de autoridad sensible, capacidad objeto de evaluación o chequeo con otro actor/entorno → `Environment Preflight`;
+- outcome definido → `Execution Task` outcome-first con Revalidate y planificación interna;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → `00`.
 
@@ -83,7 +83,7 @@ BOOTSTRAP REQUIRED
 
 La tarea de bootstrap no finge `PASS` y no puede ejecutar la unidad original que busca desbloquear. Declara explícitamente que responde a `BOOTSTRAP REQUIRED`.
 
-Una LLM Wiki separada no es obligatoria y `90 — Wiki y memoria` no debe abrirse por rutina.
+Una LLM Wiki separada no es obligatoria y `90 — Documentación y memoria` no debe abrirse por rutina.
 
 ## 7. Preparar el entorno cuando corresponda
 
@@ -141,8 +141,8 @@ Si el reporte corresponde a un memory bootstrap, su revisión no habilita autom�
 - ningún `Launch Mode` o fase artificial;
 - Memory Bootstrap Gate aplicado cuando la unidad dependa de historia conversacional;
 - `BOOTSTRAP REQUIRED` resuelto mediante una unidad de checkpoint separada antes de retomar la unidad original;
-- Environment Preflight usado cuando readiness indispensable sea desconocido;
-- Planning Task sólo cuando reduzca incertidumbre real;
+- Environment Preflight separado usado sólo cuando readiness deba conocerse antes de autoridad sensible, cuando la capacidad sea objeto de evaluación o cuando el chequeo requiera otro actor/entorno;
+- Planning Task separada usada sólo cuando exista una decisión material todavía no resuelta;
 - Execution Task acotada cuando la unidad esté lista;
 - Execution Cell reutilizada cuando corresponda;
 - evidencia devuelta al Cycle Owner;
