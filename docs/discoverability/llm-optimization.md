@@ -35,9 +35,13 @@ Utiliza consistentemente:
 - `Planning Task`;
 - `Implementation Plan`;
 - `Environment Preflight`;
+- `Protected Invariants`;
+- `Adaptation Authority`;
+- `Protected Boundaries`;
 - `Execution Task`;
 - `Execution Cell`;
 - `Execution Report`;
+- `Memory Stewardship`;
 - `Exchange`;
 - `Specialist Handoff`;
 - `coding agent`;
@@ -90,10 +94,11 @@ Una representación correcta puede resumirse así:
 ```text
 dirección suficiente
 → siguiente resultado verificable
-→ Memory Bootstrap cuando falta memoria reusable
-→ Preflight cuando readiness es desconocido
-→ Planning cuando falta inspección/diseño
-→ Execution Task cuando la unidad está lista
+→ Memory Bootstrap sólo cuando falta memoria durable indispensable
+→ definir Protected Invariants + Adaptation Authority + Protected Boundaries
+→ Planning sólo si existe una decisión material no resuelta
+→ Preflight sólo si readiness debe conocerse antes de autoridad sensible
+→ Execution Task outcome-first + Revalidate + planificación interna
 → coding agent
 → Execution Report
 → revisión y decisión bajo responsabilidad humana aplicable
