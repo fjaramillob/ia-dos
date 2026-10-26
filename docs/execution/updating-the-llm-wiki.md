@@ -36,6 +36,7 @@ La Execution Task declara:
 
 ```text
 Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 ```
 
 - `NONE`: no corresponde cambio semántico de Wiki;
@@ -43,6 +44,11 @@ Memory Policy: NONE | CONDITIONAL | REQUIRED
 - `REQUIRED`: la actualización durable forma parte confirmada del outcome.
 
 Varios outcomes menores pueden quedar `DEFERRED` y consolidarse más adelante cuando juntos formen un cambio durable.
+
+`Memory Stewardship` separa memoria local de memoria estructural:
+
+- `LOCAL`: Operational Baseline y memoria semántica estrecha pueden quedar dentro del mismo outcome;
+- `90_STRUCTURAL`: arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza o reorganización relevante de la memoria se derivan a `90 — Documentación y memoria` cuando el proyecto adopta ese custodio.
 
 ### Operational Baseline
 
@@ -98,15 +104,21 @@ Persona responsable
 
 Project Orchestrator / Cycle Owner
 → define qué outcome perseguir
-→ define Memory Policy
+→ define Memory Policy y Memory Stewardship
 → define Memory Triggers cuando corresponda
 → define si el baseline publicado debe actualizarse
+→ deriva a 90 cuando el impacto durable es estructural
 → decide cuándo consolidar varios outcomes
+
+90 — Documentación y memoria, cuando el proyecto lo adopta
+→ custodia síntesis, ubicación y coherencia de memoria estructural
+→ decide NO UPDATE | CONSOLIDATE | MATERIALIZE NOW
 
 Coding Agent — Execution
 → materializa sólo dentro de la Task y Authority Envelope
-→ actualiza memoria si la política y los triggers lo habilitan
+→ actualiza memoria LOCAL si la política y los triggers lo habilitan
 → actualiza Operational Baseline cuando cambia publicación y está autorizado
+→ ante 90_STRUCTURAL reporta ROUTE_TO_90
 → reporta evidencia
 ```
 
@@ -114,7 +126,9 @@ La capacidad de actualizar memoria no transfiere al Coding Agent autoridad para 
 
 ## Actualización dentro del mismo outcome
 
-Cuando implementación, Git, delivery y Wiki comparten una frontera estable de autoridad, la actualización durable debe ocurrir dentro de la misma Execution Task.
+Cuando implementación, Git, delivery y memoria `LOCAL` comparten una frontera estable de autoridad, la actualización durable puede ocurrir dentro de la misma Execution Task.
+
+No uses esta regla para absorber memoria estructural en el Conversation Space que desarrolló el cambio cuando la Task declara `90_STRUCTURAL`.
 
 Ejemplo:
 
@@ -126,7 +140,7 @@ Revalidate
 → Push
 → Deploy
 → Production Smoke
-→ Semantic Memory, si Memory Policy lo exige
+→ Semantic Memory LOCAL, si Memory Policy lo exige
 → Operational Baseline, si cambió publicación
 → Execution Report
 ```
@@ -141,6 +155,7 @@ Usa una Execution Task documental separada cuando el resultado principal sea:
 - consolidar varios outcomes menores en una síntesis durable;
 - reparar contradicciones u obsolescencia de la memoria;
 - migrar o reorganizar estructura documental;
+- custodiar memoria estructural derivada a `90`;
 - actualizar memoria bajo una frontera de autoridad distinta de la ejecución original.
 
 El perfil [Wiki Update Task](../../templates/wiki-update-task.template.md) sigue siendo una Execution Task canónica; no es un Artifact Type nuevo.
@@ -150,6 +165,7 @@ El perfil [Wiki Update Task](../../templates/wiki-update-task.template.md) sigue
 La Task debe indicar:
 
 - `Memory Policy`;
+- `Memory Stewardship`;
 - `Memory Triggers` cuando sea `CONDITIONAL`;
 - regla de `Operational Baseline`;
 - conocimiento confirmado que puede persistirse;
@@ -188,18 +204,32 @@ El Report debe indicar de forma compacta:
 
 ```text
 Durable Memory Impact:
-NONE | UPDATED | DEFERRED | ATTENTION REQUIRED
+NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED
 
 Operational Baseline:
 UNCHANGED | UPDATED | NO APLICA | BLOQUEADO
 ```
 
 - `NONE`: no hubo impacto semántico durable;
-- `UPDATED`: la memoria autorizada fue actualizada;
+- `UPDATED`: la memoria LOCAL autorizada fue actualizada;
 - `DEFERRED`: el cambio individual no justificó consolidación todavía;
+- `ROUTE_TO_90`: el cambio durable es estructural y corresponde Specialist Handoff a `90`; no implica que el outcome técnico esté incompleto;
 - `ATTENTION REQUIRED`: existe una decisión o contradicción que requiere gobierno.
 
 Si un outcome publicó una nueva versión y la Task exigía actualizar el Operational Baseline pero no pudo hacerlo, no debe declararse completamente cerrado sin explicar la limitación.
+
+## Higiene de current-state
+
+Mantén el camino caliente de memoria corto:
+
+```text
+home / mapa
+→ current-state compacto
+→ página de dominio relevante
+→ Task vigente
+```
+
+`current-state` describe principalmente qué es verdad ahora y dónde encontrar detalle reusable. No debe acumular cada checkpoint, hash, test matrix o cronología. Cuando deja de ser navegable, su reorganización es trabajo estructural de `90` cuando ese rol está adoptado.
 
 ## Validaciones mínimas
 
