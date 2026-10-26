@@ -57,18 +57,20 @@ Transforma la decisión en la **siguiente unidad segura**, no necesariamente en 
 Evalúa en este orden:
 
 ```text
-1. ¿El resultado está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
-2. Si depende de historia, ¿la memoria necesaria ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿corresponde Planning?
+1. ¿El outcome está definido y es verificable?
+2. ¿Cuáles son los Protected Invariants?
+3. ¿Qué Adaptation Authority puede delegarse?
+4. ¿Dónde están las Protected Boundaries?
+5. ¿Existe una decisión material todavía no resuelta?
+6. ¿Falta memoria durable indispensable o readiness que deba conocerse antes de autoridad sensible?
 ```
 
 Resultados:
 
-- historia necesaria sólo en chats → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección/diseño → `Planning Task`;
-- unidad lista → `Execution Task`.
+- historia durable indispensable ausente → `Memory Bootstrap Gate`;
+- decisión material no resuelta → `Planning Task`;
+- readiness que debe conocerse antes de conceder autoridad sensible, capacidad que es objeto de evaluación o chequeo que requiere otro actor/entorno → `Environment Preflight`;
+- outcome definido → `Execution Task` con Revalidate y planificación interna.
 
 Una Execution Task declara proporcionalmente:
 
@@ -78,25 +80,30 @@ Una Execution Task declara proporcionalmente:
 - Embedded Contract;
 - Required Reading y References cuando aporten;
 - alcance y fuera de alcance;
+- Protected Invariants;
+- Adaptation Authority;
+- Protected Boundaries;
 - Authority Envelope;
-- Memory Policy y regla de Operational Baseline cuando aplica;
+- Memory Policy, Memory Stewardship y regla de Operational Baseline cuando aplica;
 - criterios de aceptación;
 - verificaciones;
 - condiciones de detención.
 
-No dividas una Task sólo por duración, cantidad de archivos/comandos o porque internamente incluya implementación, tests, commit, push, deploy o smoke. Divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
+No dividas una Task sólo por duración, cantidad de archivos/comandos o porque internamente incluya implementación, debugging, repair, safe retry, tests, commit, push, deploy o smoke. Divide o detén cuando cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
 ## 4. Materializar
 
 La modificación física se delega a `Coding Agent — Execution` con acceso adecuado y una Execution Task autorizada.
 
-El coding agent inspecciona, modifica, prueba y reporta únicamente dentro de esa tarea.
+El coding agent revalida, planifica internamente, modifica, prueba y reporta únicamente dentro de esa tarea.
 
-Una misma Task puede contener fases internas de revalidación, implementación, verificación, Git, delivery, smoke y actualización de memoria durable cuando corresponde, si sirven al mismo outcome y están explícitamente autorizadas bajo una frontera estable.
+Con `Adaptation Authority: BOUNDED`, un fallo técnico reversible se diagnostica, repara y reintenta dentro de la misma Execution cuando no hubo side effects materiales y permanecen estables outcome, Protected Invariants y Protected Boundaries.
+
+Una misma Task puede contener fases internas de revalidación, implementación, debugging, reparación, safe retry, verificación, Git, delivery, smoke y memoria `LOCAL` cuando corresponde, si sirven al mismo outcome y están explícitamente autorizadas bajo una frontera estable.
 
 Una Execution Cell puede preservar continuidad entre tareas, pero no hereda permisos.
 
-Cuando una tarea se bloquea, `Execution Resume` sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios. Su semántica es `Task original + delta del bloqueo resuelto`.
+`Execution Resume` se usa sólo después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad. Sólo aplica si outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura siguen sin cambios. Su semántica es `Task original + delta del bloqueo externo o interrupción real resuelta`. Repair-in-place durante una Execution abierta no exige Resume.
 
 Para una tarea larga puede existir un sidecar operacional `<TASK-ID>-CHECKPOINT.md`. Registra continuidad, no autorización.
 
@@ -130,7 +137,8 @@ Después de revisar:
 - la implementación queda en su fuente técnica;
 - la evidencia queda en Report, diff, PR u otro mecanismo;
 - el trabajo pendiente queda en el sistema de seguimiento;
-- la memoria semántica se actualiza sólo según `Memory Policy`;
+- la memoria semántica se actualiza según `Memory Policy` y `Memory Stewardship`;
+- impacto `90_STRUCTURAL` pendiente de custodia se reporta `ROUTE_TO_90` sin reabrir el outcome técnico;
 - si cambió un baseline publicado, el checkpoint operacional durable debe reflejar el estado final verificado;
 - varios outcomes menores pueden consolidarse más adelante en una sola actualización semántica cuando juntos cambien la comprensión vigente.
 
@@ -147,13 +155,13 @@ Conversation Space / Cycle Owner
         ↓
 resultado definido y cohesivo
         ↓
-Memory Bootstrap Gate, cuando aplica
+Memory Bootstrap Gate, cuando falta memoria durable indispensable
         ↓
-Environment Preflight, cuando readiness es desconocido
+Planning Task, sólo si existe decisión material no resuelta
         ↓
-Planning Task, cuando falta inspección/diseño
+Environment Preflight, sólo si readiness debe conocerse antes de autoridad sensible
         ↓
-Execution Task, cuando la unidad está lista
+Execution Task outcome-first + Revalidate
         ↓
 Execution Cell o entorno autorizado
         ↓
