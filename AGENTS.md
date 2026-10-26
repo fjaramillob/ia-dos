@@ -57,9 +57,13 @@ Conversation Space   = gobierno dentro de autoridad delegada
 Specialist Handoff   = transferencia inline y copiable entre Conversation Spaces
 Execution Cell       = continuidad de ejecución
 Execution Task       = outcome cohesivo bajo una frontera estable de autoridad
+Protected Invariants = propiedades materiales que no cambian durante la adaptación
+Adaptation Authority = autonomía técnica explícita dentro de la Execution Task
+Protected Boundaries = fronteras materiales que requieren gates o autoridad explícita
 Authority Envelope   = permisos explícitos dentro de la Execution Task
 Execution Checkpoint = continuidad operacional, no autoridad
 Execution Report     = evidencia de lo ocurrido
+Memory Stewardship   = LOCAL | 90_STRUCTURAL | NO APLICA
 Memoria durable      = responsabilidad funcional
 LLM Wiki             = materialización durable, portable y navegable
 Repository           = implementación
@@ -75,13 +79,15 @@ Además:
 - una Task no implica una conversación nueva del coding agent;
 - una Execution Cell puede reutilizarse entre Tasks sin heredar permisos;
 - IA-DOS no maximiza cantidad de Tasks: maximiza el outcome seguro y verificable por Task;
-- no dividas sólo por duración, archivos, comandos, implementación, tests, commit, push, deploy o smoke;
-- divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
+- no dividas sólo por duración, archivos, comandos, implementación, debugging, reparación, safe retry, tests, commit, push, deploy o smoke;
+- con `Adaptation Authority: BOUNDED`, diagnostica, repara implementation defects, ajusta pruebas, elige mecanismos técnicamente equivalentes y realiza safe retry cuando no hubo side effects materiales y permanecen estables outcome, Protected Invariants y Protected Boundaries;
+- divide o detén cuando cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - una acción sensible no declarada en la Task no está autorizada;
 - una acción explícitamente declarada, con gates cumplidos y frontera estable, no requiere otra ida y vuelta humana por rutina;
 - el coding agent nunca aprueba su propio plan o ejecución;
 - `Authority Envelope` y `<TASK-ID>-CHECKPOINT.md` no son Artifact Types;
-- `Execution Resume = Task original + delta del bloqueo resuelto` y conserva Task ID mientras objetivo, scope, autoridad, seguridad y arquitectura no cambien;
+- `Execution Resume = Task original + delta del bloqueo externo o interrupción real resuelta`; conserva Task ID mientras outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura no cambien;
+- repair-in-place y safe retry dentro de una Execution todavía abierta no requieren Execution Resume;
 - `Execution Report` es evidence-first y no vuelve a narrar la Task;
 - `Manual Artifact Launcher` es efímero y no autoritativo;
 - `Caveman Return` compacta sólo después de materialización completa autorizada;
@@ -96,10 +102,13 @@ Además:
 - distingue `Embedded Contract`, `Required Reading` y `Reference`;
 - la memoria durable debe permitir que un Coding Agent competente, sin conversaciones previas, pueda orientarse con `repositorio + Wiki relevante + Task vigente` y contribuir tras revalidar el estado real;
 - `Memory Policy = NONE | CONDITIONAL | REQUIRED` gobierna actualización semántica dentro de una Execution Task y no es un Artifact Type;
+- `Memory Stewardship = LOCAL | 90_STRUCTURAL | NO APLICA` separa memoria local de custodia estructural; tampoco es un Artifact Type ni convierte a `90` en dispatcher;
+- ante impacto durable estructural todavía no custodiado, el Execution Report usa `Durable Memory Impact: ROUTE_TO_90`; una Wiki Update Task ya gobernada por `90` que materializa correctamente reporta `UPDATED`;
 - cuando un proyecto con LLM Wiki cambia un baseline publicado, el mismo outcome debe dejar actualizado un `Operational Baseline` durable con repositorio, branch productiva, último HEAD remoto verificado, commit productivo, deployment o release equivalente, entorno/URL, estado y fecha de verificación;
 - el `Operational Baseline` es un checkpoint de continuidad, no sustituye revalidar Git, runtime o producción antes de escribir;
 - un historial de releases, cuando exista, registra baselines publicados significativos de forma compacta; Git y la plataforma de delivery conservan el detalle exhaustivo;
-- Planning sigue siendo de solo lectura y el plan sigue siendo propuesta;
+- Planning separado sigue siendo de solo lectura y el plan sigue siendo propuesta, pero sólo se usa cuando existe una decisión material no resuelta antes de escribir; el detalle de implementación se planifica internamente dentro de Execution;
+- Environment Preflight separado se usa sólo cuando readiness debe conocerse antes de conceder autoridad sensible, cuando la capacidad misma es el objeto de evaluación o cuando la inspección requiere otro actor/entorno; la revalidación volátil ordinaria ocurre dentro de Execution;
 - el Cycle Owner puede adoptar un Implementation Plan dentro de autoridad delegada; la persona interviene ante cambios materiales de dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 ## LLM Wiki y memoria durable
@@ -113,6 +122,8 @@ Una LLM Wiki:
 - separa memoria semántica de baseline operacional;
 - no debe convertirse por defecto en backlog, archivo de TASK/REPORT, log de chats, diffs ni transcripciones;
 - no se actualiza semánticamente por cada ejecución: usa `NONE | CONDITIONAL | REQUIRED`;
+- cuando el proyecto adopta `90 — Documentación y memoria`, los cambios estructurales de arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza o reorganización relevante se derivan a ese custodio;
+- `current-state` debe funcionar como snapshot/índice operativo compacto, no como historial acumulativo;
 - si cambió un estado publicado, actualiza siempre el baseline operacional adoptado por el proyecto antes de considerar completamente cerrado ese outcome, salvo imposibilidad reportada explícitamente.
 
 ## Reglas para agentes
@@ -144,7 +155,8 @@ Antes de cerrar una tarea:
 - busca contradicciones con contratos relacionados;
 - busca residuos normativos de heurísticas reemplazadas;
 - distingue evidencia histórica de contratos vigentes;
-- confirma que no se reintroduzcan aprobaciones rutinarias no exigidas por la frontera de autoridad;
+- confirma que no se reintroduzcan Planning/Preflight/Resume rutinarios que C03 absorbió dentro de Execution;
+- confirma que no se reintroduzcan aprobaciones rutinarias no exigidas por Protected Boundaries;
 - confirma que Exchange no se confunda con un proveedor de sincronización;
 - reporta supuestos, limitaciones y pendientes reales.
 
