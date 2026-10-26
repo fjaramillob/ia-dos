@@ -135,12 +135,12 @@ NONE
 ```
 
 - `NONE`: no existe impacto durable;
-- `UPDATED`: memoria autorizada no estructural quedó actualizada;
+- `UPDATED`: memoria autorizada quedó materializada, incluida memoria estructural cuando la Wiki Update Task ya fue gobernada por `90`;
 - `DEFERRED`: outcome menor que puede consolidarse más adelante;
-- `ROUTE_TO_90`: existe impacto estructural y corresponde custodia especializada;
+- `ROUTE_TO_90`: existe impacto estructural todavía pendiente de custodia especializada;
 - `ATTENTION REQUIRED`: contradicción, ambigüedad o decisión de memoria que requiere gobierno antes de persistir.
 
-`ROUTE_TO_90` no significa que la ejecución técnica esté incompleta.
+`ROUTE_TO_90` no significa que la ejecución técnica esté incompleta. Una vez que `90` recibe el handoff y gobierna una Wiki Update Task, esa ejecución documental reporta `UPDATED` si la materialización termina correctamente; no genera un nuevo `ROUTE_TO_90`.
 
 ## Higiene de Wiki
 
