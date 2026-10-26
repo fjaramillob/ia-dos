@@ -196,7 +196,7 @@ Una tarea larga puede materializar opcionalmente `<TASK-ID>-CHECKPOINT.md` para 
 
 El checkpoint no agrega autoridad. Un nuevo Coding Agent debe leer la Task, leer el checkpoint, verificar el estado real y continuar sólo dentro de la autoridad vigente.
 
-`Execution Resume` conserva el mismo Task ID y equivale a `Task original + delta del bloqueo resuelto` cuando outcome, Protected Invariants, alcance, autoridad, seguridad, arquitectura y Protected Boundaries no cambiaron. No se necesita para repair-in-place o safe retry mientras la misma Execution siga abierta.
+`Execution Resume` conserva el mismo Task ID y equivale a `Task original + delta del bloqueo externo o interrupción real resuelta` cuando outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura no cambiaron. No se necesita para repair-in-place o safe retry mientras la misma Execution siga abierta.
 
 ## Memoria en la misma ejecución
 
