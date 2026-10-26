@@ -26,7 +26,7 @@ La auditoría distingue deliberadamente contratos normativos vigentes de evidenc
 Se recorrió recursivamente el árbol completo del repositorio:
 
 ```text
-115 blobs
+116 blobs
 root
 .github/
 bundles/
@@ -285,7 +285,7 @@ Se ejecutó nuevamente un recorrido del árbol completo de C04.
 Resultado:
 
 ```text
-Blobs revisados: 115/115
+Blobs revisados: 116/116
 Residuos normativos activos detectados: 0
 Enlaces Markdown relativos rotos detectados: 0
 Templates/prompts copiables con heurística pre-C03 detectados: 0
