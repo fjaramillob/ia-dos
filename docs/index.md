@@ -12,8 +12,8 @@ La adopción sigue este orden conceptual, sin convertirse en una pipeline rígid
 4. Abre sólo el Conversation Space que desbloquee el siguiente resultado, usando el [Registro de tópicos](orchestration/topic-routing-registry.md). Cuando transfieras gobierno entre Conversation Spaces, usa un `Specialist Handoff` inline, autocontenido y copiable; no requiere `.md`, Exchange, path ni `Manual Artifact Launcher`.
 5. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
 6. Si la siguiente unidad depende de historia conversacional, evalúa primero el [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
-7. Si una futura ejecución depende de readiness indispensable no comprobado, usa [Environment Preflight](execution/environment-readiness-and-resume.md).
-8. Si falta inspección o diseño técnico, usa `Planning Task`; si la unidad ya está lista, usa `Execution Task`.
+7. Define Protected Invariants, Adaptation Authority y Protected Boundaries con [Ejecución adaptativa](execution/adaptive-execution.md).
+8. Usa `Planning Task` sólo si existe una decisión material no resuelta y [Environment Preflight](execution/environment-readiness-and-resume.md) sólo si el readiness debe conocerse antes de autorizar una frontera sensible; de otro modo ejecuta outcome-first con Revalidate interno.
 9. Tipifica el bloque y valida el receptor con [Tipado de artefactos](orchestration/typed-artifact-routing.md).
 10. Confirma [autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md).
 11. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
@@ -37,6 +37,7 @@ Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offl
 - [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md)
 - [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md)
 - [Execution Cells y Exchange](execution/execution-cells-and-exchange.md)
+- [Ejecución adaptativa y fronteras protegidas](execution/adaptive-execution.md)
 - [Readiness y Execution Resume](execution/environment-readiness-and-resume.md)
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md)
 - [Coding agents](execution/coding-agents.md)
@@ -94,12 +95,13 @@ El Execution Report es evidencia y no selecciona la decisión de gobierno poster
 
 - [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md)
 - [Memoria durable portable y LLM Wiki](foundations/durable-memory-and-obsidian.md)
+- [Custodia de memoria estructural](foundations/memory-stewardship.md)
 - [Crear o conectar la memoria durable](getting-started/bootstrap-llm-wiki.md)
 - [Wiki Starter](../templates/wiki-starter/00-home.md)
 
 `memoria durable` describe la función; `LLM Wiki` es una posible materialización portable y navegable.
 
-La memoria semántica es selectiva (`NONE | CONDITIONAL | REQUIRED`). En proyectos publicados con Wiki, el `Operational Baseline` conserva el último estado verificado para que un agente nuevo identifique repo/branch, HEAD remoto, commit productivo, deployment/release y entorno antes de revalidarlos.
+La memoria semántica es selectiva (`NONE | CONDITIONAL | REQUIRED`). Cuando el proyecto adopta `90 — Documentación y memoria`, `Memory Stewardship: 90_STRUCTURAL` deriva sólo los cambios estructurales a ese custodio; baseline y memoria local no convierten a 90 en peaje operativo. En proyectos publicados con Wiki, el `Operational Baseline` conserva el último estado verificado para que un agente nuevo identifique repo/branch, HEAD remoto, commit productivo, deployment/release y entorno antes de revalidarlos.
 
 ## Fundamentos
 
