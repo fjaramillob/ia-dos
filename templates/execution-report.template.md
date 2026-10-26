@@ -110,9 +110,9 @@ NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED
 ```
 
 - `NONE`: no hubo cambio semántico durable;
-- `UPDATED`: la memoria `LOCAL` autorizada quedó actualizada;
+- `UPDATED`: la memoria autorizada quedó materializada; aplica tanto a memoria `LOCAL` como a una Wiki Update Task estructural ya gobernada por `90`;
 - `DEFERRED`: el outcome individual no justificó consolidación semántica todavía;
-- `ROUTE_TO_90`: el outcome produjo un cambio durable estructural y corresponde Specialist Handoff a `90 — Documentación y memoria`; no implica por sí mismo que la ejecución técnica esté incompleta;
+- `ROUTE_TO_90`: el outcome produjo un cambio durable estructural **todavía no sometido a custodia/materialización por `90`** y corresponde Specialist Handoff; no implica por sí mismo que la ejecución técnica esté incompleta;
 - `ATTENTION REQUIRED`: existe una contradicción o decisión de memoria que requiere gobierno antes de persistir.
 
 Explica brevemente las rutas afectadas cuando sea `UPDATED`. No inventes una recomendación de roadmap.
@@ -149,7 +149,9 @@ Los hechos descubiertos pueden aparecer como evidencia del outcome. El Report no
 
 Cuando la Task declara `Memory Policy`, el Report registra el resultado de esa política. La decisión sobre triggers y dirección sigue perteneciendo al Cycle Owner/persona responsable.
 
-Cuando la Task declara `Memory Stewardship: 90_STRUCTURAL`, el Report no sintetiza ni ubica por sí mismo el conocimiento estructural: usa `ROUTE_TO_90` y entrega evidencia suficiente para el handoff.
+Cuando una Task técnica declara `Memory Stewardship: 90_STRUCTURAL` y la custodia de `90` aún no ocurrió, el Report usa `ROUTE_TO_90` y entrega evidencia suficiente para el handoff.
+
+Cuando `90` ya gobernó una Wiki Update Task estructural y esa Task materializó correctamente la memoria autorizada, el Report usa `UPDATED`; no vuelve a enrutar a su propio custodio.
 
 Una Task separada de Wiki se usa sólo cuando bootstrap, consolidación, reparación, custodia estructural o una frontera de autoridad distinta lo justifican.
 
