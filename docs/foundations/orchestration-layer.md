@@ -12,8 +12,10 @@ Su función es:
 - seleccionar fuentes y contexto;
 - separar conversaciones sólo cuando aportan;
 - preservar memoria durable antes de depender de historia chat-only;
-- comprobar readiness indispensable antes de autorizar escritura;
-- transformar necesidades en Planning, Preflight o Execution según corresponda;
+- definir Protected Invariants, Adaptation Authority y Protected Boundaries;
+- usar Planning separado sólo ante una decisión material no resuelta;
+- usar Preflight separado sólo cuando readiness deba conocerse antes de conceder autoridad sensible, la capacidad sea objeto de evaluación o requiera otro actor/entorno;
+- transformar outcomes definidos en Execution outcome-first con Revalidate interno;
 - revisar retornos;
 - mantener responsabilidad humana explícita.
 
@@ -76,11 +78,11 @@ resultado verificable + Cycle Owner
    ↓
 Memory Bootstrap Gate, cuando depende de historia
    ↓
-Environment Preflight, cuando readiness indispensable es desconocido
+Planning Task, sólo si existe decisión material no resuelta
    ↓
-Planning Task, cuando falta inspección/diseño
-   o
-Execution Task, cuando la unidad está lista
+Environment Preflight, sólo si readiness debe conocerse antes de autoridad sensible
+   ↓
+Execution Task outcome-first + Revalidate
    ↓
 coding agent
    ↓
@@ -141,7 +143,7 @@ Reutilizar una conversación no acumula permisos.
 
 ## Planning
 
-Cuando falta inspección o diseño, el Cycle Owner prepara una `Planning Task` de solo lectura.
+Cuando existe una decisión material todavía no resuelta antes de escribir, el Cycle Owner prepara una `Planning Task` de solo lectura. El detalle de implementación y debugging ordinario se resuelven dentro de Execution.
 
 Produce `Implementation Plan` y no autoriza ejecución.
 
