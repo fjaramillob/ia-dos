@@ -40,6 +40,27 @@ Responsabilidad funcional de conservar conocimiento vigente y reusable fuera de 
 
 Posible materialización durable, portable y navegable de memoria del proyecto para humanos y agentes.
 
+## `Protected Invariants`
+
+Propiedades materiales y verificables que no pueden cambiar mientras el Coding Agent adapta el método dentro de una Execution Task. Ejemplos: semántica de migración, atomicidad, contrato funcional, least privilege, separación de entornos o integridad de evidencia frozen.
+
+No equivalen a una receta exacta de implementación.
+
+## `Adaptation Authority`
+
+Semántica dentro de una Execution Task que define cuánto puede adaptar el Coding Agent el medio técnico.
+
+Valores:
+
+- `NONE`: el mecanismo exacto forma parte del contrato;
+- `BOUNDED`: permite diagnosticar, reparar implementation defects, ajustar pruebas, elegir mecanismos técnicamente equivalentes y realizar safe retry sin side effects materiales mientras outcome, Protected Invariants y Protected Boundaries permanezcan intactos.
+
+No amplía scope ni Authority Envelope.
+
+## `Protected Boundaries`
+
+Fronteras materiales —por ejemplo Production, datos, seguridad, identidad, coste o evidencia frozen— que requieren gates o autoridad explícita para cruzarse.
+
 ## `Memory Policy`
 
 Semántica dentro de una Execution Task que gobierna si el outcome modifica memoria semántica durable.
@@ -52,6 +73,16 @@ Valores:
 
 No es un Artifact Type y no transfiere dirección del proyecto al Coding Agent.
 
+## `Memory Stewardship`
+
+Clasificación de custodia durable:
+
+- `LOCAL`: baseline y memoria estrecha no estructural pueden ser gobernados/materializados dentro del mismo outcome;
+- `90_STRUCTURAL`: el cambio durable estructural se deriva a `90 — Documentación y memoria` para síntesis y ubicación agnósticas del desarrollo;
+- `NO APLICA`.
+
+No es Artifact Type ni convierte a `90` en dispatcher.
+
 ## `Operational Baseline`
 
 Checkpoint durable del último estado operacional verificado de un proyecto publicado.
@@ -62,7 +93,9 @@ Puede incluir repositorio, branch productiva, último HEAD remoto verificado, co
 
 ## `Durable Memory Impact`
 
-Resultado reportado por una Execution Task respecto de memoria durable: `NONE | UPDATED | DEFERRED | ATTENTION REQUIRED`.
+Resultado reportado por una Execution Task respecto de memoria durable: `NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED`.
+
+`ROUTE_TO_90` indica impacto durable estructural cuando el proyecto adopta ese custodio; el outcome técnico puede estar completado.
 
 No es una decisión de gobierno ni un Artifact Type.
 
@@ -72,7 +105,9 @@ Gate que pregunta si la siguiente unidad depende de conocimiento relevante que s
 
 ## `Planning Task`
 
-Artefacto dirigido a `Coding Agent — Planning` para inspección y diseño técnico en solo lectura respecto del proyecto/entorno inspeccionado. Produce `Implementation Plan`.
+Artefacto dirigido a `Coding Agent — Planning` para resolver una decisión material todavía no resuelta antes de escribir. Es de solo lectura respecto del proyecto/entorno inspeccionado y produce `Implementation Plan`.
+
+No se usa por defecto para debugging ordinario o para elegir entre mecanismos equivalentes dentro de una Execution Task con `Adaptation Authority: BOUNDED`.
 
 ## `Implementation Plan`
 

@@ -7,13 +7,15 @@ Este flujo convierte una necesidad confirmada en inspección, planificación o e
 ```text
 Conversation Space
 → outcome esperado + Cycle Owner
-→ Memory Bootstrap Gate cuando depende de historia
-→ Environment Preflight cuando readiness es desconocido
-→ Planning Task cuando falta inspección/diseño
-   o Execution Task cuando la unidad está lista
-→ coding agent
+→ Protected Invariants + Adaptation Authority + Protected Boundaries
+→ Memory Bootstrap Gate sólo si falta memoria durable indispensable
+→ Planning Task sólo si existe decisión material no resuelta
+→ Environment Preflight sólo si readiness debe conocerse antes de autorizar una frontera sensible
+→ Execution Task outcome-first + Revalidate
+→ coding agent planifica internamente, ejecuta y adapta dentro de autoridad
 → retorno tipado
 → mismo Cycle Owner
+→ 90 custodia memoria estructural cuando corresponda
 → revisión y decisión según autoridad
 ```
 
@@ -33,23 +35,27 @@ Antes de una Planning Task o Execution Task que dependa de historia previa, apli
 
 ## 3. Evaluar readiness
 
-Si una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, prepara `Environment Preflight` en solo lectura.
+Toda Execution Task revalida internamente las condiciones volátiles indispensables.
 
-Sólo `LISTO PARA EJECUCIÓN` habilita considerar escritura.
+Prepara `Environment Preflight` en solo lectura únicamente cuando el readiness de runtime, herramienta, servicio, acceso, secreto o conectividad debe conocerse **antes de conceder autoridad sensible**, cuando la capacidad misma es el objeto de evaluación o cuando el chequeo requiere otro actor/entorno.
+
+No crees Preflight separado si `Revalidate` dentro de una Task ya autorizada basta para actuar con seguridad.
 
 ## 4. Decidir Planning o Execution
 
 Pregunta:
 
 ```text
-¿El outcome está suficientemente definido, es cohesivo, acotado y verificable
-bajo una frontera estable de autoridad sin inspección o diseño adicional?
+¿Existe una decisión material todavía no resuelta que debe cerrarse antes de escribir?
 ```
 
-- sí → Execution Task;
-- no por falta de inspección/diseño → Planning Task;
-- no por decisión humana indispensable → deriva sólo esa decisión;
-- no por reorientación → escala a `00`.
+- no → Execution Task; el Coding Agent planifica internamente el detalle de implementación;
+- sí → Planning Task de solo lectura;
+- si la decisión pertenece a otro dominio → Specialist Handoff;
+- si requiere autoridad humana → deriva sólo esa decisión;
+- si implica reorientación → escala a `00`.
+
+Debugging ordinario, reparación de implementación o elección entre mecanismos técnicamente equivalentes no justifican Planning separado.
 
 ## 5. Planning Task
 
@@ -57,7 +63,7 @@ La Planning Task:
 
 - es de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
 - puede materializar únicamente su propio Implementation Plan cuando Output Delivery lo autoriza;
-- resuelve una incertidumbre técnica dominante;
+- resuelve una decisión material dominante;
 - devuelve Implementation Plan al Cycle Owner;
 - no autoriza ejecución.
 
@@ -68,6 +74,9 @@ El plan propone, no ejecuta. El Cycle Owner puede adoptarlo dentro de autoridad 
 La Task debe declarar:
 
 - outcome cohesivo;
+- Protected Invariants;
+- Adaptation Authority: NONE | BOUNDED;
+- Protected Boundaries;
 - Cycle Owner y destino;
 - fuentes de autoridad;
 - Embedded Contract;
@@ -79,30 +88,35 @@ La Task debe declarar:
 - verificaciones;
 - condiciones de detención.
 
-No dividas la Task sólo por duración, cantidad de archivos/comandos o por contener fases de implementación, tests, commit, push, deploy o smoke.
+No dividas la Task sólo por duración, cantidad de archivos/comandos o por contener fases de implementación, debugging, reparación, safe retry, tests, commit, push, deploy o smoke.
 
 Puede contener:
 
 ```text
 Revalidate
+→ planificar internamente
 → Implement
 → Verify
+→ Diagnose / Repair / Safe Retry
 → Commit
 → Push
 → Deploy
 → Production Smoke
+→ Operational Baseline / memoria LOCAL cuando corresponda
 → Final State
 ```
 
 si todas las fases sirven al mismo outcome y están autorizadas dentro de una frontera estable.
 
-Divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
+Divide o detén cuando cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
 ## 7. Authority Envelope
 
 Una acción sensible no declarada está prohibida.
 
 Una acción explícitamente declarada en la Task, con gates previos cumplidos y frontera estable, puede ejecutarse sin otra ida y vuelta humana por rutina.
+
+Con `Adaptation Authority: BOUNDED`, un fallo reversible sin side effects materiales se diagnostica, repara y reintenta dentro de la misma Task cuando los Protected Invariants permanecen intactos.
 
 Branch, commit, push, PR, merge, deploy, producción, datos, servicios externos y costes siguen siendo capacidades separadas aunque puedan formar parte de la misma Task.
 
@@ -112,11 +126,12 @@ El coding agent:
 
 1. valida rol y Task;
 2. lee Required Reading e instrucciones locales;
-3. inspecciona el estado real;
-4. ejecuta sólo lo autorizado;
-5. verifica;
-6. revisa el diff;
-7. devuelve Execution Report.
+3. revalida el estado real;
+4. planifica internamente el detalle;
+5. ejecuta y adapta sólo dentro de autoridad;
+6. verifica;
+7. revisa el diff;
+8. devuelve Execution Report.
 
 Una Execution Cell activa se reutiliza mientras siga respondiendo bien.
 
@@ -124,12 +139,14 @@ Para una Task larga puede existir `<TASK-ID>-CHECKPOINT.md` con avance, HEAD/wor
 
 ## 9. Execution Resume
 
-Reanuda la misma Task cuando se resolvió un bloqueo sin cambiar objetivo, alcance, autoridad, seguridad o arquitectura.
+Reanuda la misma Task cuando se resolvió un bloqueo externo o una interrupción real sin cambiar outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad o arquitectura.
+
+No uses Resume para repair-in-place mientras la Execution siga abierta.
 
 ```text
 Execution Resume
 = Task original
-+ delta del bloqueo resuelto
++ delta del bloqueo externo o interrupción real resuelta
 ```
 
 Conserva Task ID.
@@ -150,8 +167,11 @@ El Report debe ser evidence-first y proporcional:
 - Evidence;
 - Actual Scope;
 - Acceptance;
+- Adaptations Used, sólo cuando aporte;
 - Deviations;
-- Final State.
+- Final State;
+- Durable Memory Impact;
+- Operational Baseline.
 
 No vuelva a narrar la Task ni seleccione la siguiente acción de gobierno.
 
@@ -180,6 +200,7 @@ Semántica mínima:
 ```text
 inbox = artifacts operativamente activos destinados a Coding Agents
 outbox = outputs pendientes de consumo o aún requeridos por trabajo activo
+mantén inbox/outbox escasos; retira consumidos/superseded/duplicados sin necesidad activa
 archive = cold storage operacional por trazabilidad
 ```
 
@@ -188,7 +209,7 @@ archive = cold storage operacional por trazabilidad
 ## Rechaza el cierre cuando
 
 - falta autoridad o destino;
-- readiness indispensable sigue no listo/desconocido;
+- un readiness que debía resolverse antes de conceder autoridad sensible sigue no listo/desconocido;
 - una Task ordinaria depende de memoria chat-only no resuelta;
 - cambió materialmente la frontera sin nueva decisión;
 - aparecen acciones no autorizadas;

@@ -15,7 +15,9 @@ Una conversación de Execution Cell puede reutilizarse mientras siga respondiend
 
 ## Readiness antes de ejecutar
 
-Antes de aprobar o iniciar escritura, comprueba sólo las precondiciones indispensables para la tarea:
+Toda Execution Task comienza con una fase de `Revalidate` sobre las precondiciones volátiles indispensables para la acción que va a realizar o la Protected Boundary que va a cruzar.
+
+Antes de aprobar una frontera sensible mediante Preflight separado, o antes de cruzarla durante Execution, comprueba sólo las precondiciones indispensables:
 
 - runtime y versión;
 - herramienta requerida;
@@ -37,7 +39,16 @@ Una herramienta instalada no demuestra que su servicio esté operativo.
 
 ## Environment Preflight
 
-Úsalo cuando una dependencia indispensable no esté comprobada.
+No es una fase obligatoria previa a toda Execution.
+
+Úsalo cuando:
+
+- el readiness debe conocerse antes de conceder autoridad sensible;
+- la disponibilidad/capacidad del entorno es en sí misma el resultado que se quiere evaluar;
+- la inspección requiere un actor, credencial o entorno distinto del executor;
+- existe incertidumbre material que el Cycle Owner necesita resolver antes de autorizar escritura.
+
+Si la Execution Task ya está autorizada y sólo necesita revalidar estado volátil, usa `Revalidate` dentro de la propia ejecución.
 
 El preflight:
 
@@ -65,27 +76,42 @@ inspeccionar
 
 Cada `Execution Task` declara por separado las capacidades autorizadas.
 
-## Bloqueo válido
+## Fallo técnico versus bloqueo válido
 
-Cuando una precondición falla durante ejecución:
+Con `Adaptation Authority: BOUNDED`, un fallo técnico ordinario no obliga a cerrar la ejecución como `BLOQUEADO` cuando:
 
-1. detén la tarea;
-2. devuelve un `Execution Report` con `Estado: BLOQUEADO`;
-3. registra evidencia y la atención concreta requerida;
-4. conserva la tarea como candidata a reanudación sólo si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios;
-5. no replanifiques por defecto.
+- no produjo side effects materiales o irreversibles;
+- outcome, Protected Invariants y Protected Boundaries siguen intactos;
+- la corrección usa capacidades ya autorizadas;
+- existe una ruta razonable de reparación y verificación.
+
+En ese caso: diagnostica, repara, revalida y continúa dentro de la misma Task.
+
+Devuelve `BLOQUEADO` cuando:
+
+1. la condición no puede resolverse dentro de la autoridad vigente;
+2. requiere acción externa, humana o un recurso no disponible;
+3. aparece estado parcial/irreversible no cubierto por recovery;
+4. cambia outcome, Protected Invariants, scope, autoridad, seguridad, arquitectura o Protected Boundary;
+5. no existe evidencia suficiente para un safe retry.
+
+No replanifiques por defecto.
 
 ## Execution Resume
 
-`Execution Resume` reanuda la **misma Execution Task** después de resolver una condición bloqueante.
+`Execution Resume` reanuda la **misma Execution Task** después de resolver una condición bloqueante externa o una interrupción real.
+
+No es necesario para debugging, repair-in-place o safe retry que ocurrieron mientras la misma ejecución seguía abierta bajo `Adaptation Authority: BOUNDED`.
 
 Sólo es válido cuando permanecen sin cambios:
 
-- objetivo;
+- outcome;
+- Protected Invariants;
 - alcance;
 - autoridad;
 - seguridad;
 - arquitectura;
+- Protected Boundaries;
 - resultado verificable esperado.
 
 Contrato mínimo:

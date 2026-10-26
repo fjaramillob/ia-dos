@@ -115,6 +115,26 @@ Memory Policy: NONE | CONDITIONAL | REQUIRED
 
 Pequeños outcomes pueden quedar sin actualización semántica y consolidarse después cuando, en conjunto, formen un cambio durable.
 
+### Memory Stewardship
+
+Cuando un proyecto adopta `90 — Documentación y memoria`, separa:
+
+```text
+LOCAL
+→ baseline y memoria semántica estrecha del dominio
+
+90_STRUCTURAL
+→ arquitectura, datos/source of truth, seguridad/autoridad,
+   contratos cross-domain, capacidades mayores, gobernanza
+   o reorganización relevante de la memoria
+```
+
+`90` custodia síntesis y ubicación de memoria estructural. No es dispatcher, no aprueba la ejecución técnica y no recibe todos los outcomes.
+
+El Cycle Owner identifica el impacto; ante `90_STRUCTURAL` emite un Specialist Handoff inline después de contar con evidencia suficiente. `90` puede decidir `NO UPDATE`, consolidar varios outcomes o materializar una actualización mediante Wiki Update Task.
+
+Consulta [Custodia de memoria estructural](memory-stewardship.md).
+
 ### Operational Baseline
 
 Cuando un proyecto con Wiki publica software o cambia otro estado operacional relevante, la continuidad exige conservar el último baseline verificado aunque el cambio semántico sea `NONE`.
@@ -173,11 +193,20 @@ Prefiere:
 
 Los wikilinks y plugins de Obsidian pueden ser conveniencias locales, pero la semántica crítica no debe depender de ellos.
 
-## Mapa de memoria
+## Mapa de memoria y current-state
 
 En el starter, `00-home.md` funciona como punto de entrada y mapa. Debe orientar hacia páginas concretas sin duplicarlas.
 
 Una Wiki existente puede conservar otro nombre para su home si cumple esa función.
+
+`current-state` debe funcionar como **snapshot e índice operativo compacto**, no como historial acumulativo. Cuando pierde navegabilidad por crecimiento cronológico o mezcla de dominios:
+
+- conserva allí estado vigente y enlaces;
+- mueve conocimiento reusable a páginas de dominio;
+- conserva historia sólo cuando aporta continuidad;
+- no repite matrices, hashes, reportes o cronología que ya existen en Git/Exchange/Execution Reports.
+
+La reorganización de una memoria que dejó de ser navegable es un cambio estructural y corresponde a `90` cuando el proyecto adopta ese custodio.
 
 ## Lo que no vive por defecto en la LLM Wiki
 
@@ -247,22 +276,25 @@ El Conversation Space y la persona responsable conservan dirección. El Coding A
 El Cycle Owner define dentro de la Task:
 
 - `Memory Policy`;
+- `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA`;
 - triggers, si es `CONDITIONAL`;
 - rutas y fuentes autorizadas;
 - si el baseline operacional debe actualizarse por publicación;
 - si corresponde historia compacta de release.
 
-Cuando la misma frontera de autoridad cubre implementación, Git, delivery y Wiki, el Coding Agent puede completar todo dentro del mismo outcome:
+Cuando la misma frontera de autoridad cubre implementación, Git, delivery y memoria `LOCAL`, el Coding Agent puede completar dentro del mismo outcome:
 
 ```text
 Implement
 → Verify
 → Commit / Push
 → Deploy / Smoke
-→ actualizar memoria autorizada
+→ actualizar memoria LOCAL autorizada
 → actualizar Operational Baseline
 → Execution Report
 ```
+
+Cuando el impacto es `90_STRUCTURAL`, el executor no sintetiza por defecto la memoria estructural: reporta `Durable Memory Impact: ROUTE_TO_90` y el Cycle Owner transfiere esa unidad mediante Specialist Handoff.
 
 Una Task de Wiki separada se usa cuando el resultado principal es:
 
@@ -270,6 +302,7 @@ Una Task de Wiki separada se usa cuando el resultado principal es:
 - consolidar varios outcomes menores;
 - reparar memoria inconsistente u obsoleta;
 - realizar una migración/reorganización documental;
+- custodiar memoria estructural definida por `90`;
 - trabajar bajo una frontera de autoridad distinta.
 
 No la crees como ritual posterior a cada ejecución.

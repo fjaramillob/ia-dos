@@ -75,7 +75,7 @@ Su función puede ser principalmente mecánica:
 - commit o push cuando estén explícitamente autorizados en la Task;
 - validar estructura, Markdown o enlaces.
 
-La síntesis de conocimiento permanece en el plano conversacional y puede involucrar `90 — Wiki y memoria` cuando aporta.
+La síntesis de conocimiento permanece en el plano conversacional. Cuando el proyecto adopta `90 — Documentación y memoria`, ese espacio custodia cambios estructurales; Wiki Sync sólo materializa la escritura autorizada.
 
 No crees `Wiki Sync` automáticamente por usar una LLM Wiki y no confundas esa célula con memoria durable o autoridad adicional.
 
@@ -161,6 +161,8 @@ outbox/
 archive/
 → cold storage operacional de artifacts retirados de circulación activa pero conservados por trazabilidad
 ```
+
+Mantén `inbox/` y `outbox/` como superficies activas y escasas. Cuando un artifact ya fue consumido, está superseded o existe duplicado físico sin necesidad operativa, puede retirarse de circulación activa hacia `archive/` según la convención local. Esto mejora retrieval y no cambia estado ni aprobación.
 
 Reglas:
 

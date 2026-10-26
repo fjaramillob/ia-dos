@@ -93,7 +93,7 @@ No requiere por defecto:
 - importar TASK/REPORT históricos;
 - crear un roadmap completo;
 - crear páginas vacías;
-- abrir `90 — Wiki y memoria`;
+- abrir `90 — Documentación y memoria`;
 - adoptar Exchange;
 - usar un repositorio separado.
 
@@ -164,11 +164,15 @@ Exchange específico cuando realmente aporte
 
 Si eso no es posible porque el conocimiento necesario sólo vive en el chat anterior, el gate no está satisfecho.
 
-## Relación con `90 — Wiki y memoria`
+## Relación con `90 — Documentación y memoria`
 
-`90` es opcional.
+`90` es opcional como Conversation Space, pero cuando el proyecto lo adopta actúa como custodio de **memoria estructural**.
 
-Puede intervenir cuando existe trabajo real de síntesis, contradicciones o gobierno documental, pero el Project Orchestrator o un Conversation Space autorizado puede ordenar un bootstrap mínimo directamente cuando el conocimiento ya está confirmado.
+Deriva el bootstrap a `90` cuando el conocimiento faltante afecta arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, gobernanza, capacidades mayores o una reorganización durable que varios espacios necesitarán reutilizar.
+
+Un bootstrap estrecho y local puede seguir bajo el Cycle Owner del dominio cuando el conocimiento ya está confirmado y no requiere síntesis estructural.
+
+`90` define el checkpoint durable mínimo y, cuando hace falta escritura física, emite o gobierna una Wiki Update Task. No ejecuta la unidad original ni se convierte en dispatcher.
 
 La modificación física del checkpoint requiere una tarea autorizada cuando el Conversation Space no tiene capacidad de escritura directa sobre la fuente durable.
 

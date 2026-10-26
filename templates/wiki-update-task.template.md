@@ -1,8 +1,8 @@
 # Wiki Update Task — perfil de Execution Task
 
-Usa este perfil cuando una `Execution Task` tenga como resultado principal actualizar memoria durable Markdown: bootstrap, consolidación de varios outcomes, reparación documental, migración de memoria o una frontera de autoridad separada.
+Usa este perfil cuando una `Execution Task` tenga como resultado principal actualizar memoria durable Markdown: bootstrap, consolidación de varios outcomes, reparación documental, migración de memoria, **custodia estructural definida por `90 — Documentación y memoria`** o una frontera de autoridad separada.
 
-No lo uses como paso rutinario después de cada ejecución si la Task original ya podía actualizar la memoria dentro del mismo outcome.
+No lo uses como paso rutinario después de cada ejecución si la Task original ya podía actualizar memoria `LOCAL` dentro del mismo outcome.
 
 No crea un tipo de artefacto nuevo. Conserva el contrato canónico de ejecución.
 
@@ -24,15 +24,20 @@ Task ID: [TASK-ID]
 - Memory Bootstrap Gate: `[PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT | NO APLICA]`
 - Readiness indispensable: `[LISTO PARA EJECUCIÓN | NO APLICA]`
 - Memory Policy: `REQUIRED`
+- Memory Stewardship: `[LOCAL | 90_STRUCTURAL]`
 - Operational Baseline: `[UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA]`
 
 Si esta tarea responde a `BOOTSTRAP REQUIRED`, su único resultado es persistir el checkpoint durable mínimo necesario para desbloquear otra unidad. Esa unidad original queda fuera de alcance y su gate se reevalúa después de revisar el Execution Report del bootstrap.
 
 ## Motivo de separación
 
-- `[BOOTSTRAP | CONSOLIDACIÓN DE OUTCOMES | REPARACIÓN | MIGRACIÓN | FRONTERA DE AUTORIDAD DISTINTA]`
+- `[BOOTSTRAP | CONSOLIDACIÓN DE OUTCOMES | CUSTODIA 90_STRUCTURAL | REPARACIÓN | MIGRACIÓN | FRONTERA DE AUTORIDAD DISTINTA]`
 
-Declara por qué este conocimiento no se materializó dentro de la Execution Task que produjo el cambio original. No aceptes “porque siempre hacemos una Task de Wiki” como razón suficiente.
+Declara por qué este conocimiento no se materializó dentro de la Execution Task que produjo el cambio original. `90_STRUCTURAL` es razón válida cuando el proyecto adoptó custodia especializada; no aceptes “porque siempre hacemos una Task de Wiki” como razón suficiente.
+
+Cuando responda a `ROUTE_TO_90`, el Cycle Owner normal de esta unidad documental es `90 — Documentación y memoria`; el espacio técnico original aporta evidencia y no dicta la estructura final de la Wiki.
+
+Si esta Task `90_STRUCTURAL` materializa correctamente la memoria estructural autorizada, su Execution Report declara `Durable Memory Impact: UPDATED`. No vuelve a emitir `ROUTE_TO_90`, porque la custodia ya ocurrió.
 
 ## Objetivo documental
 

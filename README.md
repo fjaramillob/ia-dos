@@ -36,6 +36,12 @@ Planning Task
 Execution Task
 → outcome cohesivo bajo una frontera estable de autoridad
 
+Protected Invariants
+→ lo que no puede cambiar mientras el agente adapta el método
+
+Adaptation Authority
+→ autonomía técnica explícita dentro de la frontera autorizada
+
 Execution Cell
 → continuidad de ejecución cuando el proyecto la adopta
 
@@ -44,6 +50,9 @@ Execution Report
 
 Memory Policy
 → decide impacto semántico durable dentro del outcome
+
+Memory Stewardship
+→ LOCAL | 90_STRUCTURAL según la naturaleza del cambio durable
 
 Operational Baseline
 → último estado publicado verificado para continuidad
@@ -67,23 +76,25 @@ La persona responsable conserva la aprobación final cuando una decisión cambia
 El Project Orchestrator identifica el siguiente resultado verificable y evalúa:
 
 ```text
-1. ¿El resultado está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
-2. Si depende de historia, ¿el conocimiento necesario ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿corresponde Planning?
+1. ¿El outcome está definido y verificable?
+2. ¿Cuáles son los Protected Invariants?
+3. ¿Qué puede adaptar autónomamente el Coding Agent?
+4. ¿Dónde están las Protected Boundaries?
+5. ¿Existe una decisión material aún no resuelta?
+6. ¿Falta memoria estructural indispensable o readiness que deba conocerse antes de autorizar una frontera sensible?
 ```
 
-Según el caso:
+El default es `Execution Task` outcome-first con planificación interna y `Revalidate` al comienzo. Según el caso:
 
-- conocimiento necesario sólo en chats → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección o diseño → `Planning Task`;
-- unidad definida + memoria suficiente + entorno listo → `Execution Task`;
+- conocimiento estructural indispensable sólo en chats → `Memory Bootstrap Gate`, con custodia de `90` cuando el proyecto adopta ese rol;
+- readiness que debe conocerse antes de conceder autoridad sensible → `Environment Preflight`;
+- decisión material de diseño todavía abierta → `Planning Task`;
+- outcome definido → `Execution Task` con Protected Invariants + Authority Envelope + Adaptation Authority;
 - falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
 
-No es una pipeline rígida. Cada gate se usa únicamente cuando corresponde.
+No es una pipeline rígida. Planning y Preflight separados son excepcionales; debugging, reparación y revalidación ordinarios viven dentro de la ejecución cuando la autoridad lo permite.
 
 ## Tipos de artefacto
 
@@ -193,15 +204,17 @@ No toda ejecución merece modificar semánticamente la Wiki. `CONDITIONAL` respo
 
 La continuidad publicada sí se conserva: cuando cambia producción/release, el Operational Baseline registra repo/branch, último HEAD remoto verificado, commit/versión publicada, deployment/release, entorno y fecha según aplique. `Repository HEAD` y `Production Commit` pueden diferir.
 
-La misma Execution Task puede implementar, publicar y actualizar memoria si todo comparte outcome y Authority Envelope. Una Wiki Update Task separada queda para bootstrap, consolidación, reparación/migración o una frontera de autoridad distinta.
+Cuando el proyecto adopta `90 — Documentación y memoria`, los cambios durables **estructurales** se derivan a ese Conversation Space mediante Specialist Handoff: arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza o reorganización relevante de la memoria. `90` custodia síntesis y ubicación; no se convierte en dispatcher ni recibe cada ejecución.
 
-La LLM Wiki no es obligatoria para cada proyecto ni exige repositorio separado. No guarda TASK/REPORT, logs, diffs o transcripciones por defecto y el Coding Agent no la lee completa por rutina.
+El Operational Baseline y memoria estrecha no estructural pueden seguir actualizándose dentro de la misma Execution Task. Una Wiki Update Task separada queda para bootstrap, consolidación, reparación/migración, custodia estructural o una frontera de autoridad distinta.
+
+La LLM Wiki no es obligatoria para cada proyecto ni exige repositorio separado. `current-state` debe mantenerse como snapshot/índice operativo compacto, no como acumulación cronológica. La Wiki no guarda TASK/REPORT, logs, diffs o transcripciones por defecto y el Coding Agent no la lee completa por rutina.
 
 Consulta [Memoria durable portable y Obsidian](docs/foundations/durable-memory-and-obsidian.md).
 
 ## Planificación técnica
 
-Cuando falta inspección o diseño:
+El Coding Agent puede planificar internamente cómo alcanzar un outcome autorizado. Usa una Planning Task separada sólo cuando existe una **decisión material todavía no resuelta antes de escribir**:
 
 ```text
 Planning Task
@@ -211,13 +224,13 @@ Planning Task
 → aprobación humana cuando corresponda
 ```
 
-El plan debe cerrar una sola decisión técnica dominante y proponer una primera unidad segura. No debe convertirse por defecto en auditoría completa, arquitectura final o roadmap integral.
+Un bug de implementación, una elección entre runners equivalentes o debugging ordinario no justifican por sí solos Planning separado. El plan debe cerrar una sola decisión material dominante y no convertirse por defecto en auditoría completa, arquitectura final o roadmap integral.
 
 IA-DOS mantiene abierta la política universal de persistencia o renovación de conversaciones de Planning. Un nombre `PLAN — ...` no obliga a abrir una conversación nueva por tarea.
 
 ## Environment Preflight
 
-Cuando una futura Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados, usa `Environment Preflight`.
+Toda Execution Task revalida al comienzo las precondiciones volátiles indispensables. Usa un `Environment Preflight` separado sólo cuando el readiness deba conocerse **antes de conceder autoridad sensible**, cuando la capacidad misma sea el objeto de evaluación o cuando la inspección requiera un actor/entorno distinto.
 
 Es de solo lectura y produce:
 
@@ -225,7 +238,7 @@ Es de solo lectura y produce:
 LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.
+No dupliques un Preflight reciente dentro de la Execution Task salvo las comprobaciones volátiles realmente necesarias.
 
 ## Ejecución y Execution Cells
 
@@ -251,7 +264,9 @@ Consulta [Execution Cells y Exchange](docs/execution/execution-cells-and-exchang
 
 ```text
 Execution Task
-= objetivo + alcance + autoridad + permisos
+= outcome + Protected Invariants
++ alcance + Authority Envelope + Adaptation Authority
++ Protected Boundaries
 + criterios + verificaciones + condiciones de detención
 ```
 
@@ -263,15 +278,9 @@ El mecanismo de transporte no cambia ese contrato.
 
 ## Execution Resume
 
-`Execution Resume` reanuda la misma Execution Task después de resolver un bloqueo únicamente si siguen sin cambios:
+`Execution Resume` reanuda la misma Execution Task después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad, siempre que sigan sin cambios outcome, alcance, autoridad, seguridad, arquitectura y Protected Invariants.
 
-- objetivo;
-- alcance;
-- autoridad;
-- seguridad;
-- arquitectura.
-
-Conserva Task ID y no amplía permisos.
+Con `Adaptation Authority: BOUNDED`, una reparación técnica ordinaria sin side effects materiales se resuelve **dentro de la misma ejecución** y no exige Resume. Conserva Task ID y no amplía permisos.
 
 ## Execution Report
 
@@ -280,7 +289,7 @@ El Execution Report es **evidencia**, no una decisión del Cycle Owner.
 ```text
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
-Durable Memory Impact: NONE | UPDATED | DEFERRED | ATTENTION REQUIRED
+Durable Memory Impact: NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED
 Operational Baseline: UNCHANGED | UPDATED | NO APLICA | BLOQUEADO
 ```
 
@@ -353,9 +362,11 @@ Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offl
 - [Tipado de artefactos](docs/orchestration/typed-artifact-routing.md)
 - [Compresión de contexto](docs/orchestration/context-compression-by-authority.md)
 - [Execution Cells y Exchange](docs/execution/execution-cells-and-exchange.md)
+- [Ejecución adaptativa y fronteras protegidas](docs/execution/adaptive-execution.md)
 - [Readiness y Resume](docs/execution/environment-readiness-and-resume.md)
 - [Memory Bootstrap Gate](docs/foundations/memory-bootstrap-gate.md)
 - [Memoria durable portable](docs/foundations/durable-memory-and-obsidian.md)
+- [Custodia de memoria estructural](docs/foundations/memory-stewardship.md)
 - [Autoridad de fuentes y artefactos](docs/execution/source-and-artifact-authority.md)
 
 ## Plantillas principales

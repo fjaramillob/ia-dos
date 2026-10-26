@@ -25,10 +25,14 @@ El transporte no cambia este contrato. `Authority Envelope` y `<TASK-ID>-CHECKPO
 Antes de emitir la tarea confirma:
 
 - [ ] el outcome está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad;
+- [ ] Protected Invariants = definidos y verificables;
+- [ ] Adaptation Authority = `NONE | BOUNDED`;
+- [ ] Protected Boundaries = explícitas cuando existan;
 - [ ] Memory Bootstrap Gate = `PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT DURABLE | NO APLICA`;
-- [ ] readiness indispensable = `LISTO PARA EJECUCIÓN | NO APLICA`;
-- [ ] Planning previo = `[REFERENCIA REVISADA | NO APLICA]`;
+- [ ] readiness previo indispensable = `LISTO PARA EJECUCIÓN | NO APLICA`; el resto se revalida dentro de Execution;
+- [ ] Planning previo = `[REFERENCIA REVISADA | NO APLICA]` y sólo existe si hubo decisión material pendiente;
 - [ ] Memory Policy = `NONE | CONDITIONAL | REQUIRED` y, si aplica, sus triggers están definidos;
+- [ ] Memory Stewardship = `LOCAL | 90_STRUCTURAL | NO APLICA`;
 - [ ] Operational Baseline = `UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA`;
 - [ ] las decisiones humanas indispensables para esta frontera están resueltas;
 - [ ] la Task puede llegar a Final State sin cambiar materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
@@ -49,6 +53,7 @@ No dividas una Task sólo por duración, cantidad de archivos/comandos o porque 
 - Implementation Plan revisado: `[REFERENCIA O NO APLICA]`
 - Environment Readiness Report: `[REFERENCIA LISTO PARA EJECUCIÓN O NO APLICA]`
 - Memory Policy: `[NONE | CONDITIONAL | REQUIRED]`
+- Memory Stewardship: `[LOCAL | 90_STRUCTURAL | NO APLICA]`
 - Operational Baseline: `[UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA]`
 
 El Conversation Agent asigna el Task ID al construir la Task real. Una candidata de Planning mantiene `Task ID: PENDIENTE — ASIGNAR AL ADOPTAR`.
@@ -58,6 +63,21 @@ El Conversation Agent asigna el Task ID al construir la Task real. Una candidata
 Describe un único resultado definido, cohesivo, terminable y verificable.
 
 Un outcome puede requerir múltiples fases internas siempre que compartan la misma frontera de autoridad.
+
+## Protected Invariants
+
+Declara únicamente las propiedades materiales que no pueden cambiar mientras el executor adapta el método:
+
+- `[INVARIANTE VERIFICABLE]`
+
+No conviertas cada detalle de implementación en invariante.
+
+## Protected Boundaries
+
+- `[PRODUCTION / DATA / SECURITY / FROZEN EVIDENCE / COST / EXTERNAL / NINGUNA]`
+- condición para cruzar: `[GATE O AUTORIZACIÓN]`
+
+Una frontera puede estar preautorizada en esta misma Task; si sus gates pasan, no requiere otra ida y vuelta humana por rutina.
 
 ## Fuentes de autoridad
 
@@ -82,8 +102,9 @@ Debe viajar dentro de esta Task:
 
 - outcome;
 - alcance y fuera de alcance;
-- Authority Envelope;
-- Memory Policy, Memory Triggers y regla de Operational Baseline;
+- Authority Envelope y Adaptation Authority;
+- Protected Invariants y Protected Boundaries;
+- Memory Policy, Memory Stewardship, Memory Triggers y regla de Operational Baseline;
 - seguridad y datos;
 - criterios de aceptación;
 - verificaciones;
@@ -135,6 +156,16 @@ No inventes rutas, credenciales, herramientas o permisos.
 
 Declara explícitamente todas las capacidades que el outcome puede utilizar.
 
+### Adaptation Authority
+
+```text
+Adaptation Authority: NONE | BOUNDED
+```
+
+Con `BOUNDED`, el Coding Agent puede diagnosticar, reparar implementation defects, ajustar pruebas, seleccionar mecanismos técnicamente equivalentes y realizar safe retry después de fallos sin side effects materiales, siempre que no cambien outcome, Protected Invariants, Protected Boundaries ni capacidades sensibles autorizadas.
+
+Con `NONE`, el mecanismo exacto forma parte del contrato y cualquier desviación material exige STOP.
+
 ```text
 Code:
 - [LECTURA / ESCRITURA / ACCIONES]
@@ -170,7 +201,7 @@ acción sensible no declarada
 acción declarada + gates cumplidos + frontera estable
 → no requiere otra ida y vuelta humana por rutina
 
-cambio material de frontera
+cambio material de outcome, Protected Invariants o Protected Boundary
 → STOP
 ```
 
@@ -180,6 +211,7 @@ El coding agent nunca aprueba su propio plan o ejecución.
 
 ```text
 Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 
 Memory Triggers, si CONDITIONAL:
 - [TRIGGER EXPLÍCITO]
@@ -199,10 +231,13 @@ Reglas:
 - `NONE` evita actualización semántica, pero no exime actualizar el Operational Baseline si el outcome cambia un estado publicado;
 - `CONDITIONAL` permite escribir memoria sólo cuando se cumple un trigger explícito;
 - `REQUIRED` incorpora la actualización durable al outcome;
+- `LOCAL` permite materializar baseline y memoria estrecha no estructural dentro de esta Task;
+- `90_STRUCTURAL` impide que el executor sintetice por sí solo arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza o reorganización relevante de memoria; reporta `ROUTE_TO_90`;
 - el Coding Agent no define nuevos triggers ni usa memoria para cambiar dirección, prioridades o roadmap;
 - cuando `UPDATE_IF_PUBLISHED` aplica, el baseline debe distinguir último HEAD remoto verificado de commit/versión realmente publicada;
 - si la Task exige actualizar un baseline publicado y esa actualización no puede completarse, reporta la limitación y no declares cierre total sin justificarla;
-- una Task WIKI separada no es necesaria cuando esta misma frontera autoriza la actualización.
+- una Task WIKI separada no es necesaria para memoria `LOCAL` cuando esta misma frontera autoriza la actualización;
+- cuando aplica `90_STRUCTURAL`, el Cycle Owner deriva después mediante Specialist Handoff inline a `90 — Documentación y memoria`.
 
 ## Fases internas permitidas
 
@@ -210,13 +245,15 @@ Declara sólo si ayuda a la ejecución. Ejemplo:
 
 ```text
 Revalidate
+→ planificar internamente
 → Implement
 → Verify
+→ Diagnose / Repair / Safe Retry, cuando haga falta
 → Commit
 → Push
 → Deploy
 → Production Smoke
-→ Durable Memory / Operational Baseline, cuando corresponda
+→ Operational Baseline / memoria LOCAL, cuando corresponda
 → Final State
 ```
 
@@ -267,14 +304,15 @@ Si usa Exchange, ese permiso cubre únicamente el output declarado. Exchange per
 
 Detente y reporta cuando:
 
-- falte información crítica;
+- falte información crítica que no pueda resolverse dentro de la Adaptation Authority;
 - exista trabajo previo no identificado que pueda perderse;
 - aparezca una instrucción local aplicable incompatible;
 - sea necesario tocar recursos o usar capacidades no autorizadas;
-- falle una verificación crítica;
+- falle una verificación crítica y no exista reparación segura dentro del scope;
+- un intento haya producido side effects materiales o estado parcial no cubierto por recovery;
 - aparezca riesgo de seguridad, pérdida de datos o coste no cubierto;
 - sea necesaria una decisión no confirmada;
-- cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
+- cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - una precondición de memoria o readiness deje de cumplirse.
 
 ## Contrato de retorno
@@ -300,6 +338,7 @@ Actual Scope
 Acceptance
 Deviations
 Final State
+Adaptations Used
 Durable Memory Impact
 Operational Baseline
 ```

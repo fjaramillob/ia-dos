@@ -9,9 +9,9 @@ Persona responsable
 → define dirección y autoridad
 
 Conversation Space / Cycle Owner
-→ gobierna resultado dentro de autoridad delegada
-→ aplica gates de memoria/readiness cuando corresponda
-→ prepara Planning Task | Environment Preflight | Execution Task | Execution Resume
+→ gobierna outcome, Protected Invariants y Protected Boundaries dentro de autoridad delegada
+→ aplica gates de memoria/readiness sólo cuando corresponda
+→ prepara Planning Task excepcional | Environment Preflight excepcional | Execution Task | Execution Resume
 
 Coding Agent
 → planifica, comprueba readiness o ejecuta según rol y artefacto recibido
@@ -70,7 +70,7 @@ Execution Resume
 → Execution Report
 ```
 
-Puede modificar únicamente lo autorizado, ejecutar verificaciones, aplicar la Memory Policy/Operational Baseline declarados y producir evidencia.
+Puede planificar internamente, modificar únicamente lo autorizado, diagnosticar/reparar dentro de la Adaptation Authority, ejecutar verificaciones, aplicar Memory Policy/Memory Stewardship/Operational Baseline y producir evidencia.
 
 No puede usar la memoria para ampliar alcance, iniciar otra unidad, aprobar su propio resultado, integrar o desplegar sin autorización explícita ni seleccionar la decisión de gobierno posterior.
 
@@ -112,7 +112,7 @@ Usa sólo el campo de sesión/célula pertinente al rol.
 
 ## Sesiones de planificación
 
-Planning conserva una frontera explícita de autorización y es siempre de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados.
+Planning conserva una frontera explícita de autorización y es siempre de solo lectura respecto de las fuentes, proyecto y entorno inspeccionados. Se usa sólo cuando existe una decisión material todavía no resuelta antes de escribir; no para debugging ordinario.
 
 Puede utilizar un identificador lógico como:
 
@@ -130,7 +130,7 @@ La planificación nunca se convierte automáticamente en ejecución.
 
 ## Environment Preflight
 
-El preflight comparte el rol de solo lectura con Planning, no su propósito.
+El preflight comparte el rol de solo lectura con Planning, no su propósito. Se usa sólo cuando readiness debe conocerse antes de conceder autoridad sensible, la capacidad misma es el objeto de evaluación o la inspección requiere otro actor/entorno; Execution usa Revalidate para estado volátil ordinario.
 
 Debe limitarse a:
 
@@ -169,7 +169,10 @@ Reutilizar una conversación no reutiliza permisos anteriores.
 
 Cada Execution Task vuelve a declarar:
 
-- objetivo;
+- outcome;
+- Protected Invariants;
+- Adaptation Authority;
+- Protected Boundaries;
 - alcance y fuera de alcance;
 - autoridad y acceso;
 - capacidades autorizadas;
@@ -180,7 +183,7 @@ Cada Execution Task vuelve a declarar:
 
 ## Planning y Execution: separación correcta
 
-La frontera obligatoria es de **rol y autoridad**, no de conversación física.
+La frontera obligatoria es de **rol y autoridad**, no de conversación física. Planning separado es excepcional; toda Execution puede planificar internamente el detalle de implementación.
 
 ```text
 Planning Task
@@ -274,7 +277,7 @@ Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 
 `Atención requerida` identifica un asunto concreto sin elegir la acción de gobierno posterior.
 
-Cuando la Task declara contrato de memoria, el reporte incluye `Durable Memory Impact` y `Operational Baseline`. No inventa conocimiento potencial ni recomienda dirección fuera de los triggers autorizados.
+Cuando la Task declara contrato de memoria, el reporte incluye `Durable Memory Impact` y `Operational Baseline`. Ante `Memory Stewardship: 90_STRUCTURAL`, usa `ROUTE_TO_90` en vez de sintetizar memoria estructural. No inventa conocimiento potencial ni recomienda dirección fuera de los triggers autorizados.
 
 ## Gate de revisión
 
@@ -286,7 +289,7 @@ Al recibir un Execution Report, compara objetivo, alcance, criterios, autorizaci
 
 La política de memoria se define antes de ejecutar. El Cycle Owner revisa después si fue aplicada correctamente y decide cualquier consolidación futura o cambio de dirección.
 
-Una Task WIKI posterior sólo se justifica por bootstrap, consolidación, reparación o frontera de autoridad distinta.
+Una Task WIKI posterior sólo se justifica por bootstrap, consolidación, custodia estructural de `90`, reparación o frontera de autoridad distinta.
 
 ## Regla principal
 
@@ -294,9 +297,12 @@ Una Task WIKI posterior sólo se justifica por bootstrap, consolidación, repara
 Conversation Space = gobierno
 Execution Cell = continuidad
 Coding Agent — Planning = solo lectura del proyecto/entorno; output propio sólo si está autorizado
-Execution Task = autoridad de una unidad
+Execution Task = autoridad de un outcome
+Protected Invariants = límites materiales estables
+Adaptation Authority = autonomía técnica acotada
 Execution Report = evidencia + impacto durable ejecutado cuando aplica
 Memory Policy = criterio semántico definido por gobierno
+Memory Stewardship = LOCAL | 90_STRUCTURAL | NO APLICA
 Operational Baseline = continuidad del estado publicado verificado
 Persona responsable = aprobación final aplicable
 Exchange = transporte pasivo

@@ -20,9 +20,12 @@ OUTCOME
 [RESULTADO DEFINIDO, COHESIVO, ACOTADO Y VERIFICABLE]
 
 PRECONDICIONES
+- Protected Invariants: [LISTA BREVE]
+- Adaptation Authority: [NONE | BOUNDED]
+- Protected Boundaries: [LISTA O NINGUNA]
 - Memory Bootstrap Gate: [PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT DURABLE | NO APLICA]
-- Readiness indispensable: [LISTO PARA EJECUCIÓN | NO APLICA]
-- Planning previo: [REFERENCIA REVISADA | NO APLICA]
+- Readiness previo indispensable: [LISTO PARA EJECUCIÓN | NO APLICA]
+- Planning previo: [REFERENCIA REVISADA | NO APLICA — sólo si existió decisión material]
 - autorización humana adicional requerida: [RESUELTA | NO APLICA]
 
 FUENTES DE AUTORIDAD
@@ -57,6 +60,10 @@ REFERENCES
 Task + Required Reading deben bastar para ejecutar sin depender de conversaciones previas.
 
 AUTHORITY ENVELOPE
+Adaptation Authority:
+- [NONE | BOUNDED]
+- BOUNDED permite diagnosticar, reparar, ajustar pruebas, elegir mecanismos equivalentes y safe retry sin side effects materiales dentro del mismo outcome/invariantes.
+
 Code:
 - lectura: [AUTORIZADA / NO AUTORIZADA]
 - escritura: [AUTORIZADA / NO AUTORIZADA]
@@ -82,10 +89,11 @@ Data / External / Cost:
 No autorizado:
 - [LÍMITES]
 
-Regla: acción sensible no declarada → no autorizada. Acción declarada + gates cumplidos + frontera estable → puede ejecutarse dentro de esta Task sin otra ida y vuelta humana por rutina.
+Regla: acción sensible no declarada → no autorizada. Acción declarada + gates cumplidos + frontera estable → puede ejecutarse dentro de esta Task sin otra ida y vuelta humana por rutina. Fallo técnico reversible dentro de `BOUNDED` → repair-in-place, no nuevo ciclo.
 
 MEMORIA DURABLE
 - Memory Policy: [NONE | CONDITIONAL | REQUIRED]
+- Memory Stewardship: [LOCAL | 90_STRUCTURAL | NO APLICA]
 - Memory Triggers, si CONDITIONAL: [LISTA O NO APLICA]
 - Operational Baseline: [UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA]
 - recurso/rutas de memoria autorizadas: [LISTA O NO APLICA]
@@ -95,12 +103,13 @@ Reglas:
 - memoria semántica y baseline operacional son independientes;
 - publicar puede exigir baseline aunque Memory Policy = NONE;
 - el Coding Agent evalúa sólo triggers explícitos y no decide dirección;
-- una Task WIKI posterior no es necesaria si esta Task ya autoriza el cambio durable.
+- memoria LOCAL puede quedar dentro de esta Task;
+- impacto 90_STRUCTURAL → no sintetizar estructuralmente; reportar ROUTE_TO_90 para Specialist Handoff posterior.
 
 FASES INTERNAS, SI APORTA
-[Revalidate → Implement → Verify → Commit → Push → Deploy → Production Smoke → Durable Memory / Operational Baseline → Final State]
+[Revalidate → planificar internamente → Implement → Verify → Diagnose/Repair/Safe Retry → Commit → Push → Deploy → Production Smoke → Operational Baseline/memoria LOCAL → Final State]
 
-No dividas sólo por duración, archivos, comandos o fases internas. Detente si cambia materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
+No dividas sólo por duración, archivos, comandos o fases internas. Detente si cambia materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
 EXECUTION CHECKPOINT OPCIONAL
 - archivo: [<EXEC-ID>-CHECKPOINT.md | NO APLICA]
@@ -137,6 +146,7 @@ Outcome
 Evidence
 Actual Scope
 Acceptance
+Adaptations Used
 Deviations
 Final State
 Durable Memory Impact

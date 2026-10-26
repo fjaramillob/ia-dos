@@ -47,17 +47,20 @@ Debe:
 - aplicar Memory Bootstrap Gate cuando la unidad depende de historia chat-only;
 - cuando el gate devuelva `BOOTSTRAP REQUIRED`, bloquear la unidad original y, si corresponde, autorizar una Execution Task separada cuyo único resultado sea persistir el checkpoint mínimo;
 - revisar el Execution Report de ese bootstrap y reevaluar el gate original antes de continuar;
-- decidir si corresponde Environment Preflight, Planning Task o Execution Task;
+- decidir si existe una decisión material que justifique Planning, readiness previo que justifique Environment Preflight o si corresponde Execution Task directa;
+- declarar outcome, Protected Invariants, Adaptation Authority y Protected Boundaries;
 - declarar fuentes, artefactos y entornos autorizados;
 - revisar el Environment Readiness Report cuando exista;
 - revisar el Implementation Plan cuando exista;
 - preparar o validar una sola unidad ejecutable;
-- definir Memory Policy, triggers cuando sea condicional y regla de Operational Baseline;
+- definir Memory Policy, Memory Stewardship, triggers cuando sea condicional y regla de Operational Baseline;
+- identificar cuándo un cambio durable es estructural y, si el proyecto adopta `90 — Documentación y memoria`, derivar esa síntesis mediante Specialist Handoff;
 - decidir cuándo varios outcomes menores ameritan consolidación durable;
 - obtener la aprobación humana necesaria antes de conceder autoridad sensible;
 - revisar el Execution Report;
 - decidir, dentro de su autoridad, cierre, corrección, reversión, transferencia, escalamiento o siguiente iteración;
-- revisar que la memoria semántica y el baseline operacional se hayan actualizado según la política declarada;
+- revisar que la memoria semántica local y el baseline operacional se hayan actualizado según la política declarada;
+- cuando corresponda `90_STRUCTURAL`, verificar que el handoff estructural se haya realizado sin convertirlo en requisito para cada ejecución;
 - escalar cuando aparezca una decisión fuera de su autoridad.
 
 La Execution Task de bootstrap no finge `PASS`, no mezcla la unidad original y no la habilita automáticamente al terminar; primero debe reevaluarse su Memory Bootstrap Gate.
@@ -144,4 +147,6 @@ Un ciclo termina cuando:
 
 La memoria semántica se actualiza conforme a la Memory Policy de la Execution Task o mediante una consolidación posterior explícita. Si el outcome cambió un estado publicado, el Operational Baseline debe quedar actualizado antes del cierre completo cuando esa memoria forma parte de la frontera autorizada.
 
-El Cycle Owner conserva criterio y dirección; delegar escritura de Wiki al Coding Agent no delega roadmap ni prioridades.
+Cuando el impacto durable sea estructural y el proyecto adopte `90`, el ciclo técnico puede quedar completado con `Durable Memory Impact: ROUTE_TO_90`; la custodia documental continúa como una responsabilidad separada de memoria, no como reapertura del outcome técnico.
+
+El Cycle Owner conserva criterio y dirección; delegar escritura de Wiki al Coding Agent o custodia estructural a `90` no delega roadmap ni prioridades.

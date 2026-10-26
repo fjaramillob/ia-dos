@@ -6,15 +6,21 @@ IA-DOS debe producir avances verificables sin depender de una plataforma, provee
 
 ```text
 dirección suficiente
-→ siguiente resultado definido y cohesivo
+→ outcome definido y verificable
 → asignar Cycle Owner
-→ Memory Bootstrap Gate cuando dependa de historia conversacional
-→ Environment Preflight cuando readiness indispensable sea desconocido
-→ Planning Task cuando falta inspección o diseño
-→ Execution Task cuando la unidad está lista
-→ artefacto vuelve al Cycle Owner
-→ revisión y decisión dentro de la autoridad aplicable
-→ persona responsable interviene cuando corresponde
+→ definir Protected Invariants + Protected Boundaries
+→ Memory Bootstrap Gate sólo si falta memoria durable indispensable
+→ Planning Task sólo si existe una decisión material no resuelta
+→ Environment Preflight sólo si readiness debe conocerse antes de autorizar una frontera sensible
+→ Execution Task outcome-first
+   → Revalidate
+   → planificar internamente
+   → implementar / probar / diagnosticar / reparar / safe retry
+   → cruzar fronteras autorizadas
+→ Execution Report
+→ revisión del Cycle Owner
+→ 90 custodia memoria estructural cuando corresponda
+→ persona responsable interviene ante cambio material de frontera
 → escalar a 00 sólo ante reorientación real
 ```
 
@@ -25,16 +31,18 @@ dirección suficiente
 Evalúa en este orden:
 
 ```text
-1. ¿El resultado está suficientemente definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
-2. Si depende de historia, ¿el conocimiento necesario ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿el coding agent puede proponer una unidad segura?
+1. ¿El outcome está suficientemente definido y verificable?
+2. ¿Qué Protected Invariants deben preservarse?
+3. ¿Qué Adaptation Authority puede delegarse?
+4. ¿Dónde están las Protected Boundaries?
+5. ¿Existe una decisión material no resuelta?
+6. ¿Falta memoria durable indispensable o readiness previo a una frontera sensible?
 ```
 
-- memoria necesaria sólo en conversaciones → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección o diseño → `Planning Task`;
-- todo listo → `Execution Task`;
+- memoria estructural necesaria sólo en conversaciones → `Memory Bootstrap Gate`;
+- readiness previo a autoridad sensible → `Environment Preflight`;
+- decisión material no resuelta → `Planning Task`;
+- outcome definido → `Execution Task` aunque falten detalles de implementación;
 - decisión humana indispensable → resolver sólo esa decisión;
 - reorientación → escalar a `00`.
 
@@ -58,7 +66,7 @@ La tarea de bootstrap no finge `PASS` ni ejecuta el resultado original.
 
 ## Planning Task
 
-La Planning Task solicita al coding agent inspeccionar fuentes y estado real en solo lectura para proponer cómo implementar.
+La Planning Task es excepcional: se usa cuando el Coding Agent no debe escribir todavía porque existe una decisión material pendiente. Los detalles de implementación y debugging ordinario se resuelven mediante planificación interna dentro de Execution.
 
 ```text
 Planning Task
@@ -83,25 +91,27 @@ Antes de aprobar una Execution Task pregunta:
 que pueda completarse bajo una frontera estable de autoridad?
 ```
 
-No dividas una Task sólo por duración, archivos, comandos o por contener fases internas como implementación, tests, commit, push, deploy o smoke.
+No dividas una Task sólo por duración, archivos, comandos o por contener fases internas como implementación, tests, debugging, reparación, safe retry, commit, push, deploy o smoke.
 
 Una misma Task puede ejecutar:
 
 ```text
 Revalidate
+→ planificar internamente
 → Implement
 → Verify
+→ Diagnose / Repair / Safe Retry
 → Commit
 → Push
 → Deploy
 → Production Smoke
-→ Durable Memory / Operational Baseline, cuando corresponda
+→ Operational Baseline / memoria LOCAL, cuando corresponda
 → Final State
 ```
 
 cuando todas las fases sirven al mismo outcome y están explícitamente autorizadas.
 
-Divide o detén cuando cambie materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
+Divide o detén cuando cambie materialmente outcome, Protected Invariants, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste, entorno o Protected Boundary.
 
 ## Authority Envelope
 
@@ -130,7 +140,9 @@ Planes y reportes no vuelven automáticamente a `00`.
 
 ## Readiness del entorno
 
-Cuando una precondición indispensable no está comprobada, usa:
+Toda Execution Task revalida las precondiciones volátiles indispensables al comienzo y antes de cruzar una Protected Boundary.
+
+Usa Environment Preflight separado cuando el readiness deba conocerse antes de conceder autoridad sensible, la capacidad misma sea el resultado de la inspección o el chequeo requiera otro actor/entorno:
 
 ```text
 Environment Preflight
@@ -138,9 +150,7 @@ Environment Preflight
 → Environment Readiness Report
 ```
 
-en vez de inferir que el entorno está listo.
-
-Sólo `LISTO PARA EJECUCIÓN` permite considerar aprobación o reanudación de escritura. El readiness report no concede escritura por sí mismo.
+No lo uses como ritual previo a toda Execution ni dupliques checks estables que ya están cubiertos por fuentes vigentes.
 
 ## Transición visible
 
@@ -186,7 +196,7 @@ Una tarea larga puede materializar opcionalmente `<TASK-ID>-CHECKPOINT.md` para 
 
 El checkpoint no agrega autoridad. Un nuevo Coding Agent debe leer la Task, leer el checkpoint, verificar el estado real y continuar sólo dentro de la autoridad vigente.
 
-`Execution Resume` conserva el mismo Task ID y equivale a `Task original + delta del bloqueo resuelto` cuando objetivo, alcance, autoridad, seguridad y arquitectura no cambiaron.
+`Execution Resume` conserva el mismo Task ID y equivale a `Task original + delta del bloqueo resuelto` cuando outcome, Protected Invariants, alcance, autoridad, seguridad, arquitectura y Protected Boundaries no cambiaron. No se necesita para repair-in-place o safe retry mientras la misma Execution siga abierta.
 
 ## Memoria en la misma ejecución
 
@@ -194,6 +204,7 @@ Toda Execution Task declara, cuando el proyecto usa memoria durable:
 
 ```text
 Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
 ```
 
@@ -201,18 +212,21 @@ La memoria semántica no se actualiza por cada ejecución. `CONDITIONAL` sólo r
 
 La continuidad operacional es independiente: si el outcome cambia un baseline publicado, el mismo outcome debe actualizar el checkpoint durable autorizado con repo/branch, HEAD remoto verificado, commit/versión productiva, deployment/release, entorno y fecha según aplique.
 
-Una Task WIKI separada se usa para bootstrap, consolidación, reparación o una frontera de autoridad distinta; no como paso rutinario posterior.
+El Operational Baseline y memoria `LOCAL` pueden materializarse dentro de la misma Execution. Cuando el cambio durable es estructural y el proyecto adopta `90 — Documentación y memoria`, el executor reporta `ROUTE_TO_90` y el Cycle Owner transfiere la síntesis mediante Specialist Handoff.
 
-El Coding Agent materializa memoria, pero no decide roadmap, prioridad o dirección por cuenta propia.
+Una Task WIKI separada se usa para bootstrap, consolidación, reparación, custodia estructural o una frontera de autoridad distinta; no como paso rutinario posterior.
+
+El Coding Agent materializa memoria autorizada, pero no decide roadmap, prioridad o dirección por cuenta propia.
 
 ## Guardrails
 
 - no enviar una intención vaga al coding agent;
 - no ejecutar antes de resolver decisiones indispensables;
 - no omitir Memory Bootstrap Gate cuando existe dependencia chat-only;
-- no omitir Environment Preflight cuando readiness indispensable es desconocido;
+- no usar Environment Preflight separado cuando basta Revalidate dentro de una Task ya autorizada;
+- no usar Planning para debugging o elección entre mecanismos equivalentes;
 - no usar Planning para autorizar escritura implícita;
-- no dividir por ceremonia una Task que conserva outcome y frontera estables;
+- no dividir por ceremonia una Task que conserva outcome, invariantes y frontera estables;
 - no abrir una conversación por cada tarea cuando existe una Execution Cell válida;
 - no regresar a `00` por rutina;
 - no asumir acceso, permisos o herramientas;
@@ -225,9 +239,11 @@ El Coding Agent materializa memoria, pero no decide roadmap, prioridad o direcci
 Conversar sólo lo indispensable.
 Persistir memoria semántica sólo cuando haga falta.
 Mantener siempre continuidad del baseline publicado cuando exista Wiki.
-Comprobar readiness antes de escribir.
-Planificar cuando reduzca incertidumbre real.
+Revalidar readiness volátil antes de escribir o cruzar una frontera protegida.
+Planificar separadamente sólo cuando exista una decisión material pendiente.
+Delegar el cómo al Coding Agent dentro de Protected Invariants y Adaptation Authority.
 Ejecutar el mayor outcome seguro y verificable que conserve una frontera estable de autoridad.
+Derivar a 90 sólo memoria durable estructural cuando el proyecto adopte ese custodio.
 Devolver evidencia al responsable declarado.
 Escalar únicamente para reorientar o resolver un cambio material de frontera.
 ```

@@ -1,6 +1,6 @@
 # Planning Task
 
-Usa esta plantilla cuando el coding agent deba inspeccionar y proponer cómo implementar antes de autorizar escritura sobre el proyecto.
+Usa esta plantilla cuando exista una **decisión material todavía no resuelta** y el coding agent deba inspeccionar en solo lectura antes de autorizar escritura. No la uses para debugging ordinario, elegir entre mecanismos equivalentes o detallar cómo ejecutar un outcome ya autorizado.
 
 ## Identificación
 
@@ -33,7 +33,7 @@ Conversation Space prepara
 
 Un identificador `PLAN — ...` puede ayudar a organizar una herramienta, pero no obliga a abrir una conversación de planificación nueva por cada tarea.
 
-La futura ejecución requiere una autorización separada. Esa separación de autoridad **no exige** una sesión de ejecución nueva: si existe una Execution Cell adecuada, la Execution Task puede reutilizar su conversación activa sin heredar permisos.
+La futura ejecución requiere una autorización separada. El hecho de que una Execution Task necesite planificación interna durante su ejecución no justifica por sí mismo crear esta Planning Task. Esa separación de autoridad **no exige** una sesión de ejecución nueva: si existe una Execution Cell adecuada, la Execution Task puede reutilizar su conversación activa sin heredar permisos.
 
 ## Objetivo del plan
 
