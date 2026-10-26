@@ -110,7 +110,7 @@ Expected Output: Implementation Plan
 Forbidden Output: cambios del proyecto | ejecución
 ```
 
-El plan propone y no se autoaprueba. El Cycle Owner puede adoptarlo dentro de autoridad delegada; la persona responsable interviene cuando cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
+El plan propone y no se autoaprueba. Planning separado se usa cuando existe una decisión material pendiente; debugging ordinario, repair-in-place y elección entre mecanismos técnicamente equivalentes pertenecen a Execution cuando la Adaptation Authority lo permite. El Cycle Owner puede adoptar el plan dentro de autoridad delegada; la persona responsable interviene cuando cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 ## Environment Preflight
 
@@ -134,7 +134,9 @@ Forbidden Output: ampliar outcome o frontera | aprobar el propio resultado | ini
 
 Debe perseguir un outcome definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad.
 
-Puede incluir fases internas de implementación, pruebas, Git, delivery o smoke sin crear Tasks separadas cuando todas sirven al mismo outcome.
+Puede incluir fases internas de planificación interna, implementación, pruebas, debugging, reparación, safe retry, Git, delivery o smoke sin crear Tasks separadas cuando todas sirven al mismo outcome.
+
+Declara `Protected Invariants`, `Adaptation Authority: NONE | BOUNDED` y `Protected Boundaries` cuando corresponda. Con `BOUNDED`, cambiar el mecanismo técnico sin cambiar esas fronteras no exige una nueva Task.
 
 ### Authority Envelope
 
@@ -183,10 +185,10 @@ Forbidden Output: replantear arquitectura | ampliar outcome | ampliar permisos
 Semántica:
 
 ```text
-Execution Resume = Task original + delta del bloqueo resuelto
+Execution Resume = Task original + delta del bloqueo externo o interrupción real resuelta
 ```
 
-Conserva Task ID y sólo aplica si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios.
+Conserva Task ID y sólo aplica si outcome, Protected Invariants, alcance, autoridad, seguridad, arquitectura y Protected Boundaries siguen sin cambios. No es obligatorio para repair-in-place dentro de una ejecución todavía abierta.
 
 ## Execution Report
 
