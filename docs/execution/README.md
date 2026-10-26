@@ -7,11 +7,13 @@ Esta sección explica cómo IA-DOS transforma resultados confirmados en inspecci
 Antes de escribir:
 
 ```text
-resultado verificable
-→ Memory Bootstrap Gate cuando depende de historia chat-only
-→ Environment Preflight cuando readiness indispensable es desconocido
-→ Planning Task cuando falta inspección/diseño
-→ Execution Task cuando la unidad está lista
+outcome verificable
+→ Memory Bootstrap Gate sólo si falta memoria durable indispensable
+→ definir Protected Invariants + Adaptation Authority + Protected Boundaries
+→ Planning Task sólo si existe decisión material no resuelta
+→ Environment Preflight sólo si readiness debe conocerse antes de autoridad sensible
+→ Execution Task outcome-first + Revalidate
+→ planificar internamente / implementar / diagnosticar / reparar / safe retry dentro de autoridad
 → Execution Cell o entorno autorizado
 → Execution Report
 → revisión del Cycle Owner
@@ -88,9 +90,11 @@ El esquema temporal no es una obligación universal para IDs de Planning.
 
 ## Memoria durable Markdown
 
-La memoria semántica se gobierna con `Memory Policy: NONE | CONDITIONAL | REQUIRED`. Si el mismo outcome ya autoriza Wiki/Git, puede materializarse dentro de esa Execution Task.
+La memoria semántica se gobierna con `Memory Policy: NONE | CONDITIONAL | REQUIRED` y `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA`.
 
-Una Task WIKI separada se reserva para bootstrap, consolidación, reparación o una frontera documental distinta.
+La memoria `LOCAL` y el Operational Baseline pueden materializarse dentro de la misma Execution Task. Cuando el impacto durable es estructural y el proyecto adopta `90 — Documentación y memoria`, el executor reporta `ROUTE_TO_90` y el Cycle Owner deriva la síntesis mediante Specialist Handoff.
+
+Una Task WIKI separada se reserva para bootstrap, consolidación, custodia estructural, reparación/migración o una frontera documental distinta.
 
 Cuando cambia un baseline publicado en un proyecto con LLM Wiki, el mismo outcome debe mantener continuidad operacional durable aunque la memoria semántica sea `NONE`.
 
