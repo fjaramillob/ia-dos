@@ -1,6 +1,8 @@
 # Environment Preflight
 
-Usa este artefacto cuando una futura Execution Task dependa de una precondición indispensable del entorno que todavía no está comprobada.
+Usa este artefacto sólo cuando una futura Execution Task dependa de una precondición indispensable cuyo readiness deba conocerse **antes de conceder autoridad sensible**, cuando la capacidad misma sea el objeto de evaluación o cuando el chequeo requiera un actor/entorno distinto.
+
+Si la Execution Task ya está autorizada y sólo necesita revalidar estado volátil, usa `Revalidate` dentro de la propia ejecución en vez de crear un Preflight separado.
 
 ```text
 Artifact Type: Environment Preflight
@@ -72,4 +74,4 @@ Si falla la materialización, el canal no produce un archivo completo o falta cu
 
 Un identificador de sesión de preflight es opcional y no impone una política universal de conversaciones de Planning.
 
-Sólo `LISTO PARA EJECUCIÓN` permite aprobar o reanudar escritura.
+Sólo `LISTO PARA EJECUCIÓN` permite conceder o reanudar la autoridad que dependía específicamente de este Preflight. No dupliques luego todas sus comprobaciones; durante Execution revalida sólo las condiciones volátiles necesarias.
