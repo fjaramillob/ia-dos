@@ -1,6 +1,8 @@
 # Planning Task compacta
 
-Usa este bloque como salida operativa para el coding agent. La plantilla completa permanece como referencia de diseño y validación.
+Usa este bloque únicamente cuando exista una decisión material todavía no resuelta antes de escribir. Debugging ordinario, repair-in-place y elección entre mecanismos técnicamente equivalentes pertenecen a Execution cuando la Adaptation Authority lo permite.
+
+La plantilla completa permanece como referencia de diseño y validación.
 
 Cuando la tarea se materializa en Exchange, puede ser consumida mediante `Manual Artifact Launcher` en vez de pegar todo su contenido nuevamente en conversación.
 
