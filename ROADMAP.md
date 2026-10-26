@@ -89,7 +89,7 @@ Exchange             = pasarela pasiva de archivos
 
 ## `v0.1.0-alpha.3` — Real-project adoption
 
-**Estado: SIGUIENTE**
+**Estado: COMPLETADO**
 
 Objetivo: dejar que el método siga evolucionando a partir de uso real, no de arquitectura anticipada.
 
@@ -125,7 +125,32 @@ Criterio de avance: estas mejoras deben surgir de necesidades observadas en proy
 
 ---
 
-## `v0.1.0-alpha.4` — Portability and adoption quality
+## `v0.1.0-alpha.4` — Adaptive execution and structural memory
+
+**Estado: ACTUAL**
+
+Objetivo: elevar IA-DOS desde ejecución guiada por pasos hacia gobierno por outcomes, invariantes y fronteras, manteniendo dirección humana y memoria portable.
+
+Consolidado mediante adopción real:
+
+- `Execution Task` outcome-first con `Protected Invariants`, `Adaptation Authority` y `Protected Boundaries`;
+- `Adaptation Authority: BOUNDED` para debugging, repair-in-place, pruebas equivalentes y safe retry sin side effects materiales;
+- Planning separado sólo ante una decisión material todavía no resuelta;
+- Environment Preflight separado sólo cuando readiness debe conocerse antes de conceder autoridad sensible, cuando la capacidad misma es objeto de evaluación o cuando requiere otro actor/entorno;
+- Execution Resume reservado para interrupciones reales, acciones externas o blockers fuera de autoridad;
+- `Memory Policy` selectiva y `Operational Baseline` durable;
+- `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA`;
+- `90 — Documentación y memoria` como custodio de memoria estructural, no dispatcher;
+- `Durable Memory Impact: ROUTE_TO_90` para impacto estructural pendiente de custodia;
+- `current-state` como snapshot/índice operativo compacto;
+- Exchange activo y escaso, sin convertirse en workflow ni fuente de estado;
+- consistencia transversal entre contratos, onboarding, prompts, templates, validación y Current Offline Pack.
+
+Criterio de estabilidad: un agente nuevo debe poder aplicar el mismo contrato vigente independientemente de si entra por `AGENTS.md`, Orchestrator, onboarding, template, prompt o Offline Pack.
+
+---
+
+## `v0.1.0-alpha.5` — Portability and adoption quality
 
 **Estado: PLANIFICADO**
 
@@ -136,8 +161,8 @@ Objetivo: hacer que IA-DOS sea fácil de adoptar, transportar y mantener sin per
 - mantener sincronizado el Current Offline Pack;
 - crear ejemplos sintéticos completos de adopción;
 - documentar actualización de una versión de IA-DOS a otra;
-- mejorar detección de documentación histórica o contradictoria;
-- definir checks livianos de coherencia entre Orchestrator, templates, onboarding y offline pack;
+- mejorar detección automática o asistida de documentación histórica/contradictoria;
+- definir checks livianos y reproducibles de coherencia entre Orchestrator, templates, onboarding y offline pack;
 - mejorar instrucciones para proyectos que ya poseen documentación propia y no quieren reorganizarla.
 
 No se introducirán herramientas obligatorias sólo para automatizar validaciones que todavía pueden resolverse claramente mediante contratos y revisión.
