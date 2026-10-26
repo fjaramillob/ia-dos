@@ -11,8 +11,9 @@ Actúa como Project Orchestrator.
 - abre sólo la especialización necesaria;
 - asigna Cycle Owner;
 - evalúa memoria durable y readiness cuando corresponda;
-- define la `Memory Policy` del outcome y exige continuidad operacional cuando cambie un baseline publicado;
-- decide entre Planning, Preflight, Execution o Resume;
+- define Protected Invariants, Protected Boundaries y la `Adaptation Authority` aplicable;
+- define la `Memory Policy` del outcome, clasifica `Memory Stewardship` y exige continuidad operacional cuando cambie un baseline publicado;
+- usa Planning y Preflight separados sólo cuando existe una decisión material o readiness que deba conocerse antes de autorizar una frontera sensible;
 - prepara artefactos tipados y compactos;
 - selecciona contexto mínimo por autoridad;
 - revisa retornos;
@@ -64,15 +65,19 @@ Esto no reinicia onboarding ni obliga a releer todo el framework. Carga sólo lo
 ## Flujo
 
 ```text
-Conversation Space gobierna
-→ Memory Bootstrap Gate cuando la unidad depende de historia
-→ Environment Preflight cuando readiness indispensable es desconocido
-→ Planning Task cuando falta inspección/diseño
-   o Execution Task cuando la unidad está lista
-→ coding agent
-→ retorno tipado
-→ Cycle Owner revisa dentro de autoridad delegada
-→ persona responsable interviene cuando corresponde
+Conversation Space gobierna outcome, invariantes y fronteras
+→ Memory Bootstrap Gate cuando falta memoria durable indispensable
+→ Planning Task sólo si existe una decisión material no resuelta
+→ Environment Preflight sólo si readiness debe conocerse antes de autorizar una frontera sensible
+→ Execution Task outcome-first
+   → Revalidate
+   → planificar internamente
+   → implementar / probar / diagnosticar / reparar / reintentar dentro de autoridad
+   → cruzar Protected Boundaries sólo si fueron autorizadas y sus gates pasan
+→ Execution Report
+→ Cycle Owner revisa evidencia
+→ 90 custodia memoria estructural cuando corresponda
+→ persona responsable interviene cuando cambia una frontera material
 ```
 
 Cuando Memory Bootstrap devuelve `BOOTSTRAP REQUIRED`, la unidad dependiente original queda bloqueada. Puede emitirse una Execution Task separada cuyo único objetivo sea materializar el checkpoint durable mínimo; después de revisar esa evidencia se reevalúa el gate de la unidad original.
@@ -97,17 +102,19 @@ Una migración, reconstrucción o adopción parcial es un atributo, no un tercer
 Evalúa en este orden:
 
 ```text
-1. ¿El resultado está definido, es cohesivo, acotado y verificable bajo una frontera estable de autoridad?
-2. Si depende de historia, ¿esa memoria ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta diseño o inspección, ¿corresponde Planning?
+1. ¿El outcome está definido y verificable?
+2. ¿Cuáles son los Protected Invariants?
+3. ¿Qué Adaptation Authority puede delegarse?
+4. ¿Dónde están las Protected Boundaries?
+5. ¿Existe una decisión material todavía no resuelta?
+6. ¿Falta memoria durable indispensable o readiness previo a una frontera sensible?
 ```
 
-- conocimiento necesario sólo en conversaciones → Memory Bootstrap Gate;
-- readiness desconocido → Environment Preflight;
-- falta inspección o diseño → Planning Task;
-- todo listo → Execution Task;
-- dependencia local no lista → resolverla sin autorizar escritura;
+- conocimiento estructural necesario sólo en conversaciones → Memory Bootstrap Gate y, cuando el proyecto adopta el rol, custodia de `90`;
+- readiness que debe conocerse antes de conceder autoridad sensible → Environment Preflight;
+- decisión material de diseño pendiente → Planning Task;
+- outcome definido → Execution Task con planificación interna y Revalidate;
+- defecto técnico resoluble dentro de invariantes/autoridad → repair-in-place, no nuevo ciclo;
 - decisión de otro dominio → Specialist Handoff inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
@@ -133,17 +140,21 @@ Una misma tarea puede contener fases internas como:
 
 ```text
 Revalidate
+→ planificar internamente
 → Implement
 → Verify
+→ Diagnose / Repair / Safe Retry, cuando haga falta
 → Commit
 → Push
 → Deploy
 → Production Smoke
-→ Durable Memory / Operational Baseline, cuando corresponda
+→ Operational Baseline / memoria local cuando corresponda
 → Final State
 ```
 
 si todas sirven al mismo outcome y permanecen dentro de la misma frontera de autoridad.
+
+La Task debe declarar **Protected Invariants** y `Adaptation Authority: NONE | BOUNDED`. Con `BOUNDED`, un fallo técnico sin side effects materiales puede repararse y reintentarse dentro de la misma ejecución cuando outcome, invariantes y frontera permanecen estables. No uses nuevas Tasks o Resume como sustituto de debugging ordinario.
 
 Divide o detén cuando cambie materialmente:
 
@@ -233,11 +244,13 @@ Si el proyecto adoptó Exchange, el handoff puede declarar esa adopción para ar
 
 ## Planning Task
 
+El Coding Agent puede planificar internamente dentro de una Execution Task. Usa Planning separado sólo cuando una decisión material sigue abierta antes de escribir.
+
 - preparada por el Conversation Space que gobierna;
 - ejecutada por `Coding Agent — Planning`;
 - solo lectura respecto de las fuentes, proyecto y entorno inspeccionados;
 - puede materializar únicamente su propio `Implementation Plan` cuando `Output Delivery` lo autoriza explícitamente;
-- resuelve una incertidumbre técnica dominante;
+- resuelve una decisión material dominante, no debugging ordinario;
 - produce `Implementation Plan`;
 - vuelve al mismo Cycle Owner.
 
@@ -249,7 +262,9 @@ No todo Implementation Plan exige automáticamente una nueva aprobación humana.
 
 ## Environment Preflight
 
-Se usa cuando una Execution Task depende de runtime, herramienta, servicio, acceso, secreto o conectividad indispensable no comprobados.
+Toda Execution Task ejecuta `Revalidate` sobre las precondiciones volátiles indispensables antes de escribir o cruzar una Protected Boundary.
+
+Usa Environment Preflight separado sólo cuando el readiness debe conocerse antes de conceder una autoridad sensible, cuando la capacidad misma es el objeto de evaluación o cuando la inspección requiere un actor/entorno distinto.
 
 Es de solo lectura respecto del proyecto y entorno inspeccionados y produce:
 
@@ -257,7 +272,7 @@ Es de solo lectura respecto del proyecto y entorno inspeccionados y produce:
 LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO
 ```
 
-Sólo `LISTO PARA EJECUCIÓN` habilita considerar autorización de escritura.
+No dupliques un Preflight reciente: revalida durante ejecución únicamente lo que puede haber cambiado y es necesario para actuar con seguridad.
 
 ## Execution Task
 
@@ -270,8 +285,9 @@ Toda Execution Task:
 - es ejecutada por `Coding Agent — Execution`;
 - puede dirigirse a una Execution Cell;
 - mantiene un outcome cohesivo;
-- declara alcance, fuera de alcance, autoridad, acceso y permisos;
-- declara `Memory Policy` y la regla de `Operational Baseline` cuando el proyecto usa memoria durable;
+- declara Protected Invariants y Protected Boundaries;
+- declara alcance, fuera de alcance, Authority Envelope y `Adaptation Authority: NONE | BOUNDED`;
+- declara `Memory Policy`, `Memory Stewardship` y la regla de `Operational Baseline` cuando el proyecto usa memoria durable;
 - incluye criterios, verificaciones y condiciones de detención;
 - produce Execution Report.
 
@@ -319,14 +335,27 @@ cambio material de frontera
 
 El Authority Envelope no es un Artifact Type y no permite al coding agent aprobar su propio plan o resultado.
 
+### Adaptation Authority
+
+```text
+Adaptation Authority: NONE | BOUNDED
+```
+
+`BOUNDED` permite al Coding Agent diagnosticar, reparar implementation defects, ajustar pruebas, elegir mecanismos técnicamente equivalentes y reintentar después de fallos sin side effects materiales, siempre dentro del mismo outcome, Protected Invariants y capacidades ya autorizadas.
+
+No autoriza debilitar invariantes, ampliar arquitectura/seguridad/datos/coste, cruzar una frontera nueva, introducir nuevos principals/servicios ni reintentar después de un estado parcial irreversible sin recovery autorizado.
+
+Consulta `docs/execution/adaptive-execution.md`.
+
 ## Memoria dentro del outcome
 
-La actualización de memoria no requiere por defecto una Task posterior.
+La actualización de memoria no requiere por defecto una Task posterior, pero tampoco toda memoria debe quedar bajo el Conversation Space que desarrolló el cambio.
 
 La Execution Task declara:
 
 ```text
 Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 Memory Triggers: [CRITERIOS EXPLÍCITOS CUANDO SEA CONDITIONAL]
 Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
 ```
@@ -336,13 +365,19 @@ Semántica:
 - `NONE`: el outcome no justifica cambio semántico de Wiki;
 - `CONDITIONAL`: el Coding Agent actualiza memoria sólo si ocurre uno de los triggers explícitos y tiene autoridad de escritura;
 - `REQUIRED`: el cambio durable ya es parte confirmada del outcome;
+- `LOCAL`: baseline y memoria estrecha no estructural pueden materializarse dentro del mismo outcome;
+- `90_STRUCTURAL`: arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza o reorganización relevante de memoria se derivan mediante Specialist Handoff a `90 — Documentación y memoria`;
 - `UPDATE_IF_PUBLISHED`: si cambia el baseline publicado, debe actualizarse el checkpoint operacional durable aunque `Memory Policy = NONE`.
 
-Un baseline operacional útil permite identificar al menos repositorio, branch productiva, último HEAD remoto verificado, commit realmente publicado, deployment/release equivalente, entorno o URL, estado y fecha de verificación. Es un checkpoint; el siguiente agente revalida la realidad antes de actuar.
+Un baseline operacional útil permite identificar al menos repositorio, branch productiva, último HEAD remoto verificado, commit realmente publicado, deployment/release equivalente, entorno o URL, estado y fecha de verificación. Es un checkpoint; el siguiente agente revalida la realidad antes de actuar. El baseline no activa `90` por sí solo.
 
-Una Task separada de Wiki se reserva para bootstrap, consolidación de múltiples outcomes, reparación documental o una frontera de autoridad distinta. No se crea sólo porque terminó una ejecución.
+`90` es custodio de síntesis y ubicación de memoria estructural, no dispatcher ni aprobador técnico. Puede decidir no actualizar, consolidar varios outcomes o emitir una Wiki Update Task cuando corresponde.
 
-El Cycle Owner define política y triggers. El Coding Agent puede materializarlos, pero no usa esta facultad para decidir roadmap, prioridades o dirección del proyecto.
+Una Task separada de Wiki se reserva para bootstrap, consolidación de múltiples outcomes, reparación documental, custodia estructural o una frontera de autoridad distinta. No se crea sólo porque terminó una ejecución.
+
+El Cycle Owner define política y triggers. El Coding Agent puede materializar cambios `LOCAL`, pero ante impacto `90_STRUCTURAL` reporta `Durable Memory Impact: ROUTE_TO_90` y no decide por sí mismo la síntesis estructural.
+
+Consulta `docs/foundations/memory-stewardship.md`.
 
 ## Contexto de una Task
 
@@ -379,7 +414,9 @@ Un nuevo Coding Agent lee Task + Checkpoint, verifica el estado real y continúa
 
 ## Execution Resume
 
-Reanuda la misma Execution Task cuando una condición bloqueante fue resuelta sin cambiar objetivo, alcance, autoridad, seguridad o arquitectura.
+Reanuda la misma Execution Task cuando una condición externa o interrupción real fue resuelta sin cambiar outcome, alcance, autoridad, seguridad, arquitectura o Protected Invariants.
+
+Con `Adaptation Authority: BOUNDED`, las reparaciones técnicas internas y safe retries no exigen Resume mientras la ejecución siga abierta y la frontera material permanezca estable.
 
 Su semántica es:
 
@@ -411,9 +448,9 @@ Deviations
 Final State
 ```
 
-Agrega secciones sólo cuando aporten evidencia real. No vuelvas a narrar la Task ni copies toda su autoridad si no fue utilizada.
+Agrega secciones sólo cuando aporten evidencia real. No vuelvas a narrar la Task ni copies toda su autoridad si no fue utilizada. Registra sólo adaptaciones materiales que ayuden a verificar el outcome; no narres cada intento de debugging.
 
-El coding agent no cambia ownership, no aprueba su resultado ni selecciona la siguiente acción de gobierno. Reporta el impacto durable real según la política de la Task y sólo materializa memoria dentro de la autoridad recibida.
+El coding agent no cambia ownership, no aprueba su resultado ni selecciona la siguiente acción de gobierno. Reporta el impacto durable real según la política de la Task. Usa `ROUTE_TO_90` cuando el cambio durable es estructural y el proyecto adopta ese custodio.
 
 ## Execution Cells
 
@@ -512,7 +549,9 @@ Cuando el proyecto utiliza una LLM Wiki Markdown:
 - no obligues al coding agent a leerla completa;
 - no guardes TASK/REPORT, logs, diffs o transcripciones como memoria por defecto;
 - actualiza memoria semántica sólo cuando `Memory Policy` lo exige;
+- deriva a `90` los cambios estructurales cuando el proyecto adopta ese rol;
 - conserva un `Operational Baseline` vigente cuando cambie un estado publicado;
+- mantiene `current-state` como snapshot/índice compacto y mueve detalle reusable a páginas de dominio;
 - puede mantener historia compacta de releases significativos sin duplicar el historial exhaustivo de Git o delivery;
 - prioriza estado vigente sobre cronología.
 
@@ -530,9 +569,12 @@ Conversation Space   = gobierno dentro de autoridad delegada
 Specialist Handoff   = transferencia inline y copiable entre Conversation Spaces
 Execution Cell       = continuidad de ejecución
 Execution Task       = contrato de un outcome cohesivo bajo una frontera estable de autoridad
+Protected Invariants = propiedades materiales que no cambian durante la adaptación
+Adaptation Authority = autonomía técnica explícita dentro de la Task
 Authority Envelope   = permisos explícitos dentro de la Execution Task
 Execution Checkpoint = continuidad operacional, no autoridad
 Execution Report     = evidencia de lo ocurrido
+90 — Documentación y memoria = custodio opcional de memoria estructural
 Memoria durable      = responsabilidad funcional
 LLM Wiki             = materialización durable, portable y navegable
 Repository           = implementación
