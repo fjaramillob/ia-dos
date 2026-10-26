@@ -26,8 +26,9 @@ Esta capa debe:
 - identificar prioridades, decisiones e hipótesis;
 - seleccionar fuentes y contexto necesarios;
 - aplicar Memory Bootstrap Gate antes de depender de historia conversacional;
-- identificar readiness indispensable antes de autorizar escritura;
-- transformar necesidades en unidades de trabajo acotadas;
+- definir Protected Invariants, Adaptation Authority y Protected Boundaries;
+- identificar readiness que deba conocerse antes de autorizar una frontera sensible;
+- transformar necesidades en outcomes acotados y verificables;
 - revisar resultados y evaluar después qué conocimiento merece persistirse.
 
 Dirigir no significa ejecutar cada modificación.
@@ -77,13 +78,16 @@ Antes de solicitar planificación o modificación física se define una unidad a
 
 Si depende de conocimiento relevante que sólo vive en conversaciones, aplica primero [Memory Bootstrap Gate](memory-bootstrap-gate.md).
 
-Si una futura Execution Task depende de una precondición indispensable del entorno no comprobada, usa `Environment Preflight` antes de autorizar escritura.
+Si el readiness de una precondición debe conocerse antes de conceder autoridad sensible, usa `Environment Preflight`. De otro modo, la Execution Task revalida internamente las condiciones volátiles.
 
-Cuando falta inspección o diseño, usa `Planning Task` en solo lectura.
+Cuando existe una decisión material de diseño todavía no resuelta, usa `Planning Task` en solo lectura. El detalle de implementación se planifica internamente durante Execution.
 
 Una `Execution Task` debe indicar proporcionalmente:
 
-- objetivo;
+- outcome;
+- Protected Invariants;
+- Adaptation Authority;
+- Protected Boundaries;
 - contexto durable estrictamente necesario;
 - referencias y lectura requerida cuando corresponda;
 - alcance y fuera de alcance;
@@ -106,12 +110,13 @@ Puede trabajar sobre implementación, documentación, configuración, pruebas o 
 
 Durante esta etapa debe:
 
-- inspeccionar antes de modificar;
-- confirmar recurso y branch o modo de trabajo;
+- inspeccionar y revalidar antes de modificar;
+- confirmar outcome, Protected Invariants, Protected Boundaries y Adaptation Authority;
+- planificar internamente el cómo;
 - leer sólo el contexto requerido;
-- evitar cambios no solicitados;
-- no introducir dependencias o refactors fuera de alcance;
-- detenerse si falta una decisión importante;
+- preservar fuera de alcance;
+- ante un fallo reversible dentro de `BOUNDED`, diagnosticar, reparar y safe-retry dentro de la misma Task;
+- detenerse si cambiar el método exige alterar un invariante o cruzar una frontera nueva;
 - ejecutar verificaciones aplicables;
 - revisar el diff;
 - devolver un `Execution Report` con evidencia.
@@ -131,7 +136,7 @@ Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
 Atención requerida: [DESCRIPCIÓN CONCRETA O NINGUNA]
 ```
 
-El reporte es evidencia. No aprueba el cambio, no elige la siguiente acción de gobierno y no consolida memoria durable.
+El reporte es evidencia. No aprueba el cambio ni elige la siguiente acción de gobierno. Puede actualizar memoria `LOCAL` autorizada; cuando el impacto es estructural y el proyecto adopta `90`, reporta `ROUTE_TO_90` para custodia separada.
 
 Después de revisar la evidencia:
 
@@ -155,11 +160,11 @@ resultado claro
         ↓
 Memory Bootstrap Gate, cuando aplica
         ↓
-Environment Preflight, cuando readiness es desconocido
+Planning Task, sólo si existe decisión material no resuelta
         ↓
-Planning Task, cuando falta inspección/diseño
+Environment Preflight, sólo si readiness debe conocerse antes de una frontera sensible
         ↓
-Execution Task, cuando la unidad está lista
+Execution Task outcome-first + Revalidate
         ↓
 Execution Cell o entorno autorizado
         ↓
@@ -187,6 +192,7 @@ Coding Agent — Planning
     inspecciona y propone
 
 Coding Agent — Execution
+    decide el cómo dentro de Protected Invariants/Adaptation Authority
     realiza el cambio autorizado y entrega evidencia
 ```
 
