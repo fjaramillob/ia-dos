@@ -53,10 +53,12 @@ Expresiones como `avancemos`, `sigamos`, `construyamos esto` o equivalentes no a
 El `Project Orchestrator` debe traducir esa intención en el siguiente resultado verificable y evaluar:
 
 ```text
-1. ¿El resultado está suficientemente definido y acotado?
-2. Si depende de historia previa, ¿el conocimiento necesario ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿hace falta Planning antes de ejecutar?
+1. ¿El outcome está definido y verificable?
+2. ¿Cuáles son los Protected Invariants?
+3. ¿Qué Adaptation Authority puede delegarse?
+4. ¿Dónde están las Protected Boundaries?
+5. ¿Existe una decisión material todavía no resuelta?
+6. ¿Falta memoria durable indispensable o readiness que deba conocerse antes de autoridad sensible?
 ```
 
 Según el resultado:
@@ -73,9 +75,6 @@ readiness que debe conocerse antes de autoridad sensible
 
 outcome definido
 → Execution Task + Revalidate + planificación interna
-
-resultado acotado + memoria suficiente + entorno listo
-→ Execution Task
 ```
 
 Cuando `Memory Bootstrap Gate` devuelve `BOOTSTRAP REQUIRED`, la unidad dependiente original queda bloqueada. Puede emitirse una `Execution Task` separada cuyo único objetivo sea persistir el checkpoint durable mínimo; esa tarea mantiene la unidad original fuera de alcance. Después de revisar su `Execution Report`, reevalúa el gate de la unidad original antes de continuar.
