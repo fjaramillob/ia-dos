@@ -120,13 +120,15 @@ Todo handoff debe declarar, según corresponda:
 
 **No usar como:** dispatcher obligatorio de toda Execution Task.
 
-### `90 — Wiki y memoria`
+### `90 — Documentación y memoria`
 
-**Propósito:** sintetizar conocimiento durable, resolver contradicciones y gobernar memoria cuando ese trabajo merece contexto propio.
+**Propósito:** custodiar memoria durable estructural con una perspectiva agnóstica del espacio que produjo el cambio; sintetizar conocimiento, resolver contradicciones y gobernar organización/navegabilidad de la Wiki.
 
-**Abrir cuando:** existen múltiples fuentes, contradicciones, reorganización importante o una síntesis durable que se beneficia de continuidad especializada.
+**Abrir cuando:** el outcome cambia arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza, reorientación durable o cuando la memoria necesita consolidación/reorganización estructural.
 
-**No abrir por rutina:** un Memory Bootstrap mínimo o una actualización documental concreta ya confirmada pueden ser gobernados por el Conversation Space actual.
+**No abrir por rutina:** Operational Baseline, bugfixes, microcopy, refactors internos, tests o memoria semántica estrecha pueden permanecer bajo el Cycle Owner con `Memory Stewardship: LOCAL`.
+
+Cuando un Execution Report declara `Durable Memory Impact: ROUTE_TO_90`, el Cycle Owner entrega un Specialist Handoff inline. `90` puede decidir `NO UPDATE`, consolidar varios outcomes o gobernar una Wiki Update Task.
 
 La modificación física de una LLM Wiki sigue requiriendo una Execution Task documental autorizada cuando la herramienta conversacional no es el recurso escritor.
 
@@ -140,29 +142,29 @@ La modificación física de una LLM Wiki sigue requiriendo una Execution Task do
 | ¿Cómo gobernamos varias unidades de ejecución? | `30` |
 | ¿Cómo comprobamos o reducimos el riesgo? | `40` |
 | ¿Cómo entregamos y operamos? | `50` |
-| ¿Qué conocimiento debe consolidarse? | `90` |
+| ¿Qué conocimiento estructural debe consolidarse o reorganizarse? | `90` |
 
 ## Gate de salida
 
 Cada espacio evalúa en este orden:
 
 ```text
-1. ¿El siguiente resultado está definido, es pequeño y verificable?
-2. Si depende de historia, ¿la memoria necesaria ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿corresponde Planning?
+1. ¿El outcome está definido y verificable?
+2. ¿Cuáles son los Protected Invariants y Protected Boundaries?
+3. ¿Existe una decisión material no resuelta?
+4. ¿Falta memoria durable indispensable o readiness previo a una frontera sensible?
 ```
 
-- memoria necesaria sólo en chats → `Memory Bootstrap Gate`;
-- readiness indispensable desconocido → `Environment Preflight`;
-- falta inspección/diseño → `Planning Task`;
-- unidad lista → `Execution Task`;
+- memoria estructural necesaria sólo en chats → `Memory Bootstrap Gate` y, cuando el proyecto adopta el rol, `90`;
+- readiness que debe conocerse antes de conceder autoridad sensible → `Environment Preflight`;
+- decisión material pendiente → `Planning Task`;
+- outcome definido → `Execution Task` con planificación interna;
 - falta decisión del mismo dominio → continúa sólo hasta resolverla;
 - falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
 
-Cuando `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, la unidad evaluada queda bloqueada. El mismo Cycle Owner puede emitir una `Execution Task` separada cuyo único resultado sea persistir el checkpoint durable mínimo; esa tarea deja la unidad original fuera de alcance, devuelve su `Execution Report` y sólo después se reevalúa el gate original. No presentes la tarea de bootstrap como `PASS`.
+Cuando `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, la unidad evaluada queda bloqueada. Si el conocimiento es estructural y el proyecto adopta `90`, el Cycle Owner deriva el bootstrap a ese custodio; si es local, puede gobernarlo directamente. La Execution Task de bootstrap deja la unidad original fuera de alcance, devuelve su Execution Report y sólo después se reevalúa el gate original. No presentes la tarea de bootstrap como `PASS`.
 
 ## Contrato del Conversation Space
 
