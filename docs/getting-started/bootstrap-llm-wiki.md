@@ -73,21 +73,23 @@ También suele aportar cuando:
 
 No uses cantidad de tareas, número de mensajes o antigüedad del proyecto como gatillos automáticos.
 
-## `90 — Wiki y memoria` es opcional
+## `90 — Documentación y memoria` como custodio estructural
 
-No es obligatorio abrir `90 — Wiki y memoria` para crear el checkpoint inicial.
+`90` no es obligatorio para cada checkpoint ni para cada deploy. Cuando el proyecto adopta ese Conversation Space, actúa como custodio de **memoria durable estructural**, no como dispatcher ni aprobador técnico.
 
-Cuando el conocimiento ya está confirmado, `00` u otro Conversation Space autorizado puede preparar directamente una actualización documental acotada.
+Un checkpoint estrecho, Operational Baseline o memoria semántica local puede seguir bajo el Cycle Owner del dominio.
 
-Abre `90` cuando exista trabajo real de:
+Deriva a `90` mediante Specialist Handoff cuando el conocimiento durable afecta, por ejemplo:
 
-- síntesis;
-- contradicciones;
-- consolidación de decisiones durables;
-- recuperación de memoria desordenada;
-- diseño de una estructura de conocimiento que ya no pueda resolverse con una actualización pequeña.
+- arquitectura o topología relevante;
+- datos o source of truth;
+- seguridad, autorización o identidad;
+- contratos cross-domain;
+- capacidades mayores que redefinen el estado vigente;
+- gobernanza;
+- reorganización relevante de la propia Wiki.
 
-`90` gobierna conocimiento; no es el proceso físico que necesariamente escribe archivos.
+`90` decide si corresponde `NO UPDATE | CONSOLIDATE | MATERIALIZE NOW`. Si materializa, gobierna una Wiki Update Task; el Coding Agent ejecuta la escritura física autorizada.
 
 ## Starter recomendado para una Wiki nueva
 
@@ -282,10 +284,13 @@ Las Execution Tasks pueden declarar:
 
 ```text
 Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
 ```
 
-La primera controla conocimiento semántico. La segunda protege continuidad cuando cambia publicación.
+La primera controla conocimiento semántico. `Memory Stewardship` decide si la actualización puede permanecer `LOCAL` o requiere custodia `90_STRUCTURAL`. La tercera protege continuidad cuando cambia publicación.
+
+Un outcome técnico con impacto estructural todavía no custodiado puede terminar `COMPLETADO` y reportar `Durable Memory Impact: ROUTE_TO_90`. Una Wiki Update Task ya gobernada por `90` que materializa correctamente reporta `UPDATED`.
 
 Varios outcomes pequeños pueden diferirse y consolidarse en una sola actualización durable cuando juntos cambien la comprensión vigente.
 
