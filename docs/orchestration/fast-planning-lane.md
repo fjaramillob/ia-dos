@@ -8,11 +8,12 @@ El Conversation Space especialista gobierna el resultado. El coding agent inspec
 
 ```text
 Conversation Space especialista
-→ Memory Bootstrap Gate cuando aplica
-→ Environment Preflight cuando readiness es desconocido
-→ Execution Task directa si ya está lista
-   o Planning Task si falta inspección/diseño
-→ coding agent
+→ Memory Bootstrap Gate cuando falta memoria durable indispensable
+→ define Protected Invariants + Adaptation Authority + Protected Boundaries
+→ Planning Task sólo si existe decisión material no resuelta
+→ Environment Preflight sólo si readiness debe conocerse antes de autoridad sensible
+→ Execution Task outcome-first + Revalidate
+→ coding agent planifica internamente y ejecuta dentro de autoridad
 → artefacto vuelve al mismo Cycle Owner
 ```
 
@@ -44,16 +45,17 @@ Cuando `Memory Bootstrap Gate = BOOTSTRAP REQUIRED`, la ruta rápida no salta el
 Evalúa:
 
 ```text
-1. ¿El resultado está suficientemente definido, es pequeño y verificable?
-2. Si depende de historia, ¿la memoria necesaria ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿el coding agent puede proponer una primera unidad segura?
+1. ¿El outcome está definido y verificable?
+2. ¿Cuáles son los Protected Invariants y Protected Boundaries?
+3. ¿Qué Adaptation Authority puede delegarse?
+4. ¿Existe una decisión material todavía no resuelta?
+5. ¿Falta memoria durable indispensable o readiness que deba conocerse antes de autoridad sensible?
 ```
 
-- **Memoria insuficiente:** aplica Memory Bootstrap Gate.
-- **Readiness desconocido:** usa Environment Preflight.
-- **Ejecución lista:** entrega Execution Task.
-- **Falta inspección o diseño:** entrega Planning Task.
+- **Memoria durable indispensable ausente:** aplica Memory Bootstrap Gate.
+- **Decisión material pendiente:** entrega Planning Task.
+- **Readiness previo a autoridad sensible:** usa Environment Preflight.
+- **Outcome definido:** entrega Execution Task con Revalidate y planificación interna.
 - **Decisión humana indispensable:** deriva sólo esa decisión.
 - **Reorientación real:** escala a `00`.
 
@@ -79,7 +81,11 @@ La tarea de bootstrap no declara `PASS` ni puede mezclar el resultado que busca 
 
 ## Planning y Preflight
 
-Los dos usan `Coding Agent — Planning` porque son de solo lectura, pero no son intercambiables:
+Son excepcionales y ambos usan `Coding Agent — Planning` porque son de solo lectura, pero no son intercambiables.
+
+Planning separado resuelve una decisión material. Preflight separado resuelve readiness previo a una frontera sensible, una capacidad que es objeto de evaluación o una inspección que requiere otro actor/entorno. Debugging y revalidación volátil ordinarios permanecen dentro de Execution.
+
+Contratos:
 
 ```text
 Planning Task
@@ -95,7 +101,7 @@ Sólo un readiness report con `LISTO PARA EJECUCIÓN` permite considerar autoriz
 
 ## Planning Task
 
-Cuando corresponde planificación:
+Cuando existe una decisión material todavía no resuelta:
 
 1. entrega una Planning Task autosuficiente;
 2. indica que es de solo lectura;
