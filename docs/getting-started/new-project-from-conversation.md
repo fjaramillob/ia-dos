@@ -46,10 +46,12 @@ Expresiones como `avancemos`, `empecemos`, `sigamos` o equivalentes no activan u
 El Project Orchestrator identifica el siguiente resultado verificable y evalúa:
 
 ```text
-1. ¿El resultado está suficientemente definido y acotado?
-2. Si depende de historia previa, ¿el conocimiento necesario ya es durable?
-3. ¿Las precondiciones indispensables del entorno están comprobadas?
-4. Si falta inspección o diseño, ¿corresponde Planning?
+1. ¿El outcome está definido y verificable?
+2. ¿Cuáles son los Protected Invariants?
+3. ¿Qué Adaptation Authority puede delegarse?
+4. ¿Dónde están las Protected Boundaries?
+5. ¿Existe una decisión material todavía no resuelta?
+6. ¿Falta memoria durable indispensable o readiness que deba conocerse antes de autoridad sensible?
 ```
 
 Según el caso:
