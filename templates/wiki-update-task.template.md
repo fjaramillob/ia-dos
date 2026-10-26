@@ -37,6 +37,8 @@ Declara por qué este conocimiento no se materializó dentro de la Execution Tas
 
 Cuando responda a `ROUTE_TO_90`, el Cycle Owner normal de esta unidad documental es `90 — Documentación y memoria`; el espacio técnico original aporta evidencia y no dicta la estructura final de la Wiki.
 
+Si esta Task `90_STRUCTURAL` materializa correctamente la memoria estructural autorizada, su Execution Report declara `Durable Memory Impact: UPDATED`. No vuelve a emitir `ROUTE_TO_90`, porque la custodia ya ocurrió.
+
 ## Objetivo documental
 
 Describe el conocimiento durable que debe quedar creado, actualizado, corregido o retirado.
