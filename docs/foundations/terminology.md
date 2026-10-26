@@ -95,7 +95,7 @@ Puede incluir repositorio, branch productiva, último HEAD remoto verificado, co
 
 Resultado reportado por una Execution Task respecto de memoria durable: `NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED`.
 
-`ROUTE_TO_90` indica impacto durable estructural cuando el proyecto adopta ese custodio; el outcome técnico puede estar completado.
+`ROUTE_TO_90` indica impacto durable estructural todavía pendiente de custodia cuando el proyecto adopta ese rol; el outcome técnico puede estar completado. Una Wiki Update Task ya gobernada por `90` que materializa correctamente reporta `UPDATED`.
 
 No es una decisión de gobierno ni un Artifact Type.
 
@@ -117,7 +117,7 @@ El Cycle Owner puede adoptarlo dentro de autoridad delegada cuando no cambia mat
 
 ## `Environment Preflight`
 
-Artefacto de solo lectura usado cuando una Execution Task depende de una precondición indispensable no comprobada.
+Artefacto de solo lectura usado cuando readiness debe conocerse antes de conceder autoridad sensible, cuando la capacidad/readiness es ella misma el objeto de evaluación o cuando la inspección requiere otro actor/entorno. La revalidación volátil ordinaria ocurre dentro de Execution.
 
 ## `Environment Readiness Report`
 
@@ -127,7 +127,7 @@ Retorno del preflight: `LISTO PARA EJECUCIÓN | NO LISTO | DESCONOCIDO`.
 
 Contrato de un **outcome definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad**.
 
-No se divide sólo por duración, cantidad de archivos/comandos ni por fases internas de implementación, tests, commit, push, deploy o smoke.
+No se divide sólo por duración, cantidad de archivos/comandos ni por fases internas de implementación, debugging, repair, safe retry, tests, commit, push, deploy o smoke.
 
 ## `Authority Envelope`
 
@@ -171,13 +171,15 @@ No es Artifact Type ni autorización.
 
 ## `Execution Resume`
 
-Reanuda la misma Task después de resolver un bloqueo sólo si objetivo, alcance, autoridad, seguridad y arquitectura siguen sin cambios.
+Reanuda la misma Task después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad.
+
+Sólo aplica si outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura siguen sin cambios.
 
 ```text
-Execution Resume = Task original + delta del bloqueo resuelto
+Execution Resume = Task original + delta del bloqueo externo o interrupción real resuelta
 ```
 
-Conserva Task ID.
+Conserva Task ID. Repair-in-place y safe retry dentro de una Execution todavía abierta no requieren Resume.
 
 ## `Execution Report`
 
@@ -185,7 +187,7 @@ Evidencia de lo ejecutado realmente. `Task = autorizado`; `Report = ocurrido`.
 
 Estados: `COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO`.
 
-Estructura preferente: `Outcome`, `Evidence`, `Actual Scope`, `Acceptance`, `Deviations`, `Final State`.
+Estructura preferente: `Outcome`, `Evidence`, `Actual Scope`, `Acceptance`, `Adaptations Used` cuando aporte, `Deviations`, `Final State`.
 
 No aprueba su propio resultado ni elige siguiente unidad. Puede reportar `Durable Memory Impact` y estado del `Operational Baseline` cuando la Task lo exige.
 
