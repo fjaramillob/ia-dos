@@ -53,9 +53,19 @@ Verification date
 
 `Repository HEAD` y `Production Commit` son campos distintos. No los colapses si divergen.
 
-## Authority Envelope
+## Authority Envelope y ejecución adaptativa
 
 La `Execution Task` es la autoridad concreta de una ejecución. Puede incluir un `Authority Envelope` que agrupe permisos explícitos para el outcome completo sin crear un Artifact Type nuevo.
+
+La autoridad no necesita congelar el método exacto. La Task declara también:
+
+```text
+Protected Invariants: [PROPIEDADES MATERIALES QUE NO PUEDEN CAMBIAR]
+Adaptation Authority: NONE | BOUNDED
+Protected Boundaries: [FRONTERAS QUE REQUIEREN GATES O AUTORIDAD EXPLÍCITA]
+```
+
+`BOUNDED` permite adaptar medios técnicos equivalentes y reparar implementation defects sin ampliar la frontera material. Consulta `adaptive-execution.md`.
 
 Ejemplo semántico:
 
@@ -95,8 +105,8 @@ acción explícitamente declarada en la Task
 + frontera estable
 → puede ejecutarse sin otra ida y vuelta humana por rutina
 
-cambio material de outcome, scope, autoridad, arquitectura,
-seguridad, datos, riesgo, coste o entorno
+cambio material de outcome, Protected Invariants, scope, autoridad,
+arquitectura, seguridad, datos, riesgo, coste, entorno o Protected Boundary
 → STOP y nueva decisión
 ```
 
@@ -114,6 +124,8 @@ Pueden formar parte de la misma Execution Task cuando:
 - la frontera de autoridad permanece estable.
 
 No impongas una nueva aprobación humana entre fases sólo por rutina si esa autoridad ya fue delegada explícitamente en la Task.
+
+Con `Adaptation Authority: BOUNDED`, tampoco impongas retorno al humano por una reparación técnica ordinaria, cambio de runner equivalente o safe retry después de un intento sin side effects materiales. El executor debe detenerse si la adaptación cambia un Protected Invariant o exige una capacidad sensible nueva.
 
 ## Compresión de contexto
 
@@ -163,6 +175,8 @@ Antes de una Execution Task comprueba sólo las precondiciones indispensables pa
 
 Planning y Environment Preflight continúan siendo de solo lectura respecto del proyecto/entorno inspeccionados.
 
+Planning separado se reserva para decisiones materiales aún no resueltas. Environment Preflight separado se reserva para readiness que debe conocerse antes de conceder autoridad sensible o cuando la capacidad misma es el objeto de evaluación. La revalidación volátil ordinaria ocurre dentro de Execution.
+
 ## No imponer topología
 
 No impongas:
@@ -180,3 +194,5 @@ No impongas:
 La estructura del proyecto pertenece al proyecto. IA-DOS gobierna el contrato de autoridad, acceso, evidencia, compresión y retorno.
 
 Una acción sensible no declarada no está autorizada. Una acción explícitamente declarada dentro de una frontera estable no necesita una nueva ceremonia sólo porque ocurre en una fase posterior de la misma Task.
+
+IA-DOS gobierna el outcome, los Protected Invariants y las Protected Boundaries; el Coding Agent gobierna los medios técnicos dentro de la Adaptation Authority recibida.
