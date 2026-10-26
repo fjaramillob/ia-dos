@@ -21,9 +21,9 @@ Execution Task
 → revisión del destino declarado
 ```
 
-Usa una Planning Task cuando todavía sea necesario inspeccionar o diseñar cómo implementar.
+El Coding Agent puede planificar internamente dentro de una Execution Task.
 
-Usa una Execution Task cuando exista un resultado definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad.
+Usa una Planning Task separada cuando exista una decisión material de diseño todavía no resuelta antes de escribir. Usa una Execution Task cuando exista un outcome definido, cohesivo, acotado y verificable bajo una frontera estable de autoridad, aunque el executor todavía deba resolver detalles de implementación.
 
 ## Regla general
 
@@ -36,7 +36,9 @@ Usa una Execution Task cuando exista un resultado definido, cohesivo, acotado y 
 
 El tipo no concede permisos. Escritura, control de versiones, cambios remotos, despliegue, datos, recursos externos, costes y producción requieren autorización explícita dentro de la Execution Task.
 
-Una Task no debe dividirse sólo por duración, cantidad de archivos o comandos, ni porque contenga fases internas de implementación, tests, commit, push, deploy o smoke. IA-DOS busca maximizar el resultado seguro y verificable por Task, no la cantidad de Tasks.
+Una Task no debe dividirse sólo por duración, cantidad de archivos o comandos, ni porque contenga fases internas de implementación, tests, debugging, reparación, safe retry, commit, push, deploy o smoke. IA-DOS busca maximizar el resultado seguro y verificable por Task, no la cantidad de Tasks.
+
+La Task declara `Protected Invariants`, `Adaptation Authority: NONE | BOUNDED` y las `Protected Boundaries` relevantes. Con `BOUNDED`, el executor puede cambiar el cómo sin cambiar el qué.
 
 ## Tipos base
 
@@ -116,9 +118,10 @@ Creación o actualización de documentación técnica, pública u operativa.
 
 Actualización cuyo resultado principal es memoria durable del proyecto.
 
-- se usa como tipo principal para bootstrap, consolidación, reparación o trabajo documental autónomo;
+- se usa como tipo principal para bootstrap, consolidación, reparación, custodia estructural o trabajo documental autónomo;
 - no es obligatorio crear una Task WIKI después de cada ejecución;
-- una Task BUILD/FIX/RELEASE puede actualizar Wiki dentro del mismo outcome cuando `Memory Policy` y Authority Envelope lo autorizan;
+- una Task BUILD/FIX/RELEASE puede actualizar Operational Baseline o memoria `LOCAL` dentro del mismo outcome cuando `Memory Policy` y Authority Envelope lo autorizan;
+- cuando el proyecto adopta `90 — Documentación y memoria`, el cambio durable estructural se deriva primero a ese Conversation Space para síntesis/ubicación;
 - distingue hechos, decisiones, hipótesis y desconocidos;
 - no copia chats o reportes completos sin síntesis;
 - evidencia: páginas actualizadas, fuentes y baseline operacional cuando corresponde.
@@ -163,6 +166,7 @@ Toda Execution Task puede declarar:
 
 ```text
 Memory Policy: NONE | CONDITIONAL | REQUIRED
+Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
 ```
 
@@ -184,6 +188,7 @@ Puede incluir múltiples fases internas si todas son inseparables del mismo resu
 Divide o detén cuando cambie materialmente:
 
 - outcome;
+- Protected Invariants;
 - scope;
 - autoridad;
 - arquitectura;
@@ -191,7 +196,8 @@ Divide o detén cuando cambie materialmente:
 - datos;
 - riesgo;
 - coste;
-- entorno.
+- entorno;
+- Protected Boundaries.
 
 Un tipo principal compartido no convierte outcomes independientes en una sola tarea.
 
