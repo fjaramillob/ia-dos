@@ -65,11 +65,14 @@ Según el resultado:
 conocimiento necesario sólo en conversaciones
 → Memory Bootstrap Gate
 
-readiness indispensable desconocido
+decisión material no resuelta antes de escribir
+→ Planning Task
+
+readiness que debe conocerse antes de autoridad sensible
 → Environment Preflight
 
-falta inspección o diseño
-→ Planning Task
+outcome definido
+→ Execution Task + Revalidate + planificación interna
 
 resultado acotado + memoria suficiente + entorno listo
 → Execution Task
