@@ -67,6 +67,19 @@ Incluye metadata técnica sólo cuando sea relevante para comprobar la tarea.
 
 No repitas criterios que no pertenecían a la Task.
 
+## Adaptations Used
+
+Incluye sólo cuando `Adaptation Authority: BOUNDED` fue utilizada materialmente.
+
+Resume cambios de método que ayuden a verificar seguridad y reproducibilidad, por ejemplo:
+
+- runner equivalente utilizado;
+- reparación técnica realizada;
+- safe retry después de confirmar ausencia de side effects;
+- pruebas nuevas o ajustadas para demostrar los mismos Protected Invariants.
+
+No narres cada intento de debugging. Una adaptación dentro de autoridad no es una desviación.
+
 ## Deviations
 
 - `Ninguna`, o
@@ -93,13 +106,14 @@ Declara siempre que la Task incluya Memory Policy:
 
 ```text
 Durable Memory Impact:
-NONE | UPDATED | DEFERRED | ATTENTION REQUIRED
+NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED
 ```
 
 - `NONE`: no hubo cambio semántico durable;
-- `UPDATED`: la memoria autorizada quedó actualizada;
+- `UPDATED`: la memoria `LOCAL` autorizada quedó actualizada;
 - `DEFERRED`: el outcome individual no justificó consolidación semántica todavía;
-- `ATTENTION REQUIRED`: existe una decisión, contradicción o cambio material que requiere gobierno.
+- `ROUTE_TO_90`: el outcome produjo un cambio durable estructural y corresponde Specialist Handoff a `90 — Documentación y memoria`; no implica por sí mismo que la ejecución técnica esté incompleta;
+- `ATTENTION REQUIRED`: existe una contradicción o decisión de memoria que requiere gobierno antes de persistir.
 
 Explica brevemente las rutas afectadas cuando sea `UPDATED`. No inventes una recomendación de roadmap.
 
@@ -135,7 +149,9 @@ Los hechos descubiertos pueden aparecer como evidencia del outcome. El Report no
 
 Cuando la Task declara `Memory Policy`, el Report registra el resultado de esa política. La decisión sobre triggers y dirección sigue perteneciendo al Cycle Owner/persona responsable.
 
-Una Task separada de Wiki se usa sólo cuando bootstrap, consolidación, reparación o una frontera de autoridad distinta lo justifican.
+Cuando la Task declara `Memory Stewardship: 90_STRUCTURAL`, el Report no sintetiza ni ubica por sí mismo el conocimiento estructural: usa `ROUTE_TO_90` y entrega evidencia suficiente para el handoff.
+
+Una Task separada de Wiki se usa sólo cuando bootstrap, consolidación, reparación, custodia estructural o una frontera de autoridad distinta lo justifican.
 
 ## Caveman Return
 
@@ -166,6 +182,7 @@ Antes de devolver el Report confirma:
 - [ ] el estado refleja lo realmente ocurrido;
 - [ ] la evidencia reportada fue realmente obtenida;
 - [ ] Actual Scope coincide con las acciones realizadas;
+- [ ] Adaptations Used distingue adaptación autorizada de desviación;
 - [ ] las desviaciones no fueron ocultadas;
 - [ ] no se afirma aprobación del propio resultado;
 - [ ] no se inicia otra unidad;
