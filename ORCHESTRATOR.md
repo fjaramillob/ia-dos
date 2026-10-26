@@ -414,7 +414,7 @@ Un nuevo Coding Agent lee Task + Checkpoint, verifica el estado real y continúa
 
 ## Execution Resume
 
-Reanuda la misma Execution Task cuando una condición externa o interrupción real fue resuelta sin cambiar outcome, alcance, autoridad, seguridad, arquitectura o Protected Invariants.
+Reanuda la misma Execution Task cuando una condición externa o interrupción real fue resuelta sin cambiar outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad o arquitectura.
 
 Con `Adaptation Authority: BOUNDED`, las reparaciones técnicas internas y safe retries no exigen Resume mientras la ejecución siga abierta y la frontera material permanezca estable.
 
@@ -426,7 +426,7 @@ Execution Resume
 + delta del bloqueo resuelto
 ```
 
-Conserva Task ID y no amplía permisos. Si una frontera cambia, prepara nueva Execution Task o vuelve a Planning.
+Conserva Task ID y no amplía permisos. Si cambia una Protected Boundary, un invariante u otra frontera material, prepara nueva Execution Task o vuelve a Planning sólo si existe una decisión material pendiente.
 
 ## Execution Report
 
