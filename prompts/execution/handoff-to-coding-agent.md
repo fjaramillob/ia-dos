@@ -11,20 +11,24 @@ Antes de modificar:
 1. lee la Execution Task canónica completa;
 2. lee el Required Reading y las instrucciones locales aplicables;
 3. inspecciona el estado real antes de escribir;
-4. confirma outcome, Cycle Owner, alcance, Authority Envelope, verificaciones y stop conditions;
-5. confirma Memory Policy, Memory Triggers y regla de Operational Baseline;
+4. confirma outcome, Protected Invariants, Protected Boundaries, Adaptation Authority, Cycle Owner, alcance, Authority Envelope, verificaciones y stop conditions;
+5. confirma Memory Policy, Memory Stewardship, Memory Triggers y regla de Operational Baseline;
 6. si existe un Execution Checkpoint, léelo y verifica su estado contra la realidad; el checkpoint no agrega autoridad;
 7. confirma cualquier Output Delivery declarado.
 
 Durante la ejecución:
-- trabaja únicamente dentro del outcome y Authority Envelope;
+- trabaja únicamente dentro del outcome, Protected Invariants, Protected Boundaries y Authority Envelope;
+- planifica internamente el cómo sin convertir detalles de implementación en nuevas Tasks;
 - una acción sensible no declarada está prohibida;
 - una acción explícitamente declarada, con gates cumplidos y frontera estable, puede ejecutarse sin pedir otra aprobación humana por rutina;
-- no dividas ni detengas sólo porque llegaste a tests, commit, push, deploy, smoke o actualización durable si esas fases siguen autorizadas dentro del mismo outcome;
+- si Adaptation Authority = BOUNDED y aparece un fallo reversible sin side effects materiales, diagnostica, repara, ajusta pruebas o mecanismo equivalente, revalida y continúa;
+- no dividas ni detengas sólo porque llegaste a debugging, safe retry, tests, commit, push, deploy, smoke o actualización durable si esas fases siguen autorizadas dentro del mismo outcome;
 - aplica Memory Policy sólo con los triggers definidos por el Cycle Owner;
+- si Memory Stewardship = LOCAL, materializa sólo la memoria autorizada;
+- si Memory Stewardship = 90_STRUCTURAL y el outcome produce impacto estructural, no sintetices la Wiki por iniciativa propia: reporta ROUTE_TO_90;
 - si cambias un estado publicado y Operational Baseline = UPDATE_IF_PUBLISHED, actualiza el checkpoint durable autorizado con el estado real verificado;
 - no uses la actualización de Wiki para decidir roadmap, prioridades o nuevas decisiones de producto;
-- detente si cambia materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
+- detente si cambia materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - ejecuta las verificaciones aplicables;
 - revisa los cambios completos.
 
@@ -37,9 +41,10 @@ Al finalizar, construye un Execution Report evidence-first:
 - Evidence;
 - Actual Scope;
 - Acceptance;
+- Adaptations Used, sólo si aporta;
 - Deviations;
 - Final State;
-- Durable Memory Impact: NONE | UPDATED | DEFERRED | ATTENTION REQUIRED, cuando aplica;
+- Durable Memory Impact: NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED, cuando aplica;
 - Operational Baseline: UNCHANGED | UPDATED | NO APLICA | BLOQUEADO.
 
 No vuelvas a narrar la Task ni listes permisos que no fueron utilizados sólo por ceremonia.
