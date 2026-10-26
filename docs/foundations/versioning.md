@@ -9,6 +9,7 @@ MAJOR.MINOR.PATCH
 Ejemplos:
 
 ```text
+0.1.0-alpha.4
 0.1.0
 0.2.0
 1.0.0
@@ -42,9 +43,13 @@ Se utiliza para:
 - eliminación o sustitución de contratos operativos;
 - cambios profundos en la forma de adopción.
 
-## Etapa `0.x`
+## Etapa `0.x` y prereleases
 
-Durante la etapa experimental, una versión minor puede incluir ajustes importantes. Estos cambios deben quedar descritos en `CHANGELOG.md`.
+Durante la etapa experimental, IA-DOS puede usar identificadores prerelease como `alpha.N` para distinguir baselines operativos antes de estabilizar una versión.
+
+Cada identificador prerelease debe tener un único significado vigente entre Roadmap, Current Offline Pack y documentación de adopción. No reutilices el mismo `alpha.N` para dos outcomes distintos.
+
+Una versión minor o prerelease puede incluir ajustes importantes. Estos cambios deben quedar descritos en `CHANGELOG.md`.
 
 ## Adopción por proyectos
 
