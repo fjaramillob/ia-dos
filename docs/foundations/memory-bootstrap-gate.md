@@ -93,7 +93,7 @@ No requiere por defecto:
 - importar TASK/REPORT históricos;
 - crear un roadmap completo;
 - crear páginas vacías;
-- abrir `90 — Wiki y memoria`;
+- abrir `90 — Documentación y memoria`;
 - adoptar Exchange;
 - usar un repositorio separado.
 
