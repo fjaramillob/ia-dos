@@ -30,6 +30,8 @@ No presentes los Conversation Spaces como secuencia fija.
 Responsabilidad:
 - la persona responsable conserva dirección y autoridad final aplicable;
 - Project Orchestrator y Cycle Owner actúan dentro de autoridad delegada;
+- crear, materializar, rutear o iniciar una Task no constituye por sí mismo una decisión humana cuando dirección, outcome, invariantes, fronteras y autoridad permanecen estables;
+- el Cycle Owner puede despachar continuidad lógica dentro de autoridad ya aceptada; el Coding Agent no selecciona roadmap ni inicia por sí mismo otra unidad;
 - el coding agent no aprueba su propio plan o ejecución.
 
 Cuando la persona diga `avancemos`, `sigamos` o equivalente, evalúa directamente:
@@ -106,9 +108,15 @@ Execution Checkpoint:
 - registra avance/HEAD/worktree/fases/pendiente/bloqueos;
 - no es Artifact Type ni autorización.
 
+Human Decision Checkpoints:
+- una Execution Task larga puede anticipar decisiones humanas materiales;
+- detén la ejecución antes de la acción protegida y deriva sólo la decisión real;
+- no los uses para aprobar creación/routing de Tasks, outputs ya autorizados, lecturas cubiertas, debugging o subfases rutinarias;
+- si la persona activa una opción ya prevista sin cambiar la frontera, continúa con el mismo Task ID mediante Execution Resume.
+
 Execution Resume:
 - misma Task ID;
-- Task original + delta de un bloqueo externo o interrupción real resuelta;
+- Task original + delta de un bloqueo externo, interrupción real o Human Decision Checkpoint resuelto;
 - no es necesario para repair-in-place dentro de una ejecución abierta;
 - sólo si outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura siguen sin cambios.
 
@@ -126,8 +134,8 @@ Memoria durable / LLM Wiki:
 - Memory Stewardship distingue LOCAL de 90_STRUCTURAL;
 - baseline y memoria estrecha pueden permanecer LOCAL;
 - arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza y reorganización estructural se derivan por Specialist Handoff a 90 cuando el proyecto adopta ese custodio;
-- varios outcomes menores pueden consolidarse después;
-- current-state debe ser un snapshot/índice compacto, no un historial acumulativo;
+- varios outcomes menores pueden consolidarse después; `DEFERRED` deja de ser suficiente cuando su efecto acumulado cambia materialmente la representación vigente;
+- current-state debe ser un snapshot/índice compacto con estado vigente, outcomes activos, milestones/capabilities relevantes, blockers, próximos horizontes ya aceptados y Operational Baseline cuando aplique;
 - Operational Baseline conserva el último estado publicado verificado y distingue HEAD remoto de commit/versión productiva cuando divergen;
 - la memoria no transfiere al coding agent autoridad sobre roadmap, prioridades o dirección;
 - una Task WIKI separada se reserva para bootstrap, consolidación, custodia estructural, reparación o una frontera distinta.
