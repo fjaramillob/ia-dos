@@ -39,6 +39,21 @@ La persona responsable conserva la aprobación final cuando una decisión cambia
 
 Una plantilla que diga `Aprobar`, `Corregir`, `Cerrar` o equivalente debe interpretarse dentro de esta frontera de autoridad.
 
+### Non-Decision Rule
+
+No eleves a la persona responsable una microdecisión cuyo único contenido sea mecánica de orquestación ya cubierta por autoridad delegada.
+
+Por sí mismos, no requieren aprobación humana adicional:
+
+- crear o nombrar una Task;
+- materializarla en un canal ya autorizado;
+- rutearla al Coding Agent correcto;
+- iniciar una inspección read-only ya cubierta;
+- continuar con la siguiente subfase obvia del mismo outcome;
+- emitir el siguiente artefacto técnico cuando no cambia ninguna frontera material.
+
+Si una de esas acciones introduce una capacidad, permiso, riesgo o Protected Boundary nueva, deja de ser mecánica y vuelve a aplicar la frontera humana.
+
 ## Responsabilidades del Cycle Owner
 
 Debe:
@@ -55,7 +70,8 @@ Debe:
 - preparar o validar una sola unidad ejecutable;
 - definir Memory Policy, Memory Stewardship, triggers cuando sea condicional y regla de Operational Baseline;
 - identificar cuándo un cambio durable es estructural y, si el proyecto adopta `90 — Documentación y memoria`, derivar esa síntesis mediante Specialist Handoff;
-- decidir cuándo varios outcomes menores ameritan consolidación durable;
+- decidir cuándo varios outcomes menores ameritan consolidación durable, incluyendo acumulaciones de `DEFERRED` que ya cambian el estado vigente;
+- continuar y despachar trabajo posterior dentro de dirección, roadmap vigente cuando exista y autoridad ya aceptados, sin pedir aprobación por la mera creación de otra Task;
 - obtener la aprobación humana necesaria antes de conceder autoridad sensible;
 - revisar el Execution Report;
 - decidir, dentro de su autoridad, cierre, corrección, reversión, transferencia, escalamiento o siguiente iteración;
@@ -64,6 +80,24 @@ Debe:
 - escalar cuando aparezca una decisión fuera de su autoridad.
 
 La Execution Task de bootstrap no finge `PASS`, no mezcla la unidad original y no la habilita automáticamente al terminar; primero debe reevaluarse su Memory Bootstrap Gate.
+
+## Continuidad delegada
+
+Después de revisar evidencia suficiente, el Cycle Owner puede cerrar, corregir o continuar sin volver a la persona responsable cuando la decisión permanece dentro de autoridad delegada.
+
+```text
+retorno aceptado
++ dirección estable
++ outcome/roadmap vigente estable
++ Protected Invariants estables
++ Protected Boundaries estables
++ autoridad suficiente
+→ Cycle Owner puede despachar la continuación lógica
+```
+
+Esto no autoriza al Coding Agent a elegir roadmap o iniciar otra unidad por sí solo. La continuidad se decide en la capa de gobierno conversacional.
+
+Cuando una Execution larga llega a un Human Decision Checkpoint material, se deriva sólo esa decisión. Si la respuesta humana activa una opción ya prevista sin alterar la frontera, la misma Task puede continuar mediante `Execution Resume`; no se crea una Task nueva por el mero hecho de haber existido una pausa humana.
 
 ## Destinos explícitos
 
