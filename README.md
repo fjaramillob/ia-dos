@@ -288,7 +288,7 @@ El mecanismo de transporte no cambia ese contrato.
 
 ## Execution Resume
 
-`Execution Resume` reanuda la misma Execution Task después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad, siempre que sigan sin cambios outcome, alcance, autoridad, seguridad, arquitectura y Protected Invariants.
+`Execution Resume` reanuda la misma Execution Task después de una interrupción real, acción externa, Human Decision Checkpoint resuelto o bloqueo que el executor no podía resolver dentro de su autoridad, siempre que sigan sin cambios outcome, alcance, autoridad, seguridad, arquitectura, Protected Invariants y Protected Boundaries.
 
 Con `Adaptation Authority: BOUNDED`, una reparación técnica ordinaria sin side effects materiales se resuelve **dentro de la misma ejecución** y no exige Resume. Conserva Task ID y no amplía permisos.
 
