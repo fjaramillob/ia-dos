@@ -134,7 +134,7 @@ Branch, commit, push, PR, merge, deploy, producción, datos, servicios externos 
 
 Todo handoff técnico declara Cycle Owner y destino del artefacto de retorno.
 
-El Cycle Owner gobierna dentro de la autoridad delegada. La persona responsable interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
+El Cycle Owner gobierna dentro de la autoridad delegada. Crear, materializar, rutear o iniciar una Task no es por sí mismo una decisión humana; si dirección, roadmap vigente cuando exista, invariantes, fronteras y autoridad siguen estables, el Cycle Owner puede despachar la continuación lógica. La persona responsable interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 Planes y reportes no vuelven automáticamente a `00`.
 
@@ -196,7 +196,7 @@ Una tarea larga puede materializar opcionalmente `<TASK-ID>-CHECKPOINT.md` para 
 
 El checkpoint no agrega autoridad. Un nuevo Coding Agent debe leer la Task, leer el checkpoint, verificar el estado real y continuar sólo dentro de la autoridad vigente.
 
-`Execution Resume` conserva el mismo Task ID y equivale a `Task original + delta del bloqueo externo o interrupción real resuelta` cuando outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura no cambiaron. No se necesita para repair-in-place o safe retry mientras la misma Execution siga abierta.
+`Execution Resume` conserva el mismo Task ID y equivale a `Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto` cuando outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura no cambiaron. No se necesita para repair-in-place o safe retry mientras la misma Execution siga abierta.
 
 ## Memoria en la misma ejecución
 
@@ -208,7 +208,7 @@ Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA
 Operational Baseline: UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA
 ```
 
-La memoria semántica no se actualiza por cada ejecución. `CONDITIONAL` sólo responde a triggers definidos por el Cycle Owner y varios outcomes menores pueden consolidarse después.
+La memoria semántica no se actualiza por cada ejecución. `CONDITIONAL` sólo responde a triggers definidos por el Cycle Owner y varios outcomes menores pueden consolidarse después. `DEFERRED` no se acumula indefinidamente: si el efecto conjunto cambia materialmente el estado vigente, outcome activo, milestone/capability, blocker, horizonte ya aceptado o autoridad reusable, corresponde consolidación según `Memory Stewardship`.
 
 La continuidad operacional es independiente: si el outcome cambia un baseline publicado, el mismo outcome debe actualizar el checkpoint durable autorizado con repo/branch, HEAD remoto verificado, commit/versión productiva, deployment/release, entorno y fecha según aplique.
 
