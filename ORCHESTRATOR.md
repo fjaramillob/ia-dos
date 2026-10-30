@@ -436,7 +436,7 @@ Un nuevo Coding Agent lee Task + Checkpoint, verifica el estado real y continúa
 
 ## Execution Resume
 
-Reanuda la misma Execution Task cuando una condición externa o interrupción real fue resuelta sin cambiar outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad o arquitectura.
+Reanuda la misma Execution Task cuando una condición externa, interrupción real o Human Decision Checkpoint fue resuelto sin cambiar outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad o arquitectura.
 
 Una Execution Task larga puede declarar **Human Decision Checkpoints** anticipados. Al alcanzarlos, el Coding Agent se detiene antes de la acción protegida y expone únicamente la evidencia y decisión material necesarias; la Task no se considera terminada sólo por esa pausa. Si la decisión humana selecciona una opción ya prevista por el contrato sin cambiar outcome ni fronteras materiales, un `Execution Resume` con el mismo Task ID transmite ese delta y continúa la misma Task. Si la decisión crea una frontera material nueva, corresponde nueva Task o Planning cuando exista una decisión de diseño pendiente.
 
@@ -447,7 +447,7 @@ Su semántica es:
 ```text
 Execution Resume
 = Task original
-+ delta del bloqueo resuelto
++ delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto
 ```
 
 Conserva Task ID y no amplía permisos. Si cambia una Protected Boundary, un invariante u otra frontera material, prepara nueva Execution Task o vuelve a Planning sólo si existe una decisión material pendiente.
