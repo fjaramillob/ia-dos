@@ -21,8 +21,9 @@ La adopción sigue este orden conceptual, sin convertirse en una pipeline rígid
 13. Reutiliza una Execution Cell mientras siga respondiendo bien; no abras una conversación por tarea.
 14. Usa [Exchange](getting-started/bootstrap-exchange.md) sólo cuando una pasarela pasiva de Markdown hacia o desde Coding Agents aporte valor. Exchange no enruta Conversation Spaces.
 15. Devuelve planes, readiness reports y Execution Reports al Cycle Owner declarado.
-16. La persona responsable conserva la aprobación final cuando la decisión excede la autoridad delegada.
-17. Escala a `00` sólo ante reorientación real.
+16. Si dirección, outcome/roadmap vigente, invariantes, fronteras y autoridad siguen estables, el Cycle Owner puede despachar la continuación lógica sin pedir aprobación por la mera creación de otra Task.
+17. La persona responsable conserva la aprobación final cuando la decisión material excede la autoridad delegada; una Task larga puede pausar en un Human Decision Checkpoint y continuar con el mismo Task ID si la opción ya estaba prevista.
+18. Escala a `00` sólo ante reorientación real.
 
 Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) cuando declare `Estado: VIGENTE` y baseline canónico. Es el único bundle actual para nuevos onboardings offline. No combines bundles históricos; consulta [Bundles](../bundles/README.md).
 
@@ -102,7 +103,7 @@ El Execution Report es evidencia y no selecciona la decisión de gobierno poster
 
 `memoria durable` describe la función; `LLM Wiki` es una posible materialización portable y navegable.
 
-La memoria semántica es selectiva (`NONE | CONDITIONAL | REQUIRED`). Cuando el proyecto adopta `90 — Documentación y memoria`, `Memory Stewardship: 90_STRUCTURAL` deriva sólo los cambios estructurales a ese custodio; baseline y memoria local no convierten a 90 en peaje operativo. En proyectos publicados con Wiki, el `Operational Baseline` conserva el último estado verificado para que un agente nuevo identifique repo/branch, HEAD remoto, commit productivo, deployment/release y entorno antes de revalidarlos.
+La memoria semántica es selectiva (`NONE | CONDITIONAL | REQUIRED`). Cuando el proyecto adopta `90 — Documentación y memoria`, `Memory Stewardship: 90_STRUCTURAL` deriva sólo los cambios estructurales a ese custodio; baseline y memoria local no convierten a 90 en peaje operativo. En proyectos publicados con Wiki, el `Operational Baseline` conserva el último estado verificado para que un agente nuevo identifique repo/branch, HEAD remoto, commit productivo, deployment/release y entorno antes de revalidarlos. La superficie caliente de memoria debe además mostrar outcomes activos, milestones/capabilities relevantes, blockers y próximos horizontes ya aceptados; varios `DEFERRED` se consolidan cuando su efecto acumulado vuelve esa representación materialmente incompleta.
 
 ## Fundamentos
 
