@@ -26,7 +26,7 @@ PRECONDICIONES
 - Memory Bootstrap Gate: [PASS | BOOTSTRAP REQUIRED — ESTA TAREA MATERIALIZA EL CHECKPOINT DURABLE | NO APLICA]
 - Readiness previo indispensable: [LISTO PARA EJECUCIÓN | NO APLICA]
 - Planning previo: [REFERENCIA REVISADA | NO APLICA — sólo si existió decisión material]
-- autorización humana adicional requerida: [RESUELTA | NO APLICA]
+- autorización humana adicional requerida: [RESUELTA | CHECKPOINT DECLARADO | NO APLICA]
 
 FUENTES DE AUTORIDAD
 | Recurso o documento | Rol | Autoridad para | Acceso | Vigencia o referencia |
@@ -91,6 +91,16 @@ No autorizado:
 
 Regla: acción sensible no declarada → no autorizada. Acción declarada + gates cumplidos + frontera estable → puede ejecutarse dentro de esta Task sin otra ida y vuelta humana por rutina. Fallo técnico reversible dentro de `BOUNDED` → repair-in-place, no nuevo ciclo.
 
+HUMAN DECISION CHECKPOINTS, SI APLICA
+- [DECISIÓN MATERIAL ANTICIPADA | ACCIÓN QUE QUEDA BLOQUEADA | EVIDENCIA MÍNIMA A PRESENTAR]
+- ninguno, si no aplica.
+
+Reglas:
+- un checkpoint humano no se usa para aprobar creación/routing de Tasks, lecturas ya autorizadas, debugging o subfases rutinarias;
+- al alcanzarlo, detenerse antes de la acción protegida y conservar continuidad de la misma Task;
+- si la decisión selecciona una opción ya prevista sin cambiar outcome ni fronteras, reanudar con Execution Resume y el mismo Task ID;
+- si la decisión introduce una frontera material nueva, volver al Cycle Owner para nueva delimitación.
+
 MEMORIA DURABLE
 - Memory Policy: [NONE | CONDITIONAL | REQUIRED]
 - Memory Stewardship: [LOCAL | 90_STRUCTURAL | NO APLICA]
@@ -130,7 +140,7 @@ VERIFICACIONES
 - evidencia esperada: [SALIDA O PRUEBA]
 
 CONDICIONES DE DETENCIÓN
-Detente ante información crítica faltante, trabajo previo en riesgo, instrucciones incompatibles, capacidad no autorizada, verificación crítica fallida, riesgo de seguridad/datos/coste no cubierto o cualquier cambio material de la frontera declarada.
+Detente ante información crítica faltante, trabajo previo en riesgo, instrucciones incompatibles, capacidad no autorizada, verificación crítica fallida, riesgo de seguridad/datos/coste no cubierto, un Human Decision Checkpoint alcanzado antes de la acción protegida o cualquier cambio material de la frontera declarada.
 
 CONTRATO DE RETORNO
 Artifact Type: Execution Report
