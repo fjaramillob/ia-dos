@@ -17,7 +17,9 @@ Debe:
 - proteger secretos, datos y recursos;
 - pedir ayuda especializada cuando el riesgo lo exige.
 
-La supervisión humana no requiere ejecutar manualmente cada cambio. Requiere conservar autoridad sobre dirección, riesgo, acceso y aprobación.
+La supervisión humana no requiere ejecutar manualmente cada cambio ni aprobar la mecánica de orquestación. Requiere conservar autoridad sobre dirección, riesgo, acceso y decisiones materiales.
+
+No debe consumirse atención humana sólo para autorizar la creación, materialización, routing o inicio de una Task cuando esas acciones ya están dentro de autoridad delegada y no cruzan una frontera material.
 
 ## Project Orchestrator
 
@@ -39,7 +41,8 @@ Debe:
 - definir o validar Memory Policy, Memory Stewardship y triggers cuando sean condicionales;
 - derivar a `90 — Documentación y memoria` los cambios durables estructurales cuando el proyecto adopta ese custodio;
 - exigir que un cambio de baseline publicado deje continuidad operacional durable cuando el proyecto usa LLM Wiki;
-- decidir cuándo varios outcomes menores ameritan consolidación semántica;
+- decidir cuándo varios outcomes menores ameritan consolidación semántica, incluyendo acumulaciones de `DEFERRED` que ya cambian el estado vigente;
+- continuar y despachar la siguiente unidad lógica sin aprobación humana adicional cuando dirección, roadmap vigente cuando exista, invariantes, fronteras y autoridad permanecen estables;
 - evitar que una conversación se convierta en fuente de verdad paralela.
 
 No debe afirmar que modificó, probó o desplegó algo sin capacidad y evidencia para hacerlo.
@@ -58,6 +61,7 @@ Debe:
 - preservar la capacidad de que un agente nuevo se ponga al día sin conversaciones previas;
 - tomar decisiones operativas sólo dentro de la autoridad delegada;
 - obtener aprobación humana cuando una decisión excede esa autoridad;
+- derivar únicamente la decisión material, no una pregunta ceremonial sobre crear o iniciar la Task;
 - escalar únicamente cuando corresponde.
 
 Cycle Owner no sustituye a la persona responsable.
@@ -145,6 +149,8 @@ El Cycle Owner define `Memory Policy: NONE | CONDITIONAL | REQUIRED`, `Memory St
 Cuando cambia un baseline publicado y el proyecto usa LLM Wiki, el outcome debe actualizar también el checkpoint operacional autorizado: repositorio/branch, HEAD remoto verificado, commit productivo, deployment/release, entorno/URL, estado y fecha de verificación.
 
 Una Task documental separada se reserva para bootstrap, consolidación, custodia estructural de `90`, reparación/migración o una frontera de autoridad distinta; no es un paso obligatorio después de cada Execution Report.
+
+La memoria caliente debe permitir reconstruir con lectura acotada qué está vigente ahora: estado actual, outcomes activos, blockers o decisiones materiales pendientes, próximos horizontes ya aceptados y Operational Baseline cuando aplique. Varios outcomes individualmente `DEFERRED` deben consolidarse cuando su efecto conjunto cambia esa representación vigente; no existe un umbral mecánico por cantidad de Tasks.
 
 Cuando un outcome técnico produce impacto `90_STRUCTURAL` todavía no custodiado, reporta `ROUTE_TO_90`; el outcome técnico puede estar completado. Una Wiki Update Task ya gobernada por `90` que materializa correctamente reporta `UPDATED`.
 
