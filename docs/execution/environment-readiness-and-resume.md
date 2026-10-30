@@ -99,7 +99,7 @@ No replanifiques por defecto.
 
 ## Execution Resume
 
-`Execution Resume` reanuda la **misma Execution Task** después de resolver una condición bloqueante externa o una interrupción real.
+`Execution Resume` reanuda la **misma Execution Task** después de resolver una condición bloqueante externa, una interrupción real o un Human Decision Checkpoint material ya previsto por la Task.
 
 No es necesario para debugging, repair-in-place o safe retry que ocurrieron mientras la misma ejecución seguía abierta bajo `Adaptation Authority: BOUNDED`.
 
@@ -129,7 +129,8 @@ Cycle Owner: [CONVERSATION SPACE]
 
 Incluye únicamente:
 
-- condición que bloqueó;
+- condición que bloqueó o Human Decision Checkpoint alcanzado;
+- decisión humana seleccionada, cuando aplique, confirmando que corresponde a una opción ya prevista y no introduce una frontera material nueva;
 - evidencia de resolución;
 - verificación previa no destructiva;
 - punto exacto de reanudación;
@@ -137,6 +138,6 @@ Incluye únicamente:
 - cambios externos relevantes;
 - destino del reporte.
 
-No abre un ciclo nuevo por sí mismo y no amplía permisos.
+No abre un ciclo nuevo por sí mismo y no amplía permisos. Una pausa humana dentro de una Task larga no obliga a crear otra Task si la decisión sólo activa una rama ya prevista y las fronteras permanecen estables.
 
 Si cambió objetivo, alcance, autoridad, seguridad, arquitectura o resultado verificable, no uses Resume: prepara una nueva `Execution Task` o vuelve a Planning cuando corresponda.
