@@ -169,14 +169,30 @@ Puede registrar avance, HEAD, worktree, fases completadas, pendiente y bloqueos.
 
 No es Artifact Type ni autorización.
 
+## `Delegated Continuity`
+
+Facultad del Cycle Owner para continuar y despachar el siguiente trabajo lógico sin otra ida y vuelta humana cuando dirección, roadmap vigente cuando exista, outcome, Protected Invariants, Protected Boundaries y autoridad permanecen dentro de lo ya aceptado.
+
+No transfiere al Coding Agent autoridad para elegir roadmap o iniciar otra unidad.
+
+## `Human Decision Checkpoint`
+
+Pausa declarada dentro de una Execution Task larga para obtener una decisión humana material antes de una acción protegida. No es Artifact Type y no se usa para aprobar mecánica rutinaria de orquestación.
+
+Si la decisión activa una opción ya prevista sin cambiar la frontera material, la misma Task puede continuar mediante `Execution Resume` con el mismo Task ID.
+
+## `Cumulative Memory Trigger`
+
+Regla semántica que obliga a reevaluar consolidación cuando varios outcomes individualmente `DEFERRED` cambian en conjunto la representación vigente del proyecto. No depende de cantidad de Tasks, tiempo, archivos o reportes.
+
 ## `Execution Resume`
 
-Reanuda la misma Task después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad.
+Reanuda la misma Task después de una interrupción real, acción externa, Human Decision Checkpoint resuelto o bloqueo que el executor no podía resolver dentro de su autoridad.
 
 Sólo aplica si outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura siguen sin cambios.
 
 ```text
-Execution Resume = Task original + delta del bloqueo externo o interrupción real resuelta
+Execution Resume = Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto
 ```
 
 Conserva Task ID. Repair-in-place y safe retry dentro de una Execution todavía abierta no requieren Resume.
