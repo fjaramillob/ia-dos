@@ -352,7 +352,7 @@ Un nuevo Coding Agent lee Task + Checkpoint, verifica estado real y continúa de
 ```text
 Execution Resume
 = Task original
-+ delta del bloqueo externo o interrupción real resuelta
++ delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto
 ```
 
 Conserva Task ID y sólo aplica si outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura siguen sin cambios. Repair-in-place dentro de una ejecución abierta no exige Resume.
@@ -503,11 +503,11 @@ repositorio real
 → revalida el estado real antes de modificar
 ```
 
-No actualices semánticamente la Wiki por cada ejecución. Usa `NONE | CONDITIONAL | REQUIRED` y consolida varios outcomes cuando juntos produzcan un cambio durable.
+No actualices semánticamente la Wiki por cada ejecución. Usa `NONE | CONDITIONAL | REQUIRED` y consolida varios outcomes cuando juntos produzcan un cambio durable. `DEFERRED` no puede mantener indefinidamente una imagen materialmente desactualizada del estado vigente.
 
 Cuando cambia publicación, actualiza el Operational Baseline aunque `Memory Policy = NONE`. Puede existir un historial compacto de baselines publicados significativos, pero Git y la plataforma de delivery conservan el detalle exhaustivo.
 
-No uses Wiki como backlog, archivo de TASK/REPORT, log de chats, diffs o transcripciones. Mantén `current-state` como snapshot/índice operativo compacto y mueve detalle reusable a páginas de dominio. No obligues al coding agent a leerla completa.
+No uses Wiki como backlog, archivo de TASK/REPORT, log de chats, diffs o transcripciones. Mantén `current-state` como snapshot/índice operativo compacto que exponga estado vigente, outcomes activos, milestones/capabilities relevantes, blockers, próximos horizontes ya aceptados y Operational Baseline cuando aplique; mueve detalle reusable a páginas de dominio. No obligues al coding agent a leerla completa.
 
 ## Actualizar la referencia local de IA-DOS
 
