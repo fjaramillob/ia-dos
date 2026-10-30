@@ -29,7 +29,8 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] Declara `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA` cuando corresponda.
 - [ ] `CONDITIONAL` depende de triggers explícitos definidos por gobierno y no delega dirección al Coding Agent.
 - [ ] Impacto estructural pendiente usa `ROUTE_TO_90`; una Wiki Task ya gobernada por 90 que materializa correctamente termina `UPDATED`.
-- [ ] `current-state` permanece como snapshot/índice compacto y no como historial acumulativo.
+- [ ] `current-state` permanece como snapshot/índice compacto con estado vigente, outcomes activos, milestones/capabilities relevantes, blockers, próximos horizontes ya aceptados y Operational Baseline cuando aplique.
+- [ ] `DEFERRED` acumulado no deja materialmente incompleta la superficie caliente de memoria.
 - [ ] Un cambio de baseline publicado actualiza el `Operational Baseline` aunque la memoria semántica sea `NONE`.
 - [ ] El Operational Baseline distingue último HEAD remoto verificado de commit/versión productiva cuando divergen.
 - [ ] La Wiki permite que un Coding Agent nuevo se oriente con repo + memoria relevante + Task vigente y luego revalide la realidad.
@@ -43,7 +44,9 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] Toda Execution Task usa Revalidate para estado volátil ordinario.
 - [ ] Una Execution Task declara Protected Invariants, Adaptation Authority y Protected Boundaries.
 - [ ] Con BOUNDED, debugging, repair-in-place y safe retry reversibles permanecen dentro de la misma ejecución.
-- [ ] Execution Resume se reserva para bloqueo externo/interrupción real y conserva outcome, invariantes, fronteras, alcance, autoridad, seguridad y arquitectura.
+- [ ] Execution Resume se reserva para bloqueo externo, interrupción real o Human Decision Checkpoint resuelto y conserva outcome, invariantes, fronteras, alcance, autoridad, seguridad y arquitectura.
+- [ ] Crear/materializar/rutear/iniciar una Task no se trata como decisión humana por sí misma cuando la autoridad ya está delegada.
+- [ ] Los Human Decision Checkpoints derivan sólo decisiones materiales y no microaprobaciones de orquestación.
 - [ ] Una `Execution Task` representa una sola unidad terminable y verificable.
 - [ ] Una `Execution Cell` conserva continuidad, no especialidad ni permisos acumulados.
 - [ ] Una conversación activa de Execution Cell se reutiliza mientras siga respondiendo bien.
