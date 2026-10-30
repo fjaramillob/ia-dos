@@ -40,6 +40,22 @@ Coding Agent
 
 El coding agent no aprueba su propio plan ni su propia ejecución.
 
+### Filtro de decisión humana
+
+La atención humana se reserva para **decisiones materiales**, no para la mecánica de orquestación.
+
+Crear, nombrar, materializar, rutear o iniciar una `Planning Task`, `Environment Preflight`, `Execution Task` o `Execution Resume` **no constituye por sí mismo una decisión humana** cuando:
+
+- la dirección ya está aceptada;
+- outcome, Protected Invariants y Protected Boundaries permanecen estables;
+- la autoridad necesaria ya fue delegada;
+- el transporte o escritura del artefacto ya está permitido;
+- no aparece una decisión material nueva.
+
+En ese caso, el Cycle Owner puede preparar y despachar la siguiente unidad sin pedir una aprobación cuya única pregunta sea «¿creo la Task?» o equivalente.
+
+La persona responsable interviene por **la decisión real**: nueva frontera, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento, dirección o impacto material.
+
 ## Continuidad
 
 Cuando el proyecto ya está en desarrollo:
@@ -196,6 +212,8 @@ No bloquees una tarea autosuficiente por ceremonia. No uses cantidad de mensajes
 El Conversation Space que confirma el resultado lo gobierna mientras permanezca dentro de su dominio.
 
 Mantiene objetivo y límites, prepara o valida tareas, revisa retornos y decide dentro de la autoridad delegada. Obtiene aprobación humana cuando la operación excede esa autoridad.
+
+Cuando un retorno aceptado deja intactos dirección, outcome, roadmap vigente cuando exista, Protected Invariants, Protected Boundaries y autoridad, el Cycle Owner puede **continuar y despachar el siguiente trabajo lógico sin otra ida y vuelta humana**. Esta continuidad delegada pertenece al gobierno conversacional; no autoriza al Coding Agent a iniciar por sí mismo otra unidad.
 
 No existe dispatcher obligatorio. Un Conversation Space autorizado puede dirigir su tarea a la Execution Cell adecuada sin pasar por `50`.
 
@@ -377,6 +395,10 @@ Una Task separada de Wiki se reserva para bootstrap, consolidación de múltiple
 
 El Cycle Owner define política y triggers. El Coding Agent puede materializar cambios `LOCAL`, pero ante impacto `90_STRUCTURAL` reporta `Durable Memory Impact: ROUTE_TO_90` y no decide por sí mismo la síntesis estructural.
 
+`DEFERRED` es válido para un outcome individual, pero no puede acumularse indefinidamente. El Cycle Owner reevalúa el conjunto cuando varios deltas, tomados en conjunto, cambian el estado vigente, outcome activo, capability/milestone, blocker material, horizonte aceptado o modelo de autoridad del proyecto. Ese cambio acumulado activa consolidación durable según `Memory Stewardship`, sin usar un umbral numérico de Tasks.
+
+Cuando existe memoria durable, su superficie caliente debe permitir reconstruir con lectura acotada: estado actual, outcomes activos, blockers o decisiones materiales pendientes, próximos horizontes ya aceptados y Operational Baseline cuando aplique. No debe exigir recorrer el historial exhaustivo para responder qué está vigente ahora.
+
 Consulta `docs/foundations/memory-stewardship.md`.
 
 ## Contexto de una Task
@@ -414,7 +436,9 @@ Un nuevo Coding Agent lee Task + Checkpoint, verifica el estado real y continúa
 
 ## Execution Resume
 
-Reanuda la misma Execution Task cuando una condición externa o interrupción real fue resuelta sin cambiar outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad o arquitectura.
+Reanuda la misma Execution Task cuando una condición externa, interrupción real o Human Decision Checkpoint fue resuelto sin cambiar outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad o arquitectura.
+
+Una Execution Task larga puede declarar **Human Decision Checkpoints** anticipados. Al alcanzarlos, el Coding Agent se detiene antes de la acción protegida y expone únicamente la evidencia y decisión material necesarias; la Task no se considera terminada sólo por esa pausa. Si la decisión humana selecciona una opción ya prevista por el contrato sin cambiar outcome ni fronteras materiales, un `Execution Resume` con el mismo Task ID transmite ese delta y continúa la misma Task. Si la decisión crea una frontera material nueva, corresponde nueva Task o Planning cuando exista una decisión de diseño pendiente.
 
 Con `Adaptation Authority: BOUNDED`, las reparaciones técnicas internas y safe retries no exigen Resume mientras la ejecución siga abierta y la frontera material permanezca estable.
 
@@ -423,7 +447,7 @@ Su semántica es:
 ```text
 Execution Resume
 = Task original
-+ delta del bloqueo resuelto
++ delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto
 ```
 
 Conserva Task ID y no amplía permisos. Si cambia una Protected Boundary, un invariante u otra frontera material, prepara nueva Execution Task o vuelve a Planning sólo si existe una decisión material pendiente.

@@ -34,7 +34,7 @@ Antes de emitir la tarea confirma:
 - [ ] Memory Policy = `NONE | CONDITIONAL | REQUIRED` y, si aplica, sus triggers están definidos;
 - [ ] Memory Stewardship = `LOCAL | 90_STRUCTURAL | NO APLICA`;
 - [ ] Operational Baseline = `UPDATE_IF_PUBLISHED | UNCHANGED | NO APLICA`;
-- [ ] las decisiones humanas indispensables para esta frontera están resueltas;
+- [ ] las decisiones humanas indispensables para esta frontera están resueltas o declaradas como Human Decision Checkpoints anticipados;
 - [ ] la Task puede llegar a Final State sin cambiar materialmente outcome, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
 No dividas una Task sólo por duración, cantidad de archivos/comandos o porque incluya implementación, tests, commit, push, deploy o smoke.
@@ -109,6 +109,7 @@ Debe viajar dentro de esta Task:
 - criterios de aceptación;
 - verificaciones;
 - condiciones de detención;
+- Human Decision Checkpoints cuando corresponda;
 - Output Delivery cuando corresponda.
 
 ## Required Reading
@@ -206,6 +207,29 @@ cambio material de outcome, Protected Invariants o Protected Boundary
 ```
 
 El coding agent nunca aprueba su propio plan o ejecución.
+
+## Human Decision Checkpoints, si aplica
+
+Úsalos cuando una Task larga pueda avanzar autónomamente hasta una decisión humana material ya anticipada.
+
+```text
+Decision:
+- [DECISIÓN MATERIAL]
+
+Blocked action:
+- [ACCIÓN QUE NO PUEDE OCURRIR ANTES DE LA DECISIÓN]
+
+Decision packet:
+- [EVIDENCIA MÍNIMA QUE DEBE VER LA PERSONA]
+```
+
+Reglas:
+
+- no son Artifact Types;
+- no se usan para pedir permiso de crear/rutear otra Task, guardar un output autorizado, hacer debugging o ejecutar una lectura ya permitida;
+- el Coding Agent se detiene antes de la acción protegida y conserva continuidad de la misma Task;
+- si la persona selecciona una opción ya prevista y no cambia outcome ni fronteras, continúa con `Execution Resume` y el mismo Task ID;
+- si la respuesta introduce una frontera material nueva, vuelve al Cycle Owner para nueva delimitación.
 
 ## Contrato de memoria durable
 
@@ -311,7 +335,8 @@ Detente y reporta cuando:
 - falle una verificación crítica y no exista reparación segura dentro del scope;
 - un intento haya producido side effects materiales o estado parcial no cubierto por recovery;
 - aparezca riesgo de seguridad, pérdida de datos o coste no cubierto;
-- sea necesaria una decisión no confirmada;
+- se alcance un Human Decision Checkpoint antes de la acción protegida;
+- sea necesaria una decisión material no anticipada o no confirmada;
 - cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - una precondición de memoria o readiness deje de cumplirse.
 
@@ -357,4 +382,4 @@ No repitas tests, commits, deploy, smoke ni detalle que ya vive en el Report.
 
 ## Autoridad posterior
 
-El Cycle Owner revisa dentro de autoridad delegada. La persona responsable interviene cuando la decisión posterior cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
+El Cycle Owner revisa dentro de autoridad delegada. Si el resultado deja estables dirección, roadmap vigente cuando exista, Protected Invariants, Protected Boundaries y autoridad, puede despachar la continuación lógica sin pedir aprobación por la mera creación de otra Task. La persona responsable interviene cuando la decisión posterior cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.

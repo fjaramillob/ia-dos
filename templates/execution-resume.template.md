@@ -1,6 +1,6 @@
 # Execution Resume
 
-Usa este artefacto para reanudar la **misma Execution Task** después de una interrupción real, una acción externa o un bloqueo que el executor no podía resolver dentro de su autoridad.
+Usa este artefacto para reanudar la **misma Execution Task** después de una interrupción real, una acción externa, un Human Decision Checkpoint resuelto o un bloqueo que el executor no podía resolver dentro de su autoridad.
 
 No lo uses para debugging ordinario, repair-in-place o safe retry mientras la misma Execution siga abierta bajo `Adaptation Authority: BOUNDED`.
 
@@ -25,8 +25,13 @@ Execution Cell o sesión: [NOMBRE O NO APLICA]
 Cycle Owner: [CONVERSATION SPACE]
 Destino: [CONVERSATION SPACE]
 
-CONDICIÓN EXTERNA O INTERRUPCIÓN QUE BLOQUEÓ
-[CONDICIÓN]
+CONDICIÓN EXTERNA, INTERRUPCIÓN O HUMAN DECISION CHECKPOINT QUE BLOQUEÓ
+[CONDICIÓN O DECISIÓN MATERIAL]
+
+DECISIÓN HUMANA, SI APLICA
+- decisión: [OPCIÓN SELECCIONADA | NO APLICA]
+- confirma una opción ya prevista por la Task: [SÍ | NO APLICA]
+- nueva frontera material introducida: [NO; si SÍ, este Resume no aplica]
 
 EVIDENCIA DE RESOLUCIÓN
 [COMANDO, SALIDA O CONFIRMACIÓN]
@@ -62,7 +67,7 @@ Semántica:
 ```text
 Execution Resume
 = Task original
-+ delta del bloqueo externo o interrupción real resuelta
++ delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto
 ```
 
 Si la tarea original utiliza una Execution Cell activa y sigue respondiendo bien, reanuda en esa misma célula. No crees una conversación nueva sólo por el bloqueo resuelto.

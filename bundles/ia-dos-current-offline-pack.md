@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.4 — ejecución adaptativa / custodia estructural 2026-10-26`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.5 — continuidad delegada / memoria caliente 2026-10-30`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -21,6 +21,8 @@ Adaptation Authority = autonomía técnica explícita dentro de Execution Task
 Protected Boundaries = fronteras materiales que requieren gates/autoridad
 Authority Envelope = permisos explícitos dentro de Execution Task
 Execution Checkpoint = continuidad operacional, no autoridad
+Human Decision Checkpoint = pausa material dentro de la misma Execution Task
+Delegated Continuity = continuidad del Cycle Owner dentro de autoridad ya aceptada
 Execution Report = evidencia de lo ocurrido
 Memory Policy = criterio semántico dentro de Execution Task
 Memory Stewardship = LOCAL | 90_STRUCTURAL | NO APLICA
@@ -40,6 +42,14 @@ La persona responsable define propósito, prioridad, restricciones y autoridad.
 Project Orchestrator y Cycle Owner gobiernan dentro de autoridad delegada. La persona responsable interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 El coding agent no aprueba su propio plan o ejecución.
+
+### Filtro de decisión humana
+
+Crear, nombrar, materializar, rutear o iniciar una Task no constituye por sí mismo una decisión humana cuando dirección, outcome, Protected Invariants, Protected Boundaries y autoridad permanecen estables y el canal de entrega ya está permitido.
+
+El Cycle Owner puede despachar la continuación lógica dentro de autoridad delegada. La persona responsable recibe sólo la decisión material real: nueva dirección, frontera, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+
+El Coding Agent no gana esa autoridad de gobierno: no elige roadmap ni inicia por sí mismo otra unidad.
 
 ### Adaptation Authority
 
@@ -93,6 +103,7 @@ No lo uses para routing entre Conversation Spaces.
 - outcome definido → Execution Task con planificación interna y Revalidate;
 - brecha de otro dominio → Specialist Handoff;
 - decisión material fuera de autoridad → deriva sólo esa decisión;
+- retorno aceptado + dirección/roadmap vigente + invariantes/fronteras/autoridad estables → el Cycle Owner puede despachar la continuación lógica sin microaprobación;
 - reorientación → escala a `00`.
 
 ## Memory Bootstrap Gate
@@ -216,6 +227,22 @@ cambio material de frontera
 
 El coding agent no aprueba su propio plan o ejecución.
 
+## Human Decision Checkpoints
+
+Una Execution Task larga puede declarar decisiones humanas materiales anticipadas sin fragmentar de antemano el outcome.
+
+```text
+Execution Task
+→ trabajo autónomo dentro de autoridad
+→ Human Decision Checkpoint
+→ STOP antes de la acción protegida
+→ persona decide sólo la cuestión material
+→ Execution Resume con el mismo Task ID
+→ continuación
+```
+
+No se usan checkpoints humanos para aprobar creación/routing de Tasks, outputs ya autorizados, lecturas cubiertas, debugging o subfases rutinarias. Si la respuesta humana introduce una frontera material nueva, corresponde nueva delimitación.
+
 ## Memoria dentro del outcome
 
 Cuando el proyecto usa memoria durable, la Execution Task declara:
@@ -254,6 +281,20 @@ Cuando aplica `90_STRUCTURAL`, el Execution Report usa `Durable Memory Impact: R
 Una Task WIKI separada se reserva para bootstrap, consolidación de varios outcomes, custodia estructural, reparación o una frontera de autoridad distinta.
 
 El Cycle Owner define política y triggers. El Coding Agent materializa memoria LOCAL dentro de autoridad; no decide roadmap, prioridades o dirección.
+
+`DEFERRED` es válido para un outcome individual, pero no se acumula indefinidamente. Cuando varios outcomes juntos cambian estado vigente, outcome activo, capability/milestone, blocker material, próximo horizonte aceptado, autoridad reusable o la relación implementación/publicación, el Cycle Owner debe consolidar memoria según `Memory Stewardship`. No existe umbral por cantidad de Tasks.
+
+La superficie caliente de memoria —`status/current-state.md` en el starter o equivalente— debe permitir reconstruir con lectura acotada:
+
+- qué es verdad ahora;
+- outcomes activos;
+- capabilities/milestones relevantes;
+- blockers o decisiones materiales pendientes;
+- próximos horizontes ya aceptados, si existe roadmap;
+- Operational Baseline cuando aplique;
+- links hacia detalle de dominio.
+
+Esa superficie representa dirección ya aceptada; no inventa roadmap ni prioridades nuevas.
 
 ## Compresión de contexto
 
@@ -311,7 +352,7 @@ Un nuevo Coding Agent lee Task + Checkpoint, verifica estado real y continúa de
 ```text
 Execution Resume
 = Task original
-+ delta del bloqueo externo o interrupción real resuelta
++ delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto
 ```
 
 Conserva Task ID y sólo aplica si outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura siguen sin cambios. Repair-in-place dentro de una ejecución abierta no exige Resume.
@@ -462,11 +503,11 @@ repositorio real
 → revalida el estado real antes de modificar
 ```
 
-No actualices semánticamente la Wiki por cada ejecución. Usa `NONE | CONDITIONAL | REQUIRED` y consolida varios outcomes cuando juntos produzcan un cambio durable.
+No actualices semánticamente la Wiki por cada ejecución. Usa `NONE | CONDITIONAL | REQUIRED` y consolida varios outcomes cuando juntos produzcan un cambio durable. `DEFERRED` no puede mantener indefinidamente una imagen materialmente desactualizada del estado vigente.
 
 Cuando cambia publicación, actualiza el Operational Baseline aunque `Memory Policy = NONE`. Puede existir un historial compacto de baselines publicados significativos, pero Git y la plataforma de delivery conservan el detalle exhaustivo.
 
-No uses Wiki como backlog, archivo de TASK/REPORT, log de chats, diffs o transcripciones. Mantén `current-state` como snapshot/índice operativo compacto y mueve detalle reusable a páginas de dominio. No obligues al coding agent a leerla completa.
+No uses Wiki como backlog, archivo de TASK/REPORT, log de chats, diffs o transcripciones. Mantén `current-state` como snapshot/índice operativo compacto que exponga estado vigente, outcomes activos, milestones/capabilities relevantes, blockers, próximos horizontes ya aceptados y Operational Baseline cuando aplique; mueve detalle reusable a páginas de dominio. No obligues al coding agent a leerla completa.
 
 ## Actualizar la referencia local de IA-DOS
 

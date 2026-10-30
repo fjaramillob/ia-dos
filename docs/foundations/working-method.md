@@ -48,6 +48,8 @@ Distingue:
 
 El Cycle Owner actúa dentro de autoridad delegada. La persona responsable interviene cuando cambian materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
+Crear, materializar, rutear o iniciar una Task no es por sí mismo una decisión humana. Si dirección, outcome, invariantes, fronteras y autoridad siguen estables, el Cycle Owner continúa sin convertir la mecánica de orquestación en un checkpoint humano.
+
 Las decisiones que deban reutilizarse se registran en memoria durable cuando corresponda.
 
 ## 3. Delimitar
@@ -103,9 +105,11 @@ Una misma Task puede contener fases internas de revalidación, implementación, 
 
 Una Execution Cell puede preservar continuidad entre tareas, pero no hereda permisos.
 
-`Execution Resume` se usa sólo después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad. Sólo aplica si outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura siguen sin cambios. Su semántica es `Task original + delta del bloqueo externo o interrupción real resuelta`. Repair-in-place durante una Execution abierta no exige Resume.
+`Execution Resume` se usa sólo después de una interrupción real, acción externa, Human Decision Checkpoint resuelto o bloqueo que el executor no podía resolver dentro de su autoridad. Sólo aplica si outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura siguen sin cambios. Su semántica es `Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto`. Repair-in-place durante una Execution abierta no exige Resume.
 
 Para una tarea larga puede existir un sidecar operacional `<TASK-ID>-CHECKPOINT.md`. Registra continuidad, no autorización.
+
+Una Task larga puede declarar Human Decision Checkpoints. El executor avanza hasta el checkpoint, se detiene antes de la acción protegida y deriva sólo la decisión material. Si la respuesta humana activa una opción ya prevista y no cambia la frontera, la misma Task continúa con `Execution Resume` y el mismo Task ID.
 
 ## 5. Verificar y aprender
 
@@ -140,7 +144,9 @@ Después de revisar:
 - la memoria semántica se actualiza según `Memory Policy` y `Memory Stewardship`;
 - impacto `90_STRUCTURAL` pendiente de custodia se reporta `ROUTE_TO_90` sin reabrir el outcome técnico;
 - si cambió un baseline publicado, el checkpoint operacional durable debe reflejar el estado final verificado;
-- varios outcomes menores pueden consolidarse más adelante en una sola actualización semántica cuando juntos cambien la comprensión vigente.
+- varios outcomes menores pueden consolidarse más adelante en una sola actualización semántica cuando juntos cambien la comprensión vigente;
+- `DEFERRED` deja de ser suficiente cuando la acumulación cambia estado actual, outcome activo, milestone/capability, blocker material, horizonte aceptado o autoridad vigente;
+- la superficie caliente de memoria debe permitir responder qué está vigente ahora sin recorrer historia exhaustiva.
 
 No copies conversaciones completas ni conviertas cada hallazgo en memoria permanente. Tampoco uses esta selectividad para dejar a un futuro agente sin saber qué versión está publicada.
 

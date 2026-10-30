@@ -142,6 +142,38 @@ NONE
 
 `ROUTE_TO_90` no significa que la ejecución técnica esté incompleta. Una vez que `90` recibe el handoff y gobierna una Wiki Update Task, esa ejecución documental reporta `UPDATED` si la materialización termina correctamente; no genera un nuevo `ROUTE_TO_90`.
 
+## Cumulative Memory Trigger
+
+`DEFERRED` describe correctamente un outcome individual que todavía no justifica una actualización semántica. No es permiso para acumular indefinidamente deltas que ya cambian la comprensión del proyecto.
+
+Reevalúa consolidación cuando varios outcomes, considerados en conjunto, cambian uno o más de estos elementos:
+
+- estado vigente;
+- outcome activo;
+- capability o milestone aceptado;
+- blocker o decisión material pendiente;
+- próximo horizonte ya aceptado;
+- arquitectura, autoridad, datos o contrato reusable;
+- Operational Baseline o relación relevante entre implementación y publicación.
+
+No existe umbral por número de Tasks, días, archivos o reportes. El trigger es **semántico**: si un agente nuevo recibiría una imagen materialmente equivocada o incompleta leyendo la memoria vigente, corresponde consolidar.
+
+Cuando el cambio acumulado es estructural y el proyecto adopta `90`, usa `ROUTE_TO_90`. Cuando es estrecho y local, puede consolidarse bajo `LOCAL` si existe autoridad.
+
+## Project State Continuity Invariant
+
+Cuando un proyecto adopta memoria durable, debe existir una superficie caliente —`status/current-state.md` en el starter o equivalente— desde la cual un Conversation Space o agente competente pueda reconstruir con lectura acotada:
+
+- qué es verdad ahora;
+- qué outcomes están activos;
+- qué capabilities/milestones relevantes están aceptados;
+- qué blockers o decisiones materiales siguen abiertos;
+- cuáles son los próximos horizontes ya aceptados, si existe roadmap;
+- cuál es el Operational Baseline vigente cuando aplique;
+- dónde profundizar para detalle de dominio.
+
+Esta superficie no inventa roadmap ni selecciona prioridades nuevas. Sólo representa dirección y estado ya aceptados.
+
 ## Higiene de Wiki
 
 La memoria caliente debe optimizar incorporación de agentes, no acumulación histórica.

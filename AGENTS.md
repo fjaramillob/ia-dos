@@ -84,9 +84,11 @@ Además:
 - divide o detén cuando cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - una acción sensible no declarada en la Task no está autorizada;
 - una acción explícitamente declarada, con gates cumplidos y frontera estable, no requiere otra ida y vuelta humana por rutina;
+- la mecánica de crear, materializar, rutear o iniciar una Task dentro de autoridad delegada no es por sí misma una decisión humana; el Cycle Owner puede continuar sin microaprobaciones mientras no cambie una frontera material;
+- una Task larga puede declarar Human Decision Checkpoints y continuar con el mismo Task ID mediante Execution Resume cuando la decisión humana activa una opción ya prevista;
 - el coding agent nunca aprueba su propio plan o ejecución;
 - `Authority Envelope` y `<TASK-ID>-CHECKPOINT.md` no son Artifact Types;
-- `Execution Resume = Task original + delta del bloqueo externo o interrupción real resuelta`; conserva Task ID mientras outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura no cambien;
+- `Execution Resume = Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto`; conserva Task ID mientras outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura no cambien;
 - repair-in-place y safe retry dentro de una Execution todavía abierta no requieren Execution Resume;
 - `Execution Report` es evidence-first y no vuelve a narrar la Task;
 - `Manual Artifact Launcher` es efímero y no autoritativo;
@@ -123,7 +125,8 @@ Una LLM Wiki:
 - no debe convertirse por defecto en backlog, archivo de TASK/REPORT, log de chats, diffs ni transcripciones;
 - no se actualiza semánticamente por cada ejecución: usa `NONE | CONDITIONAL | REQUIRED`;
 - cuando el proyecto adopta `90 — Documentación y memoria`, los cambios estructurales de arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza o reorganización relevante se derivan a ese custodio;
-- `current-state` debe funcionar como snapshot/índice operativo compacto, no como historial acumulativo;
+- `current-state` debe funcionar como snapshot/índice operativo compacto y permitir reconstruir estado vigente, outcomes activos, milestones/capabilities relevantes, blockers, próximos horizontes ya aceptados y Operational Baseline cuando aplique;
+- varios outcomes `DEFERRED` deben consolidarse cuando su efecto acumulado vuelve materialmente incompleta esa superficie caliente; no uses cantidad de Tasks como umbral;
 - si cambió un estado publicado, actualiza siempre el baseline operacional adoptado por el proyecto antes de considerar completamente cerrado ese outcome, salvo imposibilidad reportada explícitamente.
 
 ## Reglas para agentes
@@ -157,6 +160,9 @@ Antes de cerrar una tarea:
 - distingue evidencia histórica de contratos vigentes;
 - confirma que no se reintroduzcan Planning/Preflight/Resume rutinarios que C03 absorbió dentro de Execution;
 - confirma que no se reintroduzcan aprobaciones rutinarias no exigidas por Protected Boundaries;
+- confirma que no se trate la creación/routing de una Task como decisión humana por sí misma;
+- confirma que Human Decision Checkpoints no se usen para microaprobaciones y que una pausa material pueda continuar por Resume cuando la frontera siga estable;
+- confirma que `DEFERRED` acumulado no deje `current-state` materialmente desactualizado;
 - confirma que Exchange no se confunda con un proveedor de sincronización;
 - reporta supuestos, limitaciones y pendientes reales.
 

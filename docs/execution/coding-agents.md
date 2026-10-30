@@ -54,7 +54,7 @@ Coding Agent — Execution
 → materializa, verifica y reporta
 ```
 
-La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante. El Cycle Owner actúa dentro de la autoridad delegada.
+La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante. El Cycle Owner actúa dentro de la autoridad delegada y puede despachar continuidad lógica sin microaprobaciones cuando la frontera permanece estable. El Coding Agent no hereda esa autoridad de gobierno.
 
 Un coding agent no debe asumir autoridad para cambiar propósito, prioridades, arquitectura, alcance, costes, seguridad o producción cuando el artefacto recibido no lo autoriza. Dentro de `Adaptation Authority: BOUNDED`, sí puede cambiar mecanismos técnicos equivalentes, reparar implementation defects y realizar safe retry sin nueva ida y vuelta cuando Protected Invariants y Protected Boundaries permanecen intactos.
 
@@ -133,6 +133,8 @@ La célula no representa una tarea, una profesión ni un Conversation Space. Por
 Mantén una sola conversación activa por célula mientras siga respondiendo bien. Renueva únicamente ante degradación, contaminación de contexto o necesidad real de contexto limpio.
 
 Reutilizar una conversación no acumula permisos. Cada nueva `Execution Task` vuelve a declarar su autoridad y el coding agent no inicia por sí mismo la siguiente unidad.
+
+Cuando una Task declara un Human Decision Checkpoint, el Coding Agent avanza hasta ese punto, se detiene antes de la acción protegida y presenta sólo la evidencia/decisión material definida. No pide permiso para crear/rutear Tasks, guardar outputs ya autorizados, hacer debugging o ejecutar lecturas cubiertas. Si la decisión humana activa una opción ya prevista y la frontera sigue estable, reanuda la misma Task mediante `Execution Resume`.
 
 Consulta [Execution Cells y Exchange](execution-cells-and-exchange.md).
 

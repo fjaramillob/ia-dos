@@ -96,6 +96,16 @@ El default es `Execution Task` outcome-first con planificación interna y `Reval
 
 No es una pipeline rígida. Planning y Preflight separados son excepcionales; debugging, reparación y revalidación ordinarios viven dentro de la ejecución cuando la autoridad lo permite.
 
+## Filtro de decisión humana y continuidad delegada
+
+La atención humana se reserva para **decisiones materiales**, no para la mecánica de orquestación.
+
+Crear, nombrar, materializar, rutear o iniciar una Task no requiere por sí mismo otra aprobación cuando dirección, outcome, Protected Invariants, Protected Boundaries y autoridad siguen estables. El Cycle Owner puede continuar y despachar la siguiente unidad lógica dentro de autoridad ya delegada.
+
+Una Execution Task larga puede declarar Human Decision Checkpoints. El Coding Agent avanza hasta la decisión real, se detiene antes de la acción protegida y presenta sólo la evidencia necesaria. Si la persona selecciona una opción ya prevista sin cambiar la frontera material, la misma Task continúa mediante `Execution Resume` con el mismo Task ID.
+
+El Coding Agent sigue sin poder elegir roadmap ni iniciar por sí mismo otra unidad.
+
 ## Tipos de artefacto
 
 Cada bloque transferible declara su receptor y salida esperada:
@@ -200,7 +210,7 @@ repositorio real
 → puede aportar
 ```
 
-No toda ejecución merece modificar semánticamente la Wiki. `CONDITIONAL` responde sólo a triggers explícitos del Cycle Owner; varios outcomes menores pueden consolidarse más adelante.
+No toda ejecución merece modificar semánticamente la Wiki. `CONDITIONAL` responde sólo a triggers explícitos del Cycle Owner; varios outcomes menores pueden consolidarse más adelante. `DEFERRED` deja de ser suficiente cuando la acumulación cambia materialmente el estado vigente, outcome activo, capability/milestone, blocker, horizonte ya aceptado o autoridad que un agente nuevo necesita comprender.
 
 La continuidad publicada sí se conserva: cuando cambia producción/release, el Operational Baseline registra repo/branch, último HEAD remoto verificado, commit/versión publicada, deployment/release, entorno y fecha según aplique. `Repository HEAD` y `Production Commit` pueden diferir.
 
@@ -208,7 +218,7 @@ Cuando el proyecto adopta `90 — Documentación y memoria`, los cambios durable
 
 El Operational Baseline y memoria estrecha no estructural pueden seguir actualizándose dentro de la misma Execution Task. Una Wiki Update Task separada queda para bootstrap, consolidación, reparación/migración, custodia estructural o una frontera de autoridad distinta.
 
-La LLM Wiki no es obligatoria para cada proyecto ni exige repositorio separado. `current-state` debe mantenerse como snapshot/índice operativo compacto, no como acumulación cronológica. La Wiki no guarda TASK/REPORT, logs, diffs o transcripciones por defecto y el Coding Agent no la lee completa por rutina.
+La LLM Wiki no es obligatoria para cada proyecto ni exige repositorio separado. `current-state` debe mantenerse como snapshot/índice operativo compacto: estado vigente, outcomes activos, milestones/capabilities relevantes, blockers o decisiones materiales pendientes, próximos horizontes ya aceptados y Operational Baseline cuando aplique. La Wiki no guarda TASK/REPORT, logs, diffs o transcripciones por defecto y el Coding Agent no la lee completa por rutina.
 
 Consulta [Memoria durable portable y Obsidian](docs/foundations/durable-memory-and-obsidian.md).
 
@@ -278,7 +288,7 @@ El mecanismo de transporte no cambia ese contrato.
 
 ## Execution Resume
 
-`Execution Resume` reanuda la misma Execution Task después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad, siempre que sigan sin cambios outcome, alcance, autoridad, seguridad, arquitectura y Protected Invariants.
+`Execution Resume` reanuda la misma Execution Task después de una interrupción real, acción externa, Human Decision Checkpoint resuelto o bloqueo que el executor no podía resolver dentro de su autoridad, siempre que sigan sin cambios outcome, alcance, autoridad, seguridad, arquitectura, Protected Invariants y Protected Boundaries.
 
 Con `Adaptation Authority: BOUNDED`, una reparación técnica ordinaria sin side effects materiales se resuelve **dentro de la misma ejecución** y no exige Resume. Conserva Task ID y no amplía permisos.
 

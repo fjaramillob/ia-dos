@@ -127,7 +127,7 @@ Criterio de avance: estas mejoras deben surgir de necesidades observadas en proy
 
 ## `v0.1.0-alpha.4` — Adaptive execution and structural memory
 
-**Estado: ACTUAL**
+**Estado: COMPLETADO**
 
 Objetivo: elevar IA-DOS desde ejecución guiada por pasos hacia gobierno por outcomes, invariantes y fronteras, manteniendo dirección humana y memoria portable.
 
@@ -150,11 +150,24 @@ Criterio de estabilidad: un agente nuevo debe poder aplicar el mismo contrato vi
 
 ---
 
-## `v0.1.0-alpha.5` — Portability and adoption quality
+## `v0.1.0-alpha.5` — Delegated continuity and adoption quality
 
-**Estado: PLANIFICADO**
+**Estado: ACTUAL**
 
-Objetivo: hacer que IA-DOS sea fácil de adoptar, transportar y mantener sin perder equivalencia entre contratos.
+Objetivo: reducir fricción de gobierno sin transferir dirección humana, y mantener memoria caliente suficiente para que proyectos complejos puedan sostener ejecuciones más largas y agentes más capaces.
+
+Consolidado mediante evidencia de adopción real:
+
+- `Non-Decision Rule`: crear, materializar, rutear o iniciar una Task no es por sí mismo una decisión humana cuando la frontera ya está autorizada;
+- continuidad delegada del Cycle Owner para despachar trabajo posterior dentro de dirección, roadmap vigente, invariantes, fronteras y autoridad ya aceptados;
+- Human Decision Checkpoints dentro de Execution Tasks largas, con pausa antes de la acción protegida y reanudación mediante el mismo Task ID cuando la opción ya estaba prevista;
+- `Cumulative Memory Trigger`: múltiples outcomes `DEFERRED` se consolidan cuando su efecto conjunto cambia materialmente la comprensión vigente, sin umbral por cantidad de Tasks;
+- `Project State Continuity Invariant`: la memoria caliente debe permitir reconstruir estado vigente, outcomes activos, milestones/capabilities, blockers, próximos horizontes aceptados y Operational Baseline con lectura acotada;
+- preservación de la regla de que el Coding Agent no elige roadmap ni inicia por sí mismo otra unidad;
+- continuidad de `90 — Documentación y memoria` como custodio estructural opcional, sin convertirlo en gate de cada ejecución;
+- eliminación de heurísticas residuales que incentiven microtasks por tamaño o pausas ceremoniales.
+
+Prioridades todavía abiertas dentro de alpha.5:
 
 - validar onboarding con distintos asistentes y coding agents;
 - comprobar comportamiento con y sin acceso al repositorio IA-DOS;

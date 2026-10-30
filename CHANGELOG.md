@@ -8,6 +8,15 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- incorporada la `Non-Decision Rule`: crear, materializar, rutear o iniciar una Task dentro de autoridad delegada no constituye por sí mismo una decisión humana;
+- habilitada `Delegated Continuity` para que el Cycle Owner despache la continuación lógica sin microaprobaciones cuando dirección, roadmap vigente, Protected Invariants, Protected Boundaries y autoridad permanecen estables;
+- añadidos `Human Decision Checkpoints` dentro de Execution Tasks largas: la ejecución pausa antes de la acción protegida y puede continuar con el mismo Task ID mediante Execution Resume cuando la decisión humana activa una opción ya prevista;
+- preservada la frontera de gobierno: el Coding Agent no selecciona roadmap ni inicia por sí mismo otra unidad;
+- añadido `Cumulative Memory Trigger` para consolidar outcomes `DEFERRED` cuando su efecto conjunto cambia materialmente el estado vigente, sin umbrales por número de Tasks;
+- añadido `Project State Continuity Invariant` para que la memoria caliente permita reconstruir outcomes activos, milestones/capabilities, blockers, próximos horizontes aceptados y Operational Baseline con lectura acotada;
+- ampliado el Wiki Starter `current-state` con outcomes activos, capabilities/milestones, blockers/decisiones materiales y próximos horizontes aceptados;
+- propagados estos contratos a Orchestrator, responsabilidades, método, Cycle Ownership, ejecución adaptativa, Resume, templates, prompts, instrucciones persistentes, documentación de entrada y Current Offline Pack;
+- avanzado `v0.1.0-alpha.5` a estado actual como ciclo de delegated continuity/adoption quality, manteniendo IA-DOS agnóstico respecto de proyectos y proveedores;
 - alineadas todas las superficies normativas y copiables con `v0.1.0-alpha.4`, eliminando rutas activas que todavía enseñaban Planning/Preflight como fases por defecto;
 - incorporados `Protected Invariants`, `Adaptation Authority` y `Protected Boundaries` en `AGENTS.md`, project instructions, onboarding, rutas rápidas, checklists y templates de adopción;
 - reservado `Execution Resume` para bloqueos externos/interrupciones reales y normalizada su semántica como `Task original + delta del bloqueo externo o interrupción real resuelta`;
@@ -15,7 +24,7 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 - redefinido `90 — Documentación y memoria` como custodio de memoria durable estructural, sin convertirlo en dispatcher ni gate de cada ejecución;
 - aclarado que `ROUTE_TO_90` significa impacto estructural pendiente de custodia y que una Wiki Update Task ya gobernada por `90` reporta `UPDATED` al materializar correctamente;
 - actualizado el criterio de `current-state` como snapshot/índice operativo compacto y reforzada la higiene de Exchange activo;
-- corregido el versionado documental: `v0.1.0-alpha.4` representa ejecución adaptativa/custodia estructural y `v0.1.0-alpha.5` queda reservado para portability/adoption quality;
+- corregido el versionado documental: `v0.1.0-alpha.4` representa ejecución adaptativa/custodia estructural y `v0.1.0-alpha.5` continúa la validación de adoption quality con delegated continuity;
 - publicada una nueva auditoría integral vigente del repositorio posterior a C03/C04.
 
 - incorporados `Protected Invariants`, `Adaptation Authority: NONE | BOUNDED` y `Protected Boundaries` como contrato explícito de ejecución adaptativa;

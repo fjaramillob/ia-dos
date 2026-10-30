@@ -104,6 +104,7 @@ Detente cuando:
 - una prueba crítica falla y no existe reparación segura dentro del scope;
 - aparece estado parcial o irreversible no cubierto por recovery;
 - aparece un riesgo de seguridad, pérdida de datos o coste no cubierto;
+- se alcanza un Human Decision Checkpoint declarado antes de la acción protegida;
 - se requiere una decisión material de producto, arquitectura o seguridad no confirmada;
 - para continuar debes cambiar un Protected Invariant o cruzar una Protected Boundary no autorizada.
 
@@ -124,6 +125,8 @@ No inventes una sección de `conocimiento potencialmente durable` ni una siguien
 Si `Memory Stewardship = LOCAL`, materializa sólo la memoria autorizada. Si `Memory Stewardship = 90_STRUCTURAL` y la custodia todavía no ocurrió, reporta `ROUTE_TO_90` en vez de sintetizar memoria estructural por tu cuenta. Una Wiki Update Task estructural ya gobernada por `90` que termina correctamente reporta `UPDATED`.
 
 Si cambia un baseline publicado, conserva el checkpoint operacional autorizado aunque la memoria semántica sea `NONE`.
+
+Si varios outcomes previos quedaron `DEFERRED`, no asumas que pueden seguir acumulándose: cuando el efecto conjunto cambie estado vigente, outcome activo, milestone/capability, blocker, horizonte aceptado o autoridad reusable, el Cycle Owner debe consolidar memoria según `Memory Stewardship`. El Coding Agent reporta hechos; no inventa esa dirección.
 
 ## Formato del reporte final
 
