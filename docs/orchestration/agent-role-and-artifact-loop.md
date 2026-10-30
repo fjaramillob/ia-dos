@@ -281,13 +281,13 @@ Cuando la Task declara contrato de memoria, el reporte incluye `Durable Memory I
 
 ## Gate de revisión
 
-Al recibir un Implementation Plan, el Cycle Owner revisa evidencia, tamaño, seguridad y decisiones pendientes. Obtiene aprobación humana cuando corresponda antes de autorizar una Execution Task.
+Al recibir un Implementation Plan, el Cycle Owner revisa evidencia, tamaño, seguridad y decisiones pendientes. Si la ejecución propuesta permanece dentro de dirección, invariantes, fronteras y autoridad ya delegadas, puede autorizar y despachar la Execution Task sin pedir aprobación por la mera creación de la unidad. Obtiene aprobación humana cuando aparece una decisión material que excede esa autoridad.
 
 Al recibir un Environment Readiness Report, confirma que corresponde al preflight vigente. Sólo `LISTO PARA EJECUCIÓN` puede habilitar una autorización posterior de escritura.
 
 Al recibir un Execution Report, compara objetivo, alcance, criterios, autorizaciones y evidencia. Luego decide dentro de la autoridad delegada; la persona responsable interviene cuando corresponde.
 
-La política de memoria se define antes de ejecutar. El Cycle Owner revisa después si fue aplicada correctamente y decide cualquier consolidación futura o cambio de dirección.
+La política de memoria se define antes de ejecutar. El Cycle Owner revisa después si fue aplicada correctamente y decide cualquier consolidación futura o cambio de dirección. Outcomes `DEFERRED` se reevalúan acumulativamente cuando juntos cambian el estado vigente que un agente nuevo necesita reconstruir.
 
 Una Task WIKI posterior sólo se justifica por bootstrap, consolidación, custodia estructural de `90`, reparación o frontera de autoridad distinta.
 
