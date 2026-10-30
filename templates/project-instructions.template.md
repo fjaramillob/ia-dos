@@ -20,7 +20,8 @@ Responsabilidad
 - la persona responsable define propósito, prioridades, restricciones y autoridad;
 - el Project Orchestrator y el Cycle Owner gobiernan dentro de autoridad delegada;
 - la persona interviene cuando cambian materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante;
-- el Coding Agent no aprueba su propio plan o ejecución.
+- el Coding Agent no aprueba su propio plan o ejecución;
+- crear/materializar/rutear/iniciar una Task dentro de autoridad delegada no es por sí mismo una decisión humana; pregunta sólo por la decisión material real.
 
 Default operativo
 - gobierna outcomes, no secuencias rutinarias de pasos;
@@ -45,7 +46,8 @@ Resultados
 - outcome definido → Execution Task outcome-first con Revalidate interno;
 - defecto técnico reversible dentro de BOUNDED → repair-in-place, no nueva Task;
 - decisión de otro dominio → Specialist Handoff inline y copiable;
-- reorientación → escala a 00.
+- reorientación → escala a 00;
+- retorno aceptado + dirección/roadmap vigente + invariantes/fronteras/autoridad estables → el Cycle Owner puede despachar la continuación lógica sin microaprobación humana.
 
 Planning
 - Planning separado es excepcional;
@@ -71,8 +73,14 @@ Execution Task
   Revalidate → planificar internamente → Implement → Verify → Diagnose/Repair/Safe Retry → Commit → Push → Deploy → Production Smoke → Operational Baseline/memoria LOCAL → Final State;
 - divide o detente cuando cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
+Human Decision Checkpoints
+- una Execution Task larga puede anticipar decisiones humanas materiales;
+- el Coding Agent avanza hasta el checkpoint y se detiene antes de la acción protegida;
+- no se usan para aprobar creación/routing de Tasks, lecturas ya autorizadas, debugging o subfases rutinarias;
+- si la persona activa una opción ya prevista sin cambiar la frontera, continúa la misma Task con Execution Resume y el mismo Task ID.
+
 Execution Resume
-- se usa para una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad;
+- se usa para una interrupción real, acción externa, Human Decision Checkpoint resuelto o bloqueo que el executor no podía resolver dentro de su autoridad;
 - conserva Task ID;
 - semántica = Task original + delta del bloqueo externo o interrupción real resuelta;
 - sólo si outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura siguen sin cambios;
@@ -96,7 +104,8 @@ Memoria durable / LLM Wiki
 - 90_STRUCTURAL cubre arquitectura, datos/source of truth, seguridad/autoridad, contratos cross-domain, capacidades mayores, gobernanza y reorganización relevante;
 - cuando el proyecto adopta 90 — Documentación y memoria, un impacto estructural pendiente se reporta ROUTE_TO_90 y se transfiere mediante Specialist Handoff;
 - una Wiki Update Task estructural ya gobernada por 90 que materializa correctamente termina UPDATED, no vuelve a enrutar;
-- current-state debe ser snapshot/índice operativo compacto, no historial acumulativo;
+- current-state debe ser snapshot/índice operativo compacto con estado vigente, outcomes activos, milestones/capabilities relevantes, blockers, próximos horizontes ya aceptados y Operational Baseline cuando aplique;
+- varios `DEFERRED` se consolidan cuando su efecto acumulado cambia esa representación vigente; no existe umbral por número de Tasks;
 - un cambio de baseline publicado mantiene Operational Baseline aunque Memory Policy = NONE.
 
 Exchange
