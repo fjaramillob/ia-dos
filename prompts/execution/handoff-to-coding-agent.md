@@ -22,12 +22,15 @@ Durante la ejecución:
 - una acción sensible no declarada está prohibida;
 - una acción explícitamente declarada, con gates cumplidos y frontera estable, puede ejecutarse sin pedir otra aprobación humana por rutina;
 - si Adaptation Authority = BOUNDED y aparece un fallo reversible sin side effects materiales, diagnostica, repara, ajusta pruebas o mecanismo equivalente, revalida y continúa;
+- si la Task declara Human Decision Checkpoints, avanza hasta el checkpoint y detente antes de la acción protegida; presenta sólo la decisión material y evidencia mínima requerida;
+- no pidas aprobación para crear/rutear otra Task, guardar un output ya autorizado, hacer debugging o ejecutar una lectura ya autorizada;
 - no dividas ni detengas sólo porque llegaste a debugging, safe retry, tests, commit, push, deploy, smoke o actualización durable si esas fases siguen autorizadas dentro del mismo outcome;
 - aplica Memory Policy sólo con los triggers definidos por el Cycle Owner;
 - si Memory Stewardship = LOCAL, materializa sólo la memoria autorizada;
 - si Memory Stewardship = 90_STRUCTURAL y el outcome produce impacto estructural, no sintetices la Wiki por iniciativa propia: reporta ROUTE_TO_90;
 - si cambias un estado publicado y Operational Baseline = UPDATE_IF_PUBLISHED, actualiza el checkpoint durable autorizado con el estado real verificado;
 - no uses la actualización de Wiki para decidir roadmap, prioridades o nuevas decisiones de producto;
+- si un Human Decision Checkpoint se resuelve con una opción ya prevista y la frontera sigue estable, espera/reanuda mediante Execution Resume con el mismo Task ID; una nueva frontera material exige nueva delimitación;
 - detente si cambia materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno;
 - ejecuta las verificaciones aplicables;
 - revisa los cambios completos.
