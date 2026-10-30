@@ -105,7 +105,7 @@ Una misma Task puede contener fases internas de revalidación, implementación, 
 
 Una Execution Cell puede preservar continuidad entre tareas, pero no hereda permisos.
 
-`Execution Resume` se usa sólo después de una interrupción real, acción externa o bloqueo que el executor no podía resolver dentro de su autoridad. Sólo aplica si outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura siguen sin cambios. Su semántica es `Task original + delta del bloqueo externo o interrupción real resuelta`. Repair-in-place durante una Execution abierta no exige Resume.
+`Execution Resume` se usa sólo después de una interrupción real, acción externa, Human Decision Checkpoint resuelto o bloqueo que el executor no podía resolver dentro de su autoridad. Sólo aplica si outcome, Protected Invariants, Protected Boundaries, alcance, autoridad, seguridad y arquitectura siguen sin cambios. Su semántica es `Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto`. Repair-in-place durante una Execution abierta no exige Resume.
 
 Para una tarea larga puede existir un sidecar operacional `<TASK-ID>-CHECKPOINT.md`. Registra continuidad, no autorización.
 
