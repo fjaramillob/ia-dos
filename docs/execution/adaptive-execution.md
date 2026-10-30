@@ -165,11 +165,37 @@ Usa un `Environment Preflight` separado sólo cuando el readiness deba conocerse
 
 No dupliques un Preflight reciente dentro de Gate 0 salvo las comprobaciones volátiles realmente necesarias.
 
+## Human Decision Checkpoints
+
+Una Execution Task puede anticipar una o más decisiones humanas materiales sin fragmentar de antemano el outcome.
+
+```text
+Execution Task
+→ trabajo autónomo dentro de autoridad
+→ Human Decision Checkpoint
+→ STOP antes de la acción protegida
+→ persona decide sólo la cuestión material
+→ Execution Resume con el mismo Task ID
+→ continuación
+```
+
+Un Human Decision Checkpoint:
+
+- no es un Artifact Type;
+- debe declarar qué decisión puede aparecer y qué acción queda bloqueada hasta resolverla;
+- no se usa para pedir permiso de crear otra Task, guardar un archivo, hacer debugging o ejecutar una lectura ya autorizada;
+- puede apoyarse en `<TASK-ID>-CHECKPOINT.md` para preservar continuidad;
+- no amplía autoridad por sí mismo.
+
+Si la decisión selecciona una rama ya prevista por el contrato y no cambia outcome, Protected Invariants, Protected Boundaries, scope, seguridad o arquitectura, `Execution Resume` puede continuar la misma Task. Si la respuesta humana introduce una frontera material nueva, se requiere nueva delimitación.
+
 ## Execution Resume
 
 `Execution Resume` sigue siendo válido para reanudar una Task después de una interrupción real, una acción externa, una decisión humana o una condición que no podía resolver el executor dentro de su autoridad.
 
 No es obligatorio para cada reparación técnica interna. Con `Adaptation Authority: BOUNDED`, el agente puede iterar dentro de la misma ejecución mientras no haya cerrado el Report ni cambiado la frontera material.
+
+La creación o despacho de una nueva Task tampoco constituye por sí sola una decisión humana. Esa mecánica corresponde al Cycle Owner cuando sigue dentro de autoridad delegada; la persona responsable sólo debe recibir la decisión material que excede esa autoridad.
 
 ## Contratos especializados reutilizables
 
