@@ -82,7 +82,7 @@ Human Decision Checkpoints
 Execution Resume
 - se usa para una interrupción real, acción externa, Human Decision Checkpoint resuelto o bloqueo que el executor no podía resolver dentro de su autoridad;
 - conserva Task ID;
-- semántica = Task original + delta del bloqueo externo o interrupción real resuelta;
+- semántica = Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto;
 - sólo si outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura siguen sin cambios;
 - repair-in-place dentro de una Execution abierta no exige Resume.
 
