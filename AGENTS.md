@@ -88,7 +88,7 @@ Además:
 - una Task larga puede declarar Human Decision Checkpoints y continuar con el mismo Task ID mediante Execution Resume cuando la decisión humana activa una opción ya prevista;
 - el coding agent nunca aprueba su propio plan o ejecución;
 - `Authority Envelope` y `<TASK-ID>-CHECKPOINT.md` no son Artifact Types;
-- `Execution Resume = Task original + delta del bloqueo externo o interrupción real resuelta`; conserva Task ID mientras outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura no cambien;
+- `Execution Resume = Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto`; conserva Task ID mientras outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura no cambien;
 - repair-in-place y safe retry dentro de una Execution todavía abierta no requieren Execution Resume;
 - `Execution Report` es evidence-first y no vuelve a narrar la Task;
 - `Manual Artifact Launcher` es efímero y no autoritativo;
