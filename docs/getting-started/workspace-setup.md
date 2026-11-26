@@ -1,15 +1,17 @@
 # Preparar el workspace local
 
-El workspace local se prepara cuando una tarea definida en conversación necesita acceso real a repositorios, archivos, Git o un coding agent. No es un requisito previo para iniciar IA-DOS.
+El workspace local se prepara cuando un outcome necesita acceso real a repositorios, archivos, Git o un coding agent. Puede originarse en ORCHESTRATED o DIRECT; no es requisito previo para iniciar IA-DOS.
 
 La secuencia correcta es:
 
 ```text
-00 orienta
-→ se define una unidad verificable
-→ se confirma que requiere ejecución local
+ORCHESTRATED: dirección → Conversation Space → ejecución local
+DIRECT: dirección → Coding Agent → Direct Execution Gate → ejecución local
+
+En ambos casos:
 → se prepara sólo el acceso necesario
-→ se ejecuta y se devuelve evidencia
+→ se ejecuta dentro de autoridad
+→ se deja evidencia y continuidad
 ```
 
 ## Durable topology vs ephemeral execution
@@ -104,8 +106,8 @@ No abras toda la carpeta `proyectos/` como contexto cotidiano. Para una tarea no
 - el repositorio o recurso técnico correspondiente;
 - `Contexto durable necesario`;
 - las páginas incluidas en `Lectura requerida`, cuando existan;
-- la `Execution Task` o `Planning Task`;
-- instrucciones locales aplicables.
+- la `Execution Task`/`Planning Task` cuando el modo sea ORCHESTRATED, o la instrucción humana vigente cuando sea DIRECT;
+- instrucciones locales aplicables;
 
 `Referencias Wiki` no implican lectura automática.
 
@@ -152,7 +154,8 @@ Antes de ejecutar una tarea, confirma:
 - [ ] el acceso del agente se limita al alcance necesario;
 - [ ] no se entregará acceso a proyectos no relacionados;
 - [ ] no existen secretos dentro del contexto compartido;
-- [ ] la tarea que justificó preparar el workspace sigue vigente.
+- [ ] el outcome que justificó preparar el workspace sigue vigente;
+- [ ] durable topology y ephemeral execution surface pueden distinguirse sin ambigüedad.
 
 ## Siguiente paso
 
