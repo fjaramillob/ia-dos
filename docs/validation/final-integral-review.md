@@ -1,5 +1,5 @@
 > [!WARNING]
-> **EVIDENCIA HISTÓRICA — CIERRE DE FASE 6.** Esta revisión documenta la coherencia observada al cerrar la consolidación de Fase 6. No representa una certificación permanente del estado actual. La revisión vigente es [Auditoría integral del repositorio — 2026-11-25](repository-integral-audit-2026-11-25.md).
+> **EVIDENCIA HISTÓRICA — CIERRE DE FASE 6.** Esta revisión documenta la coherencia observada al cerrar la consolidación de Fase 6. No representa una certificación permanente del estado actual. La revisión vigente es [Auditoría integral del repositorio — 2026-11-25 / C08](repository-integral-audit-2026-11-25-c08.md).
 
 # Revisión integral final de consolidación
 

@@ -99,7 +99,7 @@ La auditoría integral del repositorio forma parte de la preparación de esta et
 
 - aplicar la versión consolidada de IA-DOS en proyectos activos;
 - validar el modelo de `Execution Cell` durante múltiples tareas sucesivas;
-- comprobar que un Coding Agent nuevo pueda rehidratarse desde repositorio real + LLM Wiki relevante + Operational Baseline + Execution Task vigente, revalidando la realidad antes de escribir;
+- comprobar que un Coding Agent nuevo pueda rehidratarse desde repositorio real + LLM Wiki relevante + Operational Baseline + contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT), revalidando la realidad antes de escribir;
 - medir cuánto contexto durable necesita realmente una `Execution Task`;
 - validar Exchange manual como pasarela sin convertirlo en workflow o backlog;
 - detectar fricción real de onboarding antes de introducir nuevas abstracciones;
@@ -209,7 +209,7 @@ Criterio central:
 
 ## `v0.1.0-alpha.7` — Method resolution and consistency hardening
 
-**Estado: ACTUAL**
+**Estado: COMPLETADO**
 
 Objetivo: cerrar contradicciones residuales después de C06 y hacer que la resolución de IA-DOS sea estable tanto para proyectos que siguen el método vigente como para adopciones reproducibles.
 
@@ -226,6 +226,25 @@ Objetivo: cerrar contradicciones residuales después de C06 y hacer que la resol
 Criterio central:
 
 > reproducibilidad cuando se elige; vigencia automática cuando no se ha elegido congelar el método.
+
+---
+
+## `v0.1.0-alpha.8` — Direct/Orchestrated consistency closure
+
+**Estado: ACTUAL**
+
+Objetivo: cerrar residuos Task-only que quedaron después de C07 y asegurar que DIRECT y ORCHESTRATED compartan contratos coherentes sin convertir la `Execution Task` física en requisito universal.
+
+- eliminar el pseudo-modo residual `MIXED` de onboarding;
+- hacer mode-aware los gates genéricos de avance;
+- sustituir `Task vigente` por contrato de ejecución aplicable en continuidad de memoria;
+- alinear `Coding Agent — Execution`, Memory Policy y Current Offline Pack con DIRECT sin Task física;
+- preservar lanes explícitamente ORCHESTRATED como tales, sin proyectarlas sobre DIRECT;
+- publicar auditoría C08 y revalidar residuos transversales.
+
+Criterio central:
+
+> un solo modelo de autoridad, dos entry modes explícitos y ninguna obligación Task-only fuera del alcance ORCHESTRATED.
 
 ---
 

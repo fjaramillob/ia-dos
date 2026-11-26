@@ -121,7 +121,7 @@ En ORCHESTRATED, el default es `Execution Task` outcome-first con planificación
 - conocimiento estructural indispensable sólo en chats → `Memory Bootstrap Gate`, con custodia de `90` cuando el proyecto adopta ese rol;
 - readiness que debe conocerse antes de conceder autoridad sensible → `Environment Preflight`;
 - decisión material de diseño todavía abierta → `Planning Task`;
-- outcome definido → `Execution Task` con Protected Invariants + Authority Envelope + Adaptation Authority;
+- outcome definido → `ORCHESTRATED`: `Execution Task` con Protected Invariants + Authority Envelope + Adaptation Authority; `DIRECT`: Effective Execution Contract + Direct Execution Gate, sin Task física obligatoria;
 - falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
@@ -247,7 +247,7 @@ Prueba práctica:
 ```text
 repositorio real
 + Wiki relevante
-+ Task vigente
++ contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT)
 → un Coding Agent nuevo puede ponerse al día
 → revalida el estado real
 → puede aportar
@@ -283,7 +283,7 @@ IA-DOS mantiene abierta la política universal de persistencia o renovación de 
 
 ## Environment Preflight
 
-Toda Execution Task revalida al comienzo las precondiciones volátiles indispensables. Usa un `Environment Preflight` separado sólo cuando el readiness deba conocerse **antes de conceder autoridad sensible**, cuando la capacidad misma sea el objeto de evaluación o cuando la inspección requiera un actor/entorno distinto.
+Toda ejecución revalida al comienzo las precondiciones volátiles indispensables. En ORCHESTRATED esa revalidación vive normalmente dentro de la `Execution Task`; en DIRECT forma parte del `Effective Execution Contract` y del self-planning del Coding Agent. Usa un `Environment Preflight` separado sólo cuando el readiness deba conocerse **antes de conceder autoridad sensible**, cuando la capacidad misma sea el objeto de evaluación o cuando la inspección requiera un actor/entorno distinto.
 
 Es de solo lectura y produce:
 
@@ -295,25 +295,34 @@ No dupliques un Preflight reciente dentro de la Execution Task salvo las comprob
 
 ## Ejecución y Execution Cells
 
-Cuando una unidad está definida y autorizada:
+Cuando una unidad está definida y autorizada, el transporte del contrato depende del entry mode:
 
 ```text
+ORCHESTRATED
 Execution Task
 → Execution Cell activa o entorno disponible
 → Coding Agent — Execution
 → Execution Report
 → revisión del Cycle Owner
+
+DIRECT
+Effective Execution Contract
+→ Coding Agent — Execution
+→ evidencia compacta o Execution Report cuando aporte continuidad/auditoría
+→ Governance Re-entry sólo si aparece una decisión material
 ```
 
 Una `Execution Cell` conserva continuidad de ejecución. No representa una tarea, una profesión ni un Conversation Space.
 
 Mantén una sola conversación activa por célula mientras siga respondiendo bien. No la renueves por edad, mensajes o cantidad de tareas. Renueva únicamente ante degradación, contaminación de contexto o necesidad real de contexto limpio.
 
-Reutilizar una conversación no reutiliza permisos: cada `Execution Task` vuelve a declarar autoridad completa.
+Reutilizar una conversación no reutiliza permisos: cada nuevo contrato de ejecución vuelve a declarar o reconstruir autoridad completa según el entry mode.
 
 Consulta [Execution Cells y Exchange](docs/execution/execution-cells-and-exchange.md).
 
 ## Un solo contrato de Execution Task
+
+Cuando el entry mode es ORCHESTRATED, la autoridad se materializa mediante un único contrato de `Execution Task`:
 
 ```text
 Execution Task
@@ -324,6 +333,8 @@ Execution Task
 ```
 
 Puede representarse con la [Execution Task compacta](templates/execution-task-compact.template.md), la [Execution Task completa](templates/execution-task.template.md) o el perfil documental [Wiki Update Task](templates/wiki-update-task.template.md).
+
+En DIRECT no se crea una Task física por equivalencia ceremonial: el `Effective Execution Contract` debe reconstruir esos mismos elementos materiales desde la instrucción humana, contratos durables y estado real.
 
 Una unidad ordinaria que dependa de memoria previa requiere `Memory Bootstrap Gate = PASS`. La excepción es la unidad acotada que materializa el checkpoint requerido por `BOOTSTRAP REQUIRED`; después de revisar su reporte se reevalúa el gate de la unidad original.
 

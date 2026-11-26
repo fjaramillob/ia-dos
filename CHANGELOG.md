@@ -8,6 +8,13 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- cerrados residuos Task-only posteriores a C07 para que DIRECT no herede requisitos físicos de ORCHESTRATED;
+- corregido onboarding que todavía exponía `ORCHESTRATED | DIRECT | MIXED` como modos de ejecución;
+- hechos mode-aware los gates genéricos: `Execution Task` en ORCHESTRATED y `Effective Execution Contract + Direct Execution Gate` en DIRECT;
+- sustituida la dependencia de `Task vigente` por `contrato de ejecución aplicable` en continuidad de memoria y rehidratación de agentes;
+- alineados Coding Agent — Execution, Memory Policy, Project Instructions y Current Offline Pack con ejecución DIRECT sin Task física universal;
+- avanzada `v0.1.0-alpha.8` como cierre de consistencia Direct/Orchestrated;
+- añadida auditoría C08 y revalidación transversal de residuos normativos.
 - añadida `Method Resolution Policy: FOLLOW_CURRENT | PINNED`;
 - establecido `FOLLOW_CURRENT` como default cuando no existe pin durable explícito;
 - aclarado que una versión/SHA mencionada sólo en chats, prompts o reportes no constituye pin durable;

@@ -1,3 +1,5 @@
+> **EVIDENCIA HISTÓRICA — C07.** Esta auditoría documenta la pasada C07 y sus conclusiones en ese momento. C08 detectó falsos negativos residuales posteriores a esa pasada. La revisión vigente es [Auditoría integral del repositorio — 2026-11-25 / C08](repository-integral-audit-2026-11-25-c08.md).
+
 # Auditoría integral del repositorio — 2026-11-25
 
 **Estado:** VIGENTE AL INTEGRARSE C07  

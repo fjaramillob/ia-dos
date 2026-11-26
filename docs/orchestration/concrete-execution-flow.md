@@ -49,7 +49,7 @@ Evalúa en este orden:
 - memoria estructural necesaria sólo en conversaciones → `Memory Bootstrap Gate`;
 - readiness previo a autoridad sensible → `Environment Preflight`;
 - decisión material no resuelta → `Planning Task`;
-- outcome definido → `Execution Task` aunque falten detalles de implementación;
+- outcome definido → `ORCHESTRATED`: `Execution Task` con Revalidate y planificación interna; `DIRECT`: `Effective Execution Contract` + Direct Execution Gate, sin Task física obligatoria;
 - decisión humana indispensable → resolver sólo esa decisión;
 - reorientación → escalar a `00`.
 

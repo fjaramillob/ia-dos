@@ -47,7 +47,7 @@ Resultados:
 - historia estructural chat-only indispensable → Memory Bootstrap Gate y, si el proyecto adopta el rol, 90;
 - readiness que debe conocerse antes de autoridad sensible → Environment Preflight;
 - decisión material pendiente → Planning Task de solo lectura;
-- outcome definido → Execution Task con planificación interna y Revalidate;
+- outcome definido → ORCHESTRATED: Execution Task con planificación interna y Revalidate; DIRECT: Effective Execution Contract + Direct Execution Gate, sin Task física obligatoria;
 - brecha de otro dominio → Specialist Handoff inline y copiable;
 - cambio material fuera de autoridad → deriva sólo esa decisión;
 - reorientación real → escala a 00.
@@ -129,7 +129,7 @@ Execution Report:
 - no aprueba su propio resultado ni inicia otra unidad.
 
 Memoria durable / LLM Wiki:
-- la Wiki debe permitir que un Coding Agent nuevo se ponga al día con repositorio + Wiki relevante + Task vigente;
+- la Wiki debe permitir que un Coding Agent nuevo se ponga al día con repositorio + Wiki relevante + contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT);
 - Memory Policy gobierna cambios semánticos: NONE | CONDITIONAL | REQUIRED;
 - Memory Stewardship distingue LOCAL de 90_STRUCTURAL;
 - baseline y memoria estrecha pueden permanecer LOCAL;

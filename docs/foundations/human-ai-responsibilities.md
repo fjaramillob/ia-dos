@@ -171,7 +171,7 @@ El Preflight puede materializar únicamente su propio `Environment Readiness Rep
 
 `memoria durable` es la responsabilidad de conservar conocimiento reusable fuera de conversaciones efímeras.
 
-`LLM Wiki` es una posible materialización portable y navegable. Debe sostener continuidad suficiente para que un Coding Agent nuevo comprenda el proyecto junto con el repositorio y la Task vigente.
+`LLM Wiki` es una posible materialización portable y navegable. Debe sostener continuidad suficiente para que un Coding Agent nuevo comprenda el proyecto junto con el repositorio y el contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT).
 
 El Cycle Owner define `Memory Policy: NONE | CONDITIONAL | REQUIRED`, `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA` y los triggers cuando corresponda. El coding agent no inventa esos criterios ni transforma evidencia en dirección de proyecto.
 

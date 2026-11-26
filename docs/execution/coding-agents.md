@@ -248,8 +248,8 @@ El coding agent sólo realiza cada una cuando la tarea la autoriza explícitamen
 
 Las sesiones del coding agent no son memoria durable.
 
-El Cycle Owner define qué conocimiento merece persistirse y puede delegar esa materialización dentro de la misma Execution Task. La persona responsable conserva dirección y criterio cuando la decisión es material.
+El Cycle Owner o el contrato de ejecución aplicable define qué conocimiento merece persistirse y puede delegar esa materialización dentro del mismo outcome autorizado. La persona responsable conserva dirección y criterio cuando la decisión es material.
 
-La Wiki debe permitir que un Coding Agent nuevo se ponga al día junto con el repositorio y la Task vigente; la sesión anterior del agente nunca es requisito de continuidad.
+La Wiki debe permitir que un Coding Agent nuevo se ponga al día junto con el repositorio y el contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT); la sesión anterior del agente nunca es requisito de continuidad.
 
 Exchange, cuando se adopta, sólo conserva o transporta archivos `.md`; no sustituye memoria durable, backlog ni implementación.

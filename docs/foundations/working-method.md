@@ -88,9 +88,9 @@ Resultados:
 - historia durable indispensable ausente → `Memory Bootstrap Gate`;
 - decisión material no resuelta → `Planning Task`;
 - readiness que debe conocerse antes de conceder autoridad sensible, capacidad que es objeto de evaluación o chequeo que requiere otro actor/entorno → `Environment Preflight`;
-- outcome definido → `Execution Task` con Revalidate y planificación interna.
+- outcome definido → `ORCHESTRATED`: `Execution Task` con Revalidate y planificación interna; `DIRECT`: `Effective Execution Contract` + Direct Execution Gate, sin Task física obligatoria.
 
-Una Execution Task declara proporcionalmente:
+En ORCHESTRATED, una Execution Task declara proporcionalmente los campos siguientes. En DIRECT, el Effective Execution Contract debe permitir reconstruir los equivalentes que apliquen sin fabricar una Task física:
 
 - outcome;
 - Cycle Owner y destino;
@@ -236,4 +236,4 @@ No exige completar toda la definición, documentación o arquitectura antes de c
 
 La memoria durable aparece cuando hace falta para preservar conocimiento reusable, no como ceremonia previa a cada avance. Una LLM Wiki es una posible materialización de esa memoria, no una topología obligatoria.
 
-Cuando existe, debe superar una prueba práctica: un Coding Agent nuevo puede ponerse al día con `repositorio + Wiki relevante + Task vigente`, reconocer el último baseline publicado y revalidar la realidad antes de aportar.
+Cuando existe, debe superar una prueba práctica: un Coding Agent nuevo puede ponerse al día con `repositorio + Wiki relevante + contrato de ejecución aplicable`, reconocer el último baseline publicado y revalidar la realidad antes de aportar.

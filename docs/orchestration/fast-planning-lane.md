@@ -1,6 +1,8 @@
 # Salida rápida hacia planificación técnica
 
-Este contrato evita cadenas innecesarias de conversaciones antes de llegar al entorno técnico real, sin saltarse memoria o readiness cuando son condiciones indispensables.
+Este contrato describe **exclusivamente una lane ORCHESTRATED**: evita cadenas innecesarias de conversaciones antes de llegar al entorno técnico real, sin saltarse memoria o readiness cuando son condiciones indispensables.
+
+No proyectes sus requisitos de `Execution Task` sobre DIRECT. En DIRECT rige `Effective Execution Contract + Direct Execution Gate` según [Direct Execution y Workspace Governance](../execution/direct-execution-and-workspace-governance.md).
 
 ## Regla principal
 

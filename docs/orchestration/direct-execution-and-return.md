@@ -46,7 +46,7 @@ Resultados:
 - conocimiento durable indispensable ausente → `Memory Bootstrap Gate`;
 - decisión material no resuelta → `Planning Task`;
 - readiness que debe conocerse antes de autoridad sensible, capacidad objeto de evaluación o chequeo con otro actor/entorno → `Environment Preflight`;
-- outcome definido → `Execution Task` con Revalidate y planificación interna;
+- outcome definido → `ORCHESTRATED`: `Execution Task` con Revalidate y planificación interna; `DIRECT`: `Effective Execution Contract` + Direct Execution Gate, sin Task física obligatoria;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación transversal → escala a `00`.
 

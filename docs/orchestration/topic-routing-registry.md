@@ -158,7 +158,7 @@ Cada espacio evalúa en este orden:
 - memoria estructural necesaria sólo en chats → `Memory Bootstrap Gate` y, cuando el proyecto adopta el rol, `90`;
 - readiness que debe conocerse antes de conceder autoridad sensible → `Environment Preflight`;
 - decisión material pendiente → `Planning Task`;
-- outcome definido → `Execution Task` con planificación interna;
+- outcome definido → `ORCHESTRATED`: `Execution Task` con planificación interna; `DIRECT`: `Effective Execution Contract` + Direct Execution Gate, sin Task física obligatoria;
 - falta decisión del mismo dominio → continúa sólo hasta resolverla;
 - falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;

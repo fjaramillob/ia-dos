@@ -179,7 +179,7 @@ Un ciclo termina cuando:
 4. se activó un escalamiento justificado;
 5. el siguiente resultado pertenece a un ciclo distinto y recibe nuevo Cycle Owner.
 
-La memoria semántica se actualiza conforme a la Memory Policy de la Execution Task o mediante una consolidación posterior explícita. Si el outcome cambió un estado publicado, el Operational Baseline debe quedar actualizado antes del cierre completo cuando esa memoria forma parte de la frontera autorizada.
+La memoria semántica se actualiza conforme a la Memory Policy del contrato de ejecución aplicable o mediante una consolidación posterior explícita. Si el outcome cambió un estado publicado, el Operational Baseline debe quedar actualizado antes del cierre completo cuando esa memoria forma parte de la frontera autorizada.
 
 Cuando el impacto durable sea estructural y el proyecto adopte `90`, el ciclo técnico puede quedar completado con `Durable Memory Impact: ROUTE_TO_90`; la custodia documental continúa como una responsabilidad separada de memoria, no como reapertura del outcome técnico.
 
