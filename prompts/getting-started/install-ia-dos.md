@@ -82,9 +82,11 @@ Entrega:
 - origin verificado;
 - estado previo relevante;
 - resultado del fetch/divergencia cuando fue actualización;
-- SHA final;
+- SHA final de la referencia local (informativo; no constituye por sí mismo pin durable de un proyecto);
 - estado final;
 - conflictos, advertencias o detención aplicada.
 
 No continúes con creación o modificación de proyectos sin una instrucción separada.
+
+Importante: actualizar `00-ia-dos` a origin/main no cambia automáticamente un proyecto `PINNED`. Un proyecto `FOLLOW_CURRENT` resolverá la referencia vigente al comienzo del siguiente outcome relevante.
 ```
