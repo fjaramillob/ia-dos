@@ -9,8 +9,8 @@ La adopción sigue este orden conceptual, sin convertirse en una pipeline rígid
 1. Resuelve `Method Resolution Policy: FOLLOW_CURRENT | PINNED`; una mención conversacional de versión/SHA no constituye un pin durable.
 2. Elige `Execution Entry Mode: ORCHESTRATED | DIRECT` según la necesidad actual.
 3. En `ORCHESTRATED`, [inicializa o retoma el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md); en `DIRECT`, entrega la intención humana al Coding Agent y aplica [Direct Execution y Workspace Governance](execution/direct-execution-and-workspace-governance.md).
-5. Entrega sólo la descripción y fuentes necesarias; no reconstruyas todo el proyecto por rutina.
-4. Si usas Conversation Spaces, abre sólo el que desbloquee una decisión material y usa [Specialist Handoff](orchestration/topic-routing-registry.md) cuando realmente transfieras gobierno.
+4. Entrega sólo la descripción y fuentes necesarias; no reconstruyas todo el proyecto por rutina.
+5. Si usas Conversation Spaces, abre sólo el que desbloquee una decisión material y usa [Specialist Handoff](orchestration/topic-routing-registry.md) cuando realmente transfieras gobierno.
 6. Si falta memoria durable indispensable, evalúa [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
 7. Define o reconstruye Protected Invariants, Adaptation Authority y Protected Boundaries con [Ejecución adaptativa](execution/adaptive-execution.md).
 8. Usa `Planning Task` sólo ante una decisión material no resuelta y `Environment Preflight` sólo cuando readiness deba conocerse antes de una frontera sensible.
