@@ -34,6 +34,27 @@ El Conversation Space no es gateway obligatorio.
 
 Direct Execution no elimina gobierno humano ni autoriza al Coding Agent a inventar dirección, roadmap, arquitectura o fronteras.
 
+## Resolve IA-DOS first
+
+Antes de reconstruir el contrato del proyecto, resuelve qué IA-DOS gobierna esta ejecución:
+
+```text
+fuente durable declara PINNED
+→ usar la versión/tag/commit declarada
+
+fuente durable declara FOLLOW_CURRENT
+→ resolver la referencia canónica vigente
+
+no existe política durable
+→ FOLLOW_CURRENT
+```
+
+Una versión o SHA mencionada únicamente en una conversación, prompt o reporte anterior no constituye un pin.
+
+Con `FOLLOW_CURRENT`, resuelve el método al comienzo del outcome o sesión relevante y mantén ese snapshot metodológico durante la ejecución. No cambies reglas a mitad del mismo outcome sólo porque el repositorio IA-DOS avance.
+
+Los prompts operativos cotidianos deben preferir la fuente canónica y esta política de resolución antes que incrustar un SHA fijo.
+
 ## Effective Execution Contract
 
 En modo DIRECT no es obligatorio crear una `Execution Task` física antes de comenzar si la autoridad puede reconstruirse sin ambigüedad desde fuentes durables y la instrucción humana actual.
