@@ -26,6 +26,7 @@ Registra:
 - rama principal;
 - estado del working tree;
 - repositorios relacionados;
+- recursos que parecen worktrees, previews u otras superficies efímeras;
 - documentación o memoria existente;
 - backlog o mecanismo de seguimiento existente;
 - Exchange existente, si lo hay;
@@ -60,7 +61,11 @@ Mantén el monorepo cuando sea una decisión real del proyecto. Documenta la ubi
 
 ### Estructura ambigua
 
-Si existen varios repositorios, rutas o fuentes y no puede determinarse su relación, detente antes de escribir y devuelve la ambigüedad al Cycle Owner.
+Si existen varios repositorios, rutas o fuentes y no puede determinarse su relación, distingue primero durable topology de ephemeral execution surface. Si la relación sigue materialmente ambigua, detente antes de escribir y devuelve `NEEDS_GOVERNANCE` o la ambigüedad al Cycle Owner, según entry mode.
+
+## Paso 2.5 — Mapear el workspace cuando aporte
+
+Si la raíz ya no es autoexplicativa, crea o actualiza un `PROJECT.md`/equivalente basado en `templates/project-map.template.md` sólo cuando esté autorizado. Registra recursos canónicos, memoria, dirección y convención de superficies efímeras; no dupliques backlog ni arquitectura detallada.
 
 ## Paso 3 — Elegir el modelo de adopción
 
