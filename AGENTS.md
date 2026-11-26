@@ -37,7 +37,8 @@ Si modificas alguno de estos conceptos, comprueba sus representaciones relaciona
 - `Authority Envelope`;
 - `Environment Preflight` y `Execution Resume`;
 - `Execution Cell` y checkpoints operacionales;
-- `Execution Entry Mode`, Direct Execution Gate y Effective Execution Contract;
+- `Method Resolution Policy` y resolución de la referencia IA-DOS;
+- `Execution Entry Mode`, `Execution Entry Policy`, Direct Execution Gate y Effective Execution Contract;
 - Workspace Governance, topología durable y superficies efímeras;
 - `Execution Report`;
 - `Memory Bootstrap Gate`;
@@ -56,7 +57,9 @@ No reescribas evidencia histórica sólo porque conserve wording antiguo. Distin
 ```text
 Persona responsable = dirección y aprobación final aplicable
 Conversation Space   = gobierno on-demand dentro de autoridad delegada
+Method Resolution   = FOLLOW_CURRENT | PINNED
 Execution Entry Mode = ORCHESTRATED | DIRECT
+Execution Entry Policy = ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE
 Direct Execution     = ejecución sin gateway conversacional cuando el contrato efectivo es reconstruible
 Specialist Handoff   = transferencia inline y copiable entre Conversation Spaces
 Execution Cell       = continuidad de ejecución
@@ -76,6 +79,8 @@ Exchange             = pasarela pasiva opcional hacia/desde Coding Agents
 
 Además:
 
+- si una fuente durable del proyecto declara `PINNED`, usa ese tag/commit; si declara `FOLLOW_CURRENT` o no existe pin durable, resuelve la referencia canónica vigente al comienzo del outcome y mantenla estable durante esa ejecución;
+- un SHA o versión mencionado sólo en chat, prompt o reporte no constituye pin durable;
 - `00 — Dirección y orquestación` es el Conversation Space inicial canónico cuando se usa entrada conversacional y no un dispatcher obligatorio;
 - `Execution Entry Mode: ORCHESTRATED | DIRECT` son caminos de primera clase; DIRECT no exige una Execution Task física si el Effective Execution Contract puede reconstruirse sin ambigüedad;
 - en DIRECT el Coding Agent ejecuta sólo el outcome humano actual y devuelve `NEEDS_GOVERNANCE` cuando necesite inventar dirección, roadmap, autoridad o una frontera material;
@@ -166,6 +171,9 @@ Antes de cerrar una tarea:
 - busca contradicciones con contratos relacionados;
 - busca residuos normativos de heurísticas reemplazadas;
 - distingue evidencia histórica de contratos vigentes;
+- confirma que `Execution Entry Mode` no se mezcle con `Execution Entry Policy`;
+- confirma que prompts operativos no congelen un SHA salvo reproducción histórica deliberada o pin durable explícito;
+- confirma que FOLLOW_CURRENT no cambie reglas a mitad de una ejecución;
 - confirma que no se reintroduzcan Planning/Preflight/Resume rutinarios que C03 absorbió dentro de Execution;
 - confirma que no se reintroduzcan aprobaciones rutinarias no exigidas por Protected Boundaries;
 - confirma que no se trate la creación/routing de una Task como decisión humana por sí misma;

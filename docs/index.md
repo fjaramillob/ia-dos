@@ -52,7 +52,8 @@ Estos contratos no imponen herramientas, topología física o secuencia fija.
 - [Preparar y revisar un handoff técnico](getting-started/execution-handoff.md)
 - [Validación end-to-end histórica de Fase 6](validation/end-to-end-onboarding-validation.md)
 - [Revisión integral histórica de Fase 6](validation/final-integral-review.md)
-- [Auditoría integral vigente del repositorio — 2026-10-26 / C04](validation/repository-integral-audit-2026-10-26.md)
+- [Auditoría integral vigente del repositorio — 2026-11-25 / C07](validation/repository-integral-audit-2026-11-25.md)
+- [Auditoría integral histórica — 2026-10-26 / C04](validation/repository-integral-audit-2026-10-26.md)
 - [Auditoría integral histórica — 2026-08-21](validation/repository-integral-audit-2026-08-21.md)
 
 ## Preparación del entorno, cuando corresponda
@@ -115,6 +116,7 @@ La memoria semántica es selectiva (`NONE | CONDITIONAL | REQUIRED`). Cuando el 
 - [Fuentes de verdad](foundations/source-of-truth.md)
 - [Responsabilidades humanas y de la IA](foundations/human-ai-responsibilities.md)
 - [Terminología](foundations/terminology.md)
+- [Versionado y Method Resolution](foundations/versioning.md)
 - [Checklist de revisión](foundations/review-checklist.md)
 - [Preguntas de validación](foundations/validation-questions.md)
 

@@ -1,3 +1,6 @@
+> [!WARNING]
+> **EVIDENCIA HISTÓRICA — 2026-10-26 / C04.** Esta auditoría fue vigente al integrarse PR #50, pero no representa los contratos posteriores C05–C07. Consulta [Auditoría integral del repositorio — 2026-11-25](repository-integral-audit-2026-11-25.md).
+
 # Auditoría integral del repositorio — 2026-10-26
 
 **Estado:** VIGENTE AL INTEGRARSE PR #50  

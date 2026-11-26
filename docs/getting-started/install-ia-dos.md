@@ -147,6 +147,13 @@ La actualización es correcta cuando:
 
 ## Uso cotidiano
 
+Actualizar la referencia local `00-ia-dos` y resolver la política metodológica de un proyecto son cosas distintas:
+
+- `FOLLOW_CURRENT`: la referencia local puede actualizarse a `origin/main`; el proyecto vuelve a resolver IA-DOS al comienzo del siguiente outcome relevante;
+- `PINNED`: una referencia local más nueva no cambia automáticamente el método adoptado por el proyecto.
+
+Un SHA visto en la salida de `git rev-parse HEAD` describe el estado local verificado; no se convierte por sí mismo en pin durable del proyecto.
+
 Abre únicamente el proyecto y las rutas necesarias. No entregues todo el workspace ni todos los proyectos al coding agent.
 
 Una Task autosuficiente no exige releer el framework completo. Si un Conversation Space fue retomado después de un cambio relevante de IA-DOS, consulta sólo los contratos afectados antes de decidir.

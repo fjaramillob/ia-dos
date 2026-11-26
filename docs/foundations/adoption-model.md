@@ -163,14 +163,41 @@ La memoria durable y Exchange no deben contener secretos, contraseñas, API keys
 
 Al compartir repositorios o archivos con asistentes externos, la persona responsable debe revisar qué información está exponiendo y qué operaciones autoriza.
 
-## Versión adoptada
+## Resolución del método
 
-Cada proyecto debe declarar qué versión o commit de IA-DOS utiliza cuando necesite una adopción reproducible. Puede además declarar `execution_entry_mode: ORCHESTRATED | DIRECT | MIXED` y un mapa de workspace cuando aporten claridad.
+La adopción puede declarar:
+
+```text
+Method Resolution Policy:
+FOLLOW_CURRENT | PINNED
+```
+
+- `FOLLOW_CURRENT`: resuelve la referencia canónica vigente al comienzo de un nuevo outcome/sesión relevante y mantiene ese snapshot durante la ejecución;
+- `PINNED`: usa una versión/tag/commit declarada durablemente hasta que el proyecto adopte otra.
+
+Si no existe declaración durable, el default es `FOLLOW_CURRENT`.
+
+Un SHA mencionado sólo en conversación, prompt o reporte no congela el proyecto. El pin existe únicamente cuando una fuente durable de adopción lo declara.
+
+## Política de entrada del proyecto
+
+`Execution Entry Mode` sigue siendo una elección **por ejecución**:
+
+```text
+ORCHESTRATED | DIRECT
+```
+
+Un proyecto puede declarar una preferencia durable distinta:
+
+```text
+Execution Entry Policy:
+ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE
+```
+
+La policy orienta el default; no crea un tercer modo de ejecución. `FLEXIBLE` significa elegir ORCHESTRATED o DIRECT según el outcome.
 
 Usa `templates/adoption.template.yaml` como punto de partida cuando corresponda.
 
 Los artefactos que atraviesan Exchange conservan el contrato con el que fueron construidos. Exchange no los transforma cuando IA-DOS evoluciona.
 
-Los proyectos no reciben cambios del framework de forma silenciosa. Cada actualización debe revisarse antes de adoptarse.
-
-No se recomienda declarar `main`, `latest` o `current` como versión adoptada cuando se requiera reproducibilidad.
+Cuando se requiera reproducibilidad estricta, usa `PINNED`. Cuando se prefiera incorporar el método vigente automáticamente entre outcomes, usa `FOLLOW_CURRENT`.

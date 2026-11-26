@@ -8,6 +8,16 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- añadida `Method Resolution Policy: FOLLOW_CURRENT | PINNED`;
+- establecido `FOLLOW_CURRENT` como default cuando no existe pin durable explícito;
+- aclarado que una versión/SHA mencionada sólo en chats, prompts o reportes no constituye pin durable;
+- definido que `FOLLOW_CURRENT` se resuelve al comienzo del outcome y permanece estable durante esa ejecución;
+- reservado `PINNED` para adopciones reproducibles declaradas en una fuente durable como `.ia-dos.yaml` o equivalente;
+- eliminada la necesidad de incrustar SHAs fijos en prompts operativos cotidianos;
+- separada `Execution Entry Policy: ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE` de `Execution Entry Mode: ORCHESTRATED | DIRECT`, evitando el pseudo-modo `MIXED`;
+- alineadas instalación local, Direct Execution, Project Orchestrator, AGENTS, QA, manifest de adopción y Current Offline Pack con estas reglas;
+- avanzada `v0.1.0-alpha.7` como baseline de method resolution / consistency hardening;
+- publicada una auditoría integral vigente posterior a C05/C06/C07.
 - añadido `Execution Entry Mode: ORCHESTRATED | DIRECT`; Conversation Space deja de ser gateway obligatorio de ejecución;
 - definido `Effective Execution Contract` para DIRECT a partir de instrucción humana + contratos del repo + memoria durable relevante + estado real;
 - añadido `Direct Execution Gate` con salida `PASS | NEEDS_GOVERNANCE`, evitando que el Coding Agent invente dirección, roadmap o fronteras materiales;

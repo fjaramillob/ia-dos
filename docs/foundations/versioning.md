@@ -51,10 +51,49 @@ Cada identificador prerelease debe tener un único significado vigente entre Roa
 
 Una versión minor o prerelease puede incluir ajustes importantes. Estos cambios deben quedar descritos en `CHANGELOG.md`.
 
-## Adopción por proyectos
+## Method Resolution Policy
 
-Cada proyecto fija una versión concreta de IA-DOS.
+Un proyecto puede resolver qué IA-DOS obedecer de dos formas:
 
-No se recomienda declarar adopción mediante referencias como `latest` o `main`.
+```text
+Method Resolution Policy:
+FOLLOW_CURRENT | PINNED
+```
 
-Un proyecto debe revisar los cambios antes de actualizar la versión adoptada.
+### FOLLOW_CURRENT
+
+Usa la referencia canónica vigente del repositorio IA-DOS cuando comienza un nuevo outcome, sesión relevante o alineación metodológica.
+
+Es apropiado cuando el proyecto prefiere incorporar mejoras del método sin mantener un ciclo manual de upgrades.
+
+Reglas:
+
+- una mención de versión o SHA en un chat, prompt, Execution Report o mensaje histórico **no constituye un pin durable**;
+- no incrustes un SHA fijo en prompts operativos cotidianos salvo que el objetivo sea reproducir deliberadamente un baseline histórico;
+- resuelve el método al comienzo del outcome y mantén ese snapshot metodológico estable durante la ejecución;
+- no cambies reglas a mitad de una Execution sólo porque `main` avance;
+- antes del siguiente outcome relevante vuelve a resolver la referencia vigente.
+
+### PINNED
+
+El proyecto declara durablemente una versión, tag o commit concreto, por ejemplo en `.ia-dos.yaml` o una fuente equivalente de adopción.
+
+Es apropiado cuando se necesita reproducibilidad, auditoría estricta o upgrades deliberados.
+
+Reglas:
+
+- el pin debe existir en una fuente durable del proyecto;
+- un proyecto PINNED revisa los cambios antes de adoptar otra versión;
+- mientras el pin siga vigente, `main`, `latest` o una mención conversacional más nueva no lo sustituyen.
+
+## Resolución por defecto
+
+Si el proyecto no declara de forma durable una política o pin:
+
+```text
+Method Resolution Policy = FOLLOW_CURRENT
+```
+
+Esto evita que conversaciones antiguas congelen accidentalmente IA-DOS.
+
+La reproducibilidad debe ser una decisión explícita, no un efecto lateral de haber pegado alguna vez un SHA en un prompt.

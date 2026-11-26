@@ -6,6 +6,25 @@ Este glosario describe los términos operativos vigentes de IA-DOS y separa conc
 
 Persona que mantiene la dirección del proyecto y conserva la aprobación final aplicable. Interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
+## `Method Resolution Policy`
+
+Política que define cómo un proyecto resuelve qué versión de IA-DOS gobierna su siguiente outcome:
+
+- `FOLLOW_CURRENT`: resuelve la referencia canónica vigente al comenzar un nuevo outcome/sesión relevante y mantiene ese snapshot durante la ejecución;
+- `PINNED`: usa una versión/tag/commit declarada durablemente hasta un upgrade explícito.
+
+Un SHA mencionado sólo en chat, prompt o reporte no constituye pin.
+
+## `Execution Entry Policy`
+
+Preferencia durable del proyecto sobre cómo iniciar ejecuciones:
+
+- `ORCHESTRATED_DEFAULT`;
+- `DIRECT_DEFAULT`;
+- `FLEXIBLE`.
+
+No es un tercer `Execution Entry Mode`. Cada ejecución concreta sigue usando sólo `ORCHESTRATED | DIRECT`.
+
 ## `Execution Entry Mode`
 
 Modo de entrada a ejecución:

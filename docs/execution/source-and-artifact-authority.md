@@ -36,7 +36,7 @@ Aporta antecedentes, patrones o aprendizaje. No gobierna automáticamente el res
 
 ## Continuidad operacional
 
-Cuando un proyecto usa LLM Wiki y un outcome cambia el estado publicado, la Task debe declarar cómo se actualizará el Operational Baseline.
+Cuando un proyecto usa LLM Wiki y un outcome cambia el estado publicado, la autoridad efectiva de la ejecución debe declarar cómo se actualizará el Operational Baseline.
 
 Como mínimo, cuando aplique:
 
@@ -55,9 +55,14 @@ Verification date
 
 ## Authority Envelope y ejecución adaptativa
 
-La `Execution Task` es la autoridad concreta de una ejecución. Puede incluir un `Authority Envelope` que agrupe permisos explícitos para el outcome completo sin crear un Artifact Type nuevo.
+La autoridad concreta de una ejecución vive en su **Execution Contract efectivo**:
 
-La autoridad no necesita congelar el método exacto. La Task declara también:
+- ORCHESTRATED → normalmente una `Execution Task`;
+- DIRECT → `Effective Execution Contract` reconstruido desde instrucción humana + contratos durables + estado real.
+
+Ambos pueden expresar un `Authority Envelope` con permisos explícitos para el outcome completo sin crear un Artifact Type nuevo.
+
+La autoridad no necesita congelar el método exacto. El contrato efectivo declara también:
 
 ```text
 Protected Invariants: [PROPIEDADES MATERIALES QUE NO PUEDEN CAMBIAR]
@@ -100,7 +105,7 @@ Reglas:
 acción sensible no declarada
 → no autorizada
 
-acción explícitamente declarada en la Task
+acción explícitamente autorizada por el contrato efectivo
 + gates previos cumplidos
 + frontera estable
 → puede ejecutarse sin otra ida y vuelta humana por rutina
@@ -116,14 +121,14 @@ El Authority Envelope no permite al coding agent aprobar su propio plan o ejecuc
 
 Lectura, escritura, branch, commit, push, PR, merge, despliegue, producción, datos, servicios externos y costes siguen siendo capacidades separadas. Que sean separadas no significa que requieran Tasks separadas.
 
-Pueden formar parte de la misma Execution Task cuando:
+Pueden formar parte del mismo outcome cuando:
 
 - sirven al mismo outcome cohesivo;
 - están explícitamente autorizadas;
 - los gates previos se cumplieron;
 - la frontera de autoridad permanece estable.
 
-No impongas una nueva aprobación humana entre fases sólo por rutina si esa autoridad ya fue delegada explícitamente en la Task.
+No impongas una nueva aprobación humana entre fases sólo por rutina si esa autoridad ya fue delegada explícitamente en el contrato efectivo.
 
 Con `Adaptation Authority: BOUNDED`, tampoco impongas retorno al humano por una reparación técnica ordinaria, cambio de runner equivalente o safe retry después de un intento sin side effects materiales. El executor debe detenerse si la adaptación cambia un Protected Invariant o exige una capacidad sensible nueva.
 
@@ -163,7 +168,7 @@ No compactes contexto contradictorio. Resuelve primero la autoridad y la vigenci
 
 ## Readiness del entorno
 
-Antes de una Execution Task comprueba sólo las precondiciones indispensables para las capacidades que realmente utilizará:
+Antes de escribir comprueba sólo las precondiciones indispensables para las capacidades que realmente utilizará el outcome:
 
 - entorno disponible: local, remoto o combinado;
 - recursos accesibles;

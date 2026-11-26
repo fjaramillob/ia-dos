@@ -184,7 +184,7 @@ No se introducirán herramientas obligatorias sólo para automatizar validacione
 
 ## `v0.1.0-alpha.6` — Direct execution and workspace governance
 
-**Estado: ACTUAL**
+**Estado: COMPLETADO**
 
 Objetivo: permitir que la persona responsable trabaje directamente con Coding Agents sin convertir al Conversation Space en gateway obligatorio, preservando propósito, dirección, fronteras materiales y continuidad durable.
 
@@ -204,6 +204,28 @@ Objetivo: permitir que la persona responsable trabaje directamente con Coding Ag
 Criterio central:
 
 > IA-DOS no controla cuánto puede trabajar el agente; controla qué partes del proyecto puede redefinir mientras trabaja.
+
+---
+
+## `v0.1.0-alpha.7` — Method resolution and consistency hardening
+
+**Estado: ACTUAL**
+
+Objetivo: cerrar contradicciones residuales después de C06 y hacer que la resolución de IA-DOS sea estable tanto para proyectos que siguen el método vigente como para adopciones reproducibles.
+
+- `Method Resolution Policy: FOLLOW_CURRENT | PINNED`;
+- default `FOLLOW_CURRENT` cuando no existe pin durable explícito;
+- una versión o SHA mencionada sólo en chat, prompt o reporte no constituye pin;
+- `FOLLOW_CURRENT` resuelve la referencia canónica al comienzo del outcome y mantiene ese snapshot durante la ejecución;
+- `PINNED` exige una fuente durable de adopción y cambia sólo por upgrade explícito;
+- prompts operativos sin SHA fijo por defecto;
+- separación entre `Execution Entry Mode: ORCHESTRATED | DIRECT` y `Execution Entry Policy: ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE`;
+- consistencia transversal de README, Orchestrator, AGENTS, templates, prompts, onboarding, Offline Pack y QA;
+- auditoría integral del repositorio posterior a C05/C06.
+
+Criterio central:
+
+> reproducibilidad cuando se elige; vigencia automática cuando no se ha elegido congelar el método.
 
 ---
 

@@ -4,6 +4,9 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 
 ## Comprensión
 
+- ¿`FOLLOW_CURRENT` y `PINNED` se distinguen sin convertir una mención conversacional de SHA en adopción durable?
+- ¿FOLLOW_CURRENT se re-resuelve entre outcomes y no cambia reglas a mitad de una ejecución?
+- ¿Execution Entry Policy se distingue de Execution Entry Mode, sin crear un tercer modo llamado MIXED?
 - ¿Una persona no experta entiende qué es IA-DOS y qué no es?
 - ¿Se distingue el framework del proyecto que lo adopta?
 - ¿Se entiende la diferencia entre persona responsable, Project Orchestrator, Conversation Space, Cycle Owner y coding agent?
@@ -70,6 +73,7 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 - ¿El Current Offline Pack reproduce los contratos vigentes del repositorio?
 - ¿Los bundles históricos están claramente aislados de onboarding nuevo?
 - ¿Una adopción nueva puede funcionar con repositorio remoto, referencia local o contrato embebido sin copiar todo IA-DOS dentro del producto?
+- ¿Los prompts operativos siguen la fuente canónica o el pin durable del proyecto sin incrustar SHAs transitorios?
 
 ## Calidad del estándar
 

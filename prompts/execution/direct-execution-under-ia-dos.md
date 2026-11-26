@@ -10,6 +10,12 @@ https://github.com/fjaramillob/ia-dos
 
 Execution Entry Mode: DIRECT
 
+Primero resuelve qué IA-DOS gobierna esta ejecución:
+- si una fuente durable del proyecto (.ia-dos.yaml o equivalente) declara Method Resolution Policy = PINNED, usa esa versión/tag/commit;
+- si declara FOLLOW_CURRENT, o no existe un pin durable explícito, usa la referencia canónica vigente;
+- no trates un SHA o versión mencionado sólo en conversaciones, prompts o reportes históricos como pin;
+- con FOLLOW_CURRENT, mantén el snapshot metodológico resuelto durante este outcome y vuelve a resolver antes del siguiente outcome relevante.
+
 Antes de escribir:
 1. lee las instrucciones locales aplicables (AGENTS.md, README, PROJECT.md o equivalentes);
 2. lee sólo la memoria durable necesaria para entender estado vigente, outcomes activos, blockers y próximos horizontes ya aceptados;

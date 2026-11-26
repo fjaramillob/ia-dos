@@ -18,6 +18,8 @@
 
 - [ ] Revisé los documentos relacionados.
 - [ ] Si cambié un contrato transversal, revisé también Orchestrator, onboarding, prompts, templates, AGENTS y Current Offline Pack cuando correspondía.
+- [ ] Si toqué versionado/adopción, distinguí Method Resolution Policy de Execution Entry Mode/Policy y no convertí SHAs conversacionales en pins durables.
+- [ ] Si toqué DIRECT, confirmé que Task/Report físicos no se vuelvan requisitos universales.
 - [ ] Distingí superficies normativas vigentes de evidencia histórica y no reescribí historia por conveniencia.
 - [ ] No reintroduje Planning/Preflight/Resume rutinarios incompatibles con ejecución adaptativa.
 - [ ] Si toqué memoria durable, preservé Memory Policy, Memory Stewardship y la semántica de ROUTE_TO_90/UPDATED.
