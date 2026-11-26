@@ -25,6 +25,22 @@ Entender
 
 No son fases rígidas. Se repiten tantas veces como haga falta, sin optimizar por cantidad de Tasks.
 
+## Execution Entry Mode
+
+Antes de decidir cómo trabajar, distingue:
+
+```text
+ORCHESTRATED
+→ Conversation Space/Cycle Owner materializa gobierno antes de ejecutar
+
+DIRECT
+→ persona responsable instruye al Coding Agent directamente
+→ agente reconstruye Effective Execution Contract
+→ Direct Execution Gate
+```
+
+Ambos modos usan las mismas fronteras de autoridad. DIRECT elimina un handoff, no gobierno.
+
 ## 1. Entender
 
 Lee evidencia y captura dirección suficiente antes de actuar.
@@ -46,7 +62,7 @@ Distingue:
 - decisión;
 - pregunta abierta.
 
-El Cycle Owner actúa dentro de autoridad delegada. La persona responsable interviene cuando cambian materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
+En ORCHESTRATED, el Cycle Owner actúa dentro de autoridad delegada. En DIRECT, el Coding Agent ejecuta únicamente el outcome humano vigente cuando el contrato efectivo puede reconstruirse sin ambigüedad. La persona responsable o Conversation Space interviene cuando cambian materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
 Crear, materializar, rutear o iniciar una Task no es por sí mismo una decisión humana. Si dirección, outcome, invariantes, fronteras y autoridad siguen estables, el Cycle Owner continúa sin convertir la mecánica de orquestación en un checkpoint humano.
 
@@ -93,11 +109,24 @@ Una Execution Task declara proporcionalmente:
 
 No dividas una Task sólo por duración, cantidad de archivos/comandos o porque internamente incluya implementación, debugging, repair, safe retry, tests, commit, push, deploy o smoke. Divide o detén cuando cambie materialmente outcome, Protected Invariants, Protected Boundaries, scope, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno.
 
+## 3.5 Direct Execution Gate
+
+En DIRECT, antes de escribir confirma:
+
+- outcome suficientemente claro;
+- Protected Invariants reconstruibles;
+- Protected Boundaries identificables;
+- autoridad necesaria disponible;
+- aceptación verificable;
+- memoria durable suficiente para no depender de conversaciones ausentes.
+
+Si falla por una decisión de gobierno, devuelve `NEEDS_GOVERNANCE`. Si la duda es técnica y está dentro de `BOUNDED`, self-plan y continúa.
+
 ## 4. Materializar
 
 La modificación física se delega a `Coding Agent — Execution` con acceso adecuado y una Execution Task autorizada.
 
-El coding agent revalida, planifica internamente, modifica, prueba y reporta únicamente dentro de esa tarea.
+El coding agent revalida, planifica internamente, modifica, prueba y reporta dentro de la Execution Task o, en DIRECT, dentro del Effective Execution Contract derivado de la instrucción humana y fuentes durables.
 
 Con `Adaptation Authority: BOUNDED`, un fallo técnico reversible se diagnostica, repara y reintenta dentro de la misma Execution cuando no hubo side effects materiales y permanecen estables outcome, Protected Invariants y Protected Boundaries.
 
