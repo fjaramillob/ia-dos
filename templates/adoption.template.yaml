@@ -8,7 +8,8 @@ project:
 
 adoption:
   model: "[SEPARATE_APP_AND_WIKI | MONOREPO | DOCS_IN_APP | OTHER]"
-  project_orchestrator: "[CHATGPT_PROJECT_OR_EQUIVALENT]"
+  execution_entry_mode: "[ORCHESTRATED | DIRECT | MIXED]"
+  project_orchestrator: "[CHATGPT_PROJECT_OR_EQUIVALENT | ON_DEMAND | NO_APLICA]"
   exceptions: []
 
 resources:
@@ -16,6 +17,8 @@ resources:
   memory: "[RUTA_O_URL_O_NO_APLICA]"
   backlog: "[RUTA_O_URL_O_NO_APLICA]"
   exchange: "[RUTA_O_URL_O_NO_APLICA]"
+  project_map: "[PROJECT.md | RUTA_EQUIVALENTE | NO_APLICA]"
+  ephemeral_execution_root: "[RUTA_O_CONVENCION_O_NO_APLICA]"
 
 memory:
   home: "[00-home.md | RUTA_EQUIVALENTE | NO_APLICA]"
