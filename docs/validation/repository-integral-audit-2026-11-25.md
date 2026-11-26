@@ -219,7 +219,7 @@ Hallazgos Task-only authority por lectura profunda: 4 superficies
 
 ### Regresión C07
 
-Los 22 archivos modificados antes de materializar esta auditoría fueron revalidados contra el árbol completo.
+Después de completar todas las correcciones, los 27 archivos modificados por C07 fueron revalidados contra el árbol completo. La cobertura acumulada es 120/120 blobs: los archivos no modificados heredaron la pasada integral del baseline y cada superficie cambiada fue revalidada sobre el árbol final.
 
 ```text
 OLD_MIXED_MODE: 0
@@ -230,6 +230,8 @@ TASK_ONLY_AGENT: 0
 STALE_ALPHA6 vigente: 0
 OPERATIONAL_SHA_PIN C06: 0
 Enlaces relativos rotos en archivos modificados: 0
+Final tree blobs: 120
+Changed files revalidated: 27
 ```
 
 ## Dictamen
