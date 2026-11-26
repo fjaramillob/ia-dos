@@ -21,6 +21,22 @@ La supervisión humana no requiere ejecutar manualmente cada cambio ni aprobar l
 
 No debe consumirse atención humana sólo para autorizar la creación, materialización, routing o inicio de una Task cuando esas acciones ya están dentro de autoridad delegada y no cruzan una frontera material.
 
+## Entry mode
+
+La persona responsable puede elegir operar mediante Conversation Space o ir directamente al Coding Agent.
+
+```text
+ORCHESTRATED
+→ gobierno conversacional previo
+
+DIRECT
+→ instrucción humana directa
+→ Coding Agent reconstruye contrato efectivo
+→ ejecuta sólo si Direct Execution Gate = PASS
+```
+
+El modo DIRECT no convierte al Coding Agent en Project Orchestrator. Si aparece una decisión de dirección, roadmap, arquitectura o frontera material no resuelta, debe reingresar gobierno.
+
 ## Project Orchestrator
 
 Debe:
@@ -97,6 +113,19 @@ Debe:
 La materialización del output autorizado no concede permiso sobre código, configuración, datos, Git, Wiki, servicios u otros recursos y no convierte Planning en Execution.
 
 Un identificador `PLAN — ...` puede ser lógico. IA-DOS no exige una conversación nueva por Planning Task.
+
+## Coding Agent — Direct Execution
+
+Cuando recibe una instrucción humana directa, debe:
+
+- leer instrucciones locales y memoria caliente relevante;
+- inspeccionar estado real;
+- reconstruir outcome, Protected Invariants, Protected Boundaries, autoridad, aceptación y stop conditions;
+- ejecutar self-planning si el Direct Execution Gate pasa;
+- devolver `NEEDS_GOVERNANCE` cuando deba inventar dirección o cruzar una frontera no autorizada;
+- mantener continuidad durable autorizada al finalizar.
+
+No necesita una Execution Task física si el contrato efectivo es suficientemente claro. Sí debe materializar o pedir una Task cuando el contrato necesite persistir autoridad sensible, viajar entre agentes o sostener una ejecución cuya continuidad no pueda mantenerse de otra forma.
 
 ## Coding Agent — Execution
 
