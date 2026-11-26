@@ -1,5 +1,5 @@
 > [!WARNING]
-> **EVIDENCIA HISTÓRICA — FASE 6.** Esta validación documenta el estado observado durante la consolidación de Fase 6. No debe interpretarse como validación vigente del repositorio actual. La revisión vigente es [Auditoría integral del repositorio — 2026-11-25](repository-integral-audit-2026-11-25.md).
+> **EVIDENCIA HISTÓRICA — FASE 6.** Esta validación documenta el estado observado durante la consolidación de Fase 6. No debe interpretarse como validación vigente del repositorio actual. La revisión vigente es [Auditoría integral del repositorio — 2026-11-25 / C08](repository-integral-audit-2026-11-25-c08.md).
 
 # Validación end-to-end de onboarding
 
