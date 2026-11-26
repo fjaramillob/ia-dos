@@ -11,7 +11,7 @@ Debes contar con:
 - un workspace local elegido;
 - IA-DOS disponible por referencia remota o local;
 - un nombre provisional o definitivo para el proyecto;
-- dirección inicial suficiente desde `00 — Dirección y orquestación` en modo `definición inicial`;
+- dirección inicial suficiente desde la persona responsable, directamente o mediante `00 — Dirección y orquestación` en modo `definición inicial`;
 - autorización para crear las carpetas y repositorios que realmente correspondan.
 
 No es necesario haber decidido framework, base de datos, proveedor cloud ni arquitectura final.
@@ -36,6 +36,10 @@ Reglas:
 - evitar nombres genéricos como `app`, `nuevo` o `proyecto`.
 
 El nombre visible puede ser distinto del `project-slug`.
+
+## Topología durable y ejecución efímera
+
+Define primero qué recursos son canónicos. Branches, worktrees, previews y otros recursos temporales no deben confundirse con repositorios/componentes durables. Si la raíz necesita un mapa, puede crearse `PROJECT.md` desde `templates/project-map.template.md`.
 
 ## Topologías válidas
 
@@ -88,7 +92,7 @@ El README inicial sólo necesita declarar:
 - ubicación de la memoria durable cuando ya exista;
 - advertencia de no asumir stack o arquitectura todavía.
 
-No generes código, dependencias, `.env`, pipelines ni despliegues sin una tarea específica.
+No generes código, dependencias, `.env`, pipelines ni despliegues sin un outcome/autorización específicos. En DIRECT no se requiere una Execution Task física si el Effective Execution Contract es claro.
 
 ### Memoria durable, cuando corresponda
 
