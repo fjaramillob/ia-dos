@@ -11,7 +11,11 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 
 ## Gobierno y responsabilidad
 
+- [ ] `Method Resolution Policy` distingue `FOLLOW_CURRENT | PINNED`.
+- [ ] Un SHA/versión mencionado sólo en chat, prompt o reporte no se interpreta como pin durable.
+- [ ] `FOLLOW_CURRENT` se resuelve al comienzo del outcome y permanece estable durante esa ejecución.
 - [ ] `Execution Entry Mode: ORCHESTRATED | DIRECT` aparece como caminos de primera clase.
+- [ ] `Execution Entry Policy` se distingue del Mode y usa `ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE`.
 - [ ] `00 — Dirección y orquestación` es la entrada conversacional canónica, no gateway obligatorio de ejecución.
 - [ ] Los Conversation Spaces se abren bajo demanda y no como fases.
 - [ ] El Cycle Owner actúa dentro de autoridad delegada.
@@ -83,5 +87,6 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] `Launch Mode`, `Exchange Protocol v0` y `Context Pack` sólo aparecen como términos históricos o de compatibilidad, no como contratos vigentes.
 - [ ] Los bundles históricos están marcados como históricos y no se reescriben como método actual.
 - [ ] El Current Offline Pack refleja los contratos canónicos vigentes.
+- [ ] Los prompts operativos cotidianos no fijan un SHA de IA-DOS salvo reproducción histórica deliberada o pin durable explícito.
 - [ ] No existen referencias a proyectos particulares salvo ejemplos claramente sintéticos.
 - [ ] Enlaces relativos, rutas y nombres de archivos afectados son válidos.
