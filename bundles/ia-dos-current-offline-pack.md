@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.6 — direct execution / workspace governance 2026-11-25`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.7 — method resolution / consistency hardening 2026-11-25`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -13,6 +13,8 @@ Este es el único bundle vigente para nuevos onboardings offline. No lo combines
 ```text
 Persona responsable = dirección y aprobación final aplicable
 Conversation Space = gobierno on-demand dentro de autoridad delegada
+Method Resolution Policy = FOLLOW_CURRENT | PINNED
+Execution Entry Policy = ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE
 Execution Entry Mode = ORCHESTRATED | DIRECT
 Direct Execution Gate = PASS | NEEDS_GOVERNANCE
 Effective Execution Contract = instrucción humana + contratos durables + estado real
@@ -59,6 +61,24 @@ El Coding Agent no gana esa autoridad de gobierno: no elige roadmap ni inicia po
 `Adaptation Authority: BOUNDED` permite diagnosticar, reparar implementation defects, ajustar pruebas, elegir mecanismos técnicamente equivalentes y realizar safe retry después de fallos sin side effects materiales, siempre dentro del mismo outcome, Protected Invariants y Authority Envelope.
 
 `NONE` se usa cuando el mecanismo exacto forma parte del contrato. Un estado parcial irreversible, un nuevo riesgo material o un cambio de invariante exige STOP.
+
+## Resolución del método
+
+Antes de operar, resuelve qué IA-DOS gobierna el outcome:
+
+```text
+PINNED durable
+→ usa la versión/tag/commit adoptada
+
+FOLLOW_CURRENT durable o ausencia de pin
+→ usa la referencia canónica vigente al comenzar el outcome
+```
+
+Una versión o SHA mencionada sólo en chat, prompt o reporte no constituye pin durable.
+
+Con `FOLLOW_CURRENT`, mantén el snapshot metodológico estable durante el outcome actual y vuelve a resolver antes del siguiente outcome relevante. Los prompts operativos cotidianos no deberían fijar un SHA salvo reproducción histórica deliberada.
+
+`Execution Entry Policy` puede orientar el default del proyecto (`ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE`), pero cada ejecución concreta sigue usando sólo `ORCHESTRATED | DIRECT`.
 
 ## Inicio y continuidad
 
