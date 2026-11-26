@@ -1,6 +1,6 @@
 # Modelo operativo
 
-IA-DOS organiza el desarrollo asistido por IA mediante ciclos pequeños de dirección, razonamiento, materialización y verificación.
+IA-DOS organiza el desarrollo asistido por IA mediante ciclos de dirección, razonamiento, materialización y verificación. Los ciclos pueden ser extensos mientras mantengan outcome e invariantes bajo una frontera estable.
 
 Su secuencia maestra es:
 
@@ -13,7 +13,7 @@ Dirigir
 → verificar y aprender
 ```
 
-`Dirigir` expresa la responsabilidad transversal de la persona y del Project Orchestrator. Los movimientos siguientes se repiten según las necesidades del proyecto y no constituyen fases rígidas.
+`Dirigir` expresa la responsabilidad transversal de la persona y, cuando se usa entrada ORCHESTRATED, del Project Orchestrator. En DIRECT la persona puede entregar el outcome directamente al Coding Agent; los movimientos siguientes se repiten según necesidad y no constituyen fases rígidas.
 
 ## 1. Dirigir
 
@@ -82,7 +82,7 @@ Si el readiness de una precondición debe conocerse antes de conceder autoridad 
 
 Cuando existe una decisión material de diseño todavía no resuelta, usa `Planning Task` en solo lectura. El detalle de implementación se planifica internamente durante Execution.
 
-Una `Execution Task` debe indicar proporcionalmente:
+En ORCHESTRATED, una `Execution Task` debe indicar proporcionalmente. En DIRECT, el Coding Agent reconstruye el mismo contrato como Effective Execution Contract:
 
 - outcome;
 - Protected Invariants;
@@ -104,9 +104,9 @@ La tarea debe poder ejecutarse sin depender del historial completo del chat.
 
 ## 5. Materializar
 
-El coding agent modifica los artefactos reales dentro de los límites declarados.
+El coding agent modifica los artefactos reales dentro de los límites declarados o reconstruidos por el Effective Execution Contract.
 
-Puede trabajar sobre implementación, documentación, configuración, pruebas o memoria durable **sólo cuando la tarea lo autoriza**.
+Puede trabajar sobre implementación, documentación, configuración, pruebas o memoria durable **sólo cuando la autoridad efectiva lo autoriza**.
 
 Durante esta etapa debe:
 
@@ -150,34 +150,26 @@ Aprender significa conservar conocimiento útil y confirmado, no copiar conversa
 ## Arquitectura de trabajo
 
 ```text
+ORCHESTRATED
+
 Persona responsable
-        ↓
-Project Orchestrator
-        ↓
-Conversation Space / Cycle Owner
-        ↓
-resultado claro
-        ↓
-Memory Bootstrap Gate, cuando aplica
-        ↓
-Planning Task, sólo si existe decisión material no resuelta
-        ↓
-Environment Preflight, sólo si readiness debe conocerse antes de una frontera sensible
-        ↓
-Execution Task outcome-first + Revalidate
-        ↓
-Execution Cell o entorno autorizado
-        ↓
-Coding Agent
-        ↓
-Execution Report
-        ↓
-Cycle Owner revisa dentro de autoridad delegada
-        ↓
-Persona responsable aprueba cuando corresponde
-        ↓
-Fuentes de verdad actualizadas cuando corresponde
+→ Conversation Space / Cycle Owner
+→ Execution Task / Resume
+→ Coding Agent
+→ evidencia
+→ Cycle Owner / persona según autoridad
+
+DIRECT
+
+Persona responsable
+→ Coding Agent
+→ rehidrata memoria + estado real
+→ Direct Execution Gate
+→ PASS: self-plan / execute / verify / maintain continuity
+→ NEEDS_GOVERNANCE: persona o Conversation Space resuelve la decisión material
 ```
+
+Ambos modos terminan en fuentes de verdad actualizadas cuando corresponde.
 
 ## Frontera de responsabilidad
 
@@ -186,7 +178,7 @@ Persona responsable
     define dirección y conserva aprobación final aplicable
 
 Project Orchestrator / Cycle Owner
-    gobierna y delimita dentro de autoridad delegada
+    gobierna y delimita on-demand dentro de autoridad delegada
 
 Coding Agent — Planning
     inspecciona y propone
