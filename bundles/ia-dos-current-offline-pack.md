@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.7 — method resolution / consistency hardening 2026-11-25`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.8 — direct/orchestrated consistency closure 2026-11-25`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -22,14 +22,14 @@ Specialist Handoff = transferencia inline y copiable entre Conversation Spaces
 Execution Cell = continuidad de ejecución
 Execution Task = outcome cohesivo bajo frontera estable de autoridad
 Protected Invariants = propiedades materiales que no cambian durante la adaptación
-Adaptation Authority = autonomía técnica explícita dentro de Execution Task
+Adaptation Authority = autonomía técnica explícita dentro del contrato de ejecución aplicable
 Protected Boundaries = fronteras materiales que requieren gates/autoridad
-Authority Envelope = permisos explícitos dentro de Execution Task
+Authority Envelope = permisos explícitos dentro del contrato de ejecución aplicable
 Execution Checkpoint = continuidad operacional, no autoridad
 Human Decision Checkpoint = pausa material dentro de la misma Execution Task
 Delegated Continuity = continuidad del Cycle Owner dentro de autoridad ya aceptada
 Execution Report = evidencia de lo ocurrido
-Memory Policy = criterio semántico dentro de Execution Task
+Memory Policy = criterio semántico dentro del contrato de ejecución aplicable
 Memory Stewardship = LOCAL | 90_STRUCTURAL | NO APLICA
 Operational Baseline = checkpoint durable del último estado publicado verificado
 Memoria durable = responsabilidad funcional
@@ -167,7 +167,7 @@ En DIRECT, antes de escribir:
 - historia estructural indispensable sólo en chats → Memory Bootstrap Gate y 90 cuando el proyecto adopta ese custodio;
 - readiness que debe conocerse antes de autoridad sensible → Environment Preflight;
 - decisión material pendiente → Planning Task;
-- outcome definido → Execution Task con planificación interna y Revalidate;
+- outcome definido → ORCHESTRATED: Execution Task con planificación interna y Revalidate; DIRECT: Effective Execution Contract + Direct Execution Gate, sin Task física obligatoria;
 - brecha de otro dominio → Specialist Handoff;
 - decisión material fuera de autoridad → deriva sólo esa decisión;
 - retorno aceptado + dirección/roadmap vigente + invariantes/fronteras/autoridad estables → el Cycle Owner puede despachar la continuación lógica sin microaprobación;
@@ -569,7 +569,7 @@ Prueba de suficiencia:
 ```text
 repositorio real
 + Wiki relevante
-+ Task vigente
++ contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT)
 → un Coding Agent nuevo puede ponerse al día
 → revalida el estado real antes de modificar
 ```

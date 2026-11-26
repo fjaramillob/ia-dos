@@ -170,8 +170,9 @@ Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templ
 | Memoria | ruta, URL o `NO APLICA` |
 | Backlog | ruta, URL o `NO APLICA` |
 | Exchange | ruta, URL o `NO APLICA` |
-| IA-DOS | versión o commit adoptado |
-| Execution Entry Mode | `ORCHESTRATED | DIRECT | MIXED` cuando se documente |
+| IA-DOS | `Method Resolution Policy` y versión/commit sólo cuando `PINNED`; `FOLLOW_CURRENT` si no existe pin durable |
+| Execution Entry Policy | `ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE` cuando se documente |
+| Execution Entry Mode | `ORCHESTRATED | DIRECT` para una ejecución concreta |
 | Project Orchestrator | entorno conversacional utilizado, `ON_DEMAND` o `NO APLICA` |
 | Project map | `PROJECT.md`, equivalente o `NO APLICA` |
 | Ephemeral execution root | ruta/convención o `NO APLICA` |

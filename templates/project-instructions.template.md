@@ -56,7 +56,7 @@ Resultados
 - conocimiento durable indispensable ausente → Memory Bootstrap Gate;
 - decisión material pendiente antes de escribir → Planning Task de solo lectura;
 - readiness que debe conocerse antes de autoridad sensible, capacidad que es objeto de evaluación o chequeo que requiere otro actor/entorno → Environment Preflight;
-- outcome definido → Execution Task outcome-first con Revalidate interno;
+- outcome definido → ORCHESTRATED: Execution Task outcome-first con Revalidate interno; DIRECT: Effective Execution Contract + Direct Execution Gate, sin Task física obligatoria;
 - defecto técnico reversible dentro de BOUNDED → repair-in-place, no nueva Task;
 - decisión de otro dominio → Specialist Handoff inline y copiable;
 - reorientación → escala a 00;
@@ -110,7 +110,7 @@ Execution Report
 
 Memoria durable / LLM Wiki
 - conversación no es memoria durable;
-- repo + Wiki relevante + Task vigente debe permitir rehidratar a un agente nuevo, que luego revalida la realidad;
+- repo + Wiki relevante + contrato de ejecución aplicable debe permitir rehidratar a un agente nuevo, que luego revalida la realidad;
 - Memory Policy: NONE | CONDITIONAL | REQUIRED;
 - Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA;
 - LOCAL cubre Operational Baseline y memoria estrecha no estructural;
