@@ -12,9 +12,9 @@ Las decisiones importantes deben quedar en archivos versionados y accesibles fue
 
 Un agente debe recibir el mínimo contexto suficiente para completar una tarea con seguridad.
 
-## 4. Dividir antes de ejecutar
+## 4. Dividir por frontera, no por tamaño
 
-Las tareas grandes deben separarse en cambios más pequeños, verificables y reversibles.
+Una ejecución puede ser extensa si mantiene un outcome cohesivo, verificable y una frontera estable de autoridad. Divide cuando cambien materialmente outcome, Protected Invariants, Protected Boundaries, autoridad, arquitectura, seguridad, datos, riesgo, coste o entorno; no sólo por duración, archivos, commits o cantidad de subfases.
 
 ## 5. Declarar lo que no debe cambiarse
 
@@ -30,7 +30,7 @@ La documentación debe indicar claramente qué está implementado, qué está in
 
 ## 8. Mantener responsabilidad humana
 
-La inteligencia artificial puede proponer, inspeccionar y ejecutar dentro de límites. La aprobación final sigue siendo responsabilidad humana.
+La inteligencia artificial puede proponer, inspeccionar, self-plan y ejecutar dentro de límites. La dirección y las decisiones materiales siguen bajo responsabilidad humana. El Conversation Space puede ser on-demand; no es gateway obligatorio de cada ejecución.
 
 ## 9. Mejorar con experiencia real
 
