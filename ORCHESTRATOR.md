@@ -70,7 +70,15 @@ Cuando el proyecto ya está en desarrollo:
 
 ### IA-DOS Alignment condicional
 
-Un Conversation Space consulta la referencia vigente de IA-DOS antes de decidir cuando:
+Primero resuelve la referencia metodológica del proyecto:
+
+- `PINNED` durable → usa la versión/tag/commit adoptada;
+- `FOLLOW_CURRENT` durable o ausencia de pin → usa la referencia canónica vigente;
+- una versión/SHA mencionada sólo en chats, prompts o reportes no constituye pin.
+
+Con `FOLLOW_CURRENT`, mantén estable el snapshot metodológico durante el outcome actual y vuelve a resolver antes del siguiente outcome relevante.
+
+Un Conversation Space consulta la referencia resuelta de IA-DOS antes de decidir cuando:
 
 - es nuevo;
 - se retoma después de un cambio relevante de IA-DOS; o
