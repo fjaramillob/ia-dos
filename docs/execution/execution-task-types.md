@@ -1,6 +1,8 @@
 # Registro de tipos de ejecución
 
-Este registro clasifica cómo debe materializar trabajo un coding agent. No define herramientas concretas ni conversaciones permanentes.
+Este registro clasifica Execution Tasks cuando el trabajo se materializa mediante ese artefacto. No define herramientas concretas ni conversaciones permanentes.
+
+En DIRECT sin Task física, estos tipos pueden usarse como taxonomía conceptual si aportan claridad, pero no es obligatorio materializarlos.
 
 Toda `Execution Task` debe declarar un tipo principal. Puede incluir un tipo secundario sólo cuando sea inseparable del mismo outcome.
 
@@ -34,7 +36,7 @@ Usa una Planning Task separada cuando exista una decisión material de diseño t
 → 1 Execution Report
 ```
 
-El tipo no concede permisos. Escritura, control de versiones, cambios remotos, despliegue, datos, recursos externos, costes y producción requieren autorización explícita dentro de la Execution Task.
+El tipo no concede permisos. Escritura, control de versiones, cambios remotos, despliegue, datos, recursos externos, costes y producción requieren autorización explícita dentro de la Execution Task o del Effective Execution Contract cuando el modo sea DIRECT.
 
 Una Task no debe dividirse sólo por duración, cantidad de archivos o comandos, ni porque contenga fases internas de implementación, tests, debugging, reparación, safe retry, commit, push, deploy o smoke. IA-DOS busca maximizar el resultado seguro y verificable por Task, no la cantidad de Tasks.
 
