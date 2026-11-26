@@ -76,6 +76,19 @@ No constituye:
 - evidencia de que los recursos existen;
 - decisión durable hasta ser aceptado y registrado donde corresponda.
 
+## Effective Execution Contract
+
+En ORCHESTRATED, la Execution Task materializa autoridad explícita. En DIRECT, la autoridad efectiva puede reconstruirse desde:
+
+```text
+Human Instruction
++ repository / AGENTS contracts
++ relevant durable memory
++ actual repository/environment state
+```
+
+Una instrucción humana directa no puede contradecir una fuente durable de mayor autoridad sin resolver primero esa contradicción. El Coding Agent no inventa permisos ausentes.
+
 ## Ejecución
 
 Una `Execution Task` conserva outcome, Protected Invariants, Protected Boundaries, Adaptation Authority, alcance y Authority Envelope aunque se transporte por conversación, archivo, issue o Exchange.

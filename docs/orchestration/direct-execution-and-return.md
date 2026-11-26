@@ -1,10 +1,11 @@
 # Ejecución directa y retorno acotado a 00
 
-IA-DOS busca materializar avances verificables sin convertir `00 — Dirección y orquestación` en un dispatcher obligatorio ni saltarse memoria, readiness o planificación cuando son necesarias.
+IA-DOS busca materializar avances verificables sin convertir `00 — Dirección y orquestación` en un dispatcher obligatorio. Puede operar en `ORCHESTRATED` o `DIRECT`; ambos preservan memoria, readiness, autoridad y fronteras cuando son necesarias.
 
-## Camino operativo
+## Caminos operativos
 
 ```text
+ORCHESTRATED
 Conversation Space gobierna un outcome
 → evalúa Memory Bootstrap sólo si falta memoria durable indispensable
 → define Protected Invariants + Adaptation Authority + Protected Boundaries
@@ -16,11 +17,18 @@ Conversation Space gobierna un outcome
 → revisión y decisión dentro de la autoridad delegada
 → persona responsable aprueba cuando corresponde
 → 00 sólo ante reorientación real
+
+DIRECT
+Human instruction
+→ Coding Agent rehidrata contratos durables + estado real
+→ Direct Execution Gate
+→ PASS: self-plan / execute / verify / maintain continuity
+→ NEEDS_GOVERNANCE: persona o Conversation Space resuelve sólo la decisión material
 ```
 
 La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
-## Gate de salida
+## Gate de salida ORCHESTRATED
 
 Antes de emitir una `Execution Task`, el espacio evalúa en este orden:
 
@@ -78,6 +86,10 @@ Environment Preflight
 
 El Preflight es de solo lectura. `LISTO PARA EJECUCIÓN` permite considerar la autoridad que dependía específicamente de ese Preflight; el reporte no concede esa autorización por sí mismo. No repitas como Preflight lo que puede resolverse mediante Revalidate interno.
 
+## Direct Execution Gate
+
+En DIRECT no se emite una Task física por defecto. El Coding Agent continúa sólo si puede reconstruir outcome, Protected Invariants, Protected Boundaries, autoridad, aceptación y memoria suficiente. Si falta una decisión material, devuelve `NEEDS_GOVERNANCE`; no usa esa salida para dudas técnicas ordinarias resolubles dentro de `BOUNDED`.
+
 ## Cuándo volver a 00
 
 El retorno a `00` corresponde cuando existe:
@@ -99,7 +111,7 @@ Cada tarea utiliza únicamente referencias del proyecto actual y los recursos au
 
 ## Retorno del Execution Report
 
-El `Execution Report` vuelve al Cycle Owner declarado.
+En ORCHESTRATED, el `Execution Report` vuelve al Cycle Owner declarado. En DIRECT, la salida puede ser evidencia conversacional compacta; materializa Report sólo cuando aporte trazabilidad durable, handoff o continuidad sensible.
 
 La revisión compara:
 

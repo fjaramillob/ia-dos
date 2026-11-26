@@ -152,7 +152,7 @@ Criterio de estabilidad: un agente nuevo debe poder aplicar el mismo contrato vi
 
 ## `v0.1.0-alpha.5` — Delegated continuity and adoption quality
 
-**Estado: ACTUAL**
+**Estado: COMPLETADO**
 
 Objetivo: reducir fricción de gobierno sin transferir dirección humana, y mantener memoria caliente suficiente para que proyectos complejos puedan sostener ejecuciones más largas y agentes más capaces.
 
@@ -179,6 +179,31 @@ Prioridades todavía abiertas dentro de alpha.5:
 - mejorar instrucciones para proyectos que ya poseen documentación propia y no quieren reorganizarla.
 
 No se introducirán herramientas obligatorias sólo para automatizar validaciones que todavía pueden resolverse claramente mediante contratos y revisión.
+
+---
+
+## `v0.1.0-alpha.6` — Direct execution and workspace governance
+
+**Estado: ACTUAL**
+
+Objetivo: permitir que la persona responsable trabaje directamente con Coding Agents sin convertir al Conversation Space en gateway obligatorio, preservando propósito, dirección, fronteras materiales y continuidad durable.
+
+- `Execution Entry Mode: ORCHESTRATED | DIRECT` como caminos de primera clase;
+- `Effective Execution Contract` reconstruible desde instrucción humana + contratos del repo + memoria durable relevante + estado real;
+- `Direct Execution Gate` para ejecutar sólo cuando outcome, invariantes, fronteras, autoridad y aceptación son suficientemente claros;
+- self-planning del Coding Agent como default en DIRECT;
+- `NEEDS_GOVERNANCE` cuando sea necesaria una decisión material, sin usarlo para dudas técnicas ordinarias;
+- `Governance Re-entry Trigger` semántico para recuperar Conversation Space ante cambios de propósito, roadmap, arquitectura, autoridad o riesgo;
+- `Agent-Owned Continuity` para mantener implementación, Operational Baseline y hot project state dentro de autoridad;
+- `Workspace Governance` separando topología durable de superficie efímera de ejecución;
+- autonomía alta sobre branches, worktrees, previews, fixtures y entornos temporales sin límites arbitrarios por cantidad;
+- gobierno explícito cuando se crean o redefinen repositorios, servicios, datastores o componentes canónicos;
+- `PROJECT.md` opcional como mapa mínimo del workspace cuando la topología física deja de ser autoexplicativa;
+- lifecycle y cleanup seguro para superficies efímeras.
+
+Criterio central:
+
+> IA-DOS no controla cuánto puede trabajar el agente; controla qué partes del proyecto puede redefinir mientras trabaja.
 
 ---
 

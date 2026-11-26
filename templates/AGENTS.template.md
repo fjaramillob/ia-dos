@@ -19,10 +19,13 @@ La versión de IA-DOS adoptada, cuando el proyecto use manifiesto, está declara
 ## Antes de modificar
 
 1. Lee este archivo completo.
-2. Revisa la `Execution Task` o artefacto autorizado.
-3. Consulta sólo las rutas de memoria indicadas como lectura requerida.
-4. Verifica el estado Git antes de escribir.
-5. Identifica alcance, fuera de alcance, permisos y condiciones de detención.
+2. Identifica `Execution Entry Mode: ORCHESTRATED | DIRECT`.
+3. En ORCHESTRATED, revisa la `Execution Task` o artefacto autorizado.
+4. En DIRECT, lee la instrucción humana actual, memoria caliente relevante y estado real; reconstruye el Effective Execution Contract.
+5. Consulta sólo las rutas de memoria necesarias.
+6. Verifica el estado Git antes de escribir.
+7. Identifica outcome, Protected Invariants, Protected Boundaries, autoridad, aceptación y condiciones de detención.
+8. En DIRECT, aplica `Direct Execution Gate`; si falta gobierno devuelve `NEEDS_GOVERNANCE`.
 
 ## Fuentes de verdad
 
@@ -32,11 +35,25 @@ La versión de IA-DOS adoptada, cuando el proyecto use manifiesto, está declara
 - Operational Baseline, cuando exista publicación: sección equivalente dentro del estado durable; orienta continuidad pero debe revalidarse.
 - Decisiones durables: `decisions/` o fuente equivalente declarada.
 - Trabajo pendiente: `[ISSUES, BACKLOG O SISTEMA DE SEGUIMIENTO; NO EXCHANGE]`.
-- Alcance del cambio: `Execution Task` canónica.
+- Alcance del cambio: `Execution Task` canónica en ORCHESTRATED; instrucción humana + Effective Execution Contract en DIRECT.
 - Evidencia: `Execution Report`, diff, pull request u otra evidencia autorizada.
 - Historial de archivos intercambiados: Exchange, sólo cuando el proyecto lo adopta.
 
 La memoria no demuestra por sí sola que algo esté implementado. Exchange no es backlog ni memoria. Cuando exista contradicción relevante entre memoria e implementación, conserva la evidencia y detente si afecta el resultado de la tarea.
+
+## Direct Execution
+
+En DIRECT no necesitas una Execution Task física cuando el contrato efectivo es claro y durable. Puedes self-plan, implementar, probar, reparar y verificar el outcome humano actual dentro de autoridad.
+
+No inventes roadmap, arquitectura, topología durable ni permisos. Si para continuar necesitas una decisión material devuelve:
+
+```text
+NEEDS_GOVERNANCE
+Decision: [DECISIÓN MATERIAL]
+Evidence: [MÍNIMO NECESARIO]
+Options: [SI APLICA]
+Recommended: [SI APLICA]
+```
 
 ## Acciones permitidas
 
@@ -62,7 +79,8 @@ Sólo las que la tarea autorice explícitamente, por ejemplo:
 - leer otros proyectos del workspace sin autorización;
 - afirmar verificación sin evidencia;
 - aprobar el propio resultado;
-- iniciar otra unidad automáticamente.
+- iniciar otra unidad automáticamente fuera de la instrucción humana vigente;
+- convertir branches/worktrees/previews temporales en topología durable sin gobierno cuando el cambio sea material.
 
 ## Consumo de memoria
 
@@ -82,6 +100,12 @@ Lectura requerida
 ```
 
 Si una referencia requerida no es accesible, no compenses leyendo indiscriminadamente otros recursos; reporta la limitación.
+
+## Workspace Governance
+
+Distingue recursos canónicos de superficies efímeras. Branches, worktrees, previews, fixtures y scratch artifacts pueden crearse dentro de autoridad sin máximos arbitrarios por cantidad. Nuevos repositorios, servicios, datastores o componentes canónicos pueden requerir gobierno material.
+
+Si existe `PROJECT.md`, úsalo como mapa del workspace. No lo conviertas en backlog.
 
 ## Execution Cell
 
@@ -128,9 +152,13 @@ Si cambia un baseline publicado, conserva el checkpoint operacional autorizado a
 
 Si varios outcomes previos quedaron `DEFERRED`, no asumas que pueden seguir acumulándose: cuando el efecto conjunto cambie estado vigente, outcome activo, milestone/capability, blocker, horizonte aceptado o autoridad reusable, el Cycle Owner debe consolidar memoria según `Memory Stewardship`. El Coding Agent reporta hechos; no inventa esa dirección.
 
-## Formato del reporte final
+## Formato del retorno final
 
-Devuelve un `Execution Report` canónico al Cycle Owner indicado:
+En `ORCHESTRATED`, devuelve un `Execution Report` canónico al Cycle Owner indicado.
+
+En `DIRECT`, devuelve evidencia compacta suficiente para que la persona responsable conozca resultado, verificaciones, cambios materiales, publicación/baseline y cualquier `NEEDS_GOVERNANCE`. No materialices Task/Report sólo por ceremonia. Si el proyecto exige trazabilidad durable, un handoff entre agentes o continuidad sensible, usa el contrato tipado correspondiente.
+
+Formato canónico cuando aplica Execution Report:
 
 ```text
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO

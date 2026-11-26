@@ -8,8 +8,14 @@ IA-DOS se adopta por proyecto. No se copia completo dentro de cada repositorio.
 IA-DOS
     define cómo trabajar
 
-Project Orchestrator
-    dirige conversaciones y prepara trabajo
+Persona responsable
+    elige ORCHESTRATED o DIRECT según necesidad
+
+Conversation Space / Project Orchestrator
+    gobierna on-demand cuando aporta estrategia o decisión material
+
+Coding Agent
+    ejecuta desde Task o Direct Execution Gate
 
 Proyecto
     define qué construir, para quién y bajo qué decisiones
@@ -85,8 +91,8 @@ Cada proyecto incorpora sólo los elementos que necesita. Entre los artefactos y
 
 - memoria durable o LLM Wiki;
 - `.ia-dos.yaml` mediante `templates/adoption.template.yaml`;
-- instrucciones para el Project Orchestrator;
-- `AGENTS.md` para coding agents;
+- instrucciones para el Project Orchestrator cuando se use ORCHESTRATED;
+- `AGENTS.md` para coding agents y Direct Execution;
 - Planning Tasks y Execution Tasks;
 - Execution Cells cuando exista ejecución recurrente;
 - Exchange cuando una pasarela de archivos Markdown entre agentes aporte valor;
@@ -129,7 +135,7 @@ Cuando esos componentes existan:
 
 ```text
 Conversation Spaces
-→ gobierno y razonamiento activo
+→ gobierno y razonamiento activo on-demand
 
 Execution Cells
 → continuidad operacional del coding agent
@@ -159,7 +165,7 @@ Al compartir repositorios o archivos con asistentes externos, la persona respons
 
 ## Versión adoptada
 
-Cada proyecto debe declarar qué versión o commit de IA-DOS utiliza cuando necesite una adopción reproducible.
+Cada proyecto debe declarar qué versión o commit de IA-DOS utiliza cuando necesite una adopción reproducible. Puede además declarar `execution_entry_mode: ORCHESTRATED | DIRECT | MIXED` y un mapa de workspace cuando aporten claridad.
 
 Usa `templates/adoption.template.yaml` como punto de partida cuando corresponda.
 

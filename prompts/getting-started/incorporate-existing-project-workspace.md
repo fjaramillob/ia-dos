@@ -1,6 +1,6 @@
 # Prompt para incorporar un proyecto existente al workspace
 
-Este prompt está dirigido a un coding agent con acceso al sistema de archivos y Git.
+Este prompt materializa el camino ORCHESTRATED de inspección/adopción para un coding agent con acceso al sistema de archivos y Git. En DIRECT, una inspección read-only puede realizarse bajo Direct Execution Gate; si aparece una decisión material de topología, devuelve `NEEDS_GOVERNANCE`.
 
 ```text
 Artifact Type: Planning Task

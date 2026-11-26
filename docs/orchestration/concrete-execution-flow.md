@@ -5,28 +5,35 @@ IA-DOS debe producir avances verificables sin depender de una plataforma, provee
 ## Flujo principal
 
 ```text
+ORCHESTRATED
+
 dirección suficiente
-→ outcome definido y verificable
-→ asignar Cycle Owner
-→ definir Protected Invariants + Protected Boundaries
-→ Memory Bootstrap Gate sólo si falta memoria durable indispensable
-→ Planning Task sólo si existe una decisión material no resuelta
-→ Environment Preflight sólo si readiness debe conocerse antes de autorizar una frontera sensible
+→ Conversation Space / Cycle Owner
+→ invariantes + fronteras
+→ Planning / Preflight sólo si aportan
 → Execution Task outcome-first
-   → Revalidate
-   → planificar internamente
-   → implementar / probar / diagnosticar / reparar / safe retry
-   → cruzar fronteras autorizadas
+→ Coding Agent
 → Execution Report
-→ revisión del Cycle Owner
-→ 90 custodia memoria estructural cuando corresponda
-→ persona responsable interviene ante cambio material de frontera
-→ escalar a 00 sólo ante reorientación real
+→ revisión según autoridad
+
+DIRECT
+
+dirección suficiente
+→ Coding Agent
+→ rehidrata contratos durables + estado real
+→ Direct Execution Gate
+→ PASS: self-plan / implement / verify / repair / deliver
+→ mantiene continuidad durable autorizada
+→ NEEDS_GOVERNANCE sólo ante decisión material
 ```
 
-`00 — Dirección y orquestación` no es una parada obligatoria entre definición, planificación y ejecución.
+`00 — Dirección y orquestación` no es una parada obligatoria entre definición, planificación y ejecución; en DIRECT puede no intervenir en absoluto mientras no exista Governance Re-entry Trigger.
 
-## Gate de avance
+## Direct Execution Gate
+
+En DIRECT, el Coding Agent ejecuta sólo cuando puede reconstruir sin ambigüedad outcome, Protected Invariants, Protected Boundaries, autoridad, aceptación y memoria suficiente. Si falta gobierno devuelve `NEEDS_GOVERNANCE`; si falta sólo detalle técnico, self-plan dentro de autoridad.
+
+## Gate de avance ORCHESTRATED
 
 Evalúa en este orden:
 
@@ -153,6 +160,9 @@ Environment Preflight
 No lo uses como ritual previo a toda Execution ni dupliques checks estables que ya están cubiertos por fuentes vigentes.
 
 ## Transición visible
+
+En DIRECT no existe handoff técnico obligatorio: la instrucción humana vigente es la entrada y el Coding Agent reconstruye el contrato efectivo. Una Task física sigue siendo útil cuando autoridad sensible, handoff, auditoría o continuidad extensa requieren materialización durable.
+
 
 Cuando corresponda planificación, entrega una `Planning Task` autosuficiente al coding agent en modo de solo lectura y pide devolver el `Implementation Plan` al Cycle Owner.
 

@@ -37,6 +37,8 @@ Si modificas alguno de estos conceptos, comprueba sus representaciones relaciona
 - `Authority Envelope`;
 - `Environment Preflight` y `Execution Resume`;
 - `Execution Cell` y checkpoints operacionales;
+- `Execution Entry Mode`, Direct Execution Gate y Effective Execution Contract;
+- Workspace Governance, topología durable y superficies efímeras;
 - `Execution Report`;
 - `Memory Bootstrap Gate`;
 - memoria durable / `LLM Wiki`;
@@ -53,7 +55,9 @@ No reescribas evidencia histórica sólo porque conserve wording antiguo. Distin
 
 ```text
 Persona responsable = dirección y aprobación final aplicable
-Conversation Space   = gobierno dentro de autoridad delegada
+Conversation Space   = gobierno on-demand dentro de autoridad delegada
+Execution Entry Mode = ORCHESTRATED | DIRECT
+Direct Execution     = ejecución sin gateway conversacional cuando el contrato efectivo es reconstruible
 Specialist Handoff   = transferencia inline y copiable entre Conversation Spaces
 Execution Cell       = continuidad de ejecución
 Execution Task       = outcome cohesivo bajo una frontera estable de autoridad
@@ -72,7 +76,9 @@ Exchange             = pasarela pasiva opcional hacia/desde Coding Agents
 
 Además:
 
-- `00 — Dirección y orquestación` es el Conversation Space inicial canónico y no un dispatcher obligatorio;
+- `00 — Dirección y orquestación` es el Conversation Space inicial canónico cuando se usa entrada conversacional y no un dispatcher obligatorio;
+- `Execution Entry Mode: ORCHESTRATED | DIRECT` son caminos de primera clase; DIRECT no exige una Execution Task física si el Effective Execution Contract puede reconstruirse sin ambigüedad;
+- en DIRECT el Coding Agent ejecuta sólo el outcome humano actual y devuelve `NEEDS_GOVERNANCE` cuando necesite inventar dirección, roadmap, autoridad o una frontera material;
 - los Conversation Spaces se abren bajo demanda;
 - `Specialist Handoff` se entrega inline; no requiere `.md`, Exchange, path ni launcher;
 - si un Space es nuevo, se retoma después de un cambio relevante de IA-DOS o muestra reglas obsoletas, consulta sólo los contratos vigentes necesarios sin reiniciar onboarding;
@@ -87,6 +93,8 @@ Además:
 - la mecánica de crear, materializar, rutear o iniciar una Task dentro de autoridad delegada no es por sí misma una decisión humana; el Cycle Owner puede continuar sin microaprobaciones mientras no cambie una frontera material;
 - una Task larga puede declarar Human Decision Checkpoints y continuar con el mismo Task ID mediante Execution Resume cuando la decisión humana activa una opción ya prevista;
 - el coding agent nunca aprueba su propio plan o ejecución;
+- workspace efímero y topología durable son planos distintos: branches/worktrees/previews pueden proliferar dentro de autoridad, pero nuevos repositorios/servicios/datastores/componentes canónicos pueden requerir gobierno material;
+- no impongas máximos arbitrarios de worktrees, branches, agentes o previews; exige lifecycle claro y cleanup seguro;
 - `Authority Envelope` y `<TASK-ID>-CHECKPOINT.md` no son Artifact Types;
 - `Execution Resume = Task original + delta del bloqueo externo, interrupción real o Human Decision Checkpoint resuelto`; conserva Task ID mientras outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura no cambien;
 - repair-in-place y safe retry dentro de una Execution todavía abierta no requieren Execution Resume;

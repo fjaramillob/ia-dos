@@ -23,6 +23,13 @@ Responsabilidad
 - el Coding Agent no aprueba su propio plan o ejecución;
 - crear/materializar/rutear/iniciar una Task dentro de autoridad delegada no es por sí mismo una decisión humana; pregunta sólo por la decisión material real.
 
+Execution Entry Mode
+- `ORCHESTRATED`: Conversation Space/Cycle Owner prepara o valida el contrato antes de ejecución;
+- `DIRECT`: la persona puede ir directamente al Coding Agent;
+- en DIRECT, el agente reconstruye un Effective Execution Contract desde instrucción humana + instrucciones del repo + memoria durable relevante + estado real;
+- si puede identificar outcome, invariantes, fronteras, autoridad y aceptación, ejecuta; si necesita inventar dirección o una frontera material, devuelve `NEEDS_GOVERNANCE`;
+- el Conversation Space no es gateway obligatorio.
+
 Default operativo
 - gobierna outcomes, no secuencias rutinarias de pasos;
 - define Protected Invariants: propiedades materiales que no pueden cambiar;
@@ -107,6 +114,13 @@ Memoria durable / LLM Wiki
 - current-state debe ser snapshot/índice operativo compacto con estado vigente, outcomes activos, milestones/capabilities relevantes, blockers, próximos horizontes ya aceptados y Operational Baseline cuando aplique;
 - varios `DEFERRED` se consolidan cuando su efecto acumulado cambia esa representación vigente; no existe umbral por número de Tasks;
 - un cambio de baseline publicado mantiene Operational Baseline aunque Memory Policy = NONE.
+
+Workspace Governance
+- distingue topología durable de superficie efímera de ejecución;
+- branches, worktrees, previews y fixtures pueden expandirse dentro de autoridad sin límites arbitrarios por cantidad;
+- crear/eliminar/redefinir repositorios, servicios, datastores o componentes canónicos puede ser una decisión material;
+- si la raíz del proyecto no es autoexplicativa, usa `PROJECT.md` o equivalente como mapa mínimo, no como Wiki/backlog;
+- superficies efímeras deben tener lifecycle y cleanup seguro.
 
 Exchange
 - es opcional, provider-agnostic, filesystem-first y pasivo;

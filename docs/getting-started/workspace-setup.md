@@ -1,16 +1,29 @@
 # Preparar el workspace local
 
-El workspace local se prepara cuando una tarea definida en conversación necesita acceso real a repositorios, archivos, Git o un coding agent. No es un requisito previo para iniciar IA-DOS.
+El workspace local se prepara cuando un outcome necesita acceso real a repositorios, archivos, Git o un coding agent. Puede originarse en ORCHESTRATED o DIRECT; no es requisito previo para iniciar IA-DOS.
 
 La secuencia correcta es:
 
 ```text
-00 orienta
-→ se define una unidad verificable
-→ se confirma que requiere ejecución local
+ORCHESTRATED: dirección → Conversation Space → ejecución local
+DIRECT: dirección → Coding Agent → Direct Execution Gate → ejecución local
+
+En ambos casos:
 → se prepara sólo el acceso necesario
-→ se ejecuta y se devuelve evidencia
+→ se ejecuta dentro de autoridad
+→ se deja evidencia y continuidad
 ```
+
+## Durable topology vs ephemeral execution
+
+Antes de imponer orden visual, distingue dos planos:
+
+- **durable topology**: repositorios canónicos, servicios, datastores, memoria y componentes permanentes;
+- **ephemeral execution surface**: branches, worktrees, previews, fixtures, scratch scripts, evidence y entornos temporales.
+
+El segundo plano puede crecer libremente dentro de autoridad. No uses un máximo arbitrario de worktrees o branches. El requisito es que su lifecycle sea claro y no confunda qué es canónico.
+
+Cuando la raíz del proyecto ya no sea autoexplicativa, puede existir un `PROJECT.md` o mapa equivalente basado en `templates/project-map.template.md`.
 
 ## Estructura posible
 
@@ -30,6 +43,20 @@ La ubicación puede ser `$HOME\proyectos` en Windows o `~/proyectos` en macOS y 
 
 IA-DOS no exige que todos los proyectos adopten la misma topología.
 
+Una estructura con ejecución efímera separada puede ser:
+
+```text
+proyecto/
+├── PROJECT.md              # opcional: mapa del workspace
+├── proyecto-app/           # durable
+├── proyecto-wiki/          # durable, si existe
+├── _worktrees/             # ephemeral execution
+│   └── ...
+└── archive/                # cold storage, si existe
+```
+
+Los nombres son convenciones opcionales. Lo importante es la separación semántica.
+
 ## Principios
 
 - IA-DOS puede mantenerse una sola vez como referencia local compartida cuando esa instalación aporte;
@@ -37,7 +64,9 @@ IA-DOS no exige que todos los proyectos adopten la misma topología.
 - app y Wiki pueden estar separadas, convivir en un monorepo o usar otra configuración documentada;
 - una Wiki separada no se crea por defecto: aplica el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) cuando la siguiente unidad dependa de memoria conversacional;
 - Exchange es opcional y puede vivir como recurso separado cuando el proyecto lo adopte;
-- un coding agent recibe sólo los repositorios y rutas necesarios para la tarea actual;
+- un coding agent recibe sólo los repositorios y rutas necesarios para el outcome actual;
+- el agente puede crear superficies efímeras autorizadas sin redefinir topología durable;
+- crear un nuevo repositorio, servicio, datastore o componente top-level durable puede requerir gobierno explícito;
 - no se mueve un proyecto existente sólo para cumplir una estructura recomendada.
 
 ## Proyecto nuevo
@@ -77,8 +106,8 @@ No abras toda la carpeta `proyectos/` como contexto cotidiano. Para una tarea no
 - el repositorio o recurso técnico correspondiente;
 - `Contexto durable necesario`;
 - las páginas incluidas en `Lectura requerida`, cuando existan;
-- la `Execution Task` o `Planning Task`;
-- instrucciones locales aplicables.
+- la `Execution Task`/`Planning Task` cuando el modo sea ORCHESTRATED, o la instrucción humana vigente cuando sea DIRECT;
+- instrucciones locales aplicables;
 
 `Referencias Wiki` no implican lectura automática.
 
@@ -96,6 +125,25 @@ No guardes en IA-DOS, memoria durable ni Exchange:
 - archivos `.env` con valores reales;
 - datos personales sensibles innecesarios.
 
+## Lifecycle de ejecución efímera
+
+Clasifica recursos temporales de forma operacional:
+
+```text
+ACTIVE
+→ permanece mientras aporta
+
+COMPLETED / MERGED
+→ verifica estado
+→ retira superficie efímera cuando sea seguro
+
+ABANDONED
+→ preserva evidencia durable necesaria
+→ retira superficie efímera cuando sea seguro
+```
+
+No muevas directorios que sean Git worktrees manualmente sin comprender las referencias Git; usa mecanismos compatibles con Git y verifica working state antes de cleanup.
+
 ## Verificación
 
 Antes de ejecutar una tarea, confirma:
@@ -106,7 +154,8 @@ Antes de ejecutar una tarea, confirma:
 - [ ] el acceso del agente se limita al alcance necesario;
 - [ ] no se entregará acceso a proyectos no relacionados;
 - [ ] no existen secretos dentro del contexto compartido;
-- [ ] la tarea que justificó preparar el workspace sigue vigente.
+- [ ] el outcome que justificó preparar el workspace sigue vigente;
+- [ ] durable topology y ephemeral execution surface pueden distinguirse sin ambigüedad.
 
 ## Siguiente paso
 

@@ -67,9 +67,23 @@ Repository
 → implementación real
 ```
 
-`00 — Dirección y orquestación` es la entrada canónica y recibe reorientaciones o escalamiento real. No funciona como dispatcher obligatorio.
+`00 — Dirección y orquestación` sigue siendo la entrada conversacional canónica, pero **Conversation Space no es gateway obligatorio de ejecución**. IA-DOS admite `Execution Entry Mode: ORCHESTRATED | DIRECT`; en DIRECT la persona puede ir al Coding Agent cuando el contrato efectivo se reconstruye sin ambigüedad desde instrucción + contexto durable + estado real.
 
 La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
+
+## Entry modes
+
+```text
+ORCHESTRATED
+Human → Conversation Space / Cycle Owner → Coding Agent
+
+DIRECT
+Human → Coding Agent → Direct Execution Gate
+```
+
+En DIRECT, el Coding Agent self-plans y ejecuta si puede identificar outcome, Protected Invariants, Protected Boundaries, autoridad y aceptación. Si necesita inventar dirección, roadmap o una frontera material, devuelve `NEEDS_GOVERNANCE` en vez de improvisar.
+
+Consulta [Direct Execution y Workspace Governance](docs/execution/direct-execution-and-workspace-governance.md).
 
 ## Flujo de avance
 
@@ -84,7 +98,7 @@ El Project Orchestrator identifica el siguiente resultado verificable y evalúa:
 6. ¿Falta memoria estructural indispensable o readiness que deba conocerse antes de autorizar una frontera sensible?
 ```
 
-El default es `Execution Task` outcome-first con planificación interna y `Revalidate` al comienzo. Según el caso:
+En ORCHESTRATED, el default es `Execution Task` outcome-first con planificación interna y `Revalidate`. En DIRECT, el default es Effective Execution Contract + Direct Execution Gate + self-planning. Según el caso:
 
 - conocimiento estructural indispensable sólo en chats → `Memory Bootstrap Gate`, con custodia de `90` cuando el proyecto adopta ese rol;
 - readiness que debe conocerse antes de conceder autoridad sensible → `Environment Preflight`;
@@ -104,7 +118,13 @@ Crear, nombrar, materializar, rutear o iniciar una Task no requiere por sí mism
 
 Una Execution Task larga puede declarar Human Decision Checkpoints. El Coding Agent avanza hasta la decisión real, se detiene antes de la acción protegida y presenta sólo la evidencia necesaria. Si la persona selecciona una opción ya prevista sin cambiar la frontera material, la misma Task continúa mediante `Execution Resume` con el mismo Task ID.
 
-El Coding Agent sigue sin poder elegir roadmap ni iniciar por sí mismo otra unidad.
+El Coding Agent sigue sin poder elegir roadmap ni iniciar por sí mismo otra unidad fuera de la instrucción humana vigente. En modo DIRECT puede derivar y ejecutar el plan técnico completo del outcome actual sin que un Conversation Space traduzca previamente la intención a una Task.
+
+## Workspace Governance
+
+IA-DOS permite alta autonomía sobre branches, worktrees, previews y otras superficies efímeras, pero distingue esas herramientas de la **topología durable** del proyecto. La cantidad de recursos temporales no es un problema por sí misma; sí lo es que humanos o agentes ya no puedan distinguir qué es canónico y qué es transitorio.
+
+Cuando la raíz del proyecto se vuelve ambigua, usa un mapa mínimo `PROJECT.md` o equivalente. No es Wiki, backlog ni Artifact Type.
 
 ## Tipos de artefacto
 
@@ -132,6 +152,11 @@ Conversation Space → Conversation Space
 Conversation Space → Coding Agent
 → Planning Task | Environment Preflight | Execution Task | Execution Resume
 → chat o `.md`/Exchange según el contrato de entrega
+
+Human → Coding Agent (DIRECT)
+→ instrucción actual + contratos durables + estado real
+→ Direct Execution Gate
+→ ejecución sin artefacto intermedio cuando el contrato efectivo es claro
 ```
 
 Una copia documental de un `Specialist Handoff` puede existir sólo si se solicita explícitamente o una convención local separada la conserva como archivo. Esa copia no sustituye ni condiciona la transferencia conversacional.

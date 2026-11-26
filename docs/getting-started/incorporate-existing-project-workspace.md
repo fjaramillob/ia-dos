@@ -26,6 +26,7 @@ Registra:
 - rama principal;
 - estado del working tree;
 - repositorios relacionados;
+- recursos que parecen worktrees, previews u otras superficies efímeras;
 - documentación o memoria existente;
 - backlog o mecanismo de seguimiento existente;
 - Exchange existente, si lo hay;
@@ -60,7 +61,11 @@ Mantén el monorepo cuando sea una decisión real del proyecto. Documenta la ubi
 
 ### Estructura ambigua
 
-Si existen varios repositorios, rutas o fuentes y no puede determinarse su relación, detente antes de escribir y devuelve la ambigüedad al Cycle Owner.
+Si existen varios repositorios, rutas o fuentes y no puede determinarse su relación, distingue primero durable topology de ephemeral execution surface. Si la relación sigue materialmente ambigua, detente antes de escribir y devuelve `NEEDS_GOVERNANCE` o la ambigüedad al Cycle Owner, según entry mode.
+
+## Paso 2.5 — Mapear el workspace cuando aporte
+
+Si la raíz ya no es autoexplicativa, crea o actualiza un `PROJECT.md`/equivalente basado en `templates/project-map.template.md` sólo cuando esté autorizado. Registra recursos canónicos, memoria, dirección y convención de superficies efímeras; no dupliques backlog ni arquitectura detallada.
 
 ## Paso 3 — Elegir el modelo de adopción
 
@@ -166,7 +171,10 @@ Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templ
 | Backlog | ruta, URL o `NO APLICA` |
 | Exchange | ruta, URL o `NO APLICA` |
 | IA-DOS | versión o commit adoptado |
-| Project Orchestrator | entorno conversacional utilizado |
+| Execution Entry Mode | `ORCHESTRATED | DIRECT | MIXED` cuando se documente |
+| Project Orchestrator | entorno conversacional utilizado, `ON_DEMAND` o `NO APLICA` |
+| Project map | `PROJECT.md`, equivalente o `NO APLICA` |
+| Ephemeral execution root | ruta/convención o `NO APLICA` |
 | Excepciones | motivo e impacto cuando existan |
 
 Exchange se registra sólo como recurso de transporte; no como fuente de tareas.
@@ -180,6 +188,8 @@ Antes de considerar el proyecto incorporado, confirma:
 - [ ] No se movieron archivos por normalización estética.
 - [ ] Las fuentes de verdad relevantes están identificadas.
 - [ ] El modelo de adopción refleja la estructura real.
+- [ ] Durable topology y ephemeral execution surface están diferenciadas cuando la complejidad lo requiere.
+- [ ] Si existe `PROJECT.md`, funciona como mapa y no como backlog/Wiki paralela.
 - [ ] El Memory Bootstrap Gate fue evaluado cuando la siguiente unidad depende de contexto histórico.
 - [ ] Ante `BOOTSTRAP REQUIRED`, el checkpoint se materializa mediante una Execution Task separada y la unidad original queda fuera de alcance.
 - [ ] El Execution Report del bootstrap se revisa antes de reevaluar la unidad original.

@@ -1,6 +1,6 @@
 # Prompt para crear un proyecto nuevo dentro del workspace
 
-Este prompt está dirigido a un coding agent con acceso al sistema de archivos y Git.
+Este prompt materializa el camino ORCHESTRATED para un coding agent con acceso al sistema de archivos y Git. En DIRECT, puede usarse `prompts/execution/direct-execution-under-ia-dos.md` con la misma frontera de topología durable.
 
 ```text
 Artifact Type: Execution Task
