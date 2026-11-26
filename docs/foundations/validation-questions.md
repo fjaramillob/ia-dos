@@ -8,6 +8,8 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 - ¿Se distingue el framework del proyecto que lo adopta?
 - ¿Se entiende la diferencia entre persona responsable, Project Orchestrator, Conversation Space, Cycle Owner y coding agent?
 - ¿Los Conversation Spaces aparecen como contextos bajo demanda y no como fases obligatorias?
+- ¿ORCHESTRATED y DIRECT funcionan como entry modes equivalentes en autoridad, sin obligar a pasar por Conversation Space?
+- ¿En DIRECT el Coding Agent reconstruye un Effective Execution Contract y usa `NEEDS_GOVERNANCE` sólo ante una decisión material?
 
 ## Memoria
 
@@ -47,6 +49,14 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 - ¿El Cycle Owner actúa sólo dentro de autoridad delegada?
 - ¿La persona responsable conserva la aprobación final en decisiones relevantes?
 - ¿Se distingue claramente plan, autorización, ejecución, verificación y estado durable?
+
+## Workspace Governance
+
+- ¿Se distingue con claridad qué superficies son durables y cuáles efímeras?
+- ¿El agente puede usar branches/worktrees/previews libremente dentro de autoridad sin que su cantidad dispare ceremonia?
+- ¿Cambios de repositorios/servicios/datastores/componentes canónicos siguen bajo gobierno cuando son materiales?
+- ¿Existe lifecycle/cleanup para recursos efímeros?
+- ¿Un mapa `PROJECT.md`, cuando se usa, orienta sin convertirse en segunda Wiki o backlog?
 
 ## Exchange
 
