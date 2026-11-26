@@ -31,7 +31,7 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] `Memory Bootstrap Gate` sólo bloquea cuando la siguiente unidad depende de conocimiento chat-only.
 - [ ] El coding agent consume memoria selectivamente mediante contexto durable, referencias y lectura requerida.
 - [ ] TASK/REPORT, logs, diffs y transcripciones no se convierten en Wiki por defecto.
-- [ ] Una Execution Task declara `Memory Policy: NONE | CONDITIONAL | REQUIRED` cuando el proyecto usa memoria durable.
+- [ ] El contrato de ejecución aplicable declara o permite reconstruir `Memory Policy: NONE | CONDITIONAL | REQUIRED` cuando el proyecto usa memoria durable (`Execution Task` en ORCHESTRATED; `Effective Execution Contract` en DIRECT).
 - [ ] Declara `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA` cuando corresponda.
 - [ ] `CONDITIONAL` depende de triggers explícitos definidos por gobierno y no delega dirección al Coding Agent.
 - [ ] Impacto estructural pendiente usa `ROUTE_TO_90`; una Wiki Task ya gobernada por 90 que materializa correctamente termina `UPDATED`.
@@ -39,7 +39,7 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] `DEFERRED` acumulado no deja materialmente incompleta la superficie caliente de memoria.
 - [ ] Un cambio de baseline publicado actualiza el `Operational Baseline` aunque la memoria semántica sea `NONE`.
 - [ ] El Operational Baseline distingue último HEAD remoto verificado de commit/versión productiva cuando divergen.
-- [ ] La Wiki permite que un Coding Agent nuevo se oriente con repo + memoria relevante + Task vigente y luego revalide la realidad.
+- [ ] La Wiki permite que un Coding Agent nuevo se oriente con repo + memoria relevante + contrato de ejecución aplicable y luego revalide la realidad.
 - [ ] Una Wiki Update Task separada se reserva para bootstrap, consolidación, reparación/migración o frontera distinta; no es ritual posterior a cada ejecución.
 
 ## Planificación y ejecución

@@ -145,7 +145,7 @@ Puede incluir repositorio, branch productiva, último HEAD remoto verificado, co
 
 ## `Durable Memory Impact`
 
-Resultado reportado por una Execution Task respecto de memoria durable: `NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED`.
+Resultado reportado por una ejecución respecto de memoria durable: `NONE | UPDATED | DEFERRED | ROUTE_TO_90 | ATTENTION REQUIRED`.
 
 `ROUTE_TO_90` indica impacto durable estructural todavía pendiente de custodia cuando el proyecto adopta ese rol; el outcome técnico puede estar completado. Una Wiki Update Task ya gobernada por `90` que materializa correctamente reporta `UPDATED`.
 
@@ -311,7 +311,7 @@ Rol técnico de solo lectura respecto del proyecto/entorno inspeccionado que pro
 
 ## `Coding Agent — Execution`
 
-Rol técnico que materializa únicamente una Execution Task autorizada y produce Execution Report.
+Rol técnico que materializa trabajo autorizado bajo el contrato de ejecución aplicable: `Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT. Produce `Execution Report` cuando corresponde; en DIRECT puede devolver evidencia conversacional compacta cuando no se requiere un Report durable.
 
 ## `Wiki Update Task`
 

@@ -115,8 +115,8 @@ Además:
 - Exchange no enruta Conversation Spaces, no define IDs, templates, permisos, backlog, memoria o workflow;
 - una Task es suficientemente autocontenida cuando `Task + Required Reading` permiten ejecutarla sin conversaciones previas;
 - distingue `Embedded Contract`, `Required Reading` y `Reference`;
-- la memoria durable debe permitir que un Coding Agent competente, sin conversaciones previas, pueda orientarse con `repositorio + Wiki relevante + Task vigente` y contribuir tras revalidar el estado real;
-- `Memory Policy = NONE | CONDITIONAL | REQUIRED` gobierna actualización semántica dentro de una Execution Task y no es un Artifact Type;
+- la memoria durable debe permitir que un Coding Agent competente, sin conversaciones previas, pueda orientarse con `repositorio + Wiki relevante + contrato de ejecución aplicable` y contribuir tras revalidar el estado real; el contrato es `Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT;
+- `Memory Policy = NONE | CONDITIONAL | REQUIRED` gobierna actualización semántica dentro del contrato de ejecución aplicable y no es un Artifact Type;
 - `Memory Stewardship = LOCAL | 90_STRUCTURAL | NO APLICA` separa memoria local de custodia estructural; tampoco es un Artifact Type ni convierte a `90` en dispatcher;
 - ante impacto durable estructural todavía no custodiado, el Execution Report usa `Durable Memory Impact: ROUTE_TO_90`; una Wiki Update Task ya gobernada por `90` que materializa correctamente reporta `UPDATED`;
 - cuando un proyecto con LLM Wiki cambia un baseline publicado, el mismo outcome debe dejar actualizado un `Operational Baseline` durable con repositorio, branch productiva, último HEAD remoto verificado, commit productivo, deployment o release equivalente, entorno/URL, estado y fecha de verificación;

@@ -121,7 +121,7 @@ En ORCHESTRATED, el default es `Execution Task` outcome-first con planificación
 - conocimiento estructural indispensable sólo en chats → `Memory Bootstrap Gate`, con custodia de `90` cuando el proyecto adopta ese rol;
 - readiness que debe conocerse antes de conceder autoridad sensible → `Environment Preflight`;
 - decisión material de diseño todavía abierta → `Planning Task`;
-- outcome definido → `Execution Task` con Protected Invariants + Authority Envelope + Adaptation Authority;
+- outcome definido → `ORCHESTRATED`: `Execution Task` con Protected Invariants + Authority Envelope + Adaptation Authority; `DIRECT`: Effective Execution Contract + Direct Execution Gate, sin Task física obligatoria;
 - falta decisión de otro dominio → `Specialist Handoff` inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;
 - reorientación → escala a `00`.
@@ -247,7 +247,7 @@ Prueba práctica:
 ```text
 repositorio real
 + Wiki relevante
-+ Task vigente
++ contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT)
 → un Coding Agent nuevo puede ponerse al día
 → revalida el estado real
 → puede aportar

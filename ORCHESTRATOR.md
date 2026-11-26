@@ -159,7 +159,7 @@ Evalúa en este orden:
 - conocimiento estructural necesario sólo en conversaciones → Memory Bootstrap Gate y, cuando el proyecto adopta el rol, custodia de `90`;
 - readiness que debe conocerse antes de conceder autoridad sensible → Environment Preflight;
 - decisión material de diseño pendiente → Planning Task;
-- outcome definido → Execution Task con planificación interna y Revalidate;
+- outcome definido → `ORCHESTRATED`: Execution Task con planificación interna y Revalidate; `DIRECT`: Effective Execution Contract + Direct Execution Gate, sin Task física obligatoria;
 - defecto técnico resoluble dentro de invariantes/autoridad → repair-in-place, no nuevo ciclo;
 - decisión de otro dominio → Specialist Handoff inline y copiable;
 - decisión humana indispensable → deriva sólo esa decisión;

@@ -38,7 +38,7 @@ La memoria es suficiente cuando un Coding Agent competente puede incorporarse en
 ```text
 repositorio real
 + LLM Wiki relevante
-+ Task vigente
++ contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT)
 → comprensión suficiente para contribuir
 → revalidación del estado real antes de modificar
 ```

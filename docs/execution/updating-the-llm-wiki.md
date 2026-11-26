@@ -7,7 +7,7 @@ La Wiki debe permitir que un Coding Agent competente se incorpore en cualquier p
 ```text
 repositorio real
 + Wiki relevante
-+ Execution Task vigente
++ contrato de ejecución aplicable (`Execution Task` en ORCHESTRATED o `Effective Execution Contract` en DIRECT)
 → comprensión suficiente para contribuir
 → revalidación del estado real antes de modificar
 ```
@@ -226,7 +226,7 @@ Mantén el camino caliente de memoria corto:
 home / mapa
 → current-state compacto
 → página de dominio relevante
-→ Task vigente
+→ contrato de ejecución aplicable
 ```
 
 `current-state` describe principalmente qué es verdad ahora y dónde encontrar detalle reusable. No debe acumular cada checkpoint, hash, test matrix o cronología. Cuando deja de ser navegable, su reorganización es trabajo estructural de `90` cuando ese rol está adoptado.

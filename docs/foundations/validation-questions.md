@@ -29,15 +29,15 @@ Durante la etapa alpha, cada revisión importante de IA-DOS debe poder responder
 - ¿Varios `DEFERRED` se consolidan cuando su efecto acumulado vuelve esa representación materialmente incompleta?
 - ¿Un cambio de estado publicado mantiene un Operational Baseline durable aunque no amerite cambio semántico?
 - ¿Se distinguen Repository HEAD y Production Commit cuando no coinciden?
-- ¿Un Coding Agent nuevo puede ponerse al día con repo + Wiki relevante + Task vigente sin reconstruir chats?
+- ¿Un Coding Agent nuevo puede ponerse al día con repo + Wiki relevante + contrato de ejecución aplicable sin reconstruir chats?
 - ¿Los outcomes menores pueden diferirse y consolidarse sin perder el baseline operacional?
 
 ## Planificación, readiness y ejecución
 
-- ¿Un outcome definido va por defecto a Execution Task con Revalidate y planificación interna?
+- ¿Un outcome definido usa `Execution Task` con Revalidate en ORCHESTRATED y `Effective Execution Contract + Direct Execution Gate` en DIRECT, sin exigir Task física universal?
 - ¿Planning separado aparece sólo ante una decisión material todavía no resuelta?
 - ¿Environment Preflight separado aparece sólo cuando readiness debe conocerse antes de conceder autoridad sensible, la capacidad misma es objeto de evaluación o requiere otro actor/entorno?
-- ¿La Execution Task declara Protected Invariants, Adaptation Authority y Protected Boundaries?
+- ¿El contrato de ejecución aplicable declara o permite reconstruir Protected Invariants, Adaptation Authority y Protected Boundaries?
 - ¿Con BOUNDED el Coding Agent puede diagnosticar, reparar y safe-retry fallos reversibles sin una nueva Task?
 - ¿Execution Resume se reserva para bloqueo externo, interrupción real o Human Decision Checkpoint resuelto y se invalida si cambian outcome, invariantes, fronteras, alcance, autoridad, seguridad o arquitectura?
 - ¿La creación, materialización, routing o inicio de una Task evita convertirse en aprobación humana cuando no cambia ninguna frontera material?

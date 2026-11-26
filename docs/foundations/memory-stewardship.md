@@ -184,7 +184,7 @@ Un patrón preferente:
 home / mapa
 → current-state compacto
 → página de dominio relevante
-→ Task vigente
+→ contrato de ejecución aplicable
 ```
 
 `current-state` debe actuar como índice operativo y snapshot vigente. Cuando crece por acumulación cronológica o mezcla demasiados dominios:
