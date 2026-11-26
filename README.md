@@ -71,6 +71,22 @@ Repository
 
 La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo, coste, producción, datos, seguridad, cumplimiento o impacto relevante.
 
+## Method resolution
+
+Antes de elegir cómo ejecutar, resuelve qué IA-DOS gobierna el outcome:
+
+```text
+FOLLOW_CURRENT
+→ referencia canónica vigente al comenzar el outcome
+→ snapshot estable durante esa ejecución
+
+PINNED
+→ versión/tag/commit declarada durablemente
+→ cambia sólo por upgrade explícito
+```
+
+Si no existe política durable, el default es `FOLLOW_CURRENT`. Un SHA mencionado sólo en una conversación, prompt o reporte no es un pin. Los prompts operativos cotidianos no deberían fijar SHAs salvo reproducción deliberada de un baseline histórico.
+
 ## Entry modes
 
 ```text
@@ -82,6 +98,8 @@ Human → Coding Agent → Direct Execution Gate
 ```
 
 En DIRECT, el Coding Agent self-plans y ejecuta si puede identificar outcome, Protected Invariants, Protected Boundaries, autoridad y aceptación. Si necesita inventar dirección, roadmap o una frontera material, devuelve `NEEDS_GOVERNANCE` en vez de improvisar.
+
+`Execution Entry Mode` es por ejecución (`ORCHESTRATED | DIRECT`). Una adopción puede declarar una preferencia distinta mediante `Execution Entry Policy: ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE`; `FLEXIBLE` no es un tercer modo.
 
 Consulta [Direct Execution y Workspace Governance](docs/execution/direct-execution-and-workspace-governance.md).
 
