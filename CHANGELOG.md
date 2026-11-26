@@ -8,6 +8,18 @@ El proyecto utiliza versionado semántico durante su etapa experimental.
 
 ### Changed
 
+- añadido `Execution Entry Mode: ORCHESTRATED | DIRECT`; Conversation Space deja de ser gateway obligatorio de ejecución;
+- definido `Effective Execution Contract` para DIRECT a partir de instrucción humana + contratos del repo + memoria durable relevante + estado real;
+- añadido `Direct Execution Gate` con salida `PASS | NEEDS_GOVERNANCE`, evitando que el Coding Agent invente dirección, roadmap o fronteras materiales;
+- establecido self-planning como default del Coding Agent en DIRECT;
+- añadido `Governance Re-entry Trigger` semántico para reingresar capa conversacional sólo ante decisiones de gobierno;
+- añadido `Agent-Owned Continuity` para preservar implementación, Operational Baseline y hot project state sin depender de la conversación del agente;
+- formalizada `Workspace Governance`: topología durable separada de superficie efímera de ejecución;
+- permitido crecimiento libre de branches, worktrees, previews y otras superficies temporales dentro de autoridad, sin máximos arbitrarios por cantidad;
+- establecido que nuevos repositorios, servicios, datastores o componentes canónicos pueden constituir cambios materiales de topología durable;
+- añadido `PROJECT.md` opcional mediante `templates/project-map.template.md` para mapear propósito, recursos canónicos, dirección y ejecución efímera;
+- actualizado workspace setup, manifest de adopción, AGENTS, Orchestrator, responsabilidades, source-of-truth, Coding Agents, instrucciones persistentes e índice;
+- avanzado `v0.1.0-alpha.6` como baseline de Direct Execution & Workspace Governance.
 - incorporada la `Non-Decision Rule`: crear, materializar, rutear o iniciar una Task dentro de autoridad delegada no constituye por sí mismo una decisión humana;
 - habilitada `Delegated Continuity` para que el Cycle Owner despache la continuación lógica sin microaprobaciones cuando dirección, roadmap vigente, Protected Invariants, Protected Boundaries y autoridad permanecen estables;
 - añadidos `Human Decision Checkpoints` dentro de Execution Tasks largas: la ejecución pausa antes de la acción protegida y puede continuar con el mismo Task ID mediante Execution Resume cuando la decisión humana activa una opción ya prevista;
