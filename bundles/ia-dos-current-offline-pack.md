@@ -2,7 +2,7 @@
 
 **Estado:** VIGENTE
 
-**Baseline canónico:** `IA-DOS v0.1.0-alpha.5 — continuidad delegada / memoria caliente 2026-10-30`
+**Baseline canónico:** `IA-DOS v0.1.0-alpha.6 — direct execution / workspace governance 2026-11-25`
 
 **Uso:** onboarding y operación cuando el asistente no puede navegar `https://github.com/fjaramillob/ia-dos`.
 
@@ -12,7 +12,10 @@ Este es el único bundle vigente para nuevos onboardings offline. No lo combines
 
 ```text
 Persona responsable = dirección y aprobación final aplicable
-Conversation Space = gobierno dentro de autoridad delegada
+Conversation Space = gobierno on-demand dentro de autoridad delegada
+Execution Entry Mode = ORCHESTRATED | DIRECT
+Direct Execution Gate = PASS | NEEDS_GOVERNANCE
+Effective Execution Contract = instrucción humana + contratos durables + estado real
 Specialist Handoff = transferencia inline y copiable entre Conversation Spaces
 Execution Cell = continuidad de ejecución
 Execution Task = outcome cohesivo bajo frontera estable de autoridad
@@ -59,7 +62,21 @@ El Coding Agent no gana esa autoridad de gobierno: no elige roadmap ni inicia po
 
 ## Inicio y continuidad
 
-Usa `00 — Dirección y orquestación` como Conversation Space inicial canónico.
+IA-DOS admite:
+
+```text
+ORCHESTRATED
+→ Human → Conversation Space / Cycle Owner → Coding Agent
+
+DIRECT
+→ Human → Coding Agent → Direct Execution Gate
+```
+
+`00 — Dirección y orquestación` es la entrada conversacional canónica, no un gateway obligatorio de ejecución.
+
+En DIRECT, el Coding Agent reconstruye un Effective Execution Contract desde instrucción humana, instrucciones del repo, memoria durable relevante y estado real. Si puede identificar outcome, Protected Invariants, Protected Boundaries, autoridad y aceptación, self-plans y ejecuta. Si necesita inventar dirección, roadmap o una frontera material, devuelve `NEEDS_GOVERNANCE`.
+
+Usa `00 — Dirección y orquestación` como Conversation Space inicial canónico cuando el modo de entrada sea ORCHESTRATED.
 
 - producto nuevo → `definición inicial`;
 - producto existente → `descubrimiento y adopción`.
@@ -67,6 +84,19 @@ Usa `00 — Dirección y orquestación` como Conversation Space inicial canónic
 Los Conversation Spaces no son etapas. Abre otro sólo cuando una brecha de dominio requiera contexto persistente propio.
 
 Si un Conversation Space es nuevo, se retoma después de un cambio relevante de IA-DOS o muestra reglas obsoletas, consulta la referencia vigente antes de decidir. No reinicies onboarding ni releas todo el framework por defecto; carga sólo los contratos necesarios.
+
+## Workspace Governance
+
+Distingue:
+
+- `durable topology`: repositorios canónicos, servicios, datastores, memoria y componentes permanentes;
+- `ephemeral execution surface`: branches, worktrees, previews, fixtures, scratch scripts y entornos temporales.
+
+La superficie efímera puede crecer dentro de autoridad sin máximos arbitrarios por cantidad. Crear o redefinir una superficie durable puede ser una decisión material.
+
+Cuando la raíz ya no sea autoexplicativa, usa `PROJECT.md` o equivalente como mapa mínimo; no es Wiki, backlog ni Artifact Type.
+
+Los recursos efímeros deben tener lifecycle claro y cleanup seguro.
 
 ## Handoff entre Conversation Spaces
 
@@ -85,6 +115,23 @@ Si el proyecto usa Exchange, el handoff puede declarar:
 Este proyecto adopta Exchange para artifacts hacia/desde Coding Agents.
 No lo uses para routing entre Conversation Spaces.
 ```
+
+## Direct Execution Gate
+
+En DIRECT, antes de escribir:
+
+```text
+1. outcome claro
+2. Protected Invariants reconstruibles
+3. Protected Boundaries identificadas
+4. autoridad suficiente
+5. aceptación verificable
+6. memoria durable suficiente
+```
+
+`PASS` → self-plan y execute.
+
+`NEEDS_GOVERNANCE` → deriva sólo la decisión material faltante. No uses esta salida para debugging ordinario resoluble dentro de `BOUNDED`.
 
 ## Gate de avance
 
@@ -356,6 +403,10 @@ Execution Resume
 ```
 
 Conserva Task ID y sólo aplica si outcome, Protected Invariants, Protected Boundaries, scope, autoridad, seguridad y arquitectura siguen sin cambios. Repair-in-place dentro de una ejecución abierta no exige Resume.
+
+## Agent-Owned Continuity
+
+En DIRECT, el Coding Agent no deja el proyecto dependiente de su conversación. Dentro de autoridad mantiene implementación, Operational Baseline y hot project state. No inventa roadmap; representa lo ya materializado y aceptado. Impacto estructural usa Memory Stewardship y `ROUTE_TO_90` cuando corresponda.
 
 ## Execution Report
 
