@@ -12,18 +12,19 @@ La adopción sigue este orden conceptual, sin convertirse en una pipeline rígid
 4. Abre sólo el Conversation Space que desbloquee el siguiente resultado, usando el [Registro de tópicos](orchestration/topic-routing-registry.md). Cuando transfieras gobierno entre Conversation Spaces, usa un `Specialist Handoff` inline, autocontenido y copiable; no requiere `.md`, Exchange, path ni `Manual Artifact Launcher`.
 5. Asigna un Cycle Owner con [Propiedad y retorno del ciclo](orchestration/cycle-ownership.md).
 6. Si la siguiente unidad depende de historia conversacional, evalúa primero el [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
-7. Define Protected Invariants, Adaptation Authority y Protected Boundaries con [Ejecución adaptativa](execution/adaptive-execution.md).
+7. Elige `Execution Entry Mode: ORCHESTRATED | DIRECT`. Para DIRECT y topología física consulta [Direct Execution y Workspace Governance](execution/direct-execution-and-workspace-governance.md).
+9. Define Protected Invariants, Adaptation Authority y Protected Boundaries con [Ejecución adaptativa](execution/adaptive-execution.md).
 8. Usa `Planning Task` sólo si existe una decisión material no resuelta y [Environment Preflight](execution/environment-readiness-and-resume.md) sólo si el readiness debe conocerse antes de autorizar una frontera sensible; de otro modo ejecuta outcome-first con Revalidate interno.
-9. Tipifica el bloque y valida el receptor con [Tipado de artefactos](orchestration/typed-artifact-routing.md).
-10. Confirma [autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md).
-11. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
-12. Cuando exista ejecución recurrente, define sólo las [Execution Cells](execution/execution-cells-and-exchange.md) que aporten continuidad real.
-13. Reutiliza una Execution Cell mientras siga respondiendo bien; no abras una conversación por tarea.
-14. Usa [Exchange](getting-started/bootstrap-exchange.md) sólo cuando una pasarela pasiva de Markdown hacia o desde Coding Agents aporte valor. Exchange no enruta Conversation Spaces.
-15. Devuelve planes, readiness reports y Execution Reports al Cycle Owner declarado.
-16. Si dirección, outcome/roadmap vigente, invariantes, fronteras y autoridad siguen estables, el Cycle Owner puede despachar la continuación lógica sin pedir aprobación por la mera creación de otra Task.
-17. La persona responsable conserva la aprobación final cuando la decisión material excede la autoridad delegada; una Task larga puede pausar en un Human Decision Checkpoint y continuar con el mismo Task ID si la opción ya estaba prevista.
-18. Escala a `00` sólo ante reorientación real.
+10. Tipifica el bloque y valida el receptor con [Tipado de artefactos](orchestration/typed-artifact-routing.md).
+11. Confirma [autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md).
+12. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
+13. Cuando exista ejecución recurrente, define sólo las [Execution Cells](execution/execution-cells-and-exchange.md) que aporten continuidad real.
+14. Reutiliza una Execution Cell mientras siga respondiendo bien; no abras una conversación por tarea.
+15. Usa [Exchange](getting-started/bootstrap-exchange.md) sólo cuando una pasarela pasiva de Markdown hacia o desde Coding Agents aporte valor. Exchange no enruta Conversation Spaces.
+16. Devuelve planes, readiness reports y Execution Reports al Cycle Owner declarado.
+17. Si dirección, outcome/roadmap vigente, invariantes, fronteras y autoridad siguen estables, el Cycle Owner puede despachar la continuación lógica sin pedir aprobación por la mera creación de otra Task.
+18. La persona responsable conserva la aprobación final cuando la decisión material excede la autoridad delegada; una Task larga puede pausar en un Human Decision Checkpoint y continuar con el mismo Task ID si la opción ya estaba prevista.
+19. Escala a `00` sólo ante reorientación real.
 
 Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) cuando declare `Estado: VIGENTE` y baseline canónico. Es el único bundle actual para nuevos onboardings offline. No combines bundles históricos; consulta [Bundles](../bundles/README.md).
 
@@ -39,6 +40,7 @@ Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offl
 - [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md)
 - [Execution Cells y Exchange](execution/execution-cells-and-exchange.md)
 - [Ejecución adaptativa y fronteras protegidas](execution/adaptive-execution.md)
+- [Direct Execution y Workspace Governance](execution/direct-execution-and-workspace-governance.md)
 - [Readiness y Execution Resume](execution/environment-readiness-and-resume.md)
 - [Autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md)
 - [Coding agents](execution/coding-agents.md)
@@ -85,6 +87,7 @@ La política de conversaciones de Planning permanece abierta. Un identificador `
 - [Execution Task completa](../templates/execution-task.template.md)
 - [Execution Resume](../templates/execution-resume.template.md)
 - [Execution Report](../templates/execution-report.template.md)
+- [Mapa opcional de proyecto/workspace](../templates/project-map.template.md)
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Actualizar la memoria durable](execution/updating-the-llm-wiki.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
