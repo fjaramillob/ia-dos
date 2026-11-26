@@ -10,11 +10,17 @@ La memoria durable del proyecto, cuando exista, está en:
 [RUTA O URL O NO APLICA]
 ```
 
-La versión de IA-DOS adoptada, cuando el proyecto use manifiesto, está declarada en:
+La política de resolución de IA-DOS, cuando el proyecto use manifiesto, está declarada en:
 
 ```text
 [RUTA A .ia-dos.yaml O NO APLICA]
 ```
+
+Resolución:
+- `PINNED` durable → usa la versión/tag/commit declarada;
+- `FOLLOW_CURRENT` o ausencia de pin durable → usa la referencia canónica vigente al comenzar el outcome;
+- una versión/SHA mencionada sólo en conversación, prompt o reporte no constituye pin;
+- con FOLLOW_CURRENT, no cambies reglas a mitad del outcome actual.
 
 ## Antes de modificar
 
@@ -57,13 +63,13 @@ Recommended: [SI APLICA]
 
 ## Acciones permitidas
 
-Sólo las que la tarea autorice explícitamente, por ejemplo:
+Sólo las que autorice el contrato efectivo de la ejecución —Task en ORCHESTRATED o Effective Execution Contract en DIRECT—, por ejemplo:
 
 - inspeccionar el repositorio;
 - modificar archivos dentro del alcance;
 - ejecutar pruebas y verificaciones pertinentes;
-- actualizar memoria durable cuando la Task declare Memory Policy y autoridad explícitas;
-- actualizar el Operational Baseline cuando el outcome cambie publicación y la Task lo exija;
+- actualizar memoria durable cuando el contrato efectivo declare Memory Policy/Stewardship y autoridad explícitas;
+- actualizar el Operational Baseline cuando el outcome cambie publicación y el contrato efectivo lo exija;
 - actualizar documentación técnica cuando esté incluida;
 - reportar riesgos, contradicciones y pendientes del alcance original.
 
@@ -86,7 +92,7 @@ Sólo las que la tarea autorice explícitamente, por ejemplo:
 
 No leas toda la LLM Wiki por defecto.
 
-Respeta la distinción de la tarea:
+Cuando exista Task, respeta esta distinción:
 
 ```text
 Contexto durable necesario
