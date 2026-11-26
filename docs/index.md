@@ -88,6 +88,7 @@ La política de conversaciones de Planning permanece abierta. Un identificador `
 - [Wiki Update Task](../templates/wiki-update-task.template.md)
 - [Actualizar la memoria durable](execution/updating-the-llm-wiki.md)
 - [Entregar una tarea a un coding agent](../prompts/execution/handoff-to-coding-agent.md)
+- [Operar directamente bajo IA-DOS](../prompts/execution/direct-execution-under-ia-dos.md)
 
 Una Execution Cell conserva continuidad, no permisos. Cada Execution Task vuelve a declarar autoridad completa.
 
