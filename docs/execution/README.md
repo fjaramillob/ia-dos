@@ -2,25 +2,31 @@
 
 Esta sección explica cómo IA-DOS transforma resultados confirmados en inspección, readiness o cambios verificables sobre artefactos reales.
 
-## Camino de decisión
+## Caminos de decisión
 
-Antes de escribir:
+Antes de escribir, resuelve primero Method Resolution Policy y luego elige el entry mode de esta ejecución.
 
 ```text
+ORCHESTRATED
 outcome verificable
 → Memory Bootstrap Gate sólo si falta memoria durable indispensable
-→ definir Protected Invariants + Adaptation Authority + Protected Boundaries
-→ Planning Task sólo si existe decisión material no resuelta
-→ Environment Preflight sólo si readiness debe conocerse antes de autoridad sensible
+→ Planning / Preflight sólo cuando aportan
 → Execution Task outcome-first + Revalidate
-→ planificar internamente / implementar / diagnosticar / reparar / safe retry dentro de autoridad
-→ Execution Cell o entorno autorizado
+→ planificar internamente / implementar / diagnosticar / reparar / safe retry
 → Execution Report
 → revisión del Cycle Owner
-→ aprobación humana cuando corresponda
+
+DIRECT
+instrucción humana vigente
++ contratos durables
++ estado real
+→ Effective Execution Contract
+→ Direct Execution Gate
+→ PASS: self-plan / execute / verify / maintain continuity
+→ NEEDS_GOVERNANCE sólo ante decisión material
 ```
 
-No es una pipeline rígida: cada gate se usa sólo cuando aplica.
+No es una pipeline rígida. En DIRECT no materialices Task/Report por ceremonia si el contrato efectivo y la evidencia conversacional son suficientes.
 
 ## Documentos
 
@@ -43,14 +49,16 @@ No es una pipeline rígida: cada gate se usa sólo cuando aplica.
 
 ## Regla operativa
 
+Cuando existe una Execution Task:
+
 ```text
 1 Execution Task
-→ 1 ejecución acotada
-→ 1 resultado verificable
+→ 1 outcome cohesivo
+→ 1 frontera estable
 → 1 Execution Report
 ```
 
-Una Execution Cell puede conservar continuidad entre múltiples tareas, pero cada tarea vuelve a declarar permisos.
+En DIRECT sin Task física, el Effective Execution Contract ocupa esa función y la salida puede ser evidencia compacta. Una Execution Cell puede conservar continuidad entre múltiples outcomes, pero nunca acumula permisos.
 
 El Execution Report es evidencia; no aprueba su propio resultado ni elige la siguiente unidad. Puede reportar `Durable Memory Impact` y `Operational Baseline` cuando la Task ya definió esa política.
 
@@ -92,7 +100,7 @@ El esquema temporal no es una obligación universal para IDs de Planning.
 
 La memoria semántica se gobierna con `Memory Policy: NONE | CONDITIONAL | REQUIRED` y `Memory Stewardship: LOCAL | 90_STRUCTURAL | NO APLICA`.
 
-La memoria `LOCAL` y el Operational Baseline pueden materializarse dentro de la misma Execution Task. Cuando el impacto durable es estructural y el proyecto adopta `90 — Documentación y memoria`, el executor reporta `ROUTE_TO_90` y el Cycle Owner deriva la síntesis mediante Specialist Handoff.
+La memoria `LOCAL` y el Operational Baseline pueden materializarse dentro del mismo outcome, sea mediante Execution Task o Effective Execution Contract en DIRECT. Cuando el impacto durable es estructural y el proyecto adopta `90 — Documentación y memoria`, el executor reporta `ROUTE_TO_90` y el Cycle Owner deriva la síntesis mediante Specialist Handoff.
 
 Una Task WIKI separada se reserva para bootstrap, consolidación, custodia estructural, reparación/migración o una frontera documental distinta.
 
