@@ -171,7 +171,10 @@ Cuando se necesite configuración reproducible, crea `.ia-dos.yaml` desde `templ
 | Backlog | ruta, URL o `NO APLICA` |
 | Exchange | ruta, URL o `NO APLICA` |
 | IA-DOS | versión o commit adoptado |
-| Project Orchestrator | entorno conversacional utilizado |
+| Execution Entry Mode | `ORCHESTRATED | DIRECT | MIXED` cuando se documente |
+| Project Orchestrator | entorno conversacional utilizado, `ON_DEMAND` o `NO APLICA` |
+| Project map | `PROJECT.md`, equivalente o `NO APLICA` |
+| Ephemeral execution root | ruta/convención o `NO APLICA` |
 | Excepciones | motivo e impacto cuando existan |
 
 Exchange se registra sólo como recurso de transporte; no como fuente de tareas.
@@ -185,6 +188,8 @@ Antes de considerar el proyecto incorporado, confirma:
 - [ ] No se movieron archivos por normalización estética.
 - [ ] Las fuentes de verdad relevantes están identificadas.
 - [ ] El modelo de adopción refleja la estructura real.
+- [ ] Durable topology y ephemeral execution surface están diferenciadas cuando la complejidad lo requiere.
+- [ ] Si existe `PROJECT.md`, funciona como mapa y no como backlog/Wiki paralela.
 - [ ] El Memory Bootstrap Gate fue evaluado cuando la siguiente unidad depende de contexto histórico.
 - [ ] Ante `BOOTSTRAP REQUIRED`, el checkpoint se materializa mediante una Execution Task separada y la unidad original queda fuera de alcance.
 - [ ] El Execution Report del bootstrap se revisa antes de reevaluar la unidad original.
