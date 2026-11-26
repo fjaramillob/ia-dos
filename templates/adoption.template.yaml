@@ -1,6 +1,7 @@
 ia_dos:
-  version: "[TAG_O_COMMIT_ADOPTADO]"
   source: "https://github.com/fjaramillob/ia-dos"
+  method_resolution: "[FOLLOW_CURRENT | PINNED]"
+  version: "[TAG_O_COMMIT_ADOPTADO | NO_APLICA]"
 
 project:
   name: "NOMBRE_VISIBLE"
@@ -8,7 +9,7 @@ project:
 
 adoption:
   model: "[SEPARATE_APP_AND_WIKI | MONOREPO | DOCS_IN_APP | OTHER]"
-  execution_entry_mode: "[ORCHESTRATED | DIRECT | MIXED]"
+  execution_entry_policy: "[ORCHESTRATED_DEFAULT | DIRECT_DEFAULT | FLEXIBLE]"
   project_orchestrator: "[CHATGPT_PROJECT_OR_EQUIVALENT | ON_DEMAND | NO_APLICA]"
   exceptions: []
 
