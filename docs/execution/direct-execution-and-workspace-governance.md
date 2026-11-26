@@ -59,6 +59,8 @@ Debe permitir identificar como mínimo:
 
 Una `Execution Task` sigue siendo la materialización preferida cuando el contrato necesita viajar entre agentes, persistir durante una ejecución extensa, cruzar un handoff o hacer explícita autoridad sensible.
 
+Del mismo modo, DIRECT no obliga a fabricar un `Execution Report` tipado si no existe una Task que reportar. La salida puede ser evidencia conversacional compacta. Materializa Report cuando aporte trazabilidad durable, handoff, auditoría o continuidad operacional; no por ceremonia.
+
 ## Direct Execution Gate
 
 Antes de escribir en DIRECT, el Coding Agent evalúa:
