@@ -31,11 +31,11 @@ El Project Orchestrator y el Cycle Owner pueden orientar, recomendar y tomar dec
 Persona responsable
 → conserva dirección y aprobación final aplicable
 
-Project Orchestrator / Cycle Owner
-→ gobierna dentro de autoridad delegada
+Conversation Space / Cycle Owner
+→ gobierno on-demand cuando aporta estrategia, coordinación o decisión material
 
 Coding Agent
-→ inspecciona o ejecuta dentro del artefacto recibido
+→ ejecuta desde Execution Task o Direct Execution cuando el contrato efectivo puede reconstruirse sin ambigüedad
 ```
 
 El coding agent no aprueba su propio plan ni su propia ejecución.
@@ -78,10 +78,25 @@ Un Conversation Space consulta la referencia vigente de IA-DOS antes de decidir 
 
 Esto no reinicia onboarding ni obliga a releer todo el framework. Carga sólo los contratos necesarios para la decisión actual.
 
+## Execution Entry Mode
+
+IA-DOS admite dos entradas de primera clase:
+
+```text
+Execution Entry Mode: ORCHESTRATED | DIRECT
+```
+
+`ORCHESTRATED` usa Conversation Space/Cycle Owner antes de ejecutar. `DIRECT` permite que la persona responsable vaya al Coding Agent directamente cuando éste puede reconstruir un Effective Execution Contract desde instrucción humana + contratos durables + estado real.
+
+El Conversation Space no es gateway obligatorio. En DIRECT, el Coding Agent aplica el `Direct Execution Gate`; si no puede identificar outcome, invariantes, fronteras, autoridad o aceptación sin inventar dirección, devuelve `NEEDS_GOVERNANCE` y reingresa la capa conversacional.
+
+Consulta `docs/execution/direct-execution-and-workspace-governance.md`.
+
 ## Flujo
 
 ```text
-Conversation Space gobierna outcome, invariantes y fronteras
+ORCHESTRATED
+→ Conversation Space gobierna outcome, invariantes y fronteras
 → Memory Bootstrap Gate cuando falta memoria durable indispensable
 → Planning Task sólo si existe una decisión material no resuelta
 → Environment Preflight sólo si readiness debe conocerse antes de autorizar una frontera sensible
@@ -94,6 +109,13 @@ Conversation Space gobierna outcome, invariantes y fronteras
 → Cycle Owner revisa evidencia
 → 90 custodia memoria estructural cuando corresponda
 → persona responsable interviene cuando cambia una frontera material
+
+DIRECT
+→ persona responsable instruye al Coding Agent
+→ agente rehidrata contratos durables + estado real
+→ Direct Execution Gate
+→ PASS: self-plan / execute / verify / maintain continuity
+→ NEEDS_GOVERNANCE: devuelve sólo la decisión material
 ```
 
 Cuando Memory Bootstrap devuelve `BOOTSTRAP REQUIRED`, la unidad dependiente original queda bloqueada. Puede emitirse una Execution Task separada cuyo único objetivo sea materializar el checkpoint durable mínimo; después de revisar esa evidencia se reevalúa el gate de la unidad original.
@@ -400,6 +422,19 @@ El Cycle Owner define política y triggers. El Coding Agent puede materializar c
 Cuando existe memoria durable, su superficie caliente debe permitir reconstruir con lectura acotada: estado actual, outcomes activos, blockers o decisiones materiales pendientes, próximos horizontes ya aceptados y Operational Baseline cuando aplique. No debe exigir recorrer el historial exhaustivo para responder qué está vigente ahora.
 
 Consulta `docs/foundations/memory-stewardship.md`.
+
+## Workspace Governance
+
+IA-DOS distingue `durable topology` de `ephemeral execution surface`.
+
+- durable topology: repositorios canónicos, servicios, datastores, memoria y componentes permanentes;
+- ephemeral execution: branches, worktrees, previews, fixtures, scratch scripts y entornos temporales.
+
+El Coding Agent puede expandir la superficie efímera dentro de autoridad sin pedir aprobación por cantidad. Crear o redefinir una superficie durable puede cruzar una frontera arquitectónica y requiere gobierno cuando sea material.
+
+La raíz o punto de entrada del proyecto debe permitir distinguir propósito, recursos canónicos y ejecución efímera. Cuando no sea obvio, puede usarse un `PROJECT.md` basado en `templates/project-map.template.md`.
+
+No impongas límites arbitrarios de branches/worktrees. Exige lifecycle claro y cleanup seguro.
 
 ## Contexto de una Task
 
