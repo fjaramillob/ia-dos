@@ -152,9 +152,13 @@ Si cambia un baseline publicado, conserva el checkpoint operacional autorizado a
 
 Si varios outcomes previos quedaron `DEFERRED`, no asumas que pueden seguir acumulándose: cuando el efecto conjunto cambie estado vigente, outcome activo, milestone/capability, blocker, horizonte aceptado o autoridad reusable, el Cycle Owner debe consolidar memoria según `Memory Stewardship`. El Coding Agent reporta hechos; no inventa esa dirección.
 
-## Formato del reporte final
+## Formato del retorno final
 
-Devuelve un `Execution Report` canónico al Cycle Owner indicado:
+En `ORCHESTRATED`, devuelve un `Execution Report` canónico al Cycle Owner indicado.
+
+En `DIRECT`, devuelve evidencia compacta suficiente para que la persona responsable conozca resultado, verificaciones, cambios materiales, publicación/baseline y cualquier `NEEDS_GOVERNANCE`. No materialices Task/Report sólo por ceremonia. Si el proyecto exige trazabilidad durable, un handoff entre agentes o continuidad sensible, usa el contrato tipado correspondiente.
+
+Formato canónico cuando aplica Execution Report:
 
 ```text
 Estado: COMPLETADO | PARCIAL | BLOQUEADO | FALLIDO
