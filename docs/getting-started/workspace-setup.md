@@ -12,6 +12,17 @@ La secuencia correcta es:
 → se ejecuta y se devuelve evidencia
 ```
 
+## Durable topology vs ephemeral execution
+
+Antes de imponer orden visual, distingue dos planos:
+
+- **durable topology**: repositorios canónicos, servicios, datastores, memoria y componentes permanentes;
+- **ephemeral execution surface**: branches, worktrees, previews, fixtures, scratch scripts, evidence y entornos temporales.
+
+El segundo plano puede crecer libremente dentro de autoridad. No uses un máximo arbitrario de worktrees o branches. El requisito es que su lifecycle sea claro y no confunda qué es canónico.
+
+Cuando la raíz del proyecto ya no sea autoexplicativa, puede existir un `PROJECT.md` o mapa equivalente basado en `templates/project-map.template.md`.
+
 ## Estructura posible
 
 Una organización local útil puede ser:
@@ -30,6 +41,20 @@ La ubicación puede ser `$HOME\proyectos` en Windows o `~/proyectos` en macOS y 
 
 IA-DOS no exige que todos los proyectos adopten la misma topología.
 
+Una estructura con ejecución efímera separada puede ser:
+
+```text
+proyecto/
+├── PROJECT.md              # opcional: mapa del workspace
+├── proyecto-app/           # durable
+├── proyecto-wiki/          # durable, si existe
+├── _worktrees/             # ephemeral execution
+│   └── ...
+└── archive/                # cold storage, si existe
+```
+
+Los nombres son convenciones opcionales. Lo importante es la separación semántica.
+
 ## Principios
 
 - IA-DOS puede mantenerse una sola vez como referencia local compartida cuando esa instalación aporte;
@@ -37,7 +62,9 @@ IA-DOS no exige que todos los proyectos adopten la misma topología.
 - app y Wiki pueden estar separadas, convivir en un monorepo o usar otra configuración documentada;
 - una Wiki separada no se crea por defecto: aplica el [Memory Bootstrap Gate](../foundations/memory-bootstrap-gate.md) cuando la siguiente unidad dependa de memoria conversacional;
 - Exchange es opcional y puede vivir como recurso separado cuando el proyecto lo adopte;
-- un coding agent recibe sólo los repositorios y rutas necesarios para la tarea actual;
+- un coding agent recibe sólo los repositorios y rutas necesarios para el outcome actual;
+- el agente puede crear superficies efímeras autorizadas sin redefinir topología durable;
+- crear un nuevo repositorio, servicio, datastore o componente top-level durable puede requerir gobierno explícito;
 - no se mueve un proyecto existente sólo para cumplir una estructura recomendada.
 
 ## Proyecto nuevo
@@ -95,6 +122,25 @@ No guardes en IA-DOS, memoria durable ni Exchange:
 - credenciales cloud;
 - archivos `.env` con valores reales;
 - datos personales sensibles innecesarios.
+
+## Lifecycle de ejecución efímera
+
+Clasifica recursos temporales de forma operacional:
+
+```text
+ACTIVE
+→ permanece mientras aporta
+
+COMPLETED / MERGED
+→ verifica estado
+→ retira superficie efímera cuando sea seguro
+
+ABANDONED
+→ preserva evidencia durable necesaria
+→ retira superficie efímera cuando sea seguro
+```
+
+No muevas directorios que sean Git worktrees manualmente sin comprender las referencias Git; usa mecanismos compatibles con Git y verifica working state antes de cleanup.
 
 ## Verificación
 
