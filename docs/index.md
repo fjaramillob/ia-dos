@@ -6,22 +6,23 @@ Esta documentación explica cómo utilizar IA-DOS para dirigir proyectos de soft
 
 La adopción sigue este orden conceptual, sin convertirse en una pipeline rígida:
 
-1. Elige `Execution Entry Mode: ORCHESTRATED | DIRECT` según la necesidad actual.
-2. En `ORCHESTRATED`, [inicializa o retoma el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md); en `DIRECT`, entrega la intención humana al Coding Agent y aplica [Direct Execution y Workspace Governance](execution/direct-execution-and-workspace-governance.md).
-3. Entrega sólo la descripción y fuentes necesarias; no reconstruyas todo el proyecto por rutina.
+1. Resuelve `Method Resolution Policy: FOLLOW_CURRENT | PINNED`; una mención conversacional de versión/SHA no constituye un pin durable.
+2. Elige `Execution Entry Mode: ORCHESTRATED | DIRECT` según la necesidad actual.
+3. En `ORCHESTRATED`, [inicializa o retoma el Project Orchestrator](../prompts/getting-started/initialize-project-orchestrator.md); en `DIRECT`, entrega la intención humana al Coding Agent y aplica [Direct Execution y Workspace Governance](execution/direct-execution-and-workspace-governance.md).
+5. Entrega sólo la descripción y fuentes necesarias; no reconstruyas todo el proyecto por rutina.
 4. Si usas Conversation Spaces, abre sólo el que desbloquee una decisión material y usa [Specialist Handoff](orchestration/topic-routing-registry.md) cuando realmente transfieras gobierno.
-5. Si falta memoria durable indispensable, evalúa [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
-6. Define o reconstruye Protected Invariants, Adaptation Authority y Protected Boundaries con [Ejecución adaptativa](execution/adaptive-execution.md).
-7. Usa `Planning Task` sólo ante una decisión material no resuelta y `Environment Preflight` sólo cuando readiness deba conocerse antes de una frontera sensible.
-8. En DIRECT, ejecuta sólo si `Direct Execution Gate = PASS`; si falta gobierno devuelve `NEEDS_GOVERNANCE`.
-9. Confirma [autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md).
-10. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
-11. Usa Execution Cells sólo cuando aporten continuidad real; no abras una conversación por tarea.
-12. Usa Exchange sólo cuando una pasarela pasiva de Markdown aporte valor; Exchange no es workflow ni router.
-13. En ORCHESTRATED, devuelve evidencia al Cycle Owner; en DIRECT, deja continuidad durable suficiente para que el proyecto no dependa de la conversación del agente.
-14. Si dirección, roadmap vigente, invariantes, fronteras y autoridad siguen estables, continúa sin microaprobaciones.
-15. La persona responsable interviene cuando aparece una decisión material o cambia una frontera.
-16. Reingresa Conversation Space / `00` sólo cuando exista un Governance Re-entry Trigger real.
+6. Si falta memoria durable indispensable, evalúa [Memory Bootstrap Gate](foundations/memory-bootstrap-gate.md).
+7. Define o reconstruye Protected Invariants, Adaptation Authority y Protected Boundaries con [Ejecución adaptativa](execution/adaptive-execution.md).
+8. Usa `Planning Task` sólo ante una decisión material no resuelta y `Environment Preflight` sólo cuando readiness deba conocerse antes de una frontera sensible.
+9. En DIRECT, ejecuta sólo si `Direct Execution Gate = PASS`; si falta gobierno devuelve `NEEDS_GOVERNANCE`.
+10. Confirma [autoridad de fuentes, artefactos y entornos](execution/source-and-artifact-authority.md).
+11. Aplica [Compresión de contexto por autoridad](orchestration/context-compression-by-authority.md).
+12. Usa Execution Cells sólo cuando aporten continuidad real; no abras una conversación por tarea.
+13. Usa Exchange sólo cuando una pasarela pasiva de Markdown aporte valor; Exchange no es workflow ni router.
+14. En ORCHESTRATED, devuelve evidencia al Cycle Owner; en DIRECT, deja continuidad durable suficiente para que el proyecto no dependa de la conversación del agente.
+15. Si dirección, roadmap vigente, invariantes, fronteras y autoridad siguen estables, continúa sin microaprobaciones.
+16. La persona responsable interviene cuando aparece una decisión material o cambia una frontera.
+17. Reingresa Conversation Space / `00` sólo cuando exista un Governance Re-entry Trigger real.
 
 Si la plataforma no puede navegar el repositorio canónico, usa el [Current Offline Pack](../bundles/ia-dos-current-offline-pack.md) cuando declare `Estado: VIGENTE` y baseline canónico. Es el único bundle actual para nuevos onboardings offline. No combines bundles históricos; consulta [Bundles](../bundles/README.md).
 

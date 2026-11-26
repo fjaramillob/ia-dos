@@ -630,8 +630,10 @@ Specialist Handoff ≠ Exchange file
 Manual Artifact Launcher ≠ autoridad
 Caveman Return ≠ output completo
 
-Task carries authority and the active delta.
-Report carries evidence of what actually happened.
+The execution contract carries authority and the active delta.
+In ORCHESTRATED that contract is normally the Execution Task.
+In DIRECT it is the Effective Execution Contract; a physical Task is not mandatory.
+Report carries evidence of what actually happened when a durable Report is warranted.
 Durable memory carries current reusable knowledge and the last verified published baseline when applicable.
 Repository carries implementation.
 Exchange only carries operational artifacts toward/from Coding Agents.
