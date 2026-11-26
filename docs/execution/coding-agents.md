@@ -30,7 +30,7 @@ La escritura del output autorizado no transforma Planning en Execution y no conc
 
 ### `Coding Agent — Execution`
 
-Recibe una `Execution Task` autorizada o un `Execution Resume`, planifica internamente el cómo, modifica únicamente lo permitido y devuelve un `Execution Report`.
+En ORCHESTRATED recibe una `Execution Task` autorizada o un `Execution Resume`. En DIRECT recibe una instrucción humana actual y reconstruye el contrato efectivo desde instrucciones locales, memoria durable relevante y estado real. En ambos casos planifica internamente el cómo, modifica únicamente lo permitido y devuelve evidencia proporcional.
 
 ```text
 Execution Task | Execution Resume
@@ -57,6 +57,20 @@ Coding Agent — Execution
 La persona responsable conserva la aprobación final cuando una decisión cambia dirección, autoridad, riesgo o impacto relevante. El Cycle Owner actúa dentro de la autoridad delegada y puede despachar continuidad lógica sin microaprobaciones cuando la frontera permanece estable. El Coding Agent no hereda esa autoridad de gobierno.
 
 Un coding agent no debe asumir autoridad para cambiar propósito, prioridades, arquitectura, alcance, costes, seguridad o producción cuando el artefacto recibido no lo autoriza. Dentro de `Adaptation Authority: BOUNDED`, sí puede cambiar mecanismos técnicos equivalentes, reparar implementation defects y realizar safe retry sin nueva ida y vuelta cuando Protected Invariants y Protected Boundaries permanecen intactos.
+
+## Execution Entry Mode
+
+El Coding Agent puede recibir trabajo por dos caminos:
+
+```text
+ORCHESTRATED
+→ Execution Task / Resume
+
+DIRECT
+→ instrucción humana + contratos durables + estado real
+```
+
+En DIRECT reconstruye un Effective Execution Contract. Si puede identificar outcome, invariantes, fronteras, autoridad y aceptación sin inventar dirección, continúa. Si no, devuelve `NEEDS_GOVERNANCE` con la decisión material faltante.
 
 ## Entrada mínima
 
@@ -138,6 +152,19 @@ Cuando una Task declara un Human Decision Checkpoint, el Coding Agent avanza has
 
 Consulta [Execution Cells y Exchange](execution-cells-and-exchange.md).
 
+## Direct Execution Gate
+
+Antes de escribir en DIRECT:
+
+1. confirma outcome;
+2. reconstruye Protected Invariants;
+3. identifica Protected Boundaries;
+4. confirma autoridad/capacidades necesarias;
+5. define aceptación verificable;
+6. verifica memoria durable suficiente.
+
+Si todo pasa, self-plan y ejecuta. Si falta gobierno, devuelve `NEEDS_GOVERNANCE`. No uses esta salida para dudas técnicas ordinarias resolubles dentro de `Adaptation Authority: BOUNDED`.
+
 ## Conducta durante la ejecución
 
 El coding agent debe:
@@ -206,6 +233,10 @@ Debe incluir, según corresponda:
 - evidencia verificable.
 
 El `Execution Report` no aprueba su propio resultado ni elige la siguiente unidad. Registra `Durable Memory Impact` y estado del `Operational Baseline` cuando corresponda; sólo consolida memoria dentro de la política y autoridad explícitas de la Task.
+
+## Agent-Owned Continuity
+
+En DIRECT, no dejes el proyecto dependiente de tu conversación. Dentro de autoridad actualiza implementación, Operational Baseline y memoria caliente LOCAL cuando corresponda. Si el cambio durable es estructural, usa `ROUTE_TO_90` según Memory Stewardship.
 
 ## Git y acciones externas
 
