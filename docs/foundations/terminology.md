@@ -6,6 +6,39 @@ Este glosario describe los términos operativos vigentes de IA-DOS y separa conc
 
 Persona que mantiene la dirección del proyecto y conserva la aprobación final aplicable. Interviene cuando una decisión cambia materialmente dirección, autoridad, producción, datos, seguridad, cumplimiento, coste, riesgo o impacto relevante.
 
+## `Execution Entry Mode`
+
+Modo de entrada a ejecución:
+
+- `ORCHESTRATED`: la dirección pasa por Conversation Space/Cycle Owner antes del Coding Agent;
+- `DIRECT`: la persona responsable instruye al Coding Agent sin gateway conversacional obligatorio.
+
+Ambos respetan las mismas fuentes de autoridad y Protected Boundaries.
+
+## `Effective Execution Contract`
+
+Contrato operativo reconstruido en DIRECT desde instrucción humana + instrucciones del repositorio + memoria durable relevante + estado real. Debe permitir identificar outcome, Protected Invariants, Protected Boundaries, autoridad, aceptación y stop conditions sin inventar dirección.
+
+## `Direct Execution Gate`
+
+Gate interno del Coding Agent en modo DIRECT. Resultado conceptual: `PASS | NEEDS_GOVERNANCE`.
+
+`PASS` habilita self-planning y ejecución dentro del contrato efectivo. `NEEDS_GOVERNANCE` devuelve sólo la decisión material faltante.
+
+## `Governance Re-entry Trigger`
+
+Condición semántica que vuelve necesaria la capa de gobierno conversacional: cambio de propósito/dirección, roadmap, arquitectura, frontera material, riesgo/autoridad relevante o una acumulación que requiera reevaluar qué debe hacerse.
+
+No depende de cantidad de commits, Tasks, PR o días.
+
+## `Agent-Owned Continuity`
+
+Responsabilidad del Coding Agent en DIRECT de mantener implementación, Operational Baseline y hot project state dentro de autoridad para que el proyecto no dependa de su conversación.
+
+## `Workspace Governance`
+
+Separación entre topología durable del proyecto y superficies efímeras usadas para ejecutar. La autonomía del agente es amplia en lo efímero y requiere gobierno cuando redefine estructuras canónicas de forma material.
+
 ## `Project Orchestrator`
 
 Asistente conversacional que integra dirección, contexto, fuentes y contratos para conducir el siguiente avance verificable.
