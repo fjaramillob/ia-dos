@@ -53,7 +53,8 @@ Estos contratos no imponen herramientas, topología física o secuencia fija.
 - [Preparar y revisar un handoff técnico](getting-started/execution-handoff.md)
 - [Validación end-to-end histórica de Fase 6](validation/end-to-end-onboarding-validation.md)
 - [Revisión integral histórica de Fase 6](validation/final-integral-review.md)
-- [Auditoría integral vigente del repositorio — 2026-11-25 / C07](validation/repository-integral-audit-2026-11-25.md)
+- [Auditoría integral vigente del repositorio — 2026-11-25 / C08](validation/repository-integral-audit-2026-11-25-c08.md)
+- [Auditoría integral histórica — 2026-11-25 / C07](validation/repository-integral-audit-2026-11-25.md)
 - [Auditoría integral histórica — 2026-10-26 / C04](validation/repository-integral-audit-2026-10-26.md)
 - [Auditoría integral histórica — 2026-08-21](validation/repository-integral-audit-2026-08-21.md)
 
