@@ -98,7 +98,7 @@ El Project Orchestrator identifica el siguiente resultado verificable y evalúa:
 6. ¿Falta memoria estructural indispensable o readiness que deba conocerse antes de autorizar una frontera sensible?
 ```
 
-El default es `Execution Task` outcome-first con planificación interna y `Revalidate` al comienzo. Según el caso:
+En ORCHESTRATED, el default es `Execution Task` outcome-first con planificación interna y `Revalidate`. En DIRECT, el default es Effective Execution Contract + Direct Execution Gate + self-planning. Según el caso:
 
 - conocimiento estructural indispensable sólo en chats → `Memory Bootstrap Gate`, con custodia de `90` cuando el proyecto adopta ese rol;
 - readiness que debe conocerse antes de conceder autoridad sensible → `Environment Preflight`;
@@ -152,6 +152,11 @@ Conversation Space → Conversation Space
 Conversation Space → Coding Agent
 → Planning Task | Environment Preflight | Execution Task | Execution Resume
 → chat o `.md`/Exchange según el contrato de entrega
+
+Human → Coding Agent (DIRECT)
+→ instrucción actual + contratos durables + estado real
+→ Direct Execution Gate
+→ ejecución sin artefacto intermedio cuando el contrato efectivo es claro
 ```
 
 Una copia documental de un `Specialist Handoff` puede existir sólo si se solicita explícitamente o una convención local separada la conserva como archivo. Esa copia no sustituye ni condiciona la transferencia conversacional.
