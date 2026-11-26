@@ -11,11 +11,13 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 
 ## Gobierno y responsabilidad
 
-- [ ] `00 — Dirección y orquestación` es la entrada canónica y no un dispatcher obligatorio.
+- [ ] `Execution Entry Mode: ORCHESTRATED | DIRECT` aparece como caminos de primera clase.
+- [ ] `00 — Dirección y orquestación` es la entrada conversacional canónica, no gateway obligatorio de ejecución.
 - [ ] Los Conversation Spaces se abren bajo demanda y no como fases.
 - [ ] El Cycle Owner actúa dentro de autoridad delegada.
 - [ ] La persona responsable conserva la aprobación final cuando cambian dirección, autoridad, riesgo o impacto relevante.
-- [ ] El coding agent no aprueba su propio plan o ejecución ni inicia otra unidad automáticamente.
+- [ ] El coding agent no aprueba su propio plan o ejecución ni inicia otra unidad automáticamente fuera de la instrucción humana vigente.
+- [ ] En DIRECT, `Direct Execution Gate` exige outcome, invariantes, fronteras, autoridad, aceptación y memoria suficientes; si falta gobierno usa `NEEDS_GOVERNANCE`.
 
 ## Memoria
 
@@ -59,6 +61,14 @@ Usa esta lista para comprobar que un cambio no reintroduzca contratos superados 
 - [ ] Cuando la Task declara memoria, el Report refleja `Durable Memory Impact` y estado de `Operational Baseline` sin inventar dirección.
 - [ ] La memoria LOCAL puede materializarse dentro de la misma Execution Task cuando comparte outcome y Authority Envelope.
 - [ ] La memoria estructural se deriva a `90 — Documentación y memoria` cuando el proyecto adopta ese custodio.
+
+## Workspace Governance
+
+- [ ] Se distingue topología durable de superficie efímera de ejecución.
+- [ ] No se imponen máximos arbitrarios de branches, worktrees, agentes o previews.
+- [ ] Nuevos repositorios, servicios, datastores o componentes canónicos se tratan como posible decisión material.
+- [ ] Recursos efímeros tienen lifecycle y cleanup seguro.
+- [ ] `PROJECT.md`, cuando existe, es mapa del workspace y no backlog/Wiki paralela.
 
 ## Exchange
 
